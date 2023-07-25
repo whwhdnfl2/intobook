@@ -1,0 +1,39 @@
+# MySQL ??
+
+server:
+  address: localhost
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/intobook?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8
+    username: root
+    password: root
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# createDatabaseIfNotExist: ??????? ???? ??? ???? ??
+# useUnicode: ???? ?? ?? ??
+# characterEncoding: ??? ??? ?? ??
+# characterSetResult: ???? ??? ?? ??
+# useSSL: SSL ???? ??
+
+# spring.jpa.properties.hibernate.show_sql : ??????? ??? ?? SQL?? ??? ??
+# spring.jpa.properties.hibernate.format_sql : SQL?? ??? ?? ??
+
+
+swagger:
+  project:
+    base-package: com.reboot.intobook.controller.api
