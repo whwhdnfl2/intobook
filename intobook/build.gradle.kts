@@ -36,6 +36,12 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:2.9.2")
 //    implementation("io.springfox:springfox-boot-starter:3.0.0")
 
+    //OAuth2 사용을 위한 dependency
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
+    //html 파일로 이동하기 위한 임시 dependency
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
 }
 
 tasks.withType<Test> {
