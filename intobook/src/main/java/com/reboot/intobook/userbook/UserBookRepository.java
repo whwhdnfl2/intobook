@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserBookRepository extends JpaRepository<UserBook, Long> {
-
-
+    UserBook findByUserPkAndIsbn(Long userPk, String isbn);
 }

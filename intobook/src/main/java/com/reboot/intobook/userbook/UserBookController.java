@@ -29,8 +29,18 @@ public class UserBookController {
 
     @PatchMapping("/{userBookPk}")
     @ApiOperation(value = "책의 상태를 변경하는 메소드")
-    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk, @RequestParam UserBookStatus status) {
+    public ResponseEntity<String> updateUserBookStatus(@PathVariable("userBookPk") long userBookPk, @RequestParam UserBookStatus status) {
         if (userBookService.updateUserBookStatus(userBookPk, status)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{userBookPk}")
+    @ApiOperation(value = "책장에서 책을 삭제하는 메서드")
+    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk) {
+        if (userBookService.deleteUserBook(userBookPk)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
