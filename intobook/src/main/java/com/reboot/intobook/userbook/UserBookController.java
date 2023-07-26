@@ -19,8 +19,18 @@ public class UserBookController {
     private static final String FAIL = "fail";
     @PostMapping
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
-    public ResponseEntity<?> insertUserBook(@RequestParam long userPk, @RequestParam String isbn, @RequestParam UserBookStatus status) {
+    public ResponseEntity<String> insertUserBook(@RequestParam long userPk, @RequestParam String isbn, @RequestParam UserBookStatus status) {
         if (userBookService.insertUserBook(userPk, isbn, status)) {
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/{userBookPk}")
+    @ApiOperation(value = "책의 상태를 변경하는 메소드")
+    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk, @RequestParam UserBookStatus status) {
+        if (userBookService.updateUserBookStatus(userBookPk, status)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
