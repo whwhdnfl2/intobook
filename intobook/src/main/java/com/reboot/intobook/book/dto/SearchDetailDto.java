@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SearchDetailDto {
+    private String isbn;
     private String title;
-    private String url;
-    private String thumbnail;
     private String author;
     private String publisher;
-    private String isbn;
+    private Integer page;
     private String description;
-    private Integer totPage;
+    private String coverImage;
+    private int weight;
 }

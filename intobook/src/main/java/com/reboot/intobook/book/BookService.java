@@ -55,29 +55,27 @@ public class BookService {
         URI uri = UriComponentsBuilder
                 .fromUriString(DETAIL_URL)
                 .queryParam("ttbkey", apiKey)
-                .queryParam("itemIdType", "ISBN")
                 .queryParam("ItemId", isbn)
                 .queryParam("output", "js")
                 .queryParam("Version", "20131101")
-                .queryParam("OptResult","ebookList,packing")
+                .queryParam("OptResult","packing")
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUri();
 
         RestTemplate restTemplate = new RestTemplate();
-        Map obj = restTemplate.getForObject(uri, Map.class);
-        Map item = (Map) ((List) obj.get("item")).get(0);
+        Map item = (Map) ((List) restTemplate.getForObject(uri, Map.class).get("item")).get(0);
         System.out.println( item );
 
         return SearchDetailDto.builder()
+                .isbn((String) item.get("isbn"))
                 .title((String) item.get("title"))
-                .url((String) item.get("link"))
-                .thumbnail((String) item.get("cover"))
                 .author((String) item.get("author"))
                 .publisher((String) item.get("publisher"))
-                .isbn((String) item.get("isbn"))
+                .page((Integer) item.get("mileage"))
                 .description((String) item.get("description"))
-                .totPage((Integer) item.get("mileage"))
+                .coverImage((String) item.get("cover"))
+                .weight( (Integer) ( (Map) ((Map) item.get("subInfo")).get("packing") ).get("weight") )
                 .build();
     }
 }
