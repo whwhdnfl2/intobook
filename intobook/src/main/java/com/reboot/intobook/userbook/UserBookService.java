@@ -15,7 +15,14 @@ public class UserBookService {
     private final UserBookRepository userBookRepository;
 
     public boolean insertUserBook(Long userPk, String isbn, UserBookStatus status) {
-        UserBook userBook = new UserBook(userPk, isbn, status);
+        UserBook userBook = userBookRepository.findByUserPkAndIsbn(userPk, isbn);
+        if (userBook != null) {
+            if (!userBook.isDeleted()) return false;
+            userBook.setDeleted(false);
+            userBook.setStatus(status);
+        }else {
+            userBook = new UserBook(userPk, isbn, status);
+        }
         if (status != UserBookStatus.INTEREST) {
             userBook.setStartedAt(new Date());
         }
@@ -34,4 +41,11 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
+
+    public boolean deleteUserBook(long userBookPk) {
+        UserBook userBook = userBookRepository.findById(userBookPk)
+                .orElseThrow(() -> new EntityNotFoundException("UserBook with ID " + userBookPk + " not found"));
+        userBook.setDeleted(true);
+        return userBookRepository.save(userBook) != null;
+    }
 }
