@@ -18,21 +18,21 @@ public class BookController {
 
     private final BookService bookService;
 
-//    /**
-//     * 책 검색
-//     * localhost:8080/search
-//     *
-//     * @param keyword
-//     * @param start
-//     * @return ResponseEntity
-//     */
-//    @GetMapping("")
-//    public ResponseEntity<?> search(
-//            @RequestParam String keyword,
-//            @RequestParam int start) {
-//        log.info("[Request] search");
-//        return new ResponseEntity<>(bookService.search(keyword, start), HttpStatus.OK);
-//    }
+    /**
+     * 책 검색
+     * localhost:8080/search
+     *
+     * @param keyword
+     * @param start
+     * @return ResponseEntity
+     */
+    @GetMapping("")
+    public ResponseEntity<?> search(
+            @RequestParam String keyword,
+            @RequestParam int start) {
+        log.info("[Request] search");
+        return new ResponseEntity<>(bookService.searchByKeyword(keyword, start), HttpStatus.OK);
+    }
 
     /**
      * 책 상세 정보
