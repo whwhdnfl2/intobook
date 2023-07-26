@@ -11,23 +11,23 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.nio.file.Path;
+
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    @Value("${swagger.project.base-package}")
-    private String basePackage;
+//    @Value("${swagger.project.base-package}")
+//    private String basePackage;
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(this.basePackage))
-                .paths(PathSelectors.ant("/**"))
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
                 .build()
-//                .host(this.externalHost)
-                .apiInfo(this.apiInfo())
-                .useDefaultResponseMessages(false);
+                .apiInfo(apiInfo());
     }
 
     /**
@@ -36,8 +36,8 @@ public class SwaggerConfiguration {
      */
     private ApiInfo apiInfo() {
         String title = "Swagger API Documents"; // 스웨거 UI 타이틀
-        String version = "1.0.0";
-        String license = "Dongmin All rights reserved";
+        String version = "2.9.2";
+        String license = "Into Book! All rights reserved";
 
         return new ApiInfoBuilder()
                 .title(title)
