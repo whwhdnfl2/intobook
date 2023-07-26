@@ -4,6 +4,10 @@ server:
   address: localhost
   port: 8080
 
+into-book:
+  api:
+    key: ttbjmj25885471405001
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
