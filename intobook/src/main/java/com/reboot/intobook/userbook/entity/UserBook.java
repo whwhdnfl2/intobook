@@ -4,6 +4,9 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,31 +16,37 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Table( name = "user_book" )
 public class UserBook {
 
     @Id @Column(name = "user_book_pk") @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userBookPk;
 
-    @Column(name = "now_page",
-            columnDefinition = "integer default 0")
+    @Column( name = "user_pk")
+    @NotNull
+    private Long userPk;
+
+    @Column( name = "isbn")
+    @NotNull
+    private String isbn;
+
+    @Column(name = "now_page")
+    @ColumnDefault("0")
     private int nowPage;
 
-    @Column(name = "created_at",
-            columnDefinition = "TIMESTAMP DEFAULT NOW()")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at", columnDefinition = "default(now())")
+    @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "started_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date startedAt;
 
     @Column(name = "completed_at")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date completedAt;
 
-    @Column(name = "is_deleted",
-            columnDefinition = "TINYINT DEFAULT 0")
+    @Column(name = "is_deleted")
+    @ColumnDefault("0")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isDeleted;
 
