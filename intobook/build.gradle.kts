@@ -42,6 +42,14 @@ dependencies {
     //html 파일로 이동하기 위한 임시 dependency
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 
+    //webclient dependency
+    // https://mvnrepository.com/artifact/org.springframework/spring-webflux
+    implementation("org.springframework:spring-webflux:5.3.29")
+
+    //jwt dependency
+    implementation("com.auth0:java-jwt:4.2.1")
+
+
 }
 
 tasks.withType<Test> {

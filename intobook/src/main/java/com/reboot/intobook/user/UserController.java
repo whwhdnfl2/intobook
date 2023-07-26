@@ -1,25 +1,20 @@
 package com.reboot.intobook.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import springfox.documentation.spring.web.json.Json;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
-    @RequestMapping(value = "/user")
-    public String test(){
-        return "redirect:https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=d65bd1ef2f9d2f8056ef153efcc983e7&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth";
-    }
 
+    private final UserService userService;
 
-    @GetMapping("/oauth")
-    public String test2(@RequestBody ){
-        RestTemplate restTemplate = new RestTemplate();
-
-        String url = "https://kauth.kakao.com/oauth/token";
-        String requestBody = {
-
-        }
+    @GetMapping("/jwt-test")
+    public String jwtTest() {
+        return "jwtTest 요청 성공";
     }
 }

@@ -1,5 +1,7 @@
 package com.reboot.intobook.user.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,24 +9,36 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@Builder
+@AllArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long user_pk;
-
-    private String name;
+    @Column(name = "user_pk")
+    private Long userPk;
 
     private String nickname;
 
     private String password;
 
-    private String created_at;
+    private String email;
 
-    private String sns_id;
+    @Column(name = "created_at")
+    private String createdAt;
 
-    private String sns_type;
+    @Column(name = "is_admin")
+    private boolean isAdmin;
 
-    private isAdmin is_admin;
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+    public User() {
+
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }
 
 }
