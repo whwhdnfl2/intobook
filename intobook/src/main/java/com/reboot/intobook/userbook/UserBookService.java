@@ -3,6 +3,7 @@ package com.reboot.intobook.userbook;
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookRepository;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
+import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ public class UserBookService {
     private final UserBookRepository userBookRepository;
     private final BookRepository bookRepository;
     public boolean insertUserBook(Long userPk, String isbn, UserBookStatus status) {
-        Book book = bookRepository.findByISBN(isbn);
+        Book book = bookRepository.findById(isbn).orElse(null);
+
         UserBook userBook = userBookRepository.findByUserPkAndBook(userPk, book);
         if (userBook != null) {
             if (!userBook.isDeleted()) return false;
@@ -64,4 +66,10 @@ public class UserBookService {
         userBook.setDeleted(true);
         return userBookRepository.save(userBook) != null;
     }
+
+    public UserBookResponseDto findUserBook(Long userBookPk) {
+        UserBookResponseDto userBook = userBookRepository.findByUserBookPkWithBook(userBookPk);
+        return userBook;
+    }
+
 }
