@@ -1,31 +1,56 @@
 package com.reboot.intobook.book;
 
-import com.reboot.intobook.book.dto.SaveReqDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@DisplayName("Book Service Test")
+@DisplayName("Book Test")
 @Transactional
-class BookServiceTest {
+class BookTest {
     @Autowired
     BookService bookService;
 
+    @Autowired
+    BookRepository bookRepository;
+
     @Test
-    @DisplayName("Add Book to System | Success")
+    @DisplayName("insert Book to System | Success")
     void insertBookSuccess(){
+        String isbn = getSampleBook().getIsbn();
+        assertNotNull( bookService.insertBook( isbn ) );
+    }
+
+    @Test
+    @DisplayName("find by title | Success")
+    void findBookByTitleSuccess(){
         Book book = getSampleBook();
-        assertNotNull( bookService.insertBook(book) );
+        bookRepository.save(book);
+
+        List<Book> list = bookRepository.findAllByTitle("정유정의 히말라야 환상방황");
+
+        assertNotNull( list );
+        assertEquals("정유정의 히말라야 환상방황", list.get(0).getTitle());
+    }
+
+
+    @Test
+    @DisplayName("find by author | Success")
+    void findBookByAuthorSuccess(){
+        Book book = getSampleBook();
+        bookRepository.save(book);
+
+        List<Book> list = bookRepository.findAllByAuthor("정유정");
+
+        assertNotNull( list );
+        assertEquals("정유정", list.get(0).getAuthor());
     }
 
 
