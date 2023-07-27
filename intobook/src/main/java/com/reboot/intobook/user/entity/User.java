@@ -18,6 +18,9 @@ public class User {
     @Column(name = "user_pk")
     private Long userPk;
 
+    @Column(name = "social_id")
+    private String socialId;
+
     private String nickname;
 
     private String password;
@@ -28,7 +31,8 @@ public class User {
     private String createdAt;
 
     @Column(name = "is_admin")
-    private boolean isAdmin;
+    @Enumerated(EnumType.STRING)
+    private IsAdmin isAdmin;
 
     @Column(name = "refresh_token")
     private String refreshToken;

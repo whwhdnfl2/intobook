@@ -13,8 +13,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/jwt-test")
-    public String jwtTest() {
-        return "jwtTest 요청 성공";
+    @GetMapping("/sign-up")
+    public String signUp(@RequestBody ) {
+        userService.signUp(userSignUpDto);
+        return "회원가입 성공";
     }
 }

@@ -1,7 +1,8 @@
-package com.reboot.intobook.user;
+package com.reboot.intobook.user.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.reboot.intobook.user.UserRepository;
 import com.reboot.intobook.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -112,6 +113,8 @@ public class JwtService {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractAccessToken(HttpServletRequest request) {
+        log.info(request.getHeader());
+
         return Optional.ofNullable(request.getHeader(accessHeader))
                 .filter(refreshToken -> refreshToken.startsWith(BEARER))
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
@@ -166,7 +169,11 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token) {
+        log.info("isTokenValid 실행");
+
         try {
+            log.info("isTokenValid 실행");
+
             JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
             return true;
         } catch (Exception e) {
