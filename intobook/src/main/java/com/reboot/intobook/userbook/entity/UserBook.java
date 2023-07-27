@@ -1,5 +1,6 @@
 package com.reboot.intobook.userbook.entity;
 
+import com.reboot.intobook.book.Book;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +28,13 @@ public class UserBook {
     private Long userPk;
 
     @NotNull
-    private String isbn;
+    @ManyToOne
+    @JoinColumn(name = "isbn")
+    private Book book;
 
     @ColumnDefault("0")
     private int nowPage;
 
-    @Column(columnDefinition = "default(now())")
     @CreationTimestamp
     private Date createdAt;
 

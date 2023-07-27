@@ -1,5 +1,7 @@
 package com.reboot.intobook.userbook;
 
+import com.reboot.intobook.book.Book;
+import com.reboot.intobook.book.BookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import lombok.RequiredArgsConstructor;
@@ -7,21 +9,24 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserBookService {
 
     private final UserBookRepository userBookRepository;
-
+    private final BookRepository bookRepository;
     public boolean insertUserBook(Long userPk, String isbn, UserBookStatus status) {
-        UserBook userBook = userBookRepository.findByUserPkAndIsbn(userPk, isbn);
+        Book book = bookRepository.findByISBN(isbn);
+        UserBook userBook = userBookRepository.findByUserPkAndBook(userPk, book);
         if (userBook != null) {
             if (!userBook.isDeleted()) return false;
             userBook.setDeleted(false);
             userBook.setStatus(status);
         }else {
-            userBook = new UserBook(userPk, isbn, status);
+
+            userBook = new UserBook(userPk, book, status);
         }
         if (status != UserBookStatus.INTEREST) {
             userBook.setStartedAt(new Date());
