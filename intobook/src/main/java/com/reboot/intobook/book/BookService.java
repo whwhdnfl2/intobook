@@ -1,11 +1,9 @@
 package com.reboot.intobook.book;
 
 import com.reboot.intobook.book.dto.SearchDetailDto;
-import com.reboot.intobook.book.dto.SearchDto;
+import com.reboot.intobook.book.dto.SearchListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +12,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -32,13 +28,13 @@ public class BookService {
     private final BookRepository bookRepository;
 
     /**
-     * searchByKeyword
+     * getSearchList
      *
      * @param keyword : 저자 + 제목
      * @param startIndex : 페이지수 (1 : 1~50번째 책, 2 : 51~100번째 책)
      * @return SearchDto
      */
-    public SearchDto searchByKeyword(String keyword, int startIndex) {
+    public SearchListDto getSearchList(String keyword, int startIndex) {
         URI uri = UriComponentsBuilder
                 .fromUriString(SEARCH_URL)
                 .queryParam("TTBKey", apiKey)
@@ -52,17 +48,17 @@ public class BookService {
                 .toUri();
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.exchange(uri, HttpMethod.GET, null, SearchDto.class).getBody();
+        return restTemplate.exchange(uri, HttpMethod.GET, null, SearchListDto.class).getBody();
     }
 
 
     /**
-     * searchByIsbn
+     * getSearchDetail
      *
      * @param isbn : 13자리 isbn으로 검색
      * @return SearchDetailDto
      */
-    public SearchDetailDto searchByIsbn(String isbn){
+    public SearchDetailDto getSearchDetail(String isbn){
         URI uri = UriComponentsBuilder
                 .fromUriString(DETAIL_URL)
                 .queryParam("ttbkey", apiKey)

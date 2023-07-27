@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchDto {
+public class SearchListDto {
     public Integer totalResults;
     public Integer startIndex;
 
