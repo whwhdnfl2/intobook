@@ -14,8 +14,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/sign-up")
-    public String signUp(@RequestBody ) {
-        userService.signUp(userSignUpDto);
+    public String signUp( ) {
+//        userService.signUp(userSignUpDto);
         return "회원가입 성공";
     }
 }
