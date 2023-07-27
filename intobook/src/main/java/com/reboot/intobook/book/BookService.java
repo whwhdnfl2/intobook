@@ -1,7 +1,5 @@
 package com.reboot.intobook.book;
 
-import com.reboot.intobook.book.dto.SaveReqDto;
-import com.reboot.intobook.book.dto.SearchDetailDto;
 import com.reboot.intobook.book.dto.SearchListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,7 +68,7 @@ public class BookService {
      * getSearchDetail
      *
      * @param isbn : 13자리 isbn으로 검색
-     * @return SearchDetailDto
+     * @return Book
      */
     public Book getSearchDetail(String isbn){
         URI uri = UriComponentsBuilder
