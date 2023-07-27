@@ -1,13 +1,12 @@
 package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
-import com.reboot.intobook.userbook.entity.UserBook;
+import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,6 +42,17 @@ public class UserBookController {
         Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(userPk, status, orderedBy, page);
         if (userBookList != null && userBookList.getSize() != 0) {
             return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{userBookPk}")
+    @ApiOperation(value = "책 한권을 조회하는 메소드")
+    public ResponseEntity<?> getUserBook (@PathVariable Long userBookPk){
+        UserBookResponseDto userBook = userBookService.findUserBook(userBookPk);
+        if (userBook != null) {
+            return new ResponseEntity<UserBookResponseDto>(userBook, HttpStatus.OK);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
         }
