@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +29,16 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
+    /**
+     * insertBook : client가 직접 호출하는 게 아니라, 시스템 내부적으로 사용함
+     * @param isbn
+     * @return 등록된 책의 isbn
+     */
     @Transactional
-    public String insertBook( Book book ){
-        Book save = bookRepository.save( book );
-        return save.getIsbn();
+    public String insertBook( String isbn ){
+        Book find = getSearchDetail( isbn );
+
+        return bookRepository.save( find ).getIsbn();
     }
 
     /**
@@ -65,7 +72,7 @@ public class BookService {
      * @param isbn : 13자리 isbn으로 검색
      * @return SearchDetailDto
      */
-    public SearchDetailDto getSearchDetail(String isbn){
+    public Book getSearchDetail(String isbn){
         URI uri = UriComponentsBuilder
                 .fromUriString(DETAIL_URL)
                 .queryParam("ttbkey", apiKey)
@@ -82,7 +89,7 @@ public class BookService {
         Map item = (Map) ((List) restTemplate.getForObject(uri, Map.class).get("item")).get(0);
         System.out.println( item );
 
-        return SearchDetailDto.builder()
+        return Book.builder()
                 .isbn((String) item.get("isbn"))
                 .title((String) item.get("title"))
                 .author((String) item.get("author"))
@@ -90,7 +97,12 @@ public class BookService {
                 .page((Integer) ( (Map) item.get("subInfo") ).get("itemPage"))
                 .description((String) item.get("description"))
                 .coverImage((String) item.get("cover"))
+                .price((Integer) item.get("priceStandard"))
+                .publishDate( LocalDate.parse( (String) item.get("pubDate")) )
                 .weight( (Integer) ( (Map) ((Map) item.get("subInfo")).get("packing") ).get("weight") )
+                .height( (Integer) ( (Map) ((Map) item.get("subInfo")).get("packing") ).get("sizeWidth") )
+                .width( (Integer) ( (Map) ((Map) item.get("subInfo")).get("packing") ).get("sizeHeight") )
+                .depth( (Integer) ( (Map) ((Map) item.get("subInfo")).get("packing") ).get("sizeDepth") )
                 .build();
     }
 }

@@ -24,8 +24,8 @@ class BookTest {
     @Test
     @DisplayName("insert Book to System | Success")
     void insertBookSuccess(){
-        Book book = getSampleBook();
-        assertNotNull( bookService.insertBook(book) );
+        String isbn = getSampleBook().getIsbn();
+        assertNotNull( bookService.insertBook( isbn ) );
     }
 
     @Test
