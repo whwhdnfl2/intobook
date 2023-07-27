@@ -39,4 +39,4 @@ spring:
 
 swagger:
   project:
-    base-package: com.reboot.intobook.controller.api
+    base-package: com.reboot.intobook.*
