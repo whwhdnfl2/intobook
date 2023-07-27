@@ -31,7 +31,6 @@ public class BookService {
     @Transactional
     public String insertBook( Book book ){
         Book save = bookRepository.save( book );
-
         return save.getIsbn();
     }
 
