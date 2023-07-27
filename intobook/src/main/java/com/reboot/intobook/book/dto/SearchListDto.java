@@ -12,13 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SearchDto {
-    public Integer total;
-    List<Item> items = new ArrayList<>();
+public class SearchListDto {
+    public Integer totalResults;
+    public Integer startIndex;
+
+    public List<Item> item = new ArrayList<>();
 
     static class Item{
         public String title;
-        public String image;
+        public String cover;
         public String author;
         public String isbn;
         public String description;
