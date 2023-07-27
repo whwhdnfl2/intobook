@@ -1,11 +1,16 @@
 package com.reboot.intobook.userbook;
 
+import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
+import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,7 +26,23 @@ public class UserBookController {
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
     public ResponseEntity<String> insertUserBook(@RequestParam long userPk, @RequestParam String isbn, @RequestParam UserBookStatus status) {
         if (userBookService.insertUserBook(userPk, isbn, status)) {
-            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping
+    @ApiOperation(value = "조건에 따라 책의 리스트를 조회하는 메소드")
+    public ResponseEntity<?> getUserBookList(
+            @RequestParam(required = false) UserBookStatus status,
+            @RequestParam(required = false) String orderedBy,
+            @RequestParam int page) {
+//        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userPk = 1L;
+        Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(userPk, status, orderedBy, page);
+        if (userBookList != null && userBookList.getSize() != 0) {
+            return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
         }

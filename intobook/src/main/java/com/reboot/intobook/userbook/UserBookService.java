@@ -2,13 +2,18 @@ package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookRepository;
+import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,6 +39,12 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
+    public Page<UserBookListResponseDto> findUserBookList(Long userPk, UserBookStatus status, String orderedBy, int page){
+        PageRequest pageRequest = PageRequest.of(page, 9, Sort.by(orderedBy).descending());
+
+        Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserPkAndStatusWithBook(userPk, status, pageRequest);
+        return userBookList;
+    }
     public boolean updateUserBookStatus(Long userBookPk, UserBookStatus status) {
         UserBook userBook = userBookRepository.findById(userBookPk)
                 .orElseThrow(() -> new EntityNotFoundException("UserBook with ID " + userBookPk + " not found"));
