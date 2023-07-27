@@ -12,8 +12,10 @@ public class BookRepository implements JPABookRepository{
 
     private final EntityManager em;
     @Override
-    public void save(Book book) {
+    public String save(Book book) {
         em.persist(book);
+
+        return book.getIsbn();
     }
 
     @Override

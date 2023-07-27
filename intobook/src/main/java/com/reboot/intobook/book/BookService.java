@@ -1,5 +1,6 @@
 package com.reboot.intobook.book;
 
+import com.reboot.intobook.book.dto.SaveReqDto;
 import com.reboot.intobook.book.dto.SearchDetailDto;
 import com.reboot.intobook.book.dto.SearchListDto;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,30 @@ public class BookService {
     private final String SEARCH_URL = "http://www.aladin.co.kr/ttb/api/ItemSearch.aspx";
 
     private final BookRepository bookRepository;
+
+    @Transactional
+    public String insertBook( SaveReqDto saveReqDto ){
+//        checkDuplicateBook( saveReqDto.getIsbn() ); //중복 저장 확인
+
+        String isbn = bookRepository.save( buildBook(saveReqDto) );
+
+        return isbn;
+    }
+
+    private Book buildBook(SaveReqDto saveReqDto) {
+        return Book.builder()
+                .isbn( saveReqDto.getIsbn() )
+                .title(saveReqDto.getTitle())
+                .author(saveReqDto.getAuthor())
+                .publisher(saveReqDto.getPublisher())
+                .page(saveReqDto.getPage())
+                .description(saveReqDto.getDescription())
+                .coverImage(saveReqDto.getCoverImage())
+                .price(saveReqDto.getPrice())
+                .weight(saveReqDto.getWeight())
+                .build();
+    }
+
 
     /**
      * getSearchList
