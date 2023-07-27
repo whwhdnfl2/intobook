@@ -4,6 +4,10 @@ server:
   address: localhost
   port: 8080
 
+into-book:
+  api:
+    key: ttbjmj25885471405001
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -58,7 +62,7 @@ spring:
 
 swagger:
   project:
-    base-package: com.reboot.intobook.controller.api
+    base-package: com.reboot.intobook.*
 
 jwt:
   secretKey: sc136as1c5qw4c13ax1cz3x5c4as3c1a35scczx3casc54;
