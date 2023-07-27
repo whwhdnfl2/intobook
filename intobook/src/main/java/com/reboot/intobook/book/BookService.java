@@ -29,28 +29,11 @@ public class BookService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public String insertBook( SaveReqDto saveReqDto ){
-//        checkDuplicateBook( saveReqDto.getIsbn() ); //중복 저장 확인
+    public String insertBook( Book book ){
+        Book save = bookRepository.save( book );
 
-        String isbn = bookRepository.save( buildBook(saveReqDto) );
-
-        return isbn;
+        return save.getIsbn();
     }
-
-    private Book buildBook(SaveReqDto saveReqDto) {
-        return Book.builder()
-                .isbn( saveReqDto.getIsbn() )
-                .title(saveReqDto.getTitle())
-                .author(saveReqDto.getAuthor())
-                .publisher(saveReqDto.getPublisher())
-                .page(saveReqDto.getPage())
-                .description(saveReqDto.getDescription())
-                .coverImage(saveReqDto.getCoverImage())
-                .price(saveReqDto.getPrice())
-                .weight(saveReqDto.getWeight())
-                .build();
-    }
-
 
     /**
      * getSearchList

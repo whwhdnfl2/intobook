@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -43,7 +44,7 @@ public class Book {
     private int price;
 
     @Column(name = "publish_date")
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
 
     @NotNull
     private int weight;
