@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
 
-    public void signUp(UserDto usetDto) throws Exception {
+    public void signUp(UserDto userDto) throws Exception {
 
-        if (userRepository.findByEmail(userSignUpDto.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
             throw new Exception("이미 존재하는 이메일입니다.");
         }
 
-        User user = User.builder().email(usetDto.getEmail()).socialId(usetDto.get)
+        User user = User.builder().email(userDto.getEmail()).password(userDto.getPassword()).nickname(userDto.getNickname()).build();
 
         userRepository.save(user);
     }
