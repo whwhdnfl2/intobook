@@ -93,7 +93,7 @@ public class BookService {
         System.out.println( item );
 
         return Book.builder()
-                .isbn((String) item.get("isbn"))
+                .isbn((String) item.get("isbn13"))
                 .title((String) item.get("title"))
                 .author((String) item.get("author"))
                 .publisher((String) item.get("publisher"))

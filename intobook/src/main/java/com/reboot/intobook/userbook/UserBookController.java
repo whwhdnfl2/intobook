@@ -47,7 +47,7 @@ public class UserBookController {
     @ApiOperation(value = "조건에 따라 책의 리스트를 조회하는 메소드")
     public ResponseEntity<?> getUserBookList(
             @RequestParam(required = false) UserBookStatus status,
-            @RequestParam(required = false) String orderedBy,
+            @RequestParam String orderedBy,
             @RequestParam int page) {
 //        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userPk = 1L;
