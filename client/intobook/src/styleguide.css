@@ -1,0 +1,16 @@
+@font-face {
+    font-family: "BM HANNA_TTF-Regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url("assets/font/BM-HANNA.ttf") format("truetype");
+}
+
+:root {
+    --main-green-color: #00a887;
+    --main-yellow-color: #fffbdb;
+    --bg-gray: #DCDCDC;
+    --black: #18191a;
+    --white: #ffffff;
+
+    --main-font: "BM HANNA_TTF-Regular", Helvetica;
+}
