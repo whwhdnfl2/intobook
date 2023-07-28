@@ -1,4 +1,5 @@
 import './App.css';
+import Navbar from './components/common/Navbar';
 import { BrowserRouter } from 'react-router-dom';
 
 
@@ -9,6 +10,7 @@ function App() {
         <BrowserRouter>
         </BrowserRouter>
       </div>
+      <Navbar/>
     </div>
   );
 }
