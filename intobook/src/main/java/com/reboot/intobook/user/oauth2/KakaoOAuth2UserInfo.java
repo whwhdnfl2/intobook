@@ -12,7 +12,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
 
     @Override
     public String getSocialId() {
-        return String.valueOf(attributes.get("socialId"));
+        return String.valueOf(attributes.get("id"));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class KakaoOAuth2UserInfo extends OAuth2UserInfo {
             return null;
         }
 
-        return (String) attributes.get("email");
+        return (String) account.get("email");
 
     }
 }

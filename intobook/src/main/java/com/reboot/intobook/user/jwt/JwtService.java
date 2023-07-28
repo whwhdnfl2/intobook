@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -60,7 +61,8 @@ public class JwtService {
                 //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
                 //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
                 .withClaim(EMAIL_CLAIM, email)
-                .sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
+                .sign(Algorithm.HMAC512(secretKey));
+        // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
     }
 
     /**
@@ -113,9 +115,8 @@ public class JwtService {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractAccessToken(HttpServletRequest request) {
-        return Optional.ofNullable(request.getHeader(accessHeader))
-                .filter(refreshToken -> refreshToken.startsWith(BEARER))
-                .map(refreshToken -> refreshToken.replace(BEARER, ""));
+        request.getHeader(accessHeader);
+        return Optional.ofNullable(request.getHeader(accessHeader));
     }
 
     /**
@@ -161,6 +162,7 @@ public class JwtService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.updateRefreshToken(refreshToken);
+            userRepository.save(user);
         } else {
             throw new RuntimeException("일치하는 회원이 없습니다.");
         }

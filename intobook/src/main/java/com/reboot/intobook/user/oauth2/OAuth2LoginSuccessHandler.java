@@ -1,7 +1,5 @@
 package com.reboot.intobook.user.oauth2;
 
-
-
 import com.reboot.intobook.user.UserRepository;
 import com.reboot.intobook.user.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +27,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
+
         } catch (Exception e) {
             throw e;
         }
@@ -41,8 +40,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
-
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+        response.sendRedirect("/jwt-test");
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
     }
 }
