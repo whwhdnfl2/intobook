@@ -35,10 +35,10 @@ public class BookService {
      * @return 등록된 책의 isbn
      */
     @Transactional
-    public String insertBook( String isbn ){
+    public Book insertBook( String isbn ){
         Book find = getSearchDetail( isbn );
 
-        return bookRepository.save( find ).getIsbn();
+        return bookRepository.save( find );
     }
 
     /**
@@ -65,6 +65,9 @@ public class BookService {
         return restTemplate.exchange(uri, HttpMethod.GET, null, SearchListDto.class).getBody();
     }
 
+    public Book getBook(String isbn) {
+        return bookRepository.findById(isbn).orElse(null);
+    }
 
     /**
      * getSearchDetail
@@ -90,7 +93,7 @@ public class BookService {
         System.out.println( item );
 
         return Book.builder()
-                .isbn((String) item.get("isbn"))
+                .isbn((String) item.get("isbn13"))
                 .title((String) item.get("title"))
                 .author((String) item.get("author"))
                 .publisher((String) item.get("publisher"))

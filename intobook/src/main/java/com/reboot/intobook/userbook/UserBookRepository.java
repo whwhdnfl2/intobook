@@ -1,6 +1,7 @@
 package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
+import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
@@ -13,14 +14,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserBookRepository extends JpaRepository<UserBook, Long> {
-    UserBook findByUserPkAndBook(Long userPk, Book book);
+    UserBook findByUserAndBook(User user, Book book);
 
     @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookListResponseDto(u.userBookPk, b.title, b.coverImage, u.nowPage, u.createdAt, u.startedAt, u.completedAt, u.status) " +
             "FROM UserBook u " +
             "JOIN u.book b " +
-            "WHERE u.userPk = :userPk " +
+            "WHERE u.user = :user " +
             "AND (:status IS NULL OR u.status = :status)")
-    Page<UserBookListResponseDto> findByUserPkAndStatusWithBook(Long userPk, UserBookStatus status, Pageable pageable);
+    Page<UserBookListResponseDto> findByUserAndStatusWithBook(User user, UserBookStatus status, Pageable pageable);
 
 
     @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookResponseDto(" +
