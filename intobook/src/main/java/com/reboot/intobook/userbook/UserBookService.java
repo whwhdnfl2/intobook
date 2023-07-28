@@ -55,7 +55,10 @@ public class UserBookService {
         if (oldStatus == status) return true;
         if (oldStatus == UserBookStatus.INTEREST && status == UserBookStatus.READING) {
             userBook.setStartedAt(new Date());
+        }else if ((oldStatus == UserBookStatus.INTEREST || oldStatus == UserBookStatus.READING) && status == UserBookStatus.COMPLETE){
+            userBook.setCompletedAt(new Date());
         }
+        userBook.setStatus(status);
         return userBookRepository.save(userBook) != null;
     }
 
