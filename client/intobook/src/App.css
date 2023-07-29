@@ -1,9 +1,14 @@
 .App {
+  background-color: var(--main-yellow-color);
   display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 34px;
-  height: 800px
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  gap: 2rem;
+  width: 100vw;
+  height: 100vh;
+  max-width: 360px;
+  margin: auto;
 }
 
 .App > * {
@@ -12,12 +17,6 @@
 }
 
 .main-frame {
-  background-color: var(--main-yellow-color);
   border-style: none;
-  gap: 34px;
-  height: 800px;
-  overflow: hidden;
-  /* padding: 8px 0; */
-  width: 360px;
   font-family: var(--main-font);
 }
