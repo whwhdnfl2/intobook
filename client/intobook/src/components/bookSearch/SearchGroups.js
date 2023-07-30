@@ -1,5 +1,5 @@
 import React from 'react';
-import { SearchGroup, SearchIcon, SearchMethod } from '../../styles/BookSearchStyle';
+import { SearchGroup, SearchIcon, SearchMethod } from '../../styles/bookSearch/SearchGroupsStyle';
 
 const SearchGroups = (props) => {
   const { iconSrc, methodText } = props;
