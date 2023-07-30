@@ -71,7 +71,7 @@ public class JwtService {
      */
     public String createRefreshToken() {
         Date now = new Date();
-        return JWT.create()
+        return  JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
                 .sign(Algorithm.HMAC512(secretKey));
