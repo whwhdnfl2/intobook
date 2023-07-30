@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -39,6 +41,10 @@ public class User {
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
+    @Column(name = "user_book")
+    @OneToMany(mappedBy = "user")
+    private List<UserBook> userBook = new ArrayList<>();
 
     public User() {
 

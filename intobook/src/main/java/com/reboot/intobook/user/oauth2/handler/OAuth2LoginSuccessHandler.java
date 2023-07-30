@@ -1,7 +1,8 @@
-package com.reboot.intobook.user.oauth2;
+package com.reboot.intobook.user.oauth2.handler;
 
-import com.reboot.intobook.user.UserRepository;
+import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.user.jwt.JwtService;
+import com.reboot.intobook.user.oauth2.CustomOAuth2User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

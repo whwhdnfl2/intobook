@@ -1,16 +1,15 @@
 package com.reboot.intobook.user.oauth2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.reboot.intobook.user.UserRepository;
+import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.user.jwt.*;
 
+import com.reboot.intobook.user.oauth2.handler.OAuth2LoginFailureHandler;
+import com.reboot.intobook.user.oauth2.handler.OAuth2LoginSuccessHandler;
+import com.reboot.intobook.user.oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;

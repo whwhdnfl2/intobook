@@ -3,7 +3,7 @@ package com.reboot.intobook.user.jwt;
 
 
 
-import com.reboot.intobook.user.UserRepository;
+import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
