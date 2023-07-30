@@ -14,18 +14,18 @@ function App() {
 
   return (
     <div className='App'>
+      <BrowserRouter>
       {isLoggedIn && <UpperNavbar/>}
       <div className='main-frame'>
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<TutorialPage />} />
             <Route path="/bookshelves" element={<BookshelvesPage />} />
             <Route path="/alarm" element={<AlarmPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
           </Routes>
-        </BrowserRouter>
       </div>
       {isLoggedIn && <Navbar/>}
+      </BrowserRouter>
     </div>
       
   );
