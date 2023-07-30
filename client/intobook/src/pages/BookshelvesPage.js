@@ -1,4 +1,4 @@
-const BookShelvesPage = () => {
+const BookshelvesPage = () => {
     return ( 
     <div>
         여기는 책장페이지
@@ -6,4 +6,4 @@ const BookShelvesPage = () => {
     );
 }
  
-export default BookShelvesPage;
+export default BookshelvesPage;
