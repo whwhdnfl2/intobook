@@ -2,6 +2,7 @@ package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookRepository;
+import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
@@ -22,47 +23,52 @@ import java.util.Optional;
 public class UserBookService {
 
     private final UserBookRepository userBookRepository;
-    private final BookRepository bookRepository;
-    public boolean insertUserBook(Long userPk, String isbn, UserBookStatus status) {
-        Book book = bookRepository.findById(isbn).orElse(null);
 
-        UserBook userBook = userBookRepository.findByUserPkAndBook(userPk, book);
+    public boolean insertUserBook(User user, Book book, UserBookStatus status) {
+
+        Long userPk = user.getUserPk();
+        UserBook userBook = userBookRepository.findByUserAndBook(user, book);
         if (userBook != null) {
             if (!userBook.isDeleted()) return false;
             userBook.setDeleted(false);
             userBook.setStatus(status);
         }else {
-
-            userBook = new UserBook(userPk, book, status);
+            userBook = new UserBook(user, book, status);
         }
         if (status != UserBookStatus.INTEREST) {
-            userBook.setStartedAt(new Date());
+            Date date = new Date();
+            userBook.setStartedAt(date);
+            if (status == UserBookStatus.COMPLETE) userBook.setCompletedAt(date);
         }
         return userBookRepository.save(userBook) != null;
     }
 
-    public Page<UserBookListResponseDto> findUserBookList(Long userPk, UserBookStatus status, String orderedBy, int page){
+    public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, String orderedBy, int page){
         PageRequest pageRequest = PageRequest.of(page, 9, Sort.by(orderedBy).descending());
 
-        Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserPkAndStatusWithBook(userPk, status, pageRequest);
+        Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserAndStatusWithBook(user, status, pageRequest);
         return userBookList;
     }
     public boolean updateUserBookStatus(Long userBookPk, UserBookStatus status) {
         UserBook userBook = userBookRepository.findById(userBookPk)
-                .orElseThrow(() -> new EntityNotFoundException("UserBook with ID " + userBookPk + " not found"));
-
+                .orElse(null);
+        if (userBook == null) return false;
         UserBookStatus oldStatus = userBook.getStatus();
         if (oldStatus == status) return true;
         if (oldStatus == UserBookStatus.INTEREST && status == UserBookStatus.READING) {
             userBook.setStartedAt(new Date());
+        }else if ((oldStatus == UserBookStatus.INTEREST || oldStatus == UserBookStatus.READING) && status == UserBookStatus.COMPLETE){
+            userBook.setCompletedAt(new Date());
         }
+        userBook.setStatus(status);
         return userBookRepository.save(userBook) != null;
     }
 
 
     public boolean deleteUserBook(long userBookPk) {
         UserBook userBook = userBookRepository.findById(userBookPk)
-                .orElseThrow(() -> new EntityNotFoundException("UserBook with ID " + userBookPk + " not found"));
+                .orElse(null);
+        if (userBook == null) return false;
         userBook.setDeleted(true);
         return userBookRepository.save(userBook) != null;
     }
@@ -70,6 +76,15 @@ public class UserBookService {
     public UserBookResponseDto findUserBook(Long userBookPk) {
         UserBookResponseDto userBook = userBookRepository.findByUserBookPkWithBook(userBookPk);
         return userBook;
+    }
+
+    public boolean updateUserBook(Long userBookPk, int nowPage, Date startedAt, Date completedAt) {
+        UserBook userBook = userBookRepository.findById(userBookPk).orElse(null);
+        if (userBook == null) return false;
+        userBook.setNowPage(nowPage);
+        userBook.setStartedAt(startedAt);
+        userBook.setCompletedAt(completedAt);
+        return userBookRepository.save(userBook) != null;
     }
 
 }
