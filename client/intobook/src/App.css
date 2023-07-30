@@ -1,5 +1,5 @@
 .App {
-  background-color: var(--main-yellow-color);
+  background-color: var(--main-base-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;

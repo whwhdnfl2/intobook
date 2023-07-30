@@ -10,11 +10,14 @@ const StyledNavbar = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   margin-bottom: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-right: 30px;
+  margin-left: 30px;
   background-color: var(--white);
-  border-radius: 50%;
+  border-radius: 25px;
+  height: 50px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   
 `
 
