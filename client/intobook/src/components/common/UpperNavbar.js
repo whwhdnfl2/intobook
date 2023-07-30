@@ -24,10 +24,7 @@ const UpperNavbar = () => {
             </div>
 
             <div className='menu-icons'>
-              <Link to="/tutorials">
-                <FontAwesomeIcon icon={faCircleQuestion} />
-              </Link>
-              
+              <FontAwesomeIcon icon={faCircleQuestion} />
               <FontAwesomeIcon icon={faBell}/>
               <FontAwesomeIcon icon={faBars} />
             </div>
