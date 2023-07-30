@@ -12,7 +12,7 @@ export const Title = styled.div`
   left: 20px;
   line-height: 20px;
   white-space: nowrap;
-`
+`;
 
 export const SerchBarDiv = styled.div`
   min-width: 340px;
@@ -66,4 +66,4 @@ export const SearchBarInput = styled.input`
     font-size: 14px;
     letter-spacing: -1px;
   }
-`
+`;

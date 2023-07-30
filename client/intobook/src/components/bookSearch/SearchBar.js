@@ -4,7 +4,7 @@ import { Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } fr
 import { searchBooks } from './../../api/searchApi';
 
 
-const SearchBar = ({title}) => {
+const SearchBar = ({ title, updateSearchResults }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const searchBarInputRef = useRef(null);
 
@@ -16,7 +16,7 @@ const SearchBar = ({title}) => {
     if (searchKeyword.trim() !== '') {
       // 검색 api 호출
       const searchValues = await searchBooks(searchKeyword, 0);
-      console.log('결과결과', searchValues)
+      updateSearchResults(searchValues.item);
     }
   };
 
@@ -31,7 +31,7 @@ const SearchBar = ({title}) => {
   }, []);
 
   return (
-    <div>
+    <>
       <Title>{title}</Title>
       <SerchBarDiv>
         <BarcordeIcon src={barcodehIcon} alt="barcode-icon" />
@@ -51,7 +51,7 @@ const SearchBar = ({title}) => {
           />
         )}
       </SerchBarDiv>
-    </div>
+    </>
   );
 };
 
