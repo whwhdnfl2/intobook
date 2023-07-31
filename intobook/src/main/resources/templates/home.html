@@ -2,9 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>홈 - 블루투스 테스트</title>
 </head>
 <body>
+    <button id="bluetoothButton">블루투스!</button>
 
+    <script>
+        const bluetoothButton = document.getElementById("bluetoothButton")
+
+        bluetoothButton.addEventListener("click", () => {
+            navigator.bluetooth.requestDevice({
+             filters: [{ services: ['0000dfb0-0000-1000-8000-00805f9b34fb'] }]
+            })
+                .then(device => {
+                    // Human-readable name of the device.
+                    console.log(device.name);
+                    // Attempts to connect to remote GATT Server.
+                    return device.gatt.connect(); })
+                .then(server => {
+                    // Getting Service…
+                    console.log(server);
+                    return server.getPrimaryService('0000dfb0-0000-1000-8000-00805f9b34fb');
+                })
+                .then(service => {
+                    // Getting Characteristic…
+                    return service.getCharacteristic('0000dfb1-0000-1000-8000-00805f9b34fb');
+                })
+                .then(characteristic => {
+                    // Reading Level…
+                    return characteristic.readValue();
+                })
+                .then(value => {
+                    console.log(`Data Sending is ${value.getUint8(0)}`);
+                })
+                .catch(error => { console.error(error); });
+        })
+
+        function getDevice(device) { // 페어링 해제 감지
+            device.addEventListener('gattserverdisconnected', () => {
+                alert("디바이스 연결이 끊어졌습니다.");
+            });
+        }
+
+        function sendCharacteristic(characteristic) { // 데이터 전송
+            characteristic.writeValue(new Uint8Array([0x04, 0x03, 0x02, 0x01]))
+        }ㄹ
+
+        function getCharacteristic(characteristic) { // 데이터 받기
+            characteristic.startNotifications().then(() => {
+                characteristic.addEventListener('characteristicvaluechanged', function(e) {
+                    const value = e.target.value.getUint8(0).toString(10);
+                    console.log(value);
+                });
+            })
+        }
+
+    </script>
 </body>
 </html>
