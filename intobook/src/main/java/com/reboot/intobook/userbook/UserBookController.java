@@ -35,7 +35,7 @@ public class UserBookController {
         if (book == null) {
             book = bookService.insertBook(isbn);
         }
-        User user = userService.getUser(1L);
+        User user = User.builder().userPk(1L).build();
         if (userBookService.insertUserBook(user, book, status)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
         }else {
@@ -51,7 +51,7 @@ public class UserBookController {
             @RequestParam int page) {
 //        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userPk = 1L;
-        User user = userService.getUser(userPk);
+        User user = User.builder().userPk(1L).build();
         Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(user, status, orderedBy, page);
         if (userBookList != null && userBookList.getSize() != 0) {
             return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
