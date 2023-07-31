@@ -36,8 +36,6 @@ public class UserBookController {
         if (book == null) {
             book = bookService.insertBook(isbn);
         }
-        User user = User.builder().userPk(1L).build();
-
         JwtUtil jwtUtil = new JwtUtil();
         User user = User.builder().userPk(jwtUtil.extractClaims(accessToken).get("userPk", Long.class)).build();
 
