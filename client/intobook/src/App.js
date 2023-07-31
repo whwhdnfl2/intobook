@@ -3,6 +3,9 @@ import Navbar from './components/common/Navbar';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import UpperNavbar from './components/common/UpperNavbar';
 import TutorialPage from './pages/TutorialPage';
+import BookshelvesPage from './pages/BookshelvesPage';
+import AlarmPage from './pages/AlarmPage';
+import StatisticsPage from './pages/StatisticsPage';
 
 
 function App() {
@@ -11,15 +14,18 @@ function App() {
 
   return (
     <div className='App'>
+      <BrowserRouter>
       {isLoggedIn && <UpperNavbar/>}
       <div className='main-frame'>
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<TutorialPage />} />
+            <Route path="/bookshelves" element={<BookshelvesPage />} />
+            <Route path="/alarm" element={<AlarmPage />} />
+            <Route path="/statistics" element={<StatisticsPage />} />
           </Routes>
-        </BrowserRouter>
       </div>
       {isLoggedIn && <Navbar/>}
+      </BrowserRouter>
     </div>
       
   );
