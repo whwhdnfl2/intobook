@@ -1,4 +1,4 @@
-package com.reboot.intobook.user.jwt;
+package com.reboot.intobook.utils;
 
 import java.util.Random;
 

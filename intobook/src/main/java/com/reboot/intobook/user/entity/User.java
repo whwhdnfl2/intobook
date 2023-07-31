@@ -4,8 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -18,17 +24,18 @@ public class User {
     @Column(name = "user_pk")
     private Long userPk;
 
+    private String password;
+
     @Column(name = "social_id")
     private String socialId;
 
     private String nickname;
 
-    private String password;
-
     private String email;
 
+    @CreationTimestamp
     @Column(name = "created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "is_admin")
     @Enumerated(EnumType.STRING)
@@ -36,6 +43,10 @@ public class User {
 
     @Column(name = "refresh_token")
     private String refreshToken;
+
+//    @Column(name = "user_book")
+//    @OneToMany(mappedBy = "user")
+//    private List<UserBook> userBook = new ArrayList<>();
 
     public User() {
 

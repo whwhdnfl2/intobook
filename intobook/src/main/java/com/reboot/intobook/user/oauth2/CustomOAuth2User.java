@@ -16,6 +16,7 @@ public class CustomOAuth2User extends DefaultOAuth2User {
 
     private IsAdmin role;
     private String email;
+    private Long userPk;
 
     /**
      * Constructs a {@code DefaultOAuth2User} using the provided parameters.
@@ -28,9 +29,10 @@ public class CustomOAuth2User extends DefaultOAuth2User {
     public CustomOAuth2User(Collection<? extends GrantedAuthority> authorities,
                             Map<String, Object> attributes, String nameAttributeKey,
                             String email,
-                            IsAdmin role) {
+                            IsAdmin role, Long userPk) {
         super(authorities, attributes, nameAttributeKey);
         this.role = role;
         this.email = email;
+        this.userPk = userPk;
     }
 }

@@ -2,7 +2,7 @@ package com.reboot.intobook.user.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.reboot.intobook.user.UserRepository;
+import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +43,7 @@ public class JwtService {
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     private static final String EMAIL_CLAIM = "email";
+    private static final String USERPK_CLAIM = "userPk";
     private static final String BEARER = "Bearer ";
 
     private final UserRepository userRepository;
@@ -50,7 +51,7 @@ public class JwtService {
     /**
      * AccessToken 생성 메소드
      */
-    public String createAccessToken(String email) {
+    public String createAccessToken(String email, Long userPk) {
         Date now = new Date();
         return JWT.create() // JWT 토큰을 생성하는 빌더 반환
                 .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
@@ -59,8 +60,11 @@ public class JwtService {
                 //클레임으로는 저희는 email 하나만 사용합니다.
                 //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
                 //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
+
                 .withClaim(EMAIL_CLAIM, email)
-                .sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
+                .withClaim(USERPK_CLAIM, userPk)
+                .sign(Algorithm.HMAC512(secretKey.getBytes()));
+        // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
     }
 
     /**
@@ -69,10 +73,10 @@ public class JwtService {
      */
     public String createRefreshToken() {
         Date now = new Date();
-        return JWT.create()
+        return  JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + refreshTokenExpirationPeriod))
-                .sign(Algorithm.HMAC512(secretKey));
+                .sign(Algorithm.HMAC512(secretKey.getBytes()));
     }
 
     /**
@@ -113,6 +117,7 @@ public class JwtService {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractAccessToken(HttpServletRequest request) {
+        request.getHeader(accessHeader);
         return Optional.ofNullable(request.getHeader(accessHeader))
                 .filter(refreshToken -> refreshToken.startsWith(BEARER))
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
@@ -128,7 +133,7 @@ public class JwtService {
     public Optional<String> extractEmail(String accessToken) {
         try {
             // 토큰 유효성 검사하는 데에 사용할 알고리즘이 있는 JWT verifier builder 반환
-            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey))
+            return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey.getBytes()))
                     .build() // 반환된 빌더로 JWT verifier 생성
                     .verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
                     .getClaim(EMAIL_CLAIM) // claim(Emial) 가져오기
@@ -161,18 +166,16 @@ public class JwtService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.updateRefreshToken(refreshToken);
+            userRepository.save(user);
         } else {
             throw new RuntimeException("일치하는 회원이 없습니다.");
         }
     }
 
     public boolean isTokenValid(String token) {
-        log.info("isTokenValid 실행");
-
         try {
             log.info("isTokenValid 실행");
-
-            JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token);
+            JWT.require(Algorithm.HMAC512(secretKey.getBytes())).build().verify(token);
             return true;
         } catch (Exception e) {
             log.error("유효하지 않은 토큰입니다. {}", e.getMessage());

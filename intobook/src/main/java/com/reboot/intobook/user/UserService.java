@@ -1,25 +1,30 @@
 package com.reboot.intobook.user;
 
-import com.reboot.intobook.user.dto.UserDto;
 import com.reboot.intobook.user.entity.User;
+import com.reboot.intobook.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
 
-    public void signUp(UserDto userDto) throws Exception {
+    public void updateNickname(Long userPk, String nickname) throws Exception{
+        Optional<User> user = userRepository.findByUserPk(userPk);
 
-        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
-            throw new Exception("이미 존재하는 이메일입니다.");
+        if(user.isPresent()){
+            User user1 = user.get();
+            user1.setNickname(nickname);
+            userRepository.saveAndFlush(user1);
+        }else{
+            throw new Exception("없으요");
         }
-
-        User user = User.builder().email(userDto.getEmail()).password(userDto.getPassword()).nickname(userDto.getNickname()).build();
-
-        userRepository.save(user);
     }
+
 }
