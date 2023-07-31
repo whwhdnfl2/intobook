@@ -15,8 +15,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void updateNickname(String email, String nickname) throws Exception{
-        Optional<User> user = userRepository.findByEmail(email);
+    public void updateNickname(Long userPk, String nickname) throws Exception{
+        Optional<User> user = userRepository.findByUserPk(userPk);
 
         if(user.isPresent()){
             User user1 = user.get();

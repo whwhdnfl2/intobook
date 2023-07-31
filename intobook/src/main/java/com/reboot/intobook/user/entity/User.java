@@ -42,9 +42,9 @@ public class User {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-    @Column(name = "user_book")
-    @OneToMany(mappedBy = "user")
-    private List<UserBook> userBook = new ArrayList<>();
+//    @Column(name = "user_book")
+//    @OneToMany(mappedBy = "user")
+//    private List<UserBook> userBook = new ArrayList<>();
 
     public User() {
 
