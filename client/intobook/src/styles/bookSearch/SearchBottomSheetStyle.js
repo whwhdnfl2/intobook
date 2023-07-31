@@ -1,16 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Booksearch = styled.div`
-  height: 90vh;
-  display: flex;
-  align-items: flex-end;
-  min-width: 360px;
-`;
-
 export const SearchBottomeSheetDiv = styled.div`
-  width: 360px;
-  min-height: 254px;
-  border-radius: 20px;
   padding: 13px 0;
   position: relative;
   display: flex;

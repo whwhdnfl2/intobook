@@ -18,23 +18,23 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-      {isLoggedIn && <UpperNavbar/>}
-      <div className='main-frame'>
+        {isLoggedIn && <UpperNavbar />}
+        <div className='main-frame'>
           <Routes>
-            <Route path='/' element={<HomePage />}  />
+            <Route path='/' element={<HomePage />} />
             <Route path="/tutorial" element={<TutorialPage />} />
-            <Route path='/search' element={<BookSearchPage />}  />
+            <Route path='/search' element={<BookSearchPage />} />
             <Route path="/bookshelves" element={<BookshelvesPage />} />
             <Route path="/book/:bookId" element={<BookInfoPage />} />
             <Route path="/alarm" element={<AlarmPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
             <Route path="/login" element={<LoginPage />} />
           </Routes>
-      </div>
-      {isLoggedIn && <Navbar/>}
+        </div>
+        {isLoggedIn && <Navbar />}
       </BrowserRouter>
     </div>
-      
+
   );
 }
 

@@ -54,5 +54,4 @@ const SearchBar = ({ title, updateSearchResults }) => {
   );
 };
 
-
 export default SearchBar;

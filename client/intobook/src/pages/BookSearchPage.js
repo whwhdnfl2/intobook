@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../components/bookSearch/SearchBar';
 import SearchResults from './../components/bookSearch/SearchResults';
-import { styled } from 'styled-components';
+import { Layout } from '../styles/bookSearch/SearchStyle';
 
 const BookSearchPage = () => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
@@ -17,13 +17,5 @@ const BookSearchPage = () => {
     </Layout>
   );
 };
-
-const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 20px;
-  height: 500px;
-  gap: 30px;
-`
 
 export default BookSearchPage;
