@@ -22,7 +22,7 @@ public class SearchListDto {
         public String title;
         public String cover;
         public String author;
-        public String isbn;
+        public String isbn13;
         public String description;
     }
 }

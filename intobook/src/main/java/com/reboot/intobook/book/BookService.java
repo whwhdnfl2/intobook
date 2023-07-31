@@ -1,7 +1,5 @@
 package com.reboot.intobook.book;
 
-import com.reboot.intobook.book.dto.SaveReqDto;
-import com.reboot.intobook.book.dto.SearchDetailDto;
 import com.reboot.intobook.book.dto.SearchListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,10 +33,10 @@ public class BookService {
      * @return 등록된 책의 isbn
      */
     @Transactional
-    public String insertBook( String isbn ){
+    public Book insertBook( String isbn ){
         Book find = getSearchDetail( isbn );
 
-        return bookRepository.save( find ).getIsbn();
+        return bookRepository.save( find );
     }
 
     /**
@@ -65,12 +63,15 @@ public class BookService {
         return restTemplate.exchange(uri, HttpMethod.GET, null, SearchListDto.class).getBody();
     }
 
+    public Book getBook(String isbn) {
+        return bookRepository.findById(isbn).orElse(null);
+    }
 
     /**
      * getSearchDetail
      *
      * @param isbn : 13자리 isbn으로 검색
-     * @return SearchDetailDto
+     * @return Book
      */
     public Book getSearchDetail(String isbn){
         URI uri = UriComponentsBuilder
@@ -90,7 +91,7 @@ public class BookService {
         System.out.println( item );
 
         return Book.builder()
-                .isbn((String) item.get("isbn"))
+                .isbn((String) item.get("isbn13"))
                 .title((String) item.get("title"))
                 .author((String) item.get("author"))
                 .publisher((String) item.get("publisher"))

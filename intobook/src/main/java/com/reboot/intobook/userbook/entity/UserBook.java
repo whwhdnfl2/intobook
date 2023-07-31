@@ -1,6 +1,7 @@
 package com.reboot.intobook.userbook.entity;
 
 import com.reboot.intobook.book.Book;
+import com.reboot.intobook.user.entity.User;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,9 @@ public class UserBook {
     private Long userBookPk;
 
     @NotNull
-    private Long userPk;
+    @ManyToOne
+    @JoinColumn(name = "userPk")
+    private User user;
 
     @NotNull
     @ManyToOne
