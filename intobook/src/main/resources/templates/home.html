@@ -2,26 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>홈 - 블루투스 테스트</title>
+    <title>블루투스 테스트</title>
 </head>
 <body>
-    <button id="bluetoothButton">블루투스!</button>
+    <button id="scan">블루투스 스캔</button>
+    <button id="disconnect">연결 끊기</button>
+    <button id="reconnect">다시 연결</button>
+    <button id="send">데이터 받기</button>
 
     <script>
-        const bluetoothButton = document.getElementById("bluetoothButton")
+        var bluetoothDevice = null;
+        var Bcharacteristic = null;
 
-        bluetoothButton.addEventListener("click", () => {
+        document.querySelector('#scan').addEventListener("click", () => {
             navigator.bluetooth.requestDevice({
              filters: [{ services: ['0000dfb0-0000-1000-8000-00805f9b34fb'] }]
             })
                 .then(device => {
                     // Human-readable name of the device.
                     console.log(device.name);
+                    bluetoothDevice = device;
                     // Attempts to connect to remote GATT Server.
-                    return device.gatt.connect(); })
+                    return bluetoothDevice.gatt.connect(); })
                 .then(server => {
                     // Getting Service…
-                    console.log(server);
+                    console.log(server.name);
                     return server.getPrimaryService('0000dfb0-0000-1000-8000-00805f9b34fb');
                 })
                 .then(service => {
@@ -29,33 +34,119 @@
                     return service.getCharacteristic('0000dfb1-0000-1000-8000-00805f9b34fb');
                 })
                 .then(characteristic => {
-                    // Reading Level…
-                    return characteristic.readValue();
+                    characteristic.startNotifications();
                 })
-                .then(value => {
-                    console.log(`Data Sending is ${value.getUint8(0)}`);
+                .then(characteristic => {
+                    characteristic.addEventListener('characteristicvaluechanged',
+                        handleCharacteristicValueChanged);
+                    console.log('Notifications have been started.');
                 })
+                // .then(characteristic => {
+                //     // Reading Level…
+                //     Bcharacteristic = characteristic;
+                //     return Bcharacteristic.readValue();
+                // })
+                // .then(value => {
+                //     console.log(`Data Sending is ${value.getUint8(0)}`);
+                //     console.log(value);
+                // })
                 .catch(error => { console.error(error); });
         })
 
-        function getDevice(device) { // 페어링 해제 감지
-            device.addEventListener('gattserverdisconnected', () => {
-                alert("디바이스 연결이 끊어졌습니다.");
-            });
+        function handleCharacteristicValueChanged(event) {
+            const value = event.target.value;
+            console.log('Received ' + value);
+            // TODO: Parse Heart Rate Measurement value.
+            // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
         }
+
+        document.querySelector('#disconnect').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                onDisconnectButtonClick();
+            }
+        });
+
+        document.querySelector('#reconnect').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                onReconnectButtonClick();
+            }
+        });
+        document.querySelector('#send').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                getCharacteristic(Bcharacteristic);
+            }
+        });
+
+        function connect() {
+            console.log('Connecting to Bluetooth Device...');
+            return bluetoothDevice.gatt.connect()
+                .then(server => {
+                    console.log('> Bluetooth Device connected');
+                });
+        }
+
+
+        function onDisconnectButtonClick() {
+            if (!bluetoothDevice) {
+                return;
+            }
+
+            if (bluetoothDevice.gatt.connected) {
+                bluetoothDevice.gatt.disconnect();
+                console.log('Disconnecting from Bluetooth Device Successfully');
+            } else {
+                console.log('> Bluetooth Device is already disconnected');
+            }
+        }
+
+        function onReconnectButtonClick() {
+            if (!bluetoothDevice) {
+                return;
+            }
+            if (bluetoothDevice.gatt.connected) {
+                console.log('> Bluetooth Device is already connected');
+                return;
+            }
+            connect()
+                .catch(error => {
+                    console.log('Argh! ' + error);
+                });
+        }
+
+        function isWebBluetoothEnabled() {
+            if (navigator.bluetooth) {
+                return true;
+            } else {
+                console.log('Web Bluetooth API is not available.\n' +
+                    'Please make sure the "Experimental Web Platform features" flag is enabled.');
+                return false;
+            }
+        }
+
 
         function sendCharacteristic(characteristic) { // 데이터 전송
             characteristic.writeValue(new Uint8Array([0x04, 0x03, 0x02, 0x01]))
-        }ㄹ
+        }
 
         function getCharacteristic(characteristic) { // 데이터 받기
             characteristic.startNotifications().then(() => {
                 characteristic.addEventListener('characteristicvaluechanged', function(e) {
-                    const value = e.target.value.getUint8(0).toString(10);
+                    const value = e.target.value.getUint8(0);
                     console.log(value);
                 });
             })
         }
+
+
 
     </script>
 </body>
