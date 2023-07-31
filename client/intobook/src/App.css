@@ -2,7 +2,6 @@
   background-color: var(--main-base-color);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   overflow: hidden;
   gap: 2rem;
   width: 100vw;
