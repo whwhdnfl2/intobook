@@ -1,18 +1,21 @@
 import React from 'react';
 import { Stack, Box } from '@mui/material';
 import ResultBook from './ResultBook';
+import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 
 const SearchResults = ({ bookSearchResults }) => {
   const resultsArray = bookSearchResults || []
 
   return (
-      <Stack direction='row' flexWrap='wrap' justifyContent='start' gap={3.5} >
+    <ResultsContainer>
+      <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
         {resultsArray.map((item, idx) => (
-          <Box key={idx} mb={2}>
+          <Box key={idx}>
             <ResultBook bookCover={item} />
           </Box>
         ))}
       </Stack>    
+    </ResultsContainer> 
   );
 };
 

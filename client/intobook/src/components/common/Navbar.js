@@ -10,15 +10,14 @@ const StyledNavbar = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 10px;
-  margin-right: 30px;
-  margin-left: 30px;
+  margin: 0 30px 10px 30px;
   background-color: var(--white);
   border-radius: 25px;
   height: 50px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 715px;
+  position: fixed;
+  bottom: 20px;
+  width: 300px;
 `;
 
 const Navbar = () => {
