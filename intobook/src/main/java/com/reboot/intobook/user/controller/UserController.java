@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 import static java.awt.SystemColor.info;
 
 @RestController
@@ -30,6 +32,8 @@ public class UserController {
     @PatchMapping("/updateNickname")
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization")String accessToken, @RequestParam String nickname){
         log.info("accessToken: " + accessToken);
+
+        accessToken = accessToken.substring(7);
 
         Claims claims = jwtUtil.extractClaims(accessToken, secretKey);
         Long userPk = claims.get("userPk", Long.class);

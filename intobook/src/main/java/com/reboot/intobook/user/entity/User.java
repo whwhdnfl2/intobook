@@ -24,6 +24,8 @@ public class User {
     @Column(name = "user_pk")
     private Long userPk;
 
+    private String password;
+
     @Column(name = "social_id")
     private String socialId;
 
