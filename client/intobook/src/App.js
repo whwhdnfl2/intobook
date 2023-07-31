@@ -8,6 +8,7 @@ import AlarmPage from './pages/AlarmPage';
 import StatisticsPage from './pages/StatisticsPage';
 import HomePage from './pages/HomePage';
 import BookSearchPage from './pages/BookSearchPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/bookshelves" element={<BookshelvesPage />} />
             <Route path="/alarm" element={<AlarmPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
       </div>
       {isLoggedIn && <Navbar/>}
