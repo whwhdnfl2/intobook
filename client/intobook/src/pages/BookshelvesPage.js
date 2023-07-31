@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import BookshelvesContent from '../components/bookShelves/BookshelvesContent';
 
 const StyledBookshelvesPage = styled.div`
   font-size: 18px;
@@ -8,7 +9,7 @@ const StyledBookshelvesPage = styled.div`
 const BookshelvesPage = () => {
     return ( 
     <StyledBookshelvesPage>
-       여기는 책장페이지
+       <BookshelvesContent/>
     </StyledBookshelvesPage>
     );
 }
