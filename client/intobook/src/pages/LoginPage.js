@@ -1,4 +1,12 @@
-import SocialKakao from "../components/login/Login";
+import React from 'react';
+import SocialKakao from '../components/login/SocialKakao';
 
+const LoginPage = () => {
+  return ( 
+    <div>
+      <SocialKakao />
+    </div>
+  );
+}
 
-<SocialKakao></SocialKakao>
+export default LoginPage;

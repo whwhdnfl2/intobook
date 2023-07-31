@@ -9,6 +9,7 @@ import StatisticsPage from './pages/StatisticsPage';
 import HomePage from './pages/HomePage';
 import BookSearchPage from './pages/BookSearchPage';
 import BookInfoPage from './pages/BookInfoPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/book/:bookId" element={<BookInfoPage />} />
             <Route path="/alarm" element={<AlarmPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
       </div>
       {isLoggedIn && <Navbar/>}
