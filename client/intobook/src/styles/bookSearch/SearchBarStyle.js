@@ -1,5 +1,11 @@
 import { styled } from 'styled-components';
 
+export const SearchBarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
 export const Title = styled.div`
   color: var(--main-green-color);
   font-family: var(--content-font);
@@ -7,20 +13,17 @@ export const Title = styled.div`
   font-weight: 700;
   font-style: normal;
   letter-spacing: -0.5px;
-  position: absolute;
-  top: 100px;
-  left: 20px;
+  position: relative;
   line-height: 20px;
   white-space: nowrap;
+  margin-left: 10px;
 `;
 
 export const SerchBarDiv = styled.div`
-  min-width: 340px;
+  min-width: 320px;
   height: 50px;
   border-radius: 20px;
-  position: absolute;
-  top: 140px;
-  left: 10px;
+  position: relative;
   display: flex;
   align-items: center;
   background-color: var(--white);
@@ -63,7 +66,7 @@ export const SearchBarInput = styled.input`
     color: #00000080;
     font-family: var(--content-font);
     font-weight: 300;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: -1px;
   }
 `;

@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Booksearch = styled.div`
-  height: 100vh;
+  height: 90vh;
   display: flex;
   align-items: flex-end;
   min-width: 360px;
