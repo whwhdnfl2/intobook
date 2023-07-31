@@ -1,4 +1,3 @@
-import react from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
@@ -20,18 +19,20 @@ const StyledNavbar = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 715px;
-  `;
+`;
 
 const Navbar = () => {
     return ( 
         <StyledNavbar>
+          <Link to='/'>
             <FontAwesomeIcon icon={faHome} />
-            <Link to="/bookshelves">
-              <FontAwesomeIcon icon={faBook}/>
-            </Link>
-            <Link to="/statistics">
-              <FontAwesomeIcon icon={faChartSimple} />
-            </Link>
+          </Link>
+          <Link to="/bookshelves">
+            <FontAwesomeIcon icon={faBook}/>
+          </Link>
+          <Link to="/statistics">
+            <FontAwesomeIcon icon={faChartSimple} />
+          </Link>
         </StyledNavbar>
      );
 }

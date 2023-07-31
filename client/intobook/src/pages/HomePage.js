@@ -9,14 +9,14 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <div style={{width: '350px', fontSize: '50px'}}
+    < >
+      <div style={{ fontSize: '50px', margin: '0 20px', display: 'flex'}}
         onClick={showSearchBottomSheetHandler}
       >
         +
       </div>
       {showSearchBottomSheet && <SearchBottomSheet />}
-    </div>
+    </>
   );
 };
 

@@ -20,9 +20,10 @@ const BookSearchPage = () => {
 
 const Layout = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  position: relative;
+  flex-direction: column;
+  margin: 0 20px;
+  height: 500px;
+  gap: 30px;
 `
 
 export default BookSearchPage;

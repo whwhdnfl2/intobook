@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
-import { Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
+import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
 import { searchBooks } from './../../api/searchApi';
-
 
 const SearchBar = ({ title, updateSearchResults }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -15,7 +14,7 @@ const SearchBar = ({ title, updateSearchResults }) => {
   const searchHandler = async () => {
     if (searchKeyword.trim() !== '') {
       // 검색 api 호출
-      const searchValues = await searchBooks(searchKeyword, 0);
+      const searchValues = await searchBooks(searchKeyword, 1);
       updateSearchResults(searchValues.item);
     }
   };
@@ -31,7 +30,7 @@ const SearchBar = ({ title, updateSearchResults }) => {
   }, []);
 
   return (
-    <>
+    <SearchBarContainer>
       <Title>{title}</Title>
       <SerchBarDiv>
         <BarcordeIcon src={barcodehIcon} alt="barcode-icon" />
@@ -51,8 +50,9 @@ const SearchBar = ({ title, updateSearchResults }) => {
           />
         )}
       </SerchBarDiv>
-    </>
+    </SearchBarContainer>
   );
 };
+
 
 export default SearchBar;
