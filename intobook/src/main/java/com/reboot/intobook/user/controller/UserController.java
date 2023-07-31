@@ -33,9 +33,7 @@ public class UserController {
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization")String accessToken, @RequestParam String nickname){
         log.info("accessToken: " + accessToken);
 
-        accessToken = accessToken.substring(7);
-
-        Claims claims = jwtUtil.extractClaims(accessToken, secretKey);
+        Claims claims = jwtUtil.extractClaims(accessToken);
         Long userPk = claims.get("userPk", Long.class);
         log.info("UserPk: " + userPk);
         try{
