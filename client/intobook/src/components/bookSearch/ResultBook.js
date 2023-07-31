@@ -6,10 +6,11 @@ import { styled } from 'styled-components';
 const ResultBook = ({ bookCover }) => {
   const title = bookCover?.title.split('-')[0].trim()
   const author = bookCover?.author.split('(')[0].trim()
+  const bookId = bookCover?.isbn13
 
   return (
     <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: '88px'}}}>
-      <Link to={`/book/${bookCover.isbn13}`} style={{textDecoration: 'none'}}>
+      <Link to={`/book/${bookId}`} style={{textDecoration: 'none'}}>
         <CardMedia image={bookCover?.cover} alt={bookCover?.title} sx={{ width: 88, height: 112 }} />
         <CardContent sx={{ height: '42px', padding: '2px'}} >
           <TitleTypography
