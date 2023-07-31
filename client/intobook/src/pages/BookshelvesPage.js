@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookshelvesContent from '../components/bookShelves/BookshelvesContent';
+import BookshelvesContent from './../components/bookshelves/BookshelvesContent';
 
 const StyledBookshelvesPage = styled.div`
   font-size: 18px;
 `;
 
 const BookshelvesPage = () => {
-    return ( 
+  return (
     <StyledBookshelvesPage>
-       <BookshelvesContent/>
+      <BookshelvesContent />
     </StyledBookshelvesPage>
-    );
+  );
 }
- 
+
 export default BookshelvesPage;
