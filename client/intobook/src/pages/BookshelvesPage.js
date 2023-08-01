@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookshelvesContent from './../components/bookshelves/BookshelvesContent';
 import BookWishList from './../components/bookshelves/BookWishList';
+import BookshelvesContent from './../components/bookShelves/BookshelvesContent';
 
 const StyledBookshelvesPage = styled.div`
   text-align: center;
