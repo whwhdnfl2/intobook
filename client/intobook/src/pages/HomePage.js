@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import SearchBottomSheet from '../components/bookSearch/SearchBottomSheet';
 import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
-import Character from './../components/home/Character';
+import { Character, HistoryLogs } from '../components/home';
+import ReadingBook from './../components/home/ReadingBook';
 
 
 const HomePage = () => {
@@ -18,7 +19,9 @@ const HomePage = () => {
   return (
     <Layout>
       <WelcomeText>Hello, {nickname}님-!</WelcomeText>
-      <Character></Character>
+      <Character />
+      <HistoryLogs />
+      <ReadingBook />
       <div style={{ fontSize: '50px', margin: '0 20px', display: 'flex'}}
         onClick={clickHandler}
       >
