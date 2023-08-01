@@ -1,7 +1,6 @@
 package com.reboot.intobook.user.controller;
 
 import com.reboot.intobook.user.UserService;
-import com.reboot.intobook.user.dto.UserUpdateNicknameDto;
 import com.reboot.intobook.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
@@ -9,26 +8,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
-import static java.awt.SystemColor.info;
 
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
 
-    @Value("${jwt.secretKey}")
-    private String secretKey;
-
-    private JwtUtil jwtUtil = new JwtUtil();
+    private final JwtUtil jwtUtil = new JwtUtil();
 
     @PatchMapping()
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization")String accessToken, @RequestParam String nickname){
@@ -51,6 +42,6 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "login 성공";
+        return "로그인 페이지";
     }
 }
