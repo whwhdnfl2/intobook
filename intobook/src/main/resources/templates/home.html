@@ -20,36 +20,30 @@
             })
                 .then(device => {
                     // Human-readable name of the device.
-                    console.log(device.name);
+                    console.log('Connecting to GATT Server...');
                     bluetoothDevice = device;
                     // Attempts to connect to remote GATT Server.
                     return bluetoothDevice.gatt.connect(); })
                 .then(server => {
                     // Getting Service…
-                    console.log(server.name);
+                    console.log('Getting Service...');
                     return server.getPrimaryService('0000dfb0-0000-1000-8000-00805f9b34fb');
                 })
                 .then(service => {
                     // Getting Characteristic…
+                    console.log('Getting Characteristic...');
                     return service.getCharacteristic('0000dfb1-0000-1000-8000-00805f9b34fb');
-                })
-                .then(characteristic => {
-                    characteristic.startNotifications();
                 })
                 .then(characteristic => {
                     characteristic.addEventListener('characteristicvaluechanged',
                         handleCharacteristicValueChanged);
-                    console.log('Notifications have been started.');
+                    console.log('characteristicvaluechanged have been started.');
+                    return characteristic.readValue();
                 })
-                // .then(characteristic => {
-                //     // Reading Level…
-                //     Bcharacteristic = characteristic;
-                //     return Bcharacteristic.readValue();
-                // })
-                // .then(value => {
-                //     console.log(`Data Sending is ${value.getUint8(0)}`);
-                //     console.log(value);
-                // })
+                .then(value => {
+                    console.log(`Data Sending is ${value.getUint8(0)}`);
+                    console.log(value);
+                })
                 .catch(error => { console.error(error); });
         })
 
