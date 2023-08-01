@@ -12,7 +12,7 @@ export const SearchBottomeSheetDiv = styled.div`
 export const Title = styled.div`
   font-family: var(--content-font);
   font-weight: 400;
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-h4);
   color: #00000066;
   width: 360px;
   min-height: 24px;
