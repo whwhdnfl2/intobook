@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookshelvesContent from './../components/bookshelves/BookshelvesContent';
+import BookshelvesContent from './../components/bookShelves/BookshelvesContent';
 
 const StyledBookshelvesPage = styled.div`
   font-size: 18px;
