@@ -1,10 +1,11 @@
 import React from 'react';
 import KakaoLoginLogo from "../../assets/img/login/kakao_login_medium_wide.png";
-import code from "../../recoil/Oauth"
 
 const SocialKakao = () => {
+  const kakaoURL = `http://localhost:8080/login` 
+
   const handleLogin = () => {
-      window.location.href = "{code}";
+      window.location.href = kakaoURL;
   };
 
   return (
