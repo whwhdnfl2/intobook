@@ -1,6 +1,22 @@
 import React from 'react';
 import { useEffect } from 'react';
+import styled from 'styled-components';
 import {userbooks} from './../../api/userbookApi';
+
+const StyledBookshelvesContentPage = styled.div`
+  border: 1px solid black;
+  margin: 10px 10px 10px 10px;
+`;
+
+const StyledBookshelvesTab = styled.div`
+  border: 1px solid black;
+  margin: 10px 10px 10px 10px;
+`;
+
+const StyledContentsSpace = styled.div`
+  border: 1px solid black;
+  margin: 10px 10px 10px 10px;
+`;
 
 const BookshelvesContent = () => {
     
@@ -18,9 +34,11 @@ const BookshelvesContent = () => {
     },[]);
 
     return ( 
-        <div>
-
-        </div>
+        <StyledBookshelvesContentPage>
+            <StyledBookshelvesTab>탭이 들어갈 공간</StyledBookshelvesTab>
+            <hr/>
+            <StyledContentsSpace>내용이 들어갈 공간</StyledContentsSpace>
+        </StyledBookshelvesContentPage>
      );
 }
  
