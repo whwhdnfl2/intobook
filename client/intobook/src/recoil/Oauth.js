@@ -1,9 +1,11 @@
-import { atom } from "recoil";
+const code = new URL(window.location.href).searchParams.get('code')
 
-export const token = atom({
-  key: "",
-  default: {},
-});
+// import { atom } from 'recoil';
+
+// export const isLoggedInState = atom({
+//   key: 'isLoggedInState',
+//   default: true,
+// });
 
 // export const token = atom({
 //   key: "token",
