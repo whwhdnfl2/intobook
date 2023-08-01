@@ -20,6 +20,7 @@ import static java.awt.SystemColor.info;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
@@ -29,7 +30,7 @@ public class UserController {
 
     private JwtUtil jwtUtil = new JwtUtil();
 
-    @PatchMapping("/updateNickname")
+    @PatchMapping()
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization")String accessToken, @RequestParam String nickname){
         log.info("accessToken: " + accessToken);
 
@@ -46,5 +47,10 @@ public class UserController {
     @GetMapping("/jwt-test")
     public String jwtTest() {
         return "jwtTest 요청 성공";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login 성공";
     }
 }
