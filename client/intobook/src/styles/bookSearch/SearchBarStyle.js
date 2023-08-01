@@ -4,12 +4,13 @@ export const SearchBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: 30px;
 `;
 
 export const Title = styled.div`
   color: var(--main-green-color);
   font-family: var(--content-font);
-  font-size: var(--font-size-m);
+  font-size: var(--font-size-h4);
   font-weight: 700;
   font-style: normal;
   letter-spacing: -0.5px;

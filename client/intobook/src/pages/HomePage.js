@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import SearchBottomSheet from '../components/bookSearch/SearchBottomSheet';
+import { Layout } from './../styles/CommonStyle';
+import { styled } from 'styled-components';
+import Character from './../components/home/Character';
+
 
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,17 +12,26 @@ const HomePage = () => {
     setIsOpen(true);
   };
 
+  // reocil 전역 상태에서 값 받아오기
+  const nickname = '북빠';
+
   return (
-    < >
+    <Layout>
+      <WelcomeText>Hello, {nickname}님-!</WelcomeText>
+      <Character></Character>
       <div style={{ fontSize: '50px', margin: '0 20px', display: 'flex'}}
         onClick={clickHandler}
       >
         +
       </div>
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} />
-
-    </>
+    </Layout>
   );
 };
+
+const WelcomeText = styled.div`
+  font-size: var(--font-h4);
+  color: var(--main-green-color);
+`
 
 export default HomePage;

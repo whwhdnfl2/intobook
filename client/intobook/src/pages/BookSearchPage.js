@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../components/bookSearch/SearchBar';
 import SearchResults from './../components/bookSearch/SearchResults';
-import { Layout } from '../styles/bookSearch/SearchStyle';
+import { Layout } from './../styles/CommonStyle';
 
 const BookSearchPage = () => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
