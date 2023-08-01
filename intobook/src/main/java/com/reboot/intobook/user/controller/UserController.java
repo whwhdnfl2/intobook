@@ -1,6 +1,6 @@
 package com.reboot.intobook.user.controller;
 
-import com.reboot.intobook.user.UserService;
+import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;

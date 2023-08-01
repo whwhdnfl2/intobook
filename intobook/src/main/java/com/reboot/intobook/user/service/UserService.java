@@ -1,4 +1,4 @@
-package com.reboot.intobook.user;
+package com.reboot.intobook.user.service;
 
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;

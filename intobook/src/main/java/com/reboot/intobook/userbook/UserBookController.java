@@ -2,7 +2,7 @@ package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookService;
-import com.reboot.intobook.user.UserService;
+import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
