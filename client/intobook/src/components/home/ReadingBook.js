@@ -22,12 +22,12 @@ const ReadingBook = () => {
         <GridContainer>
           <BookBox>
           {/* 현재 등록한 책 있을 경우 그책 cover 이미지 보여주기 */}
-            <Typography>현재 등록 책</Typography>
+            {/* <Typography>현재 등록 책</Typography> */}
             <BluetoothImg src={bluetoothSrc} alt='bluetooth-icon' />
           </BookBox>
           <ContentBox>
             {/* 등록한 책이 있고, 로그 기록이 하나라도 있다면 마지막 로그 기록 보여주기 */}
-            <Typography>마지막 로그 기록</Typography>
+            {/* <Typography>마지막 로그 기록</Typography> */}
             <AddCircleOutlineIcon onClick={clickHandler} style={{ color: 'var(--main-green-color)', fontSize: '26px' }}/>
           </ContentBox>
         </GridContainer>
