@@ -4,6 +4,7 @@ import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookRepository;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
+import com.reboot.intobook.userbook.dto.UserBookOrderBy;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
@@ -43,8 +44,16 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
-    public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, String orderedBy, int page){
-        PageRequest pageRequest = PageRequest.of(page, 9, Sort.by(orderedBy).descending());
+    public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, UserBookOrderBy orderBy, int page){
+        Sort sort;
+        if (orderBy == UserBookOrderBy.title) {
+            sort = Sort.by("book.title").and(Sort.by("createdAt").descending());
+        } else if (orderBy == UserBookOrderBy.author) {
+            sort = Sort.by("book.author").and(Sort.by("createdAt").descending());
+        } else {
+            sort = Sort.by(orderBy.toString()).descending();
+        }
+        PageRequest pageRequest = PageRequest.of(page, 9, sort);
 
         Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserAndStatusWithBook(user, status, pageRequest);
         return userBookList;
