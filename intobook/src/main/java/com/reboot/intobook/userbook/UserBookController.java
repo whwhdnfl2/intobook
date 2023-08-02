@@ -30,13 +30,16 @@ public class UserBookController {
     private static final String FAIL = "fail";
     @PostMapping
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
-    public ResponseEntity<String> insertUserBook(@RequestHeader("Authorization") String accessToken, @RequestParam String isbn, @RequestParam UserBookStatus status) {
+    public ResponseEntity<String> insertUserBook(
+//            @RequestHeader("Authorization") String accessToken,
+            @RequestParam String isbn, @RequestParam UserBookStatus status) {
         Book book = bookService.getBook(isbn);
         if (book == null) {
             book = bookService.insertBook(isbn);
         }
-        JwtUtil jwtUtil = new JwtUtil();
-        User user = User.builder().userPk(jwtUtil.extractClaims(accessToken).get("userPk", Long.class)).build();
+//        JwtUtil jwtUtil = new JwtUtil();
+//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
+        User user = User.builder().userPk(1L).build(); //임시 userPk 1
 
         if (userBookService.insertUserBook(user, book, status)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
@@ -48,13 +51,14 @@ public class UserBookController {
     @GetMapping
     @ApiOperation(value = "조건에 따라 책의 리스트를 조회하는 메소드")
     public ResponseEntity<?> getUserBookList(
-            @RequestHeader("Authorization") String accessToken,
+//            @RequestHeader("Authorization") String accessToken,
             @RequestParam(required = false) UserBookStatus status,
             @RequestParam String orderedBy,
             @RequestParam int page) {
 //        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        JwtUtil jwtUtil = new JwtUtil();
-        User user = User.builder().userPk(jwtUtil.extractClaims(accessToken).get("userPk", Long.class)).build();
+//        JwtUtil jwtUtil = new JwtUtil();
+//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
+        User user = User.builder().userPk(1L).build();  //임시 userPk 1
         Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(user, status, orderedBy, page);
         if (userBookList != null && userBookList.getSize() != 0) {
             return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
