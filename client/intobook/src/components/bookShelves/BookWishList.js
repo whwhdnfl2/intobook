@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import {userbooks} from './../../api/userbookApi';
+import {userbooks} from '../../api/userbookApi';
 
 const StyledBookWishListPage = styled.div`
   border: 1px solid black;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import {userbooks} from './../../api/userbookApi';
+import {userbooks} from '../../api/userbookApi';
 import { useRecoilValue } from 'recoil';
-import { usernameSelector, userBooksSelector} from './../../recoil/user/userSelector';
+import { usernameSelector, userBooksSelector} from '../../recoil/user/userSelector';
 
 const StyledBookshelvesContentPage = styled.div`
   border: 1px solid black;
