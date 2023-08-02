@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, StyledEngineProvider, Typography } from '@mui/material';
 import { styled } from 'styled-components';
 import default_char from "../../assets/img/character/default_char.png";
+import Modal from './../common/Modal';
 
 const Character = () => {
   // 유저에 따라 imgSrc, nickname, bgColor, desc 다르게 받아오기
@@ -14,9 +15,14 @@ const Character = () => {
   const status = 1;
   const showNickname = status === 1;
 
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <StyledEngineProvider injectFirst>
-      <CharacterBox style={{ background: bgColor }}>
+      <Modal openModal={openModal} setOpenModal={setOpenModal}>
+
+      </Modal>
+      <CharacterBox style={{ background: bgColor }} onClick={() => setOpenModal(true)}>
         <CharacterImg src={imgSrc} />
         <div>
           {showNickname && (
