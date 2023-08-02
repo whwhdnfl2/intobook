@@ -5,6 +5,7 @@ import com.reboot.intobook.book.BookService;
 import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
+import com.reboot.intobook.userbook.dto.UserBookOrderBy;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import com.reboot.intobook.utils.JwtUtil;
@@ -53,13 +54,13 @@ public class UserBookController {
     public ResponseEntity<?> getUserBookList(
 //            @RequestHeader("Authorization") String accessToken,
             @RequestParam(required = false) UserBookStatus status,
-            @RequestParam String orderedBy,
+            @RequestParam UserBookOrderBy orderBy,
             @RequestParam int page) {
 //        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        JwtUtil jwtUtil = new JwtUtil();
 //        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
         User user = User.builder().userPk(1L).build();  //임시 userPk 1
-        Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(user, status, orderedBy, page);
+        Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(user, status, orderBy, page);
         if (userBookList != null && userBookList.getSize() != 0) {
             return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
         }else {
