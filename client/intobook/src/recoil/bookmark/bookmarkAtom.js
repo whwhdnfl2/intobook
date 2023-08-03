@@ -3,13 +3,13 @@ import { atom } from 'recoil';
 // 블루투스 연결 상태
 export const BluetoothAtom = atom({
     key: 'BluetoothAtom',
-    default: false
+    default: true
 });
 
 // 북갈피 현재 상태
 export const BookmarkStatusAtom = atom({
     key: 'BookmarkStatusAtom',
-    default: false
+    default: true
 });
 
 export const BookmarkAtom = atom({

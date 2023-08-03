@@ -4,7 +4,7 @@ const BookDescription = ({ bookInfo }) => {
   return (
     <div>
       <h3>책 소개</h3>
-      <p>{bookInfo.description}</p>
+      {/* <p>{bookInfo.description}</p> */}
     </div>
   );
 };
