@@ -3,8 +3,6 @@ import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 import { Character, HistoryLogs } from '../components/home';
 import ReadingBook from './../components/home/ReadingBook';
-import Bluetooth from './../components/home/Bluetooth';
-import Bookmark from './../components/home/Bookmark';
 
 const HomePage = () => {
   // reocil 전역 상태에서 값 받아오기
@@ -16,7 +14,7 @@ const HomePage = () => {
       <Bluetooth />
       <Bookmark />
       <Character />
-      <HistoryLogs />
+      {/* <HistoryLogs /> */}
       <ReadingBook />
     </Layout>
   );

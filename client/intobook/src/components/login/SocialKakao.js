@@ -2,7 +2,7 @@ import React from 'react';
 import KakaoLoginLogo from "../../assets/img/login/kakao_login_medium_wide.png";
 
 const SocialKakao = () => {
-  const kakaoURL = `http://localhost:8080/login` 
+  const kakaoURL = `http://localhost:8080` 
 
   const handleLogin = () => {
       window.location.href = kakaoURL;
