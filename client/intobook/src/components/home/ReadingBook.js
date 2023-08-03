@@ -1,5 +1,5 @@
-// import React from 'react';
 import React, { useState } from 'react';
+// import { useHistory } from 'react-router-dom'; 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
 import { StyledEngineProvider, Container, Box, Typography } from '@mui/material';
@@ -10,11 +10,16 @@ import BookCover from './../common/bookCover';
 
 const ReadingBook = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const nowPage = 70
+
+  // 이미지 경로 (실제로는 axios 통신을 통해 받아와야됨)
   const imgUrl = "https://i.ytimg.com/vi/1ZhDsPdvl6c/maxresdefault.jpg"
 
+  // 현재 페이지
+  const nowPage = 70
 
-  // 현재 등록한 책과 마지막 로그 기록에 대한 정보 필요
+  // 현재 읽고 있는 책이 있는지 여부
+  const hasReadingBook = false
+
 
   const clickHandler = () => {
     setIsOpen(true);
@@ -26,12 +31,18 @@ const ReadingBook = () => {
         <GridContainer>
           <CurrentBook>
             {/* 현재 등록되어 있는 책이 있다면 커버 이미지 보여주기 */}
-            <BookCover img={imgUrl}/>
+            {hasReadingBook && <BookCover img={imgUrl} />}
             {/* 현재 등록되어 있는 책이 없다면 책을 등록할 수 있는 버튼 보여주기 */}
-            {/* <AddCircleOutlineIcon onClick={clickHandler} style={{ color: 'var(--main-green-color)', fontSize: '26px'}}/> */}
+            {!hasReadingBook && (
+              <AddCircleOutlineIcon
+                onClick={clickHandler}
+                style={{ color: 'var(--main-green-color)', fontSize: '26px' }}
+              />
+            )}
           </CurrentBook>
           <CurrentBookStatus>
-            {/* <Typography>천개의 파랑</Typography> */}
+            {hasReadingBook && ( <Typography>천개의 파랑</Typography>) }
+            {!hasReadingBook && ( <Typography>책을 등록해보세요</Typography>) }
           </CurrentBookStatus>
         </GridContainer>
         <ProgressBar now_page={nowPage} />
