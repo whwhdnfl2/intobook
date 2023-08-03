@@ -20,11 +20,20 @@ const Bookmark = () => {
     width: 172px;
     height: 196px;
     margin: 0 auto;
-  `
+  `;
+
+  const BookmarkText = styled.div`
+    font-size: 16px;
+    margin: 15px auto 10px auto;
+  `;
 
   return ( 
     <>
       <BookmarkImg src={imgSrc} />
+      <BookmarkText>
+        { isBookmarkOut? '북갈피가 나와있어요' : '북갈피가 들어가있어요' }
+      </BookmarkText>
+
     </>
   );
 };
