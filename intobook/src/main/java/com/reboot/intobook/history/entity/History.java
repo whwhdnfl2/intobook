@@ -17,7 +17,6 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @NoArgsConstructor(access =  AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class History {
 
     @Id @GeneratedValue
