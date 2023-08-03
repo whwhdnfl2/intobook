@@ -4,10 +4,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
 import { StyledEngineProvider, Container, Box, Typography } from '@mui/material';
 import { styled } from 'styled-components';
-import blutetooth from '../../assets/img/character/bluetooth.png'
 
 const ReadingBook = () => {
-  const bluetoothSrc = blutetooth;
   const [isOpen, setIsOpen] = useState(false);
 
   // 현재 등록한 책과 마지막 로그 기록에 대한 정보 필요
@@ -23,7 +21,7 @@ const ReadingBook = () => {
           <BookBox>
           {/* 현재 등록한 책 있을 경우 그책 cover 이미지 보여주기 */}
             {/* <Typography>현재 등록 책</Typography> */}
-            <BluetoothImg src={bluetoothSrc} alt='bluetooth-icon' />
+            {/* <BluetoothImg src={bluetoothSrc} alt='bluetooth-icon' /> */}
           </BookBox>
           <ContentBox>
             {/* 등록한 책이 있고, 로그 기록이 하나라도 있다면 마지막 로그 기록 보여주기 */}
