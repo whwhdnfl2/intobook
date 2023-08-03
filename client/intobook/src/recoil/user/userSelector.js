@@ -1,20 +1,20 @@
-import { userAtom } from "./userAtoms";
+import { UserAtom } from "./UserAtom";
 import { selector } from "recoil";
 
 //유저네임 돌려주는 선택자
-export const usernameSelector = selector({
-    key: 'usernameSelector',
+export const UsernameSelector = selector({
+    key: 'UsernameSelector',
     get: ({get}) => {
-        const user = get(userAtom);
+        const user = get(UserAtom);
         return user.username;
     }
 });
 
 // 유저가 저장한 책 돌려주는 선택자
-export const userBooksSelector = selector({
-    key: 'userBooksSelector',
+export const UserBooksSelector = selector({
+    key: 'UserBooksSelector',
     get: ({get}) => {
-        const user = get(userAtom);
+        const user = get(UserAtom);
         return user.userbooks;
     }
 });

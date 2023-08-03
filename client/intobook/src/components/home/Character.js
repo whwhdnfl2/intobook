@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Box, StyledEngineProvider, Typography } from '@mui/material';
 import { styled } from 'styled-components';
-import default_char from "../../assets/img/character/default_char.png";
+import default_char from "../../assets/img/home/default_char.png";
 import Modal from './../common/Modal';
 
 const Character = () => {
@@ -43,6 +43,10 @@ const Character = () => {
     </StyledEngineProvider>
   );
 };
+
+const innerDiv = styled.div`
+  width:12  l3eqlkedl;
+`
 
 const CharacterBox = styled(Box)`
   display: flex;

@@ -11,6 +11,8 @@ const HomePage = () => {
   return (
     <Layout>
       <WelcomeText>Hello, {nickname}님-!</WelcomeText>
+      <Bluetooth />
+      <Bookmark />
       <Character />
       {/* <HistoryLogs /> */}
       <ReadingBook />
