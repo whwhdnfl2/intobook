@@ -11,3 +11,11 @@ export const BookmarkStatusAtom = atom({
     key: 'BookmarkStatusAtom',
     default: false
 });
+
+export const BookmarkAtom = atom({
+    key: 'BookmarkAtom',
+    default: {
+        bluetooth: false,
+        bookmark: false,
+    }
+});
