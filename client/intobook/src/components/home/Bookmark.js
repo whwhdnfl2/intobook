@@ -1,30 +1,18 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom } from './../../recoil/bookmark/bookmarkAtom';
+import { bookmark, bookmarkBright, bookmarkDark } from './../../assets/img/home/index'
 import { styled } from 'styled-components';
-import bookmark_bright from '../../assets/img/home/bookmark_bright.png';
-import bookmark_dark from '../../assets/img/home/bookmark_dark.png';
-import bookmark from '../../assets/img/home/bookmark.png';
 
 const Bookmark = () => {
-  const [isConnected, setIsConnected] = useRecoilState(BluetoothAtom);
-  const [isBookmarkOut, setIsBookmarkOut] = useRecoilState(BookmarkStatusAtom);
-  // const isConnected = false;
+  const isConnected= useRecoilValue(BluetoothAtom);
+  const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);
+
   const imgSrc = !isConnected
     ? bookmark
     : isBookmarkOut
-    ? bookmark_bright
-    : bookmark_dark;
-
-
-  // 블루투스 연결 상태 받아오는 핸들러
-  const bookmarkHandler = async () => {
-    // const bookmarkStatus = await getBookmarkStatus();
-    const bookmarkStatus = !isBookmarkOut;
-    const bluetoothStatus = !isConnected;
-    setIsBookmarkOut(bookmarkStatus);
-    setIsConnected(bluetoothStatus);
-  };
+    ? bookmarkBright
+    : bookmarkDark;
 
   return (
     <>

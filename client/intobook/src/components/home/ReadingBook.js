@@ -7,7 +7,6 @@ import { styled } from 'styled-components';
 import ProgressBar from './../common/progressBar';
 import BookCover from './../common/bookCover';
 
-
 const ReadingBook = () => {
   const [isOpen, setIsOpen] = useState(false);
 
