@@ -13,3 +13,10 @@ export const BookmarkStatusAtom = atom({
     key: 'BookmarkStatusAtom',
     default: true
 });
+
+
+// 책갈피와 연동 중인 책
+export const ReadingBookAtom = atom({
+    key: 'ReadingBookAtom',
+    default: null
+});

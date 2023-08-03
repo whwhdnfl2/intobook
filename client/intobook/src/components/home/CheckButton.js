@@ -1,12 +1,14 @@
 import Button from '@mui/material/Button';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
-import { BluetoothAtom, BookmarkStatusAtom } from './../../recoil/bookmark/bookmarkAtom'
+import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom'
 
 
 const CheckButton = () => {
   const setIsConnected = useSetRecoilState(BluetoothAtom);
   const setIsBookmarkOut = useSetRecoilState(BookmarkStatusAtom);
+  const setReadingBook = useSetRecoilState(ReadingBookAtom);
+
 
   const bluetoothHandler = () => {
     setIsConnected((status) => !status);
@@ -17,8 +19,7 @@ const CheckButton = () => {
   };
 
   const readingBookHandler = () => {
-    setIsConnected((status) => !status);
-    setIsBookmarkOut((status) => !status);
+    setReadingBook((val) => '책 있어요');
   };
 
   return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bookmark, Bluetooth, ReadingBook, CheckButton } from '../components/home';
+import { Bookmark, Bluetooth, ReadingBook, CheckButton, Timer } from '../components/home';
 import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 
@@ -17,6 +17,7 @@ const HomePage = () => {
       <CheckButton>확인</CheckButton>
       <Bluetooth />
       <Bookmark />
+      <Timer />
       <ReadingBook />
     </Layout>
   );
