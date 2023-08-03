@@ -3,7 +3,7 @@ import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 import { Character, HistoryLogs } from '../components/home';
 import ReadingBook from './../components/home/ReadingBook';
-
+import Bluetooth from './../components/home/Bluetooth';
 
 const HomePage = () => {
   // reocil 전역 상태에서 값 받아오기
@@ -12,6 +12,7 @@ const HomePage = () => {
   return (
     <Layout>
       <WelcomeText>Hello, {nickname}님-!</WelcomeText>
+      <Bluetooth />
       <Character />
       <HistoryLogs />
       <ReadingBook />

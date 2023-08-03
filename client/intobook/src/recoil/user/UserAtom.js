@@ -1,8 +1,8 @@
-import {atom} from 'recoil';
+import { atom } from 'recoil';
 
 // 유저 정보 위한 아톰
-export const userAtom = atom({
-    key: 'userAtom',
+export const UserAtom = atom({
+    key: 'UserAtom',
     default: {
         username: '',
         userbooks: [],
