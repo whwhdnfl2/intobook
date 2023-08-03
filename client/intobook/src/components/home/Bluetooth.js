@@ -6,8 +6,7 @@ import BluetoothIcon from '@mui/icons-material/Bluetooth';
 import { styled } from 'styled-components';
 
 const Bluetooth = () => {
-  const [isConnected , setIsConnected] = useRecoilState(BluetoothAtom);
-
+  const [isConnected, setIsConnected] = useRecoilState(BluetoothAtom);
 
   // 블루투스 연결 상태 받아오는 핸들러
   const bluetoothHandler = async () => {
@@ -16,21 +15,13 @@ const Bluetooth = () => {
     setIsConnected(bluetoothStatus);
   };
 
-  const BluetoothDiv = styled.div`
-    display: flex;
-    align-items: center;
-    color: ${isConnected ? 'var(--main-color)' : 'var(--bg-gray)'};
-    font-size: ${isConnected ? 'var(--font-h5)' : 'var(--font-h2)'};
-  `;
-
-  const IconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-  `;
-
   return (
-    <BluetoothDiv>
+    <BluetoothDiv
+      style={{
+        color: isConnected ? 'var(--main-color)' : 'var(--bg-gray)',
+        fontSize: isConnected ? 'var(--font-h5)' : 'var(--font-h2)',
+      }}
+    >
       <IconWrapper>
         <BluetoothIcon />
       </IconWrapper>
@@ -40,5 +31,17 @@ const Bluetooth = () => {
     </BluetoothDiv>
   );
 };
+
+const BluetoothDiv = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 30px auto;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+`;
 
 export default Bluetooth;
