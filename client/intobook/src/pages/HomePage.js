@@ -4,7 +4,6 @@ import { styled } from 'styled-components';
 import { Character, HistoryLogs } from '../components/home';
 import ReadingBook from './../components/home/ReadingBook';
 
-
 const HomePage = () => {
   // reocil 전역 상태에서 값 받아오기
   const nickname = '북빠';
@@ -13,7 +12,7 @@ const HomePage = () => {
     <Layout>
       <WelcomeText>Hello, {nickname}님-!</WelcomeText>
       <Character />
-      <HistoryLogs />
+      {/* <HistoryLogs /> */}
       <ReadingBook />
     </Layout>
   );

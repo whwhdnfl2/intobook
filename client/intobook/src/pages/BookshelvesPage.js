@@ -8,7 +8,6 @@ const StyledBookshelvesPage = styled.div`
   border: 1px solid black;
   margin: 10px 10px 10px 10px;
 `;
-
 const StyledBookTitle = styled.div`
   border: 1px solid black;
   margin: 10px 10px 10px 10px;
