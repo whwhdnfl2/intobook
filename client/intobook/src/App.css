@@ -1,0 +1,21 @@
+.App {
+  background-color: var(--main-base-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 2rem;
+  width: 100vw;
+  height: 100vh;
+  max-width: 360px;
+  margin: auto;
+}
+
+.App > * {
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+.main-frame {
+  border-style: none;
+  font-family: var(--main-font);
+}
