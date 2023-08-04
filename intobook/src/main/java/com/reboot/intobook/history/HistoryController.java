@@ -1,10 +1,12 @@
 package com.reboot.intobook.history;
 
-import io.jsonwebtoken.Claims;
+import com.reboot.intobook.history.dto.GetHistoryListResponse;
+import com.reboot.intobook.history.dto.GetHistoryResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,16 @@ public class HistoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newHistoryPk);
     }
 
-//    @GetMapping("/{userBookPk}/history")
-//    public ResponseEntity<Result> getHistory(@PathVariable("userBookPk") long userBookPk ){
-//        historyService.findUserBookHistoryAll(userBookPk);
-//    }
+    /**
+     * localhost:8080/historys?userBookPk=2
+     * @param userBookPk
+     * @return
+     */
+    @GetMapping()
+    public ResponseEntity<GetHistoryListResponse> getHistoryList(@RequestParam("userBookPk") long userBookPk ,@RequestParam("page")  int page ){
+        GetHistoryListResponse historyList = historyService.findUserBookHistoryList(userBookPk, page);
+
+        return ResponseEntity.status(HttpStatus.OK).body(historyList);
+    }
 }
 
