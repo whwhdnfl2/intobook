@@ -26,12 +26,11 @@ public class UserBookController {
     private final UserBookService userBookService;
 
     private final BookService bookService;
-    private final UserService userService;
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     @PostMapping
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
-    public ResponseEntity<String> insertUserBook(@RequestHeader("Authorization") String accessToken, @RequestParam String isbn, @RequestParam UserBookStatus status) {
+    public ResponseEntity<String> insertUserBook(@RequestHeader("Authorization") String accessToken, @RequestParam String isbn) {
         Book book = bookService.getBook(isbn);
         if (book == null) {
             book = bookService.insertBook(isbn);
@@ -39,7 +38,7 @@ public class UserBookController {
         JwtUtil jwtUtil = new JwtUtil();
         User user = User.builder().userPk(jwtUtil.extractClaims(accessToken).get("userPk", Long.class)).build();
 
-        if (userBookService.insertUserBook(user, book, status)) {
+        if (userBookService.insertUserBook(user, book)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);

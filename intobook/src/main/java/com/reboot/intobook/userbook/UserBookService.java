@@ -24,21 +24,19 @@ public class UserBookService {
 
     private final UserBookRepository userBookRepository;
 
-    public boolean insertUserBook(User user, Book book, UserBookStatus status) {
-
-        Long userPk = user.getUserPk();
+    public boolean insertUserBook(User user, Book book) {
         UserBook userBook = userBookRepository.findByUserAndBook(user, book);
         if (userBook != null) {
             if (!userBook.isDeleted()) return false;
             userBook.setDeleted(false);
-            userBook.setStatus(status);
+            userBook.setStatus(UserBookStatus.NOWREADING);
         }else {
-            userBook = new UserBook(user, book, status);
-        }
-        if (status != UserBookStatus.INTEREST) {
-            Date date = new Date();
-            userBook.setStartedAt(date);
-            if (status == UserBookStatus.COMPLETE) userBook.setCompletedAt(date);
+            userBook = new UserBook(user, book, UserBookStatus.NOWREADING);
+            List<UserBook> preReadingBooks = userBookRepository.findByStatus(UserBookStatus.NOWREADING);
+            for (UserBook preReadingBook : preReadingBooks) {
+                preReadingBook.setStatus(UserBookStatus.READING);
+                userBookRepository.save(preReadingBook);
+            }
         }
         return userBookRepository.save(userBook) != null;
     }
@@ -55,10 +53,14 @@ public class UserBookService {
         if (userBook == null) return false;
         UserBookStatus oldStatus = userBook.getStatus();
         if (oldStatus == status) return true;
-        if (oldStatus == UserBookStatus.INTEREST && status == UserBookStatus.READING) {
-            userBook.setStartedAt(new Date());
-        }else if ((oldStatus == UserBookStatus.INTEREST || oldStatus == UserBookStatus.READING) && status == UserBookStatus.COMPLETE){
-            userBook.setCompletedAt(new Date());
+        if (status == UserBookStatus.NOWREADING) {
+            List<UserBook> preReadingBooks = userBookRepository.findByStatus(UserBookStatus.NOWREADING);
+            for (UserBook preReadingBook : preReadingBooks) {
+                preReadingBook.setStatus(UserBookStatus.READING);
+                userBookRepository.save(preReadingBook);
+            }
+        }else if (status == UserBookStatus.READING) {
+            return false;
         }
         userBook.setStatus(status);
         return userBookRepository.save(userBook) != null;
