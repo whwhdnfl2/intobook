@@ -34,13 +34,6 @@ public class HistoryService {
                 .orElseThrow(() -> new NoSuchElementException("User Book Not Found Error!!!"));
         User findUser = findUserBook.getUser();
 
-        // 책장에 이미 넣은 책일 때, 걸러내기
-        History alreadyExist = historyRepository.findByUserAndUserBook(findUser, findUserBook);
-        if( alreadyExist != null ){
-            // FIXME: add exception handling
-            return -1L;
-        }
-
         // history 생성
         History history = History.builder()
                 .userBook(findUserBook)
