@@ -1,13 +1,16 @@
 import React from 'react';
-import { CardMedia } from '@mui/material';
 
-const BookCover = ({img}) => {
-  const imgSrc = img;
+const BookCover = ({ image, customStyle, alt }) => {
+  const defaultStyle = {
+    width: 70,
+    height: 100,
+    borderRadius: '20px',
+  };
+
+  const combinedStyle = { ...defaultStyle, ...customStyle };
 
   return (
-    <div>
-      <CardMedia image={imgSrc} sx={{ width: 70, height: 100, borderRadius: '20px' }} />
-    </div>
+    <img src={image} alt={alt} style={{ ...combinedStyle }} />
   );
 };
 

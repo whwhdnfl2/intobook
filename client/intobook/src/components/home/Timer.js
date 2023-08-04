@@ -27,7 +27,7 @@ const Timer = () => {
       }, 1000);
     }
 
-    if (!isBookmarkOut) {
+    if (!isBookmarkOut || !isConnected) {
       setMinutes(0);
       setSeconds(0);
     }
