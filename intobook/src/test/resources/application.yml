@@ -1,0 +1,79 @@
+# MySQL 설정
+
+
+into-book:
+  api:
+    key: ttbjmj25885471405001
+
+spring:
+  profiles:
+    active: local
+
+#  profiles:
+#    include: oauth
+
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: d65bd1ef2f9d2f8056ef153efcc983e7
+            client-secret: XJnjnScvebxqQNWEwtohdUMI9x17WTln
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, account_email
+            client-name: Kakao
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+# createDatabaseIfNotExist: 데이터베이스가 존재하지 않으면 자동으로 생성
+# useUnicode: 유니코드 사용 여부 설정
+# characterEncoding: 문자열 인코딩 종류 설정
+# characterSetResult: 결과값의 인코딩 종류 설정
+# useSSL: SSL 사용여부 설정
+
+# spring.jpa.properties.hibernate.show_sql : 하이버네이트가 실행한 모든 SQL문을 콘솔로 출력
+# spring.jpa.properties.hibernate.format_sql : SQL문을 가독성 있게 표현
+
+swagger:
+  project:
+    base-package: com.reboot.intobook.controller.api
+
+jwt:
+  secretKey: sc136as1c5qw4c13ax1cz3x5c4as3c1a35scczx3casc54;
+
+  access:
+    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    header: Authorization
+
+  refresh:
+    expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
+    header: Authorization-refresh
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
