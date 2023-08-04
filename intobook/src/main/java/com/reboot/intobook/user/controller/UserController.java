@@ -24,13 +24,12 @@ public class UserController {
 
     private final JwtUtil jwtUtil = new JwtUtil();
 
-    @PatchMapping()
+    //닉네임 업데이트
+    @PatchMapping("/updateNickname")
     public ResponseEntity<?> updateNickname(@RequestHeader("Authorization")String accessToken, @RequestParam String nickname){
-        log.info("accessToken: " + accessToken);
-
+        //claim을 jwtUtil로 추출한다. 그리고 해당 claim에서 userPk를 추출한다.
         Claims claims = jwtUtil.extractClaims(accessToken);
         Long userPk = claims.get("userPk", Long.class);
-        log.info("UserPk: " + userPk);
         try{
             userService.updateNickname(userPk, nickname);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -38,37 +37,44 @@ public class UserController {
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("/jwt-test")
-    public String jwtTest() {
-        return "jwtTest 요청 성공";
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "로그인 페이지";
-    }
-
+    //로그아웃. 해당 유저의 fcmToken을 제거한다.
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader("Authorization")String accessToken){
-
+        //claim을 jwtUtil로 추출한다. 그리고 해당 claim에서 userPk를 추출한다.
         Claims claims = jwtUtil.extractClaims(accessToken);
         Long userPk = claims.get("userPk", Long.class);
         try{
-            userService.logout(userPk);
+            userService.deleteFcmToken(userPk);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    //fcmToken으로 알람 보내는 테스트
     @GetMapping("/fcmTest")
-    public  ResponseEntity<?> fcmTest(@RequestHeader("Authorization")String accessToken){
+    public ResponseEntity<?> fcmTest(@RequestHeader("Authorization")String accessToken){
         try{
-            fcmService.sendSaleCompletedMessage(accessToken);
+            fcmService.test(accessToken);
             return  new ResponseEntity<>(HttpStatus.OK);
 
         }catch (Exception e){
             return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    //사용자가 알림을 허용하면 fcmToken을 받아서 저장한다.
+    @PostMapping("/tramsmitFcmToken")
+    public ResponseEntity<?> tramsmitFcmToken(@RequestHeader("Authorization")String accessToken, @RequestBody String fcmToken){
+        //claim을 jwtUtil로 추출한다. 그리고 해당 claim에서 userPk를 추출한다.
+        Claims claims = jwtUtil.extractClaims(accessToken);
+        Long userPk = claims.get("userPk", Long.class);
+        try{
+            userService.insertFcmToken(userPk, fcmToken);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
