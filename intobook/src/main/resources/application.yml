@@ -9,11 +9,14 @@ into-book:
     key: ttbjmj25885471405001
 
 spring:
+  profiles:
+    default: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/intobook?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
     username: root
     password: root
+
 
 #  profiles:
 #    include: oauth

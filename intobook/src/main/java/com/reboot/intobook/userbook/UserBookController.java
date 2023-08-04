@@ -2,7 +2,6 @@ package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookService;
-import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookOrderBy;
@@ -26,14 +25,13 @@ public class UserBookController {
     private final UserBookService userBookService;
 
     private final BookService bookService;
-    private final UserService userService;
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     @PostMapping
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
     public ResponseEntity<String> insertUserBook(
 //            @RequestHeader("Authorization") String accessToken,
-            @RequestParam String isbn, @RequestParam UserBookStatus status) {
+            @RequestParam String isbn) {
         Book book = bookService.getBook(isbn);
         if (book == null) {
             book = bookService.insertBook(isbn);
@@ -42,7 +40,7 @@ public class UserBookController {
 //        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
         User user = User.builder().userPk(1L).build(); //임시 userPk 1
 
-        if (userBookService.insertUserBook(user, book, status)) {
+        if (userBookService.insertUserBook(user, book)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
@@ -78,6 +76,21 @@ public class UserBookController {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/nowreading")
+    @ApiOperation(value = "현재 읽고있는 책 한권을 조회하는 메소드")
+    public ResponseEntity<?> getNowReadingUserBook (
+//            @RequestHeader("Authorization") String accessToken
+    ) {
+        User user = User.builder().userPk(1L).build();  //임시 userPk 1
+        UserBookResponseDto nowReadingUserBook = userBookService.findNowReadingUserBook(user);
+        if (nowReadingUserBook != null) {
+            return new ResponseEntity<UserBookResponseDto>(nowReadingUserBook, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 
     @PatchMapping("/{userBookPk}")
     @ApiOperation(value = "책의 상태를 변경하는 메소드")
