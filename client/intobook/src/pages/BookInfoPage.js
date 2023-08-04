@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { searchBookDetail } from '../api/searchBookDetail';
+import { getBookDetail } from '../api/searchApi';
 
 import BookDescription from './../components/bookInfo/bookDescription';
 import BookHistory from './../components/bookInfo/bookHistory';
@@ -17,7 +17,7 @@ const BookInfoPage = () => {
   useEffect(() => {
     const fetchBookDetail = async () => {
       try {
-        const bookData = await searchBookDetail(bookId);
+        const bookData = await getBookDetail(bookId);
         setBookInfo(bookData);
         setLoading(false);
       } catch (err) {
