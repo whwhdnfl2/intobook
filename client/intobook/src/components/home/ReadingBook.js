@@ -14,7 +14,7 @@ const ReadingBook = () => {
   const imgUrl = "https://i.ytimg.com/vi/1ZhDsPdvl6c/maxresdefault.jpg"
 
   // 현재 페이지
-  const nowPage = 70
+  const nowPage = 60
 
   // 현재 읽고 있는 책이 있는지 여부
   const hasReadingBook = false
