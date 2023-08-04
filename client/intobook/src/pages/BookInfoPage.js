@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookDesc, BookStatistics, BookHistory, Tab } from './../components/bookInfo';
+import { BookDesc, BookStatistics, BookHistoryLog, Tab } from './../components/bookInfo';
 import { useParams } from 'react-router-dom';
 import { Layout } from './../styles/CommonStyle';
 import { useRecoilValue } from 'recoil';
@@ -17,7 +17,7 @@ const BookInfoPage = () => {
         // <BookStatistics bookInfo={bookInfo} />
         <BookStatistics />
       ) : (
-        <BookHistory />
+        <BookHistoryLog />
       )}
     </Layout>
   );

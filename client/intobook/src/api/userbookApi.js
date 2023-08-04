@@ -17,16 +17,11 @@ export const userbooks = async (orderedBy, page, status) => {
 };
 
 // 현재 읽고 있는 책 불러오기
-// export const readingBookInfo = async (keyword, start) => {
-//   try {
-//     const res = await axiosInstance.get(`/books`, {
-//       params: {
-//         keyword: keyword,
-//         start: start,
-//       },
-//     });
-//     return res.data;
-//   } catch (err) {
-//     return err
-//   }
-// };
+export const getReadingBookInfo = async () => {
+  try {
+    const res = await axiosInstance.get(`/userbook/nowreading`);
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};
