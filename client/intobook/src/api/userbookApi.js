@@ -1,16 +1,16 @@
 import axiosInstance from './axiosConfig';
 
-export const userbooks = async (orderedBy, page, status) => {
+export const userbooks = async (orderBy, page, status) => {
   try {
     const res = await axiosInstance.get(`/userbook`, {
       params: {
         // Autorization: Autorization,
-        orderedBy: orderedBy,
+        orderBy: orderBy,
         page: page,
         status: status
       },
     });
-    return res.data;
+    return res.data.content;
   } catch (err) {
     return err
   }

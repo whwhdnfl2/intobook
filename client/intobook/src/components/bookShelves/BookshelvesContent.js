@@ -1,9 +1,8 @@
-import React from 'react';
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import {userbooks} from '../../api/userbookApi';
+import React, { useEffect } from 'react';
+import { userbooks } from './../../api/userbookApi';
 import { useRecoilValue } from 'recoil'; 
 import { UsernameSelector, UserBooksSelector } from './../../recoil/user/UserSelector';
+import styled from 'styled-components';
 
 const StyledBookshelvesContentPage = styled.div`
   border: 1px solid black;
@@ -23,16 +22,20 @@ const StyledContentsSpace = styled.div`
 const BookshelvesContent = () => {
     
     useEffect(() => {
-        const fetchUserBooks = async () => {
+        const getUserBooks = async () => {
             try {
-                const res = userbooks('createdAt',0,'INTEREST')
-                console.log("객체 받아오기",res)
+                const res = userbooks('startedAt', 0, 'READING')
+                console.log("객체 받아오기",res.array)
             } catch (error) {
                 console.error("에러발생:",error)
             }
         };
+        // const getUserBooks = async () => {
+        //   const userBooks = userbooks('startedAt', 0, 'READING')
+        //   console.log(userbooks)
+        // };
 
-        fetchUserBooks();
+        getUserBooks();
     },[]);
 
     return ( 
