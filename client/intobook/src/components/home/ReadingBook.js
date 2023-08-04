@@ -1,24 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom'; 
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { ProgressBar, BookCover } from './../common';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
 import { StyledEngineProvider, Container, Box, Typography } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useRecoilState } from 'recoil';
+import { ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
+import { getReadingBookInfo } from '../../api/userbookApi';
 import { styled } from 'styled-components';
-import ProgressBar from './../common/progressBar';
-import BookCover from './../common/bookCover';
 
 const ReadingBook = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);
 
-  // 이미지 경로 (실제로는 axios 통신을 통해 받아와야됨)
-  const imgUrl = "https://i.ytimg.com/vi/1ZhDsPdvl6c/maxresdefault.jpg"
+  useEffect(() =>  {
+    const getReadingBook = async () => {
+      const detailInfo = await getReadingBookInfo();
+      setNowReadingBook(detailInfo);
+    };
+    getReadingBook();
+  
+  }, [setNowReadingBook]);
 
-  // 현재 페이지
-  const nowPage = 70
+  const tempTitle = nowReadingBook?.title;
+  const tempAauthor = nowReadingBook?.author;
+  
+  const coverImg = nowReadingBook?.coverImage;
+  const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
+  const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
 
-  // 현재 읽고 있는 책이 있는지 여부
-  const hasReadingBook = false
-
+  const nowPage = nowReadingBook?.nowPage + 30;
 
   const clickHandler = () => {
     setIsOpen(true);
@@ -29,10 +40,8 @@ const ReadingBook = () => {
       <StyledEngineProvider injectFirst>
         <GridContainer>
           <CurrentBook>
-            {/* 현재 등록되어 있는 책이 있다면 커버 이미지 보여주기 */}
-            {hasReadingBook && <BookCover image={imgUrl} />}
-            {/* 현재 등록되어 있는 책이 없다면 책을 등록할 수 있는 버튼 보여주기 */}
-            {!hasReadingBook && (
+            {nowReadingBook && <BookCover image={coverImg} />}
+            {!nowReadingBook && (
               <AddCircleOutlineIcon
                 onClick={clickHandler}
                 style={{ color: 'var(--main-green-color)', fontSize: '26px' }}
@@ -40,8 +49,8 @@ const ReadingBook = () => {
             )}
           </CurrentBook>
           <CurrentBookStatus>
-            {hasReadingBook && ( <Typography>천개의 파랑</Typography>) }
-            {!hasReadingBook && ( <Typography>책을 등록해보세요</Typography>) }
+            {nowReadingBook && ( <Typography>{title} - {author}</Typography>) }
+            {!nowReadingBook && ( <Typography>책을 등록해보세요</Typography>) }
           </CurrentBookStatus>
         </GridContainer>
         <ProgressBar now_page={nowPage} />

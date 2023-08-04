@@ -1,6 +1,6 @@
 import React from 'react';
 
-const onReadingBook = () => {
+const BookHistoryLog = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const onReadingBook = () => {
   );
 };
 
-export default onReadingBook;
+export default BookHistoryLog;
