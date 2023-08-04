@@ -62,9 +62,9 @@ public class UserController {
     }
 
     @GetMapping("/fcmTest")
-    public  ResponseEntity<?> fcmTest(@RequestParam("fcmToken")String fcmToken){
+    public  ResponseEntity<?> fcmTest(@RequestHeader("Authorization")String accessToken){
         try{
-            fcmService.sendSaleCompletedMessage(fcmToken);
+            fcmService.sendSaleCompletedMessage(accessToken);
             return  new ResponseEntity<>(HttpStatus.OK);
 
         }catch (Exception e){

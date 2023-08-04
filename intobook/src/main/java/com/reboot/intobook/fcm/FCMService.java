@@ -4,6 +4,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
+import com.reboot.intobook.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,14 @@ import java.util.Optional;
 public class FCMService {
 
     private final UserRepository userRepository;
-    public void sendSaleCompletedMessage(String email) throws Exception {
-        Optional<User> temp = userRepository.findByEmail(email);
+    private final JwtUtil jwtUtil = new JwtUtil();
+
+    public void sendSaleCompletedMessage(String accessToken) throws Exception {
+
+        Claims claims = jwtUtil.extractClaims(accessToken);
+        Long userPk = claims.get("userPk", Long.class);
+
+        Optional<User> temp = userRepository.findByUserPk(userPk);
         if(temp.isPresent()){
             User user = temp.get();
 
