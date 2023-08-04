@@ -8,7 +8,6 @@ const BookDesc = ({ bookId }) => {
   const title = bookInfo?.title.split('-')[0].trim()
   const author = bookInfo?.author.split('(')[0].trim()
 
-
   useEffect(() => {
     const getBookInfo = async () => {
       const bookInfo = await getBookDetail(bookId);
@@ -20,7 +19,7 @@ const BookDesc = ({ bookId }) => {
   return (
     <BookInfoDiv>
       <div style={{ display: 'flex' }}>
-        <BookCover imgSrc={bookInfo?.coverImage} alt={title + 'image'}
+        <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
           customStyle={{ width: '80px', border: '2px solid white' }}
         />
         <div>
