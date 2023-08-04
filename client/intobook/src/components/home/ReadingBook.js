@@ -30,7 +30,7 @@ const ReadingBook = () => {
         <GridContainer>
           <CurrentBook>
             {/* 현재 등록되어 있는 책이 있다면 커버 이미지 보여주기 */}
-            {hasReadingBook && <BookCover img={imgUrl} />}
+            {hasReadingBook && <BookCover image={imgUrl} />}
             {/* 현재 등록되어 있는 책이 없다면 책을 등록할 수 있는 버튼 보여주기 */}
             {!hasReadingBook && (
               <AddCircleOutlineIcon

@@ -1,9 +1,11 @@
 import React from 'react';
 
-const BookHistory = ()=>{
-  return(
-    <p>옥장판 팔러 가야하나봐..</p>
-  )
-}
+const BookHistory = () => {
+  return (
+    <div>
+      히스토리
+    </div>
+  );
+};
 
 export default BookHistory;
