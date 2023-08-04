@@ -33,7 +33,7 @@ public class UserBookController {
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
     public ResponseEntity<String> insertUserBook(
 //            @RequestHeader("Authorization") String accessToken,
-            @RequestParam String isbn, @RequestParam UserBookStatus status) {
+            @RequestParam String isbn) {
         Book book = bookService.getBook(isbn);
         if (book == null) {
             book = bookService.insertBook(isbn);
@@ -42,7 +42,7 @@ public class UserBookController {
 //        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
         User user = User.builder().userPk(1L).build(); //임시 userPk 1
 
-        if (userBookService.insertUserBook(user, book, status)) {
+        if (userBookService.insertUserBook(user, book)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
