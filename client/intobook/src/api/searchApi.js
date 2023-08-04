@@ -13,3 +13,12 @@ export const searchBooks = async (keyword, start) => {
     return err
   }
 };
+
+export const getBookDetail = async (isbn) => {
+  try {
+    const res = await axiosInstance.get(`/books/${isbn}`);
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};

@@ -18,8 +18,18 @@ const CheckButton = () => {
     setIsBookmarkOut((status) => !status);
   };
 
+  // const readingBookHandler = () => {
+  //   setReadingBook((val) => '책 있어요');
+  // };
+
   const readingBookHandler = () => {
-    setReadingBook((val) => '책 있어요');
+    setReadingBook((val) => {
+      if (val === null) {
+        return '등록된 책 있어요';
+      } else {
+        return null;
+      }
+    });
   };
 
   return (
