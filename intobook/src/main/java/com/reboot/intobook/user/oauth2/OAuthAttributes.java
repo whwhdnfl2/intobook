@@ -3,6 +3,8 @@ package com.reboot.intobook.user.oauth2;
 
 import com.reboot.intobook.user.entity.IsAdmin;
 import com.reboot.intobook.user.entity.User;
+import com.reboot.intobook.user.oauth2.userinfo.KakaoOAuth2UserInfo;
+import com.reboot.intobook.user.oauth2.userinfo.OAuth2UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 

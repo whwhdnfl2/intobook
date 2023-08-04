@@ -39,8 +39,6 @@ public class UserBook {
     private int nowPage;
 
     @CreationTimestamp
-    private Date createdAt;
-
     private Date startedAt;
 
     private Date completedAt;

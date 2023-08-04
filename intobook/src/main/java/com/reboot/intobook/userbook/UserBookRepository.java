@@ -12,11 +12,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserBookRepository extends JpaRepository<UserBook, Long> {
     UserBook findByUserAndBook(User user, Book book);
 
-    @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookListResponseDto(u.userBookPk, b.title, b.coverImage, u.nowPage, u.createdAt, u.startedAt, u.completedAt, u.status) " +
+    @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookListResponseDto(u.userBookPk, b.title, b.coverImage, u.nowPage, u.startedAt, u.completedAt, u.status) " +
             "FROM UserBook u " +
             "JOIN u.book b " +
             "WHERE u.user = :user " +
@@ -25,10 +27,13 @@ public interface UserBookRepository extends JpaRepository<UserBook, Long> {
 
 
     @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookResponseDto(" +
-            "u.userBookPk, b.title, b.coverImage, b.description, b.author, b.publisher, " +
-            "u.nowPage, u.createdAt, u.startedAt, u.completedAt, u.status) " +
+            "u.userBookPk, b.title, b.coverImage, b.author, b.publisher, " +
+            "u.nowPage, u.startedAt, u.completedAt, u.status) " +
             "FROM UserBook u " +
             "JOIN u.book b " +
             "WHERE u.userBookPk = :userBookPk")
     UserBookResponseDto findByUserBookPkWithBook(Long userBookPk);
+
+
+    UserBook findAllByUserAndStatus(User user, UserBookStatus userBookStatus);
 }

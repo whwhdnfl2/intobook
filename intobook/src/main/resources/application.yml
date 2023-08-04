@@ -9,11 +9,14 @@ into-book:
     key: ttbjmj25885471405001
 
 spring:
+  profiles:
+    default: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/intobook?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
     username: root
     password: root
+
 
 #  profiles:
 #    include: oauth
@@ -38,7 +41,7 @@ spring:
           kakao:
             client-id: d65bd1ef2f9d2f8056ef153efcc983e7
             client-secret: XJnjnScvebxqQNWEwtohdUMI9x17WTln
-            redirect-uri: http://localhost:8080/oauth
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope: profile_nickname, account_email
@@ -62,7 +65,7 @@ spring:
 
 swagger:
   project:
-    base-package: com.reboot.intobook.*
+    base-package: com.reboot.intobook.controller.api
 
 jwt:
   secretKey: sc136as1c5qw4c13ax1cz3x5c4as3c1a35scczx3casc54;
@@ -74,3 +77,12 @@ jwt:
   refresh:
     expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace

@@ -1,4 +1,4 @@
-package com.reboot.intobook.user.oauth2;
+package com.reboot.intobook.user.oauth2.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;

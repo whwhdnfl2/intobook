@@ -1,4 +1,4 @@
-package com.reboot.intobook.user.oauth2;
+package com.reboot.intobook.user.oauth2.userinfo;
 
 import java.util.Map;
 
