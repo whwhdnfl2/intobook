@@ -2,53 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBookDetail } from '../api/searchApi';
 
-import BookDescription from './../components/bookInfo/bookDescription';
 import BookHistory from './../components/bookInfo/bookHistory';
+import BookDesc from '../components/bookInfo/BookDesc';
+import { Layout } from './../styles/CommonStyle';
 
 const BookInfoPage = () => {
   const { bookId } = useParams();
-  const [bookInfo, setBookInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const [selectedTab, setSelectedTab] = useState('introduction'); // 'introduction' 또는 'history'로 초기화
 
-
-  useEffect(() => {
-    const fetchBookDetail = async () => {
-      try {
-        const bookData = await getBookDetail(bookId);
-        setBookInfo(bookData);
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to fetch book details.');
-        setLoading(false);
-      }
-    };
-
-    fetchBookDetail();
-  }, [bookId]);
-
   return (
-    <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <div>{error}</div>
-      ) : (
-        <div>
-          <h2>{bookInfo.title}</h2>
-          <div style={{ display: 'flex' }}>
-            <img src={bookInfo.coverImage} alt="Book Cover" style={{ width: '150px', marginRight: '10px' }} />
-            <div>
-              <p>{bookInfo.author}</p>
-              <p>출판사: {bookInfo.publisher}</p>
-              <p>전체 페이지: {bookInfo.page}</p>
-              <p>출판일: {bookInfo.publishDate}</p>
-            </div>
-          </div>          
-        </div>
-      )}
+    <Layout>
+      <BookDesc bookId={bookId} />
       <div>
       <div style={{ display: 'flex', marginBottom: '20px' }}>
             <span
@@ -71,13 +35,13 @@ const BookInfoPage = () => {
               북 히스토리
             </span>
           </div>
-          {selectedTab === 'introduction' ? (
+          {/* {selectedTab === 'introduction' ? (
             <BookDescription bookInfo={bookInfo} />
           ) : (
             <BookHistory bookInfo={bookInfo} />
-          )}
+          )} */}
         </div>
-    </div>
+    </Layout>
   );
 };
 
