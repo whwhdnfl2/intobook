@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
@@ -25,19 +26,23 @@ public class UserBookService {
 
     private final UserBookRepository userBookRepository;
 
+    public void nowReadingToReading (User user) {
+        UserBook preReadingBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        if (preReadingBook == null) return;
+        preReadingBook.setStatus(UserBookStatus.READING);
+        userBookRepository.save(preReadingBook);
+    }
+
+    @Transactional
     public boolean insertUserBook(User user, Book book) {
         UserBook userBook = userBookRepository.findByUserAndBook(user, book);
+        nowReadingToReading(user);
         if (userBook != null) {
             if (!userBook.isDeleted()) return false;
             userBook.setDeleted(false);
             userBook.setStatus(UserBookStatus.NOWREADING);
         }else {
             userBook = new UserBook(user, book, UserBookStatus.NOWREADING);
-            List<UserBook> preReadingBooks = userBookRepository.findByStatus(UserBookStatus.NOWREADING);
-            for (UserBook preReadingBook : preReadingBooks) {
-                preReadingBook.setStatus(UserBookStatus.READING);
-                userBookRepository.save(preReadingBook);
-            }
         }
         return userBookRepository.save(userBook) != null;
     }
@@ -56,6 +61,7 @@ public class UserBookService {
         Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserAndStatusWithBook(user, status, pageRequest);
         return userBookList;
     }
+    @Transactional
     public boolean updateUserBookStatus(Long userBookPk, UserBookStatus status) {
         UserBook userBook = userBookRepository.findById(userBookPk)
                 .orElse(null);
@@ -63,13 +69,11 @@ public class UserBookService {
         UserBookStatus oldStatus = userBook.getStatus();
         if (oldStatus == status) return true;
         if (status == UserBookStatus.NOWREADING) {
-            List<UserBook> preReadingBooks = userBookRepository.findByStatus(UserBookStatus.NOWREADING);
-            for (UserBook preReadingBook : preReadingBooks) {
-                preReadingBook.setStatus(UserBookStatus.READING);
-                userBookRepository.save(preReadingBook);
-            }
+            nowReadingToReading(userBook.getUser());
         }else if (status == UserBookStatus.READING) {
             return false;
+        }else {
+            userBook.setCompletedAt(new Date());
         }
         userBook.setStatus(status);
         return userBookRepository.save(userBook) != null;
@@ -89,6 +93,7 @@ public class UserBookService {
         return userBook;
     }
 
+    @Transactional
     public boolean updateUserBook(Long userBookPk, int nowPage, Date startedAt, Date completedAt) {
         UserBook userBook = userBookRepository.findById(userBookPk).orElse(null);
         if (userBook == null) return false;
@@ -98,4 +103,19 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
+    public UserBookResponseDto findNowReadingUserBook(User user) {
+        UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        if (userBook == null) return null;
+        return UserBookResponseDto.builder()
+                .userBookPk(userBook.getUserBookPk())
+                .title(userBook.getBook().getTitle())
+                .coverImage(userBook.getBook().getCoverImage())
+                .author(userBook.getBook().getAuthor())
+                .publisher(userBook.getBook().getPublisher())
+                .nowPage(userBook.getNowPage())
+                .startedAt(userBook.getStartedAt())
+                .completedAt(userBook.getCompletedAt())
+                .status(userBook.getStatus())
+                .build();
+    }
 }

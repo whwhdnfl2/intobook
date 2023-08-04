@@ -27,12 +27,13 @@ public interface UserBookRepository extends JpaRepository<UserBook, Long> {
 
 
     @Query("SELECT new com.reboot.intobook.userbook.dto.UserBookResponseDto(" +
-            "u.userBookPk, b.title, b.coverImage, b.description, b.author, b.publisher, " +
+            "u.userBookPk, b.title, b.coverImage, b.author, b.publisher, " +
             "u.nowPage, u.startedAt, u.completedAt, u.status) " +
             "FROM UserBook u " +
             "JOIN u.book b " +
             "WHERE u.userBookPk = :userBookPk")
     UserBookResponseDto findByUserBookPkWithBook(Long userBookPk);
 
-    List<UserBook> findByStatus(UserBookStatus userBookStatus);
+
+    UserBook findAllByUserAndStatus(User user, UserBookStatus userBookStatus);
 }

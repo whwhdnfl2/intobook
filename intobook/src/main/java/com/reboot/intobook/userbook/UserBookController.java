@@ -2,7 +2,6 @@ package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
 import com.reboot.intobook.book.BookService;
-import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookOrderBy;
@@ -26,7 +25,6 @@ public class UserBookController {
     private final UserBookService userBookService;
 
     private final BookService bookService;
-    private final UserService userService;
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
     @PostMapping
@@ -78,6 +76,21 @@ public class UserBookController {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/nowreading")
+    @ApiOperation(value = "현재 읽고있는 책 한권을 조회하는 메소드")
+    public ResponseEntity<?> getNowReadingUserBook (
+//            @RequestHeader("Authorization") String accessToken
+    ) {
+        User user = User.builder().userPk(1L).build();  //임시 userPk 1
+        UserBookResponseDto nowReadingUserBook = userBookService.findNowReadingUserBook(user);
+        if (nowReadingUserBook != null) {
+            return new ResponseEntity<UserBookResponseDto>(nowReadingUserBook, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+    }
+
 
     @PatchMapping("/{userBookPk}")
     @ApiOperation(value = "책의 상태를 변경하는 메소드")
