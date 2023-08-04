@@ -50,9 +50,9 @@ public class UserBookService {
     public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, UserBookOrderBy orderBy, int page){
         Sort sort;
         if (orderBy == UserBookOrderBy.title) {
-            sort = Sort.by("book.title").and(Sort.by("createdAt").descending());
+            sort = Sort.by("book.title").and(Sort.by("startedAt").descending());
         } else if (orderBy == UserBookOrderBy.author) {
-            sort = Sort.by("book.author").and(Sort.by("createdAt").descending());
+            sort = Sort.by("book.author").and(Sort.by("startedAt").descending());
         } else {
             sort = Sort.by(orderBy.toString()).descending();
         }
