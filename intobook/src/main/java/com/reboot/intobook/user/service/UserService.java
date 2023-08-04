@@ -27,4 +27,15 @@ public class UserService {
         }
     }
 
+    public void logout(Long userPk) throws Exception {
+        Optional<User> user = userRepository.findByUserPk(userPk);
+
+        if(user.isPresent()){
+            User user1 = user.get();
+            user1.setFcmToken(null);
+            userRepository.saveAndFlush(user1);
+        }else{
+            throw new Exception("없으요");
+        }
+    }
 }
