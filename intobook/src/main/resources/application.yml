@@ -85,4 +85,4 @@ logging:
             sql: trace
 
 fcm:
-  certification: com.reboot.intobook.fcm.reboot-623ba-firebase-adminsdk-zj8bg-d7fdba28b4.json
+  certification: src/main/resources/reboot-623ba-firebase-adminsdk-zj8bg-d7fdba28b4.json
