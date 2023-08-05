@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -58,11 +59,9 @@ public class HistoryController {
 
     @GetMapping("/user")
     @ApiOperation(value="user에 해당하는 기록 전부 select")
-    public ResponseEntity<List<GetHistoryResponse>> getUserHistoryList(@RequestHeader("Authorization") String accessToken){
-        JwtUtil jwtUtil = new JwtUtil();
-        Claims claims = jwtUtil.extractClaims(accessToken);
+    public ResponseEntity<List<GetHistoryResponse>> getUserHistoryList(){
         try{
-            Long userPk = claims.get("userPk", Long.class);
+            Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
             List<GetHistoryResponse> historyList = historyService.findUserHistoryList(userPk);
             return  ResponseEntity.status(HttpStatus.OK).body(historyList);
         }catch (Exception e){
