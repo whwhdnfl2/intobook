@@ -1,7 +1,6 @@
 import React from 'react';
+import { BookWishList, BookshelvesContent } from '../components/bookShelves';
 import styled from 'styled-components';
-import BookWishList from '../components/bookShelves/BookWishList';
-import BookshelvesContent from '../components/bookShelves/BookshelvesContent';
 
 const StyledBookshelvesPage = styled.div`
   text-align: center;
@@ -12,7 +11,6 @@ const StyledBookTitle = styled.div`
   border: 1px solid black;
   margin: 10px 10px 10px 10px;
 `;
-
 
 const BookshelvesPage = () => {
   return (
