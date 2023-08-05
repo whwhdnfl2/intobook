@@ -8,7 +8,9 @@ import com.reboot.intobook.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -22,6 +24,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class FCMService {
+
+    @Value("${jwt.secretKey}")
+    String secretKey;
     @PersistenceContext
     EntityManager em;
 
@@ -31,9 +36,8 @@ public class FCMService {
 
 
     //fcm알림 테스트를 위한 method
-    public void test(String accessToken) throws Exception {
-        Claims claims = jwtUtil.extractClaims(accessToken);
-        Long userPk = claims.get("userPk", Long.class);
+    public void test() throws Exception {
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<User> temp = userRepository.findByUserPk(userPk);
         if(temp.isPresent()){
             User user = temp.get();
