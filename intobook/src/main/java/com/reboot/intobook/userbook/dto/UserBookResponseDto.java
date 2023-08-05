@@ -1,6 +1,7 @@
 package com.reboot.intobook.userbook.dto;
 
 
+import com.reboot.intobook.userbook.entity.UserBook;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,9 +23,9 @@ public class UserBookResponseDto {
     private Date startedAt;
     private Date completedAt;
     private UserBookStatus status;
-
+    private int page;
     @Builder
-    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, Date startedAt, Date completedAt, UserBookStatus status) {
+    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, Date startedAt, Date completedAt, UserBookStatus status, int page) {
         this.userBookPk = userBookPk;
         this.title = title;
         this.coverImage = coverImage;
@@ -34,5 +35,21 @@ public class UserBookResponseDto {
         this.startedAt = startedAt;
         this.completedAt = completedAt;
         this.status = status;
+        this.page = page;
+    }
+
+    public static UserBookResponseDto toEntity(UserBook userBook) {
+        return UserBookResponseDto.builder()
+                .userBookPk(userBook.getUserBookPk())
+                .title(userBook.getBook().getTitle())
+                .coverImage(userBook.getBook().getCoverImage())
+                .author(userBook.getBook().getAuthor())
+                .publisher(userBook.getBook().getPublisher())
+                .nowPage(userBook.getNowPage())
+                .startedAt(userBook.getStartedAt())
+                .completedAt(userBook.getCompletedAt())
+                .status(userBook.getStatus())
+                .page(userBook.getBook().getPage())
+                .build();
     }
 }
