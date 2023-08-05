@@ -1,27 +1,25 @@
 import React from 'react';
-import { BookWishList, BookshelvesContent } from '../components/bookShelves';
+import {Typography} from '@mui/material';
+import BookshelvesMain from '../components/bookShelves/BookshelvesMain';
 import styled from 'styled-components';
+import { Layout } from './../styles/CommonStyle';
 
-const StyledBookshelvesPage = styled.div`
-  text-align: center;
-  border: 1px solid black;
-  margin: 10px 10px 10px 10px;
-`;
-const StyledBookTitle = styled.div`
-  border: 1px solid black;
-  margin: 10px 10px 10px 10px;
-`;
 
 const BookshelvesPage = () => {
+  const username = "능이"
+  
   return (
-    <StyledBookshelvesPage>
-      <StyledBookTitle>
-        능이님의 책장입니다.
-      </StyledBookTitle>
-      <BookWishList/>
-      <BookshelvesContent/>
-    </StyledBookshelvesPage>
+    <Layout>
+      {<TitleTypography>{username}님의 책장</TitleTypography>}
+      <BookshelvesMain />
+    </Layout>
   );
 }
+
+const TitleTypography = styled(Typography)`
+  variant : h5;
+  component : h1;
+  color: var(--main-color);
+`;
 
 export default BookshelvesPage;

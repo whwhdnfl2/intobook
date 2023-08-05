@@ -1,50 +1,13 @@
-import React, { useEffect } from 'react';
-import { userbooks } from './../../api/userbookApi';
-import { useRecoilValue } from 'recoil'; 
-import { UsernameSelector, UserBooksSelector } from './../../recoil/user/UserSelector';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 
-const StyledBookshelvesContentPage = styled.div`
-  border: 1px solid black;
-  margin: 10px 10px 10px 10px;
-`;
+const BookshelvesContent = () => ({ selectedTab }) => {
+  // selectedTab 값에 따라 적절한 책들을 표시하는 로직을 구현하세요
+  // 예를 들어, 'all'일 경우 전체 책을 보여주고, 'read'일 경우 읽은 책만 보여줍니다.
+  return (
+    <div>
+      {/* 적절한 내용을 표시하는 부분 */}
+    </div>
+  );
+};
 
-const StyledBookshelvesTab = styled.div`
-  border: 1px solid black;
-  margin: 10px 10px 10px 10px;
-`;
-
-const StyledContentsSpace = styled.div`
-  border: 1px solid black;
-  margin: 10px 10px 10px 10px;
-`;
-
-const BookshelvesContent = () => {
-    
-    useEffect(() => {
-        const getUserBooks = async () => {
-            try {
-                const res = userbooks('startedAt', 0, 'READING')
-                console.log("객체 받아오기",res.array)
-            } catch (error) {
-                console.error("에러발생:",error)
-            }
-        };
-        // const getUserBooks = async () => {
-        //   const userBooks = userbooks('startedAt', 0, 'READING')
-        //   console.log(userbooks)
-        // };
-
-        getUserBooks();
-    },[]);
-
-    return ( 
-        <StyledBookshelvesContentPage>
-            <StyledBookshelvesTab>탭이 들어갈 공간</StyledBookshelvesTab>
-            <hr/>
-            <StyledContentsSpace>내용이 들어갈 공간</StyledContentsSpace>
-        </StyledBookshelvesContentPage>
-     );
-}
- 
 export default BookshelvesContent;
