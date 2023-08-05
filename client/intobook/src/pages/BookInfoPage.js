@@ -26,8 +26,6 @@ const BookInfoPage = () => {
     getBookInfo()
   }, [bookId, userBookId]);
 
-
-
   return (
     <Layout>
       <BookDesc bookInfo={bookInfo} />
@@ -35,7 +33,7 @@ const BookInfoPage = () => {
       {selectedTab === 'statistics' ? (
         <BookStatistics />
       ) : (
-        <BookHistoryLog />
+        <BookHistoryLog userBookId={userBookId} />
       )}
       <Buttons bookInfo={bookInfo} />
     </Layout>
