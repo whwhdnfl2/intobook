@@ -58,8 +58,14 @@ public class UserBookService {
         }
         PageRequest pageRequest = PageRequest.of(page, 9, sort);
 
-        Page<UserBookListResponseDto> userBookList = userBookRepository.findByUserAndStatusWithBook(user, status, pageRequest);
-        return userBookList;
+
+        Page<UserBook> userBookList = null;
+        if (status == null) {
+            userBookList = userBookRepository.findByUser(user, pageRequest);
+        }else {
+            userBookList =  userBookRepository.findByUserAndStatus(user, status, pageRequest);
+        }
+        return userBookList.map(userBook -> UserBookListResponseDto.toEntity(userBook));
     }
     @Transactional
     public boolean updateUserBookStatus(Long userBookPk, UserBookStatus status) {
@@ -89,8 +95,10 @@ public class UserBookService {
     }
 
     public UserBookResponseDto findUserBook(Long userBookPk) {
-        UserBookResponseDto userBook = userBookRepository.findByUserBookPkWithBook(userBookPk);
-        return userBook;
+        UserBook userBook = userBookRepository.findById(userBookPk)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        return UserBookResponseDto.toEntity(userBook);
     }
 
     @Transactional
@@ -106,16 +114,6 @@ public class UserBookService {
     public UserBookResponseDto findNowReadingUserBook(User user) {
         UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (userBook == null) return null;
-        return UserBookResponseDto.builder()
-                .userBookPk(userBook.getUserBookPk())
-                .title(userBook.getBook().getTitle())
-                .coverImage(userBook.getBook().getCoverImage())
-                .author(userBook.getBook().getAuthor())
-                .publisher(userBook.getBook().getPublisher())
-                .nowPage(userBook.getNowPage())
-                .startedAt(userBook.getStartedAt())
-                .completedAt(userBook.getCompletedAt())
-                .status(userBook.getStatus())
-                .build();
+        return UserBookResponseDto.toEntity(userBook);
     }
 }
