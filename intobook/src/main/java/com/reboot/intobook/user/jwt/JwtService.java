@@ -161,16 +161,18 @@ public class JwtService {
     /**
      * RefreshToken DB 저장(업데이트)
      */
-    public void updateRefreshToken(String email, String refreshToken) {
+    public void updateRefreshTokenAndFcmToken(String email, String refreshToken, String fcmToken) {
         Optional<User> userOptional = userRepository.findByEmail(email);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.updateRefreshToken(refreshToken);
+            user.updateFcmToken(fcmToken);
             userRepository.save(user);
         } else {
             throw new RuntimeException("일치하는 회원이 없습니다.");
         }
     }
+
 
     public boolean isTokenValid(String token) {
         try {

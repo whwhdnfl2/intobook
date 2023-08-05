@@ -24,7 +24,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("OAuth2 Login 성공!");
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-            loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
+            loginSuccess(response, oAuth2User, request.getParameter("fcmToken")); // 로그인에 성공한 경우 access, refresh 토큰 생성
 
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -33,12 +33,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     // TODO : 소셜 로그인 시에도 무조건 토큰 생성하지 말고 JWT 인증 필터처럼 RefreshToken 유/무에 따라 다르게 처리해보기
-    private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
+    private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User, String fcmToken) throws IOException {
         String accessToken = jwtService.createAccessToken(oAuth2User.getEmail(), oAuth2User.getUserPk());
         String refreshToken = jwtService.createRefreshToken();
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
         response.sendRedirect("http://localhost:3000?accessToken=" + "Bearer " + accessToken + "&refreshToken=" + "Bearer " + refreshToken);
-        jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+        jwtService.updateRefreshTokenAndFcmToken(oAuth2User.getEmail(), refreshToken, fcmToken);
     }
 }

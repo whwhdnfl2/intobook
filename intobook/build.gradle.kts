@@ -59,6 +59,10 @@ dependencies {
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
+    // https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
+    implementation("com.google.firebase:firebase-admin:8.1.0")
+
+
 }
 
 tasks.withType<Test> {

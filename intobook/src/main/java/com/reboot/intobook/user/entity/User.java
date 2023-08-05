@@ -1,5 +1,6 @@
 package com.reboot.intobook.user.entity;
 
+import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,8 @@ public class User {
 
     private String email;
 
+    private String fcmToken;
+
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -44,9 +47,9 @@ public class User {
     @Column(name = "refresh_token")
     private String refreshToken;
 
-//    @Column(name = "user_book")
-//    @OneToMany(mappedBy = "user")
-//    private List<UserBook> userBook = new ArrayList<>();
+    @Column(name = "user_book")
+    @OneToMany(mappedBy = "user")
+    private List<UserBook> userBook = new ArrayList<>();
 
     public User() {
 
@@ -54,6 +57,9 @@ public class User {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
 }
