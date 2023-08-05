@@ -7,7 +7,10 @@ import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -19,7 +22,11 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class FCMService {
+
+    @Value("${jwt.secretKey}")
+    String secretKey;
     @PersistenceContext
     EntityManager em;
 
@@ -29,9 +36,8 @@ public class FCMService {
 
 
     //fcm알림 테스트를 위한 method
-    public void test(String accessToken) throws Exception {
-        Claims claims = jwtUtil.extractClaims(accessToken);
-        Long userPk = claims.get("userPk", Long.class);
+    public void test() throws Exception {
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<User> temp = userRepository.findByUserPk(userPk);
         if(temp.isPresent()){
             User user = temp.get();
@@ -55,38 +61,39 @@ public class FCMService {
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 36000)
+    @Scheduled(fixedDelay = 3600000)
     public void sendAlarm() throws FirebaseMessagingException {
         //user table에서 userPk를 전부 가져온다.
-        TypedQuery<UserPkFcmDto> query = em.createQuery("select u.userPk, u.fcmToken from User u", UserPkFcmDto.class);
-        List<UserPkFcmDto> resultList = query.getResultList();
+        List<User> resultList =  userRepository.findAll();
         //userPk를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
-        for(UserPkFcmDto userPkFcmDto: resultList){
-            if(userPkFcmDto.getFcmToken() == null) continue;
+        for(User user: resultList){
+            if(user.getFcmToken() == null) continue;
             //나중에 로직 추가 userPk를 통해서 해당 사용자가 얼마나 오랫동안 책을 읽지 않았느지 체크한다. 그리고 알람을 보내야 하면 넣는다.
 //            if(){
 //                selectedFcmTokens.add(userPkFcmDto.getFcmToken());
 //            }
         }
 
-        MulticastMessage message = MulticastMessage.builder().addAllTokens(selectedFcmTokens).setNotification(Notification.builder()
-                .setTitle("보내라")
-                .setBody("굿")
-                .build())
-                .build();
-
-        BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
-        if (response.getFailureCount() > 0) {
-            List<SendResponse> responses = response.getResponses();
-            List<String> failedTokens = new ArrayList<>();
-            for (int i = 0; i < responses.size(); i++) {
-                if (!responses.get(i).isSuccessful()) {
-                    failedTokens.add(selectedFcmTokens.get(i));
+        try{
+            MulticastMessage message = MulticastMessage.builder().addAllTokens(selectedFcmTokens).setNotification(Notification.builder()
+                            .setTitle("보내라")
+                            .setBody("굿")
+                            .build())
+                    .build();
+            BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
+            if (response.getFailureCount() > 0) {
+                List<SendResponse> responses = response.getResponses();
+                List<String> failedTokens = new ArrayList<>();
+                for (int i = 0; i < responses.size(); i++) {
+                    if (!responses.get(i).isSuccessful()) {
+                        failedTokens.add(selectedFcmTokens.get(i));
+                    }
                 }
+                // 실패한 registrationTokens에 대한 추가 처리 이건 나중에 할 예정
             }
-            // 실패한 registrationTokens에 대한 추가 처리 이건 나중에 할 예정
+        }catch (Exception e){
+            log.error("sendAlarm error: " + e.getClass());
         }
-
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -21,17 +22,15 @@ public class FCMInitializer {
 
     @PostConstruct
     public void initialize() throws IOException {
-        ClassPathResource resource = new ClassPathResource(googleApplicationCredentials);
-
-        try (InputStream is = resource.getInputStream()) {
-            FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(is))
+        try{
+            FileInputStream serviceAccount =
+                    new FileInputStream(googleApplicationCredentials);
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
-
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-                log.info("FirebaseApp initialization complete");
-            }
+            FirebaseApp.initializeApp(options);
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

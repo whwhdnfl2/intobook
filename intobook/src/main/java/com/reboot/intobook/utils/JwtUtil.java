@@ -2,25 +2,24 @@ package com.reboot.intobook.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class JwtUtil {
-
-    private final String secretKey = "sc136as1c5qw4c13ax1cz3x5c4as3c1a35scczx3casc54";
-
-    public Long getUserPkFromAccessToken(String token){
-        Claims claims = extractClaims(token);
+    public Long getUserPkFromAccessToken(String token, String secretKey){
+        Claims claims = extractClaims(token, secretKey);
         Long userPk = claims.get("userPk", Long.class);
         return userPk;
     }
 
-    public String getEmailFromAccessToken(String token){
-        Claims claims = extractClaims(token);
+    public String getEmailFromAccessToken(String token, String secretKey){
+        Claims claims = extractClaims(token, secretKey);
         String email = claims.get("email", String.class);
         return email;
     }
 
     // JWT 토큰에서 클레임 추출
-    public Claims extractClaims(String token) {
+    public Claims extractClaims(String token, String secretKey) {
         token = token.substring(7);
         return Jwts.parser()
                 .setSigningKey(secretKey.getBytes())
