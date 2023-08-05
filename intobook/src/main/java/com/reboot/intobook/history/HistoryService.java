@@ -35,7 +35,7 @@ public class HistoryService {
     private final BookRepository bookRepository;
 
     @Transactional
-    public Long create( Long userBookPk ) throws Exception {
+    public Long create( Long userBookPk ) {
         // 필요한 요소 조회
         UserBook findUserBook = userBookRepository.findById(userBookPk)
                 .orElseThrow(() -> new NoSuchElementException("User Book Not Found Error!!!"));
@@ -78,6 +78,16 @@ public class HistoryService {
                 .build();
     }
 
+    public List<GetHistoryResponse> findUserHistoryList(Long userPk ){
+        // userBook 조회
+        User findUser = userRepository.findById(userPk)
+                .orElseThrow(() -> new NoSuchElementException("User Book Not Found Error!!!"));
+
+        List<GetHistoryResponse> histories = historyRepository.findByUser(findUser);
+        return histories;
+
+    }
+
 //    /**
 //     * 나의 모든 history 조회
 //     */
@@ -87,15 +97,28 @@ public class HistoryService {
 
 
     @Transactional
-    public void update( Long historyPk, String comment ){
-        Optional<History> history = historyRepository.findById(historyPk);
-        history.get().updateComment(comment);
+    public void updateComment( Long historyPk, String comment ) throws NoSuchElementException{
+        History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+        history.updateComment(comment);
     }
 
     @Transactional
-    public void delete( Long historyPk ){
-        History findHistory = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+    public void updateEndtime(long historyPk, LocalDateTime endTime) throws NoSuchElementException{
+        History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+        history.updateEndTime(endTime);
+    }
 
+    @Transactional
+    public void updatePressure(long historyPk, int pressure) throws NoSuchElementException{
+        History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+        history.updatePressure(pressure);
+    }
+
+    @Transactional
+    public void delete( Long historyPk ) throws NoSuchElementException{
+        History findHistory = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
         historyRepository.delete(findHistory);
     }
+
+
 }

@@ -43,8 +43,9 @@ public class History {
 
     private LocalDateTime endTime;
 
-
     private int pageAmount;
+
+    private int pressure;
 
     private String comment;
 
@@ -54,7 +55,16 @@ public class History {
         this.userBook = userBook;
         this.user = user;
     }
-      public void updateComment( String comment ){
+    public void updateComment( String comment ){
         this.comment = comment;
     }
+
+    public void updateEndTime(LocalDateTime endTime){
+        this.endTime = endTime;
+    }
+
+    public void updatePressure(int pressure){
+        this.pressure = pressure;
+    }
+
 }
