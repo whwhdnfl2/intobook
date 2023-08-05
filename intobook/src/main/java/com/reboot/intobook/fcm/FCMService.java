@@ -64,9 +64,10 @@ public class FCMService {
         List<String> selectedFcmTokens = new ArrayList<>();
         for(UserPkFcmDto userPkFcmDto: resultList){
             if(userPkFcmDto.getFcmToken() == null) continue;
-            if(){ //userPk를 통해서 해당 사용자가 얼마나 오랫동안 책을 읽지 않았느지 체크한다. 그리고 알람을 보내야 하면 넣는다.
-                selectedFcmTokens.add(userPkFcmDto.getFcmToken());
-            }
+            //나중에 로직 추가 userPk를 통해서 해당 사용자가 얼마나 오랫동안 책을 읽지 않았느지 체크한다. 그리고 알람을 보내야 하면 넣는다.
+//            if(){
+//                selectedFcmTokens.add(userPkFcmDto.getFcmToken());
+//            }
         }
 
         MulticastMessage message = MulticastMessage.builder().addAllTokens(selectedFcmTokens).setNotification(Notification.builder()
