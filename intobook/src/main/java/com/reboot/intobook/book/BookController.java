@@ -1,6 +1,7 @@
 package com.reboot.intobook.book;
 
 
+import com.reboot.intobook.user.entity.User;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +34,14 @@ public class BookController {
             )
     })
     public ResponseEntity<?> getSearchList(
+//            @RequestHeader("Authorization") String accessToken,
             @RequestParam String keyword,
             @RequestParam int start) {
         log.info("[Request] search");
-        return new ResponseEntity<>(bookService.getSearchList(keyword, start), HttpStatus.OK);
+//        JwtUtil jwtUtil = new JwtUtil();
+//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
+        User user = User.builder().userPk(1L).build(); //임시 userPk 1
+        return new ResponseEntity<>(bookService.getSearchList(keyword, start, user), HttpStatus.OK);
     }
 
     @GetMapping("/{isbn}")
@@ -47,9 +52,14 @@ public class BookController {
             value="isbn",
             example ="9791188810123"
     )
-    public ResponseEntity<?> getSearchDetail(@PathVariable String isbn) {
+    public ResponseEntity<?> getSearchDetail(
+//            @RequestHeader("Authorization") String accessToken,
+            @PathVariable String isbn) {
         log.info("[Request] search detail");
-        return new ResponseEntity<>(bookService.getSearchDetail(isbn), HttpStatus.OK);
+//        JwtUtil jwtUtil = new JwtUtil();
+//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
+        User user = User.builder().userPk(1L).build();
+        return new ResponseEntity<>(bookService.getSearchDetail(user, isbn), HttpStatus.OK);
     }
 
 //    @PostMapping("")
