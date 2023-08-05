@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import { useHistory } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import { ProgressBar, BookCover } from './../common';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
 import { StyledEngineProvider, Container, Box, Typography } from '@mui/material';
@@ -28,6 +28,7 @@ const ReadingBook = () => {
   const coverImg = nowReadingBook?.coverImage;
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
+  const userBookId = nowReadingBook?.userBookPk;
 
   const nowPage = nowReadingBook?.nowPage + 30;
 
@@ -49,8 +50,10 @@ const ReadingBook = () => {
             )}
           </CurrentBook>
           <CurrentBookStatus>
-            {nowReadingBook && ( <Typography>{title} - {author}</Typography>) }
-            {!nowReadingBook && ( <Typography>책을 등록해보세요</Typography>) }
+            <Link to={`/userbook/${userBookId}`} style={{textDecoration: 'none'}}>
+              {nowReadingBook && ( <Typography>{title} - {author}</Typography>) }
+            </Link>
+              {!nowReadingBook && ( <Typography>책을 등록해보세요</Typography>) }
           </CurrentBookStatus>
         </GridContainer>
         <ProgressBar now_page={nowPage} />

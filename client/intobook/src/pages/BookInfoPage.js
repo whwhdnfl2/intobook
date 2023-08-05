@@ -1,34 +1,43 @@
-import React from 'react';
-import { BookDesc, BookStatistics, BookHistoryLog, Tab } from './../components/bookInfo';
+import React, { useState, useEffect } from 'react';
+import { BookDesc, BookStatistics, BookHistoryLog, Tab, Buttons } from './../components/bookInfo';
 import { useParams } from 'react-router-dom';
 import { Layout } from './../styles/CommonStyle';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom } from './../recoil/book/BookAtom';
-import { addUserBook } from '../api/userbookApi';
+
+import { getBookDetail } from '../api/searchApi';
+import { getUserBookInfo } from '../api/userbookApi';
 
 const BookInfoPage = () => {
-  const { bookId } = useParams();
+  const { bookId, userBookId } = useParams();
+  const [bookInfo, setBookInfo] = useState(null);
   const selectedTab = useRecoilValue(BookInfoTabAtom);
 
-  const registerBookHandler = async () => {
-    const res = await addUserBook(bookId);
+  useEffect(() => {
+    const getBookInfo = async () => {
+      if (bookId) {
+        const bookInfo = await getBookDetail(bookId);
+        setBookInfo(bookInfo);
+      } else if (userBookId) {
+        const bookInfo = await getUserBookInfo(userBookId);
+        setBookInfo(bookInfo);
+      }
+    };
+    getBookInfo()
+  }, [bookId, userBookId]);
 
-    if (res === 'success') {
-      // home으로 이동하기
-    }
-  };
+
 
   return (
     <Layout>
-      <BookDesc bookId={bookId} />
+      <BookDesc bookInfo={bookInfo} />
       <Tab />
       {selectedTab === 'statistics' ? (
-        // <BookStatistics bookInfo={bookInfo} />
         <BookStatistics />
       ) : (
         <BookHistoryLog />
       )}
-      <button onClick={registerBookHandler} >지금 읽을래요!</button>
+      <Buttons bookInfo={bookInfo} />
     </Layout>
   );
 };
