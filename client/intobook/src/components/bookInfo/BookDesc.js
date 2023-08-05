@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { getBookDetail } from '../../api/searchApi';
+import React from 'react';
 import BookCover from './../common/bookCover';
 import { styled } from 'styled-components';
 
-const BookDesc = ({ bookId }) => {
-  const [bookInfo, setBookInfo] = useState(null);
-  const title = bookInfo?.title.split('-')[0].trim()
-  const author = bookInfo?.author.split('(')[0].trim()
-
-  useEffect(() => {
-    const getBookInfo = async () => {
-      const bookInfo = await getBookDetail(bookId);
-      setBookInfo(bookInfo);
-    };
-    getBookInfo()
-  }, [bookId]);
+const BookDesc = ({ bookInfo }) => {
+  const tempTitle = bookInfo?.title;
+  const tempAauthor = bookInfo?.author;
+  
+  const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
+  const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
 
   return (
     <BookInfoDiv>
@@ -38,5 +31,6 @@ const BookInfoDiv = styled.div`
   height: 140px;
   background-color: var(--main-color);
   border-radius: 20px;
-`
+`;
+
 export default BookDesc;

@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const ResultBook = ({ bookCover }) => {
-  const title = bookCover?.title.split('-')[0].trim()
-  const author = bookCover?.author.split('(')[0].trim()
+  const tempTitle = bookCover?.title;
+  const tempAauthor = bookCover?.author;
+  
+  const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
+  const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
   const bookId = bookCover?.isbn13
 
   return (
