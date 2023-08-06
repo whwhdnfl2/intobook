@@ -1,24 +1,16 @@
 import './App.css';
-import Navbar from './components/common/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { TutorialPage, BookshelvesPage, AlarmPage, HomePage, StatisticsPage, BookSearchPage, BookInfoPage, LoginPage } from './pages';
 import UpperNavbar from './components/common/UpperNavbar';
-import TutorialPage from './pages/TutorialPage';
-import BookshelvesPage from './pages/BookshelvesPage';
-import AlarmPage from './pages/AlarmPage';
-import StatisticsPage from './pages/StatisticsPage';
-import HomePage from './pages/HomePage';
-import BookSearchPage from './pages/BookSearchPage';
-import BookInfoPage from './pages/BookInfoPage';
-import LoginPage from './pages/LoginPage';
+import Navbar from './components/common/Navbar';
 
 function App() {
-
   const isLoggedIn = true;
 
   return (
     <div className='App'>
       <BrowserRouter>
-        {isLoggedIn && <UpperNavbar />}
+        {isLoggedIn && <UpperNavbar/>}
         <div className='main-frame'>
           <Routes>
             <Route path='/' element={<HomePage />} />
@@ -34,7 +26,6 @@ function App() {
         {isLoggedIn && <Navbar />}
       </BrowserRouter>
     </div>
-
   );
 }
 
