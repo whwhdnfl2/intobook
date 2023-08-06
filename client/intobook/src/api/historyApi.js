@@ -1,6 +1,6 @@
 import axiosInstance from './axiosConfig';
 
-// 히스토리 조회하기
+// 로그 조회하기
 export const getBookHistory = async (userBookPk, page) => {
   try {
     const res = await axiosInstance.get(`/historys/userBook`, {
@@ -15,12 +15,28 @@ export const getBookHistory = async (userBookPk, page) => {
   }
 };
 
+// 로그 수정하기
+export const editBookHistory = async (historyPk, comment) => {
+  try {
+    const res = await axiosInstance.patch(`/historys`, null, {
+      params: {
+        historyPk,
+        comment,
+      },
+    })
+    console.log(res.data);
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};
+
 // 로그 삭제하기
-export const deleteBookHistory = async (userBookPk) => {
+export const deleteBookHistory = async (historyPk) => {
   try {
     const res = await axiosInstance.delete(`/historys`, {
       params: {
-        userBookPk: userBookPk,
+        historyPk,
       },
     });
     return res.data;

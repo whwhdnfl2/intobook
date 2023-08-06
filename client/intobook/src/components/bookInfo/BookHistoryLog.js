@@ -10,6 +10,7 @@ const BookHistoryLog = ({ userBookId }) => {
   useEffect(() => {
     const getHistoryLogs = async () => {
       const res = await getBookHistory(userBookId, 0);
+      console.log('hi', res)
       setHistoryLogs(res.items);
     }; 
     getHistoryLogs()
