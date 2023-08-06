@@ -9,7 +9,7 @@ const BookHistoryLog = ({ userBookId }) => {
 
   useEffect(() => {
     const getHistoryLogs = async () => {
-      const res = await getBookHistory(userBookId, 0); 
+      const res = await getBookHistory(userBookId, 0);
       setHistoryLogs(res.items);
     }; 
     getHistoryLogs()

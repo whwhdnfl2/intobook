@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, Menu, MenuItem } from '@mui/material';
+import MenuPopup from '../common/MenuPopup';
+import { Card, CardContent } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled } from 'styled-components';
 
@@ -19,7 +20,7 @@ const Log = ({ log }) => {
   // 수정하기/삭제하기 menu
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  
+
   const openMenuHandler = (e) => {
     setAnchorEl(e.currentTarget);
   };
@@ -44,24 +45,7 @@ const Log = ({ log }) => {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
             />
-            <Menu id='edit-menu' anchorEl={anchorEl} open={open}
-              onClose={closeMenuHandler} 
-              MenuListProps={{
-                'aria-labelledby': 'edit-button',
-                sx: { padding: 0 }
-              }}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-            >
-              <MenuItem onClick={closeMenuHandler} sx={{ fontSize: '12px' }}>수정하기</MenuItem>
-              <MenuItem onClick={closeMenuHandler} sx={{ fontSize: '12px' }}>삭제하기</MenuItem>
-            </Menu>
+            <MenuPopup anchorEl={anchorEl} open={open} onClose={closeMenuHandler} />
           </div>
         </CardContent>
       </LogCard>
