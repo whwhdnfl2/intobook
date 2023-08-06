@@ -8,7 +8,25 @@ const axiosInstance = Axios.create({
   },
 });
 
-// 추후 로그인이 필요한 부분에 interceptors 로직 추가
-// https://third9.github.io/posts/Axios%EB%8B%A4%EC%96%91%ED%95%98%EA%B2%8C_%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B0-interceptor/
+var getCookie = function(name) {
+  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return value? value[2] : null;
+};
+
+axiosInstance.interceptors.request.use(
+(config) => {
+  const accessToken = getCookie('accessToken');
+  console.log(accessToken);
+
+  config.headers['Content-Type'] = 'application/json';
+  config.headers['Authorization'] = `Bearer ${accessToken}`;
+
+  return config;
+},
+(error) => {
+  console.log(error);
+  return Promise.reject(error);
+}
+);
 
 export default axiosInstance;

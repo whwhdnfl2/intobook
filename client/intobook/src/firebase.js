@@ -4,12 +4,13 @@ import {getMessaging} from 'firebase/messaging';
 
 //firebase 구성객체
 const firebaseConfig = {
-  apiKey: "AIzaSyAq0vKv3Vxk5akJ04zO5S63DFoYl-qWvaI",
-  authDomain: "intobook-706bb.firebaseapp.com",
-  projectId: "intobook-706bb",
-  storageBucket: "intobook-706bb.appspot.com",
-  messagingSenderId: "666090916041",
-  appId: "1:666090916041:web:f3d1ae6e27f6fc08e3a518"
+  apiKey: "AIzaSyBqXN4Cca5eHs2M-8hDraBx61nyGYghlhA",
+  authDomain: "reboot-623ba.firebaseapp.com",
+  projectId: "reboot-623ba",
+  storageBucket: "reboot-623ba.appspot.com",
+  messagingSenderId: "1055736308919",
+  appId: "1:1055736308919:web:8c45f6662740d1fc9f1932",
+  measurementId: "G-70KL4BF6XB"
 };
 
 // Firebase 초기화
