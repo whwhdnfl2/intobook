@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,15 +31,13 @@ public class UserBookController {
     @PostMapping
     @ApiOperation(value = "새로운 책을 추가하는 메소드")
     public ResponseEntity<String> insertUserBook(
-//            @RequestHeader("Authorization") String accessToken,
             @RequestParam String isbn) {
         Book book = bookService.getBook(isbn);
         if (book == null) {
             book = bookService.insertBook(isbn);
         }
-//        JwtUtil jwtUtil = new JwtUtil();
-//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
-        User user = User.builder().userPk(1L).build(); //임시 userPk 1
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = User.builder().userPk(userPk).build();
 
         if (userBookService.insertUserBook(user, book)) {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
@@ -50,14 +49,11 @@ public class UserBookController {
     @GetMapping
     @ApiOperation(value = "조건에 따라 책의 리스트를 조회하는 메소드")
     public ResponseEntity<?> getUserBookList(
-//            @RequestHeader("Authorization") String accessToken,
             @RequestParam(required = false) UserBookStatus status,
             @RequestParam UserBookOrderBy orderBy,
             @RequestParam int page) {
-//        Long userPk = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        JwtUtil jwtUtil = new JwtUtil();
-//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
-        User user = User.builder().userPk(1L).build();  //임시 userPk 1
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = User.builder().userPk(userPk).build();
         Page<UserBookListResponseDto> userBookList = userBookService.findUserBookList(user, status, orderBy, page);
         if (userBookList != null && userBookList.getSize() != 0) {
             return new ResponseEntity<Page<UserBookListResponseDto>>(userBookList, HttpStatus.OK);
@@ -80,9 +76,9 @@ public class UserBookController {
     @GetMapping("/nowreading")
     @ApiOperation(value = "현재 읽고있는 책 한권을 조회하는 메소드")
     public ResponseEntity<?> getNowReadingUserBook (
-//            @RequestHeader("Authorization") String accessToken
     ) {
-        User user = User.builder().userPk(1L).build();  //임시 userPk 1
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = User.builder().userPk(userPk).build();
         UserBookResponseDto nowReadingUserBook = userBookService.findNowReadingUserBook(user);
         if (nowReadingUserBook != null) {
             return new ResponseEntity<UserBookResponseDto>(nowReadingUserBook, HttpStatus.OK);
