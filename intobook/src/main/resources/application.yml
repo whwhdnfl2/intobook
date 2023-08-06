@@ -7,7 +7,7 @@ into-book:
 
 spring:
   profiles:
-    active: local
+    active: prod
 
 #  profiles:
 #    include: oauth
