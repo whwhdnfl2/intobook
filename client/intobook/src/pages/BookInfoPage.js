@@ -1,36 +1,50 @@
-import React from 'react';
-import { BookDesc, BookStatistics, BookHistoryLog, Tab } from './../components/bookInfo';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { BookDesc, BookStatistics, BookHistoryLog, Tab, Buttons } from './../components/bookInfo';
 import { Layout } from './../styles/CommonStyle';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom } from './../recoil/book/BookAtom';
-import { addUserBook } from '../api/userbookApi';
+import { getUserBookInfo } from '../api/userbookApi';
+import { styled } from 'styled-components';
 
 const BookInfoPage = () => {
-  const { bookId } = useParams();
+  const { userBookId } = useParams();
+  const [bookInfo, setBookInfo] = useState(null);
   const selectedTab = useRecoilValue(BookInfoTabAtom);
 
-  const registerBookHandler = async () => {
-    const res = await addUserBook(bookId);
-
-    if (res === 'success') {
-      // home으로 이동하기
-    }
-  };
+  useEffect(() => {
+    const getBookInfo = async () => {
+      const bookInfo = await getUserBookInfo(userBookId);
+      setBookInfo(bookInfo);
+    };
+    getBookInfo()
+  }, [userBookId]);
 
   return (
     <Layout>
-      <BookDesc bookId={bookId} />
-      <Tab />
-      {selectedTab === 'statistics' ? (
-        // <BookStatistics bookInfo={bookInfo} />
-        <BookStatistics />
-      ) : (
-        <BookHistoryLog />
-      )}
-      <button onClick={registerBookHandler} >지금 읽을래요!</button>
+      <BookDesc bookInfo={bookInfo} />
+      <BookInfoContent>
+        <Tab />
+        {selectedTab === 'statistics' ? (
+          <BookStatistics />
+        ) : (
+          <BookHistoryLog userBookId={userBookId} />
+        )}
+        {selectedTab === 'statistics' && <Buttons bookInfo={bookInfo} />}
+      </BookInfoContent>
     </Layout>
   );
 };
+
+const BookInfoContent = styled.div`
+  width: 320px;
+  height: 410px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: var(--white);
+  border: 1px solid var(--main-color);
+  margin-top: 12px;
+  }
+`;
 
 export default BookInfoPage;

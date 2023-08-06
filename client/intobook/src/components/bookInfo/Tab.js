@@ -10,11 +10,12 @@ const Tab = () => {
   };
 
   return (
-    <div style={{ display: 'flex', margin: '20px 0' }}>
+    <div style={{ display: 'flex', margin: '20px' }}>
       <span
         onClick={() => handleTabClick('statistics')}
         style={{
           paddingRight: '10px',
+          color: selectedTab === 'statistics' ? 'black' : '#818181',
           textDecoration: selectedTab === 'statistics' ? 'underline' : 'none',
           cursor: 'pointer'
         }}
@@ -26,11 +27,12 @@ const Tab = () => {
         onClick={() => handleTabClick('history')}
         style={{
           padding: '0 10px',
+          color: selectedTab === 'history' ? 'black' : '#818181',
           textDecoration: selectedTab === 'history' ? 'underline' : 'none',
           cursor: 'pointer',
         }}
       >
-        내 히스토리 보기
+        독서 히스토리 보기
       </span>
     </div>
   );

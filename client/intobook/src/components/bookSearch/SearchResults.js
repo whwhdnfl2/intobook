@@ -14,7 +14,7 @@ const SearchResults = ({ bookSearchResults }) => {
             <ResultBook bookCover={item} />
           </Box>
         ))}
-      </Stack>    
+      </Stack>
     </ResultsContainer> 
   );
 };
