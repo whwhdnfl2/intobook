@@ -3,7 +3,7 @@ import { Menu, MenuItem } from '@mui/material';
 import Modal from './Modal';
 
 const MenuPopup = ({ anchorEl, open, onClose }) => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false); 
 
   return (
     <>

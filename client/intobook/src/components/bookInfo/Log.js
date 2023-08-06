@@ -3,6 +3,8 @@ import MenuPopup from '../common/MenuPopup';
 import { Card, CardContent } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { styled } from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { HistoryLogAtom } from '../../recoil/book/BookAtom'
 
 const Log = ({ log }) => {
   const startTime = log?.startTime;
@@ -23,8 +25,15 @@ const Log = ({ log }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  const [selectedLog, setSelectedLog] = useRecoilState(HistoryLogAtom);
+
   const openMenuHandler = (e) => {
     setAnchorEl(e.currentTarget);
+    setSelectedLog({
+      startTime,
+      endTime,
+      comment: log?.comment,
+    });
   };
 
   const closeMenuHandler = () => {
@@ -47,7 +56,7 @@ const Log = ({ log }) => {
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
             />
-            <MenuPopup anchorEl={anchorEl} open={open} onClose={closeMenuHandler} log={log} />
+            <MenuPopup anchorEl={anchorEl} open={open} onClose={closeMenuHandler} />
           </div>
         </CardContent>
       </LogCard>
