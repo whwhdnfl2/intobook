@@ -2,6 +2,7 @@ import React from 'react';
 import { Bookmark, Bluetooth, ReadingBook, CheckButton, Timer } from '../components/home';
 import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
+import { Button } from '@mui/material';
 
 const HomePage = () => {
   // HomePage 마운트(?)될 때 
