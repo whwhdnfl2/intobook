@@ -16,6 +16,8 @@ const Log = ({ log }) => {
   
   const et = new Date(endTime);
   const formatEndTime = `${et.getHours().toString()}:${et.getMinutes().toString().padStart(2, '0')}`;
+
+  const comment = log?.comment || '한줄평을 작성해보세요'
   
   // 수정하기/삭제하기 menu
   const [anchorEl, setAnchorEl] = useState(null);
@@ -38,14 +40,14 @@ const Log = ({ log }) => {
             <span>{pageAmount}m</span>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div>한줄평을 작성해보세요</div>
-            <EditIcon sx={{ fontSize: 'medium' }} id='edit-button' 
+            <div>{comment}</div>
+            <EditIcon sx={{ fontSize: 'medium', cursor: 'pointer' }} id='edit-button' 
               onClick={openMenuHandler} 
               aria-controls={open ? 'edit-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
             />
-            <MenuPopup anchorEl={anchorEl} open={open} onClose={closeMenuHandler} />
+            <MenuPopup anchorEl={anchorEl} open={open} onClose={closeMenuHandler} log={log} />
           </div>
         </CardContent>
       </LogCard>
