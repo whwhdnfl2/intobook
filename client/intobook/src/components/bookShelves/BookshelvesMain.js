@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import BookshelvesContent from './BookshelvesContent'; // 책장 내용 컴포넌트를 import 해주세요
 
 const BookshelvesMain = () => {
-  const [selectedTab, setSelectedTab] = useState('all'); // 'all', 'read', 'reading' 중 하나로 초기화
+  const [selectedTab, setSelectedTab] = useState('READING'); // 'all', 'read', 'reading' 중 하나로 초기화
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -13,9 +13,9 @@ const BookshelvesMain = () => {
   return (
     <div>
       <Tabs value={selectedTab} onChange={handleTabChange}>
-        <Tab label="전체" value="all" />
-        <Tab label="읽은 책" value="read" />
-        <Tab label="읽고 있는 책" value="reading" />
+        <Tab label="전체" value="NOWREADING" />
+        <Tab label="읽은 책" value="COMPLETED" />
+        <Tab label="읽고 있는 책" value="READING" />
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
     </div>
