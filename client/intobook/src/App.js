@@ -25,7 +25,6 @@ function App() {
             <Route path="/tutorial" element={<TutorialPage />} />
             <Route path='/search' element={<BookSearchPage />} />
             <Route path="/bookshelves" element={<BookshelvesPage />} />
-            <Route path="/book/:bookId" element={<BookInfoPage />} />
             <Route path="/userbook/:userBookId" element={<BookInfoPage />} />
             <Route path="/alarm" element={<AlarmPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
