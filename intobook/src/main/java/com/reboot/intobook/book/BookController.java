@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -34,13 +35,11 @@ public class BookController {
             )
     })
     public ResponseEntity<?> getSearchList(
-//            @RequestHeader("Authorization") String accessToken,
             @RequestParam String keyword,
             @RequestParam int start) {
         log.info("[Request] search");
-//        JwtUtil jwtUtil = new JwtUtil();
-//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
-        User user = User.builder().userPk(1L).build(); //임시 userPk 1
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = User.builder().userPk(userPk).build();
         return new ResponseEntity<>(bookService.getSearchList(keyword, start, user), HttpStatus.OK);
     }
 
@@ -53,12 +52,10 @@ public class BookController {
             example ="9791188810123"
     )
     public ResponseEntity<?> getSearchDetail(
-//            @RequestHeader("Authorization") String accessToken,
             @PathVariable String isbn) {
         log.info("[Request] search detail");
-//        JwtUtil jwtUtil = new JwtUtil();
-//        Long userPk = jwtUtil.extractClaims(accessToken).get("userPk", Long.class);
-        User user = User.builder().userPk(1L).build();
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        User user = User.builder().userPk(userPk).build();
         return new ResponseEntity<>(bookService.getSearchDetail(user, isbn), HttpStatus.OK);
     }
 
