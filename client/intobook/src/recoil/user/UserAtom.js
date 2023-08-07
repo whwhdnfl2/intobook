@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 // 유저 정보 위한 아톰
 export const UserNameAtom = atom({
-    key: 'UserAtom',
+    key: 'UserNameAtom',
     default: ''
 });
 
