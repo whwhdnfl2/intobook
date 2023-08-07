@@ -31,7 +31,6 @@ const IconDiv = styled.div`
   margin-right: 4px;
 `;
 
-
 const TextDiv = styled.div`
   height: 36px;
   display: flex;
