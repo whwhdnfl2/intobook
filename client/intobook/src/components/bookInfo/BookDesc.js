@@ -28,7 +28,7 @@ const BookDesc = ({ bookInfo }) => {
             <div style={{ fontSize: 'var(--font-h6)', color: '#AFB1B6' }}>{bookInfo?.publisher}</div>
             <span style={{ fontSize: 'var(--font-h6)', color: '#AFB1B6' }}>{bookInfo?.page}p</span>
           </div>
-          <LabelDiv>{ }</LabelDiv>
+          <LabelDiv>{statusInfo}</LabelDiv>
         </TempDiv>
       </BookInfoContentDiv>
     </BookInfoDiv>
@@ -43,7 +43,6 @@ const BookInfoDiv = styled.div`
   border-radius: 20px;
   display: flex;
   padding-left: 10px;
-  // justify-content: center;
   align-items: center;
 `;
 
@@ -51,22 +50,26 @@ const BookInfoContentDiv = styled.div`
   display: flex; 
   flex-direction: column;
   justify-content: space-between;
-  height: 120px; 
-  padding: 5px;
-  margin: 0;
+  width: 220px;
+  height: 110px;
 `;
 
 const LabelDiv = styled.div`
   width: 150px;
   height: 40px;
   flex-shrink: 0;
-  background: #00A887;
+  background: var(--main-green-color);
+  color: var(--white);
+  font-family: var(--main-font);
+  font-size: var(--main-h5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
-
 
 const TempDiv = styled.div`
   display: flex;
-  width: 200px;
+  width: 100%;
   justify-content: space-between;
 `;
 export default BookDesc;

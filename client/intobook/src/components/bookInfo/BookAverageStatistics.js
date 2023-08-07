@@ -12,20 +12,16 @@ const BookAverageStatistics = () => {
 
 const StatisticsDiv = styled.div`
   width: 300px;
-  height: 180px;
   flex-shrink: 0;
-  border-radius: 20px;
-  background: var(--white);
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  margin: 15px auto 15px auto;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
 `;
 
 const Div = styled.div`
-width: 120px;
-height: 150px;
+width: 145px;
+height: 160px;
 flex-shrink: 0;
 border-radius: 10px;
 background: var(--main-color);

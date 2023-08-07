@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { BookDesc, BookStatistics, BookHistoryLog, Tab, Buttons } from './../components/bookInfo';
+import { BookDesc, BookStatistics, BookHistoryLog, Tab } from './../components/bookInfo';
 import { Layout } from './../styles/CommonStyle';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom } from './../recoil/book/BookAtom';
@@ -30,7 +30,6 @@ const BookInfoPage = () => {
         ) : (
           <BookHistoryLog userBookId={userBookId} />
         )}
-        {selectedTab === 'statistics' && <Buttons bookInfo={bookInfo} />}
       </BookInfoContent>
     </Layout>
   );
