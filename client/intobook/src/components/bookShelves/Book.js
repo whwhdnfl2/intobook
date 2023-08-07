@@ -13,8 +13,6 @@ const ResultBook = ({ bookInfo }) => {
   const bookId = bookInfo?.isbn13 || bookInfo?.isbn;
   const status = bookInfo?.status;
 
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <>
     <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: '88px'}}}  >
@@ -33,9 +31,9 @@ const ResultBook = ({ bookInfo }) => {
           <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
             {author}
           </Typography>
-          <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
+          {/* <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
             ({publisher})
-          </Typography>
+          </Typography> */}
         </CardContent>
     </Card>
     </>

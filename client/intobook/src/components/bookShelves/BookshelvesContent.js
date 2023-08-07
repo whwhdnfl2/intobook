@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { FormControl, MenuItem, Select } from '@mui/material';
 import BookList from './BookList';
+import styled from 'styled-components';
 
 const BookshelvesContent = ({ selectedTab }) => {
   const [filter, setFilter] = useState('startedAt'); // 기본 정렬 기준은 등록순
@@ -10,18 +11,46 @@ const BookshelvesContent = ({ selectedTab }) => {
     setFilter((prev) => event.target.value);
   };
 
+
+  const StyledFormControl = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0 8px;
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const SelectLabel = styled.label`
+  margin-right: 8px;
+`;
+
+const SelectBox = styled.select`
+  flex: 1;
+  border: none;
+  background-color: transparent;
+`;
+
+
   return (
     <div>
-      <FormControl>
-        <Select value={filter} onChange={handleFilterChange}>
-          <MenuItem value="startedAt">등록순</MenuItem>
-          <MenuItem value="author">저자순</MenuItem>
-          <MenuItem value="title">제목순</MenuItem>
-          <MenuItem value="nowPage">진행률순</MenuItem>
-        </Select>
-      </FormControl>
-      
-      {<BookList bookStatus={selectedTab} orderBy={filter}/>}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <StyledFormControl>
+        {/* <SelectLabel htmlFor="select">정렬</SelectLabel> */}
+        <SelectBox id="select" value={filter} onChange={handleFilterChange}>
+          <option value="startedAt">등록순</option>
+          <option value="author">저자순</option>
+          <option value="title">제목순</option>
+          <option value="nowPage">진행률순</option>
+        </SelectBox>
+      </StyledFormControl>
+      </div>
+      <div>
+        {<BookList bookStatus={selectedTab} orderBy={filter}/>}
+      </div>
     </div>
   );
 };

@@ -66,8 +66,8 @@ const UpperNavbar = () => {
       </div>
 
       <div className='menu-icons'>
-        <button><FontAwesomeIcon icon={faCircleQuestion} /></button>
-        <FontAwesomeIcon onClick={() => {setOpenModal(true)}}  icon={faBell} />
+        <FontAwesomeIcon onClick={() => {setOpenModal(true)}} icon={faCircleQuestion} />
+        <FontAwesomeIcon icon={faBell} />
         <FontAwesomeIcon icon={faBars} />
       </div>
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'Tutorial'} closeModal={closeModal} />

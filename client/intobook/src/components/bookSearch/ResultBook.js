@@ -20,6 +20,7 @@ const ResultBook = ({ bookCover }) => {
   const clickHandler = () => {
     setIsOpen(true);
   };
+  
   const selectedInfo = {
     cover: bookCover?.cover,
     title,
