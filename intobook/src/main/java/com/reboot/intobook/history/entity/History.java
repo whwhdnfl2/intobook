@@ -1,19 +1,16 @@
 package com.reboot.intobook.history.entity;
 
-import com.reboot.intobook.book.Book;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -38,10 +35,12 @@ public class History {
     @JoinColumn(name = "user_pk")
     private User user;
 
-    @CreatedDate
+    @CreationTimestamp
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    private long readingTime;
 
     private int pageAmount;
 
@@ -55,12 +54,17 @@ public class History {
         this.userBook = userBook;
         this.user = user;
     }
-    public void updateComment( String comment ){
+    public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( String comment, LocalDateTime startTime, LocalDateTime endTime){
         this.comment = comment;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.readingTime = ChronoUnit.MINUTES.between(startTime, endTime);
     }
 
-    public void updateEndTime(LocalDateTime endTime){
-        this.endTime = endTime;
+    public void updateEndTimeAndReadingTime(){
+        LocalDateTime now = LocalDateTime.now();
+        this.endTime = now;
+        this.readingTime = ChronoUnit.MINUTES.between(this.startTime, now);
     }
 
     public void updatePressure(int pressure){

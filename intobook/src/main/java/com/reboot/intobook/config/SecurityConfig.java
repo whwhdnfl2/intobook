@@ -8,7 +8,6 @@ import com.reboot.intobook.user.oauth2.handler.OAuth2LoginSuccessHandler;
 import com.reboot.intobook.user.oauth2.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

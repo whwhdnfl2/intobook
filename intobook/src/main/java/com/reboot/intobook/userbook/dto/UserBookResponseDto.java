@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -20,12 +21,12 @@ public class UserBookResponseDto {
     private String author;
     private String publisher;
     private int nowPage;
-    private Date startedAt;
-    private Date completedAt;
+    private LocalDateTime startedAt;
+    private LocalDateTime completedAt;
     private UserBookStatus status;
     private int page;
     @Builder
-    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, Date startedAt, Date completedAt, UserBookStatus status, int page) {
+    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt, UserBookStatus status, int page) {
         this.userBookPk = userBookPk;
         this.title = title;
         this.coverImage = coverImage;

@@ -1,11 +1,9 @@
 package com.reboot.intobook.fcm;
 
 import com.google.firebase.messaging.*;
-import com.reboot.intobook.fcm.dto.UserPkFcmDto;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

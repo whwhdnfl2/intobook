@@ -1,6 +1,5 @@
 package com.reboot.intobook.history.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,20 +9,25 @@ import java.time.LocalDateTime;
 
 public class GetHistoryResponse {
 
+    private long historyPk;
+
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    private long readingTime;
 
     private String comment;
 
     private int pageAmount;
 
     @Builder
-    public GetHistoryResponse(LocalDateTime startTime, LocalDateTime endTime, String comment, int pageAmount){
+    public GetHistoryResponse(long historyPk, LocalDateTime startTime, LocalDateTime endTime, long readingTime, String comment, int pageAmount){
+        this.historyPk = historyPk;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.readingTime = readingTime;//ChronoUnit.MINUTES.between(startTime, endTime);
         this.comment = comment;
         this.pageAmount = pageAmount;
     }
-
 }

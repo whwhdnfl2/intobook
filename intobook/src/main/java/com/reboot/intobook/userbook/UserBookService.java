@@ -1,7 +1,6 @@
 package com.reboot.intobook.userbook;
 
 import com.reboot.intobook.book.Book;
-import com.reboot.intobook.book.BookRepository;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookOrderBy;
@@ -15,10 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -79,7 +75,7 @@ public class UserBookService {
         }else if (status == UserBookStatus.READING) {
             return false;
         }else {
-            userBook.setCompletedAt(new Date());
+            userBook.setCompletedAt(LocalDateTime.now());
         }
         userBook.setStatus(status);
         return userBookRepository.save(userBook) != null;
@@ -102,7 +98,7 @@ public class UserBookService {
     }
 
     @Transactional
-    public boolean updateUserBook(Long userBookPk, int nowPage, Date startedAt, Date completedAt) {
+    public boolean updateUserBook(Long userBookPk, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt) {
         UserBook userBook = userBookRepository.findById(userBookPk).orElse(null);
         if (userBook == null) return false;
         userBook.setNowPage(nowPage);

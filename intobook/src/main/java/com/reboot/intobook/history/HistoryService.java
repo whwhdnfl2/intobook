@@ -1,7 +1,5 @@
 package com.reboot.intobook.history;
 
-import com.reboot.intobook.book.Book;
-import com.reboot.intobook.book.BookRepository;
 import com.reboot.intobook.history.dto.GetHistoryListResponse;
 import com.reboot.intobook.history.dto.GetHistoryResponse;
 import com.reboot.intobook.history.entity.History;
@@ -13,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +28,6 @@ public class HistoryService {
     private final HistoryRepository historyRepository;
     private final UserBookRepository userBookRepository;
     private final UserRepository userRepository;
-    private final BookRepository bookRepository;
 
     @Transactional
     public Long create( Long userBookPk ) {
@@ -59,12 +54,15 @@ public class HistoryService {
         // userBook 조회
         UserBook findUserBook = userBookRepository.findById(userBookPk)
                         .orElseThrow(() -> new NoSuchElementException("User Book Not Found Error!!!"));
-
-        Page<History> histories = historyRepository.findByUserBook( findUserBook, PageRequest.of( page, 20, Sort.by("startTime")));
+        log.info("유저북" + findUserBook);
+        Page<History> histories = historyRepository.findByUserBookAndEndTimeIsNotNull(findUserBook, PageRequest.of( page, 20, Sort.by("endTime")));
+        log.info("히스토리 : " + histories);
         List<GetHistoryResponse> items = histories.stream().map( history -> {
             return new GetHistoryResponse(
+                    history.getHistoryPk(),
                     history.getStartTime(),
                     history.getEndTime(),
+                    history.getReadingTime(),
                     history.getComment(),
                     history.getPageAmount()
             );
@@ -97,15 +95,17 @@ public class HistoryService {
 
 
     @Transactional
-    public void updateComment( Long historyPk, String comment ) throws NoSuchElementException{
+    public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( Long historyPk, String comment, LocalDateTime startTime, LocalDateTime endTime) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
-        history.updateComment(comment);
+        history.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(comment, startTime, endTime);
     }
 
     @Transactional
-    public void updateEndtime(long historyPk, LocalDateTime endTime) throws NoSuchElementException{
+    public void updateEndtime(long historyPk) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
-        history.updateEndTime(endTime);
+        history.updateEndTimeAndReadingTime();
+        UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
+        userBook.updateCompleteAt(LocalDateTime.now());
     }
 
     @Transactional

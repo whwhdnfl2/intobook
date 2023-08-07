@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -39,9 +39,9 @@ public class UserBook {
     private int nowPage;
 
     @CreationTimestamp
-    private Date startedAt;
+    private LocalDateTime startedAt;
 
-    private Date completedAt;
+    private LocalDateTime completedAt;
 
     @ColumnDefault("0")
     @Type(type = "org.hibernate.type.NumericBooleanType")
@@ -50,4 +50,8 @@ public class UserBook {
     @Enumerated(EnumType.STRING)
     @NotNull
     private UserBookStatus status;
+
+    public void updateCompleteAt(LocalDateTime completedAt){
+        this.completedAt = completedAt;
+    }
 }

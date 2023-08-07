@@ -1,10 +1,8 @@
 package com.reboot.intobook.user.controller;
 
 import com.reboot.intobook.fcm.FCMService;
-import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 

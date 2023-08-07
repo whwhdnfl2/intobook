@@ -1,8 +1,6 @@
 package com.reboot.intobook.user.jwt;
 
 
-
-
 import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.utils.PasswordUtil;

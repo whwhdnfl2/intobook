@@ -7,7 +7,6 @@ import com.reboot.intobook.userbook.dto.UserBookListResponseDto;
 import com.reboot.intobook.userbook.dto.UserBookOrderBy;
 import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBookStatus;
-import com.reboot.intobook.utils.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

@@ -2,14 +2,11 @@ package com.reboot.intobook.history;
 
 import com.reboot.intobook.history.dto.GetHistoryListResponse;
 import com.reboot.intobook.history.dto.GetHistoryResponse;
-import com.reboot.intobook.history.entity.History;
-import com.reboot.intobook.utils.JwtUtil;
-import io.jsonwebtoken.Claims;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +20,7 @@ import java.util.NoSuchElementException;
 @Api(tags = "History API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("historys")
+@RequestMapping("/historys")
 @Slf4j
 public class HistoryController {
     private final HistoryService historyService;
@@ -35,7 +32,7 @@ public class HistoryController {
      */
     @PostMapping()
     @ApiOperation(value="책장 안에 책의 history 생성")
-    public ResponseEntity<Long> createHistory( @RequestParam("userBookPk") long userBookPk) {
+    public ResponseEntity<Long> createHistory( @RequestParam("userBookPk") Long userBookPk) {
 
         Long newHistoryPk = historyService.create( userBookPk );
         return ResponseEntity.status(HttpStatus.CREATED).body(newHistoryPk);
@@ -69,18 +66,18 @@ public class HistoryController {
         }
     }
 
-    @PutMapping("/updateHistoryEndtime")
+    @PutMapping("/updateHistoryEndtime/{historyPk}")
     @ApiOperation(value="책을 읽고 나서 endTime을 수정하는 api")
-    public ResponseEntity<GetHistoryListResponse> updateHistoryEndtime(@PathVariable("historyPk") long historyPk ,@RequestParam("endTime") LocalDateTime endTime ){
+    public ResponseEntity<GetHistoryListResponse> updateHistoryEndtime(@PathVariable("historyPk") long historyPk){
         try{
-            historyService.updateEndtime(historyPk, endTime);
+            historyService.updateEndtime(historyPk);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (NoSuchElementException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/updateHistoryPressure")
+    @PutMapping("/updateHistoryPressure/{historyPk}")
     @ApiOperation(value="책을 읽고 나서 pressure을 수정하는 api")
     public ResponseEntity<GetHistoryListResponse> updateHistoryPressure(@PathVariable("historyPk") long historyPk ,@RequestParam("pressure") int pressure ){
         try{
@@ -91,18 +88,19 @@ public class HistoryController {
         }
     }
 
-    @PatchMapping()
+    @PatchMapping("/{historyPk}")
     @ApiOperation(value="comment 수정하는 api")
-    public ResponseEntity<GetHistoryListResponse> updateHistoryComment(@PathVariable("historyPk") long historyPk, @RequestParam("comment") String comment ){
+    public ResponseEntity<GetHistoryListResponse> updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(@PathVariable("historyPk") long historyPk, @RequestParam("comment") String comment, @RequestParam("startTime") LocalDateTime startTime, @RequestParam("endTime") LocalDateTime endTime ){
         try{
-            historyService.updateComment(historyPk, comment);
+            historyService.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(historyPk, comment, startTime, endTime);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (NoSuchElementException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping()
+
+    @DeleteMapping("/{historyPk}")
     @ApiOperation(value="history 삭제 api")
     public ResponseEntity<GetHistoryListResponse> deleteHistory(@PathVariable("historyPk") long historyPk){
         try{
