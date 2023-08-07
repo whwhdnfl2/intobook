@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -90,7 +91,7 @@ public class HistoryController {
 
     @PatchMapping("/{historyPk}")
     @ApiOperation(value="comment 수정하는 api")
-    public ResponseEntity<GetHistoryListResponse> updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(@PathVariable("historyPk") long historyPk, @RequestParam("comment") String comment, @RequestParam("startTime") LocalDateTime startTime, @RequestParam("endTime") LocalDateTime endTime ){
+    public ResponseEntity<GetHistoryListResponse> updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(@PathVariable("historyPk") long historyPk, @RequestParam("comment") String comment, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("startTime") LocalDateTime startTime, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("endTime") LocalDateTime endTime ){
         try{
             historyService.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(historyPk, comment, startTime, endTime);
             return ResponseEntity.status(HttpStatus.OK).build();

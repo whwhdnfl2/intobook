@@ -55,7 +55,7 @@ public class HistoryService {
         UserBook findUserBook = userBookRepository.findById(userBookPk)
                         .orElseThrow(() -> new NoSuchElementException("User Book Not Found Error!!!"));
         log.info("유저북" + findUserBook);
-        Page<History> histories = historyRepository.findByUserBookAndEndTimeIsNotNull(findUserBook, PageRequest.of( page, 20, Sort.by("endTime")));
+        Page<History> histories = historyRepository.findByUserBookAndEndTimeIsNotNull(findUserBook, PageRequest.of( page, 20, Sort.by("endTime").descending()));
         log.info("히스토리 : " + histories);
         List<GetHistoryResponse> items = histories.stream().map( history -> {
             return new GetHistoryResponse(
