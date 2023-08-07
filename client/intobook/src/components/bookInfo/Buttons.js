@@ -43,7 +43,7 @@ const Buttons = ({ bookInfo }) => {
 };
 
 const StatusDiv = styled.button`
-  width: 150px;
+  width: 142px;
   height: 30px;
   border: none;
   border-radius: 20px;
@@ -58,7 +58,7 @@ const StatusDiv = styled.button`
 `;
 
 const StatusButton = styled.button`
-  width: 150px;
+  width: 142px;
   height: 30px;
   border: none;
   border-radius: 20px;

@@ -31,6 +31,7 @@ const ReadingBook = () => {
   const userBookId = nowReadingBook?.userBookPk;
 
   const nowPage = nowReadingBook?.nowPage + 30;
+  const progress = Math.floor((nowPage / nowReadingBook?.page) * 100);
 
   const clickHandler = () => {
     setIsOpen(true);
@@ -56,7 +57,7 @@ const ReadingBook = () => {
             {!nowReadingBook && (<Typography>책을 등록해보세요</Typography>)}
           </CurrentBookStatus>
         </GridContainer>
-        <ProgressBar now_page={nowPage} />
+        <ProgressBar progress={progress} containerWidth={320} />
       </StyledEngineProvider>
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} />
     </>
@@ -65,17 +66,18 @@ const ReadingBook = () => {
 
 // 이후 styles 폴더로 파일 분리 필요
 const GridContainer = styled(Container)`
-  width: 300px;
+  width: 320px;
   height: 112px;
   padding: 0;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 const CurrentBookStatus = styled(Box)`
-  width: 200px;
+  width: 220px;
   border-radius: 20px;
-  background: var(--white);
+  background: #68A4E3;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
@@ -84,7 +86,7 @@ const CurrentBookStatus = styled(Box)`
 
 const CurrentBook = styled(Box)`
   width: 80px;
-  background: var(--white);
+  background: #68A4E3;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   display: flex;

@@ -10,7 +10,7 @@ const Tab = () => {
   };
 
   return (
-    <div style={{ display: 'flex', margin: '20px' }}>
+    <div style={{ display: 'flex', margin: '12px' }}>
       <span
         onClick={() => handleTabClick('statistics')}
         style={{
@@ -20,7 +20,7 @@ const Tab = () => {
           cursor: 'pointer'
         }}
       >
-        통계
+        책 통계
       </span>
       <span> | </span>
       <span
@@ -32,7 +32,7 @@ const Tab = () => {
           cursor: 'pointer',
         }}
       >
-        독서 히스토리 보기
+        히스토리
       </span>
     </div>
   );
