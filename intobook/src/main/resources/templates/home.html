@@ -137,7 +137,7 @@
         function handleNotifications(event) {
             let value = event.target.value;
             let a = [];
-            // Convert raw data bytes to hex values just for the sake of showing something.
+            // Convert raw data bytes to hex values just for the sake of showing something
             // In the "real" world, you'd use data.getUint8, data.getUint16 or even
             // TextDecoder to process raw data bytes.
             // for (let i = 0; i < value.byteLength; i++) {
@@ -145,15 +145,20 @@
             // }
             // console.log('> ' + a.join(' '));
 
-            for (let i = 0; i < value.byteLength; i++) {
+            for (let i = 0; i < 2; i++) { // 내부, 외부 조도센서값
                 a.push( value.getUint8(i) );
             }
+
+            // a.push( "aaaa");
+            let tmp="";
+            for (let i = 2; i < value.byteLength; i++) { // 압력센서값
+                tmp +=  String.fromCharCode( value.getUint8(i));
+                console.log(tmp);
+            }
+            a.push( tmp );
+
             console.log('> ' + a.join(' '));
-            console.log(value);
-
-
-            // const number = parseInt(value.toString().trim());
-            // console.log(number);
+            // console.log(value);
         }
 
         function sendCharacteristic(characteristic) { // 데이터 전송
