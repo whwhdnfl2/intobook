@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { HistoryLogsAtom } from '../../recoil/book/BookAtom';
 import { Stack, Box } from '@mui/material';
 import { getBookHistory } from './../../api/historyApi';
 import Log from './Log';
 import { styled } from 'styled-components';
 
 const BookHistoryLog = ({ userBookId }) => {
-  const [historyLogs, setHistoryLogs] = useState([]);
+  const [historyLogs, setHistoryLogs] = useRecoilState(HistoryLogsAtom);
 
   useEffect(() => {
     const getHistoryLogs = async () => {
-      const res = await getBookHistory(userBookId, 0);
-      console.log('hi', res)
-      setHistoryLogs(res.items);
+      try {
+        const res = await getBookHistory(userBookId, 0);
+        setHistoryLogs(res.items);
+      } catch (err) {
+        console.error(err);
+      }
     }; 
     getHistoryLogs()
-  }, [userBookId])
+  }, [setHistoryLogs, userBookId])
   
   return (
     <HistoryLogContainer> 

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { HistoryLogAtom } from '../../recoil/book/BookAtom';
+import { LogAtom } from '../../recoil/book/BookAtom';
 import { styled } from 'styled-components';
 import { editBookHistory } from '../../api/historyApi';
 
 const LogEdit = ({ closeModal }) => {
-  const logValues = useRecoilValue(HistoryLogAtom);
+  const logValues = useRecoilValue(LogAtom);
   const [editedComment, setEditedComment] = useState(logValues.comment || '');
 
   const handleTextareaChange = (e) => {
