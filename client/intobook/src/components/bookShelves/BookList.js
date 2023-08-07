@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { userbooks } from '../../api/userbookApi';
 import { useRecoilState } from 'recoil';
 import { UserBooksAtom } from '../../recoil/user/UserAtom';
 import { styled } from 'styled-components';
-import { Typography } from '@mui/material';
-import BookCover from './../common/bookCover';
+import { Stack, Box } from '@mui/material';
+import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
+import  Book from './Book'
 
 const BookList = ({bookStatus, orderBy}) => {
     const [userBooks, setUserBooks] = useRecoilState(UserBooksAtom)
@@ -32,25 +34,21 @@ const BookList = ({bookStatus, orderBy}) => {
       font-size: var(--font-h6);
     `;
 
-    const StyledBookList = styled.div`
-      display: flex;
-      flex-wrap: wrap;
-    `
-
     return ( 
     <div>
-        <StyledBookList>
-            {userBooks.length > 0 ? (
-            userBooks.map((book) => (
-                <StyledBookCompo>
-                    <BookCover key={book.userBookPk} image={book.coverImage} alt={"책이미지"}/>
-                    {/* <span>{book.title}</span> */}
-                </StyledBookCompo>
-            ))
-        ) : (
-            <p>책이 없습니다.</p>
-        )}
-      </StyledBookList>
+        <ResultsContainer>
+          <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
+            { userBooks.length >0? (
+              userBooks.map((book) => (
+                <Box key={book.userBookPk}>
+                  <Link to={`/userbook/${book.userBookPk}`} style={{ textDecoration: 'none' }}>
+                   <Book bookInfo={book}/>
+                  </Link>
+                </Box>
+              ))
+            ) : (<p>책이 없습니다.</p>)}
+          </Stack>
+    </ResultsContainer> 
     </div> );
 }
  

@@ -2,37 +2,23 @@ import React, { useState } from 'react';
 import BookCover from './../common/bookCover';
 import { Typography, Card, CardContent } from '@mui/material';
 import { styled } from 'styled-components';
-import SelectedBook from './SelectedBook';
 
-const ResultBook = ({ bookCover }) => {
-  const tempTitle = bookCover?.title;
-  const tempAauthor = bookCover?.author;
+const ResultBook = ({ bookInfo }) => {
+  const tempTitle = bookInfo?.title;
+  const tempAauthor = bookInfo?.author;
   
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
-  const publisher = bookCover?.publisher ? bookCover?.publisher : '출판사'; 
-  const bookId = bookCover?.isbn13 || bookCover?.isbn;
-  const status = bookCover?.status;
-  const coverImage = bookCover?.cover ? bookCover?.cover : bookCover?.coverImage
+  const publisher = bookInfo?.publisher ? bookInfo?.publisher : '출판사'; 
+  const bookId = bookInfo?.isbn13 || bookInfo?.isbn;
+  const status = bookInfo?.status;
 
   const [isOpen, setIsOpen] = useState(false);
-  
-  const clickHandler = () => {
-    setIsOpen(true);
-  };
-  const selectedInfo = {
-    cover: bookCover?.cover,
-    title,
-    author,
-    publisher,
-    bookId,
-    status
-  }
 
   return (
     <>
-    <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: '88px'}}} onClick={clickHandler}  >
-      <BookCover image={coverImage} alt={title + 'image'}
+    <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: '88px'}}}  >
+      <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
         customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
       />
         <CardContent sx={{ height: '42px', padding: '2px'}} >
@@ -52,7 +38,6 @@ const ResultBook = ({ bookCover }) => {
           </Typography>
         </CardContent>
     </Card>
-    <SelectedBook isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} selectedInfo={selectedInfo} />
     </>
   );
 };
