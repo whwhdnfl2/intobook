@@ -5,7 +5,7 @@ const StatisticsPage = () => {
  
     return ( 
     <div>
-        {username} 님의 통계페이지입니다!
+        {username} 오늘도 피그마만 했다.
         <BookCharacter/>
 
     </div>
