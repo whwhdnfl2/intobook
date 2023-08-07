@@ -1,37 +1,41 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Button } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
+
 
 const Tutorial = ({ closeModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 3;
+  const totalPages = 4;
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const handlePageChange = (event, newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
     <ModalContent>
       {/* 페이지 내용 */}
-      {currentPage === 1 && <p>첫 번째 페이지 내용</p>}
-      {currentPage === 2 && <p>두 번째 페이지 내용</p>}
-      {currentPage === 3 && <p>세 번째 페이지 내용</p>}
+      {currentPage === 1 && <PageContent>첫 번째 페이지 내용 </PageContent>}
+      {currentPage === 2 && <PageContent>두 번째 페이지 내용 </PageContent>}
+      {currentPage === 3 && <PageContent>세 번째 페이지 내용 </PageContent>}
+      {currentPage === 4 && <PageContent>네 번째 페이지 내용 </PageContent>}
 
       {/* 페이지네이션 */}
       <PaginationWrapper>
-        <Page onClick={handlePrevPage}>이전</Page>
-        <Page onClick={handleNextPage}>다음</Page>
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+          hidePrevButton
+          hideNextButton
+          color="primary"
+        />
       </PaginationWrapper>
 
       {/* '나중에 보기' 버튼 */}
-      <SmallButton onClick={closeModal}>나중에 보기</SmallButton>
+      <StyledButton variant="contained" onClick={closeModal}>
+        나중에 보기
+      </StyledButton>
     </ModalContent>
   );
 };
@@ -39,30 +43,28 @@ const Tutorial = ({ closeModal }) => {
 const ModalContent = styled.div`
   min-width: 240px;
   background-color: white;
-  border: 1px solid black;
-  padding: 20px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const PaginationWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Page = styled.div`
-  width: 100px;
-  height: 100px;
-  border: 1px solid black;
+const PageContent = styled.div`
+  width: 100%;
+  height: 300px;
+  background-color: lightblue;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px;
-  cursor: pointer;
 `;
 
-const SmallButton = styled.button`
+const PaginationWrapper = styled.div`
   margin-top: 20px;
 `;
+
+// 여기 왜 important안하면 적용이 안될까
+const StyledButton = styled(Button)`
+  margin-top: 20px !important;
+`;
+
 export default Tutorial;
