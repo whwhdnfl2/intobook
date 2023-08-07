@@ -11,7 +11,7 @@ const Modal = ({ openModal, setOpenModal, modalType }) => {
   return (
     <>
       <Dialog open={openModal} onClose={() => setOpenModal(false)} PaperProps={{ style: { borderRadius: '20px' } }}>
-        <DialogContent sx={{ width: '280px', height: '450px' }}>
+        <DialogContent sx={{ width: '280px', height: '430px' }}>
           {modalType === 'Tutorial' && <Tutorial closeModal={closeModal} />}
           {modalType === 'LogEdit' && <LogEdit closeModal={closeModal} />}
         </DialogContent>
