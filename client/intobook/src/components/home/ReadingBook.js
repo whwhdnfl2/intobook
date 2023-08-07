@@ -43,7 +43,7 @@ const ReadingBook = () => {
         <GridContainer>
           <CurrentBook>
             <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
-              {nowReadingBook && <BookCover image={coverImg} />}
+              {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: 'none' }}  />}
             </Link>
             {!nowReadingBook && (
               <AddCircleOutlineIcon
@@ -76,6 +76,7 @@ const GridContainer = styled(Container)`
 
 const CurrentBookStatus = styled(Box)`
   width: 220px;
+  height: 110px;
   border-radius: 20px;
   background: #68A4E3;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -83,9 +84,10 @@ const CurrentBookStatus = styled(Box)`
   justify-content: center;
   align-items: center;
   `;
-
-const CurrentBook = styled(Box)`
+  
+  const CurrentBook = styled(Box)`
   width: 80px;
+  height: 110px;
   background: #68A4E3;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
