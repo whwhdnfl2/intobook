@@ -1,5 +1,7 @@
 import React from 'react';
 import { ProgressBar } from '../common';
+import BookTotalStatistics from './BookTotalStatistics';
+import BookAverageStatistics from './BookAverageStatistics';
 
 const BookStatistics = () => {
   // 이후에 값 받아오기
@@ -8,8 +10,10 @@ const BookStatistics = () => {
   
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div>
       <ProgressBar progress={progress} containerWidth={300} />
+      <BookTotalStatistics />
+      <BookAverageStatistics />
     </div>
   );
 };

@@ -10,7 +10,7 @@ const Tab = () => {
   };
 
   return (
-    <div style={{ display: 'flex', margin: '12px' }}>
+    <div style={{ display: 'flex', margin: '5px 12px' }}>
       <span
         onClick={() => handleTabClick('statistics')}
         style={{

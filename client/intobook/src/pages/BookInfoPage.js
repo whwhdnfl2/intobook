@@ -23,8 +23,8 @@ const BookInfoPage = () => {
   return (
     <Layout>
       <BookDesc bookInfo={bookInfo} />
-        <Tab />
       <BookInfoContent>
+        <Tab />
         {selectedTab === 'statistics' ? (
           <BookStatistics />
         ) : (
@@ -38,12 +38,13 @@ const BookInfoPage = () => {
 
 const BookInfoContent = styled.div`
   width: 320px;
-  height: 380px;
+  height: 400px;
   flex-shrink: 0;
   border-radius: 20px;
   background: var(--white);
   border: 1px solid var(--main-color);
   padding-top: 10px;
+  margin-top: 10px;
 `;
 
 export default BookInfoPage;
