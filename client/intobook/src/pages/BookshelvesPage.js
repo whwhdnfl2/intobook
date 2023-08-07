@@ -6,15 +6,23 @@ import { Layout } from './../styles/CommonStyle';
 
 
 const BookshelvesPage = () => {
-  const username = "능이"
+  const username = "북빠"
   
   return (
     <Layout>
-      {<TitleTypography>{username}님의 책장</TitleTypography>}
+      <TitleContainer>
+        {<TitleTypography>{username}님의 책장</TitleTypography>}
+      </TitleContainer>
       <BookshelvesMain />
     </Layout>
   );
 }
+
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
 
 const TitleTypography = styled(Typography)`
   variant : h5;

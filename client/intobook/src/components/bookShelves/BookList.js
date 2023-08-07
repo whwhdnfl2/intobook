@@ -8,7 +8,7 @@ import { Stack, Box } from '@mui/material';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 import  Book from './Book'
 
-const BookList = ({bookStatus, orderBy}) => {
+const BookList = ({bookStatus, orderBy, pageKind}) => {
     const [userBooks, setUserBooks] = useRecoilState(UserBooksAtom)
 
     const fetchBooks = async () => {
