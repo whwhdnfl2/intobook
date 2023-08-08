@@ -1,7 +1,7 @@
 import BookCharacter from "../components/userStatistics/BookCharacter";
 
 const StatisticsPage = () => {
-    const username = "zaru"
+    const username = "zzarru"
  
     return ( 
     <div>
