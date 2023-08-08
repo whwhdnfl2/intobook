@@ -73,7 +73,7 @@ const UpperNavbar = () => {
       </LeftSection>
 
       <CenteredLogo className='logo'>
-        B
+        Book
       </CenteredLogo>
 
       <RightSection>
