@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { LogAtom, LogEditAtom } from '../../recoil/book/BookAtom';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
+import { editBookHistory } from '../../api/historyApi';
 import { styled } from 'styled-components';
+import DateTime from './DateTime';
 
 const HistoryLogEdit = () => {
-  const [selectedLog, setSelectedLog] = useRecoilState(LogAtom);
-  const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
+  const selectedLog = useRecoilValue(LogAtom);
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
+  const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
+  const [isOpenTimeEdit, setIsOpenTimeEdit] = useState(false);
+  const [editTarget, setEditTarget] = useState('start')
+  const [selectedStartTime, setSelectedStartTime] = useRecoilState(SelectedStartTimeAtom);
+  const [selectedEndTime, setSelectedEndTime] = useRecoilState(SelectedEndTimeAtom);
+
+
 
 
   console.log(selectedLog, 13333)
+  console.log(editedComment, 555)
+  console.log(selectedStartTime, 6666)
+  console.log(selectedEndTime, 77777)
 
+  // 날짜 데이터 포맷
   function formatDate(inputDate) {
     const date = new Date(inputDate);
     const formattedDate = `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(1)}월 ${String(date.getDate()).padStart(1)}일`;
     return formattedDate;
   }
 
+  // 시간 데이터 포맷
   function formatTime(inputTime) {
     const date = new Date(inputTime);
     const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
@@ -26,23 +39,30 @@ const HistoryLogEdit = () => {
   const date = formatDate(selectedLog.startTime);
   const startTime = formatTime(selectedLog.startTime);
   const endTime = formatTime(selectedLog.endTime);
+  
 
+  // 수정된 한줄평 editedComment에 반영하기
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
   };
 
+  // DB에 수정 요청 보낼 때 DateTime 포맷
+  // const editStartTime = selectedLog.startTime.split(".")[0];
+  // const editEndTime = selectedLog.endTime.split(".")[0];
+
   const editLogHandler = async () => {
     try {
-      // await editBookHistory(logValues.historyPk, startTime, endTime, editedComment);
-      // 저장후 히스토리
+      // await editBookHistory(selectedLog.historyPk, editStartTime, editEndTime, editedComment);
     } catch (err) {
       console.error(err);
     } finally {
-      // closeModal()
+      setIsOpenLogEdit(false);
     }
   };
 
-
+  const updateTimeHandler = (newHours, newMinutes) => {
+    console.log(newHours, newMinutes, '하하핳하')
+  };
 
   return (
     <LogEditContainer>
@@ -54,32 +74,36 @@ const HistoryLogEdit = () => {
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path d="M0 0H12V6L8 10L12 14V20H0V14L4 10L0 6V0ZM10 14.5L6 10.5L2 14.5V18H10V14.5ZM6 9.5L10 5.5V2H2V5.5L6 9.5ZM4 4H8V4.75L6 6.75L4 4.75V4Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv>
+          <ContentDiv onClick={() => {setIsOpenTimeEdit(true); setEditTarget('start')}}>
             <SubTitle>시작 시간</SubTitle>
-            <Content>{startTime}</Content>
+            <Content>{selectedStartTime.hours}:{selectedStartTime.minutes}</Content>
           </ContentDiv>
         </TimeDiv>
         <TimeDiv>
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 20H0V14L4 10L0 6V0H12V6L8 10L12 14M2 5.5L6 9.5L10 5.5V2H2M6 10.5L2 14.5V18H10V14.5M8 16H4V15.2L6 13.2L8 15.2V16Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv>
+          <ContentDiv onClick={() => {setIsOpenTimeEdit(true); setEditTarget('end')}}>
             <SubTitle>마친 시간</SubTitle>
-            <Content>{endTime}</Content>
+            <Content>{selectedEndTime.hours}:{selectedEndTime.minutes}</Content>
           </ContentDiv>
-
         </TimeDiv>
       </TimeContainer>
-      <CommentDiv
-        placeholder={selectedLog.comment === null ? '한줄평을 작성해보세요' : ''}
-        value={editedComment}
-        onChange={handleTextareaChange}
-        maxLength="110"
-      />
-      <div>
+      {isOpenTimeEdit ? (
+          <CommentDiv
+            placeholder={selectedLog.comment === null ? '한줄평을 작성해보세요' : ''}
+            value={editedComment}
+            onChange={handleTextareaChange}
+            maxLength="110"
+          />
+        ) : (
+          <DateTime onSave={updateTimeHandler} targetType={editTarget} />
+        )}
+      {/* <div>
         <Button onClick={editLogHandler}>저장하기</Button>
         <Button onClick={() => setIsOpenLogEdit(false)} style={{ background: 'var(--white)', border: '1px solid var(--main-color)', color: 'var(--main-color)' }}>뒤로 가기</Button>
-      </div>
+      </div> */}
+
 
     </LogEditContainer>
   );
