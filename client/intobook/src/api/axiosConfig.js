@@ -1,4 +1,6 @@
 import Axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { IsLoggedIn } from '../recoil/user/UserAtom';
 
 const axiosInstance = Axios.create({
   baseURL: 'http://localhost:8080',
@@ -15,8 +17,10 @@ var getCookie = function(name) {
 
 axiosInstance.interceptors.request.use(
 (config) => {
+  
   const accessToken = getCookie('accessToken');
   console.log(accessToken);
+  
 
   config.headers['Content-Type'] = 'application/json';
   config.headers['Authorization'] = `Bearer ${accessToken}`;
