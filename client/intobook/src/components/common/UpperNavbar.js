@@ -65,48 +65,48 @@ const UpperNavbar = () => {
 
   return (
     <StyledUpperNavbar>
-       <LeftSection>
-       <HiddenHelpIcon  />
-       <HiddenHelpIcon  />
-       <HiddenHelpIcon  />
-       <HiddenHelpIcon  />
+      <LeftSection>
+        <HiddenHelpIcon />
+        <HiddenHelpIcon />
+        <HiddenHelpIcon />
+        <HiddenHelpIcon />
       </LeftSection>
 
       <CenteredLogo className='logo'>
-        BOOK!
+        Book
       </CenteredLogo>
 
       <RightSection>
-        <HelpIcon onClick={() => {setOpenModal(true)}} />
+        <HelpIcon onClick={() => { setOpenModal(true) }} />
         {/* <Badge badgeContent={4} color="primary"> */}
-         <NotificationsIcon color="action" />
+        <NotificationsIcon color="action" />
         {/* </Badge> */}
         <IconButton
-            id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-            size="small"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'basic-button',
-        }}
-      >
-        <MenuItem onClick={handleClose}>정보수정</MenuItem>
-        <MenuItem onClick={handleClose}>로그아웃</MenuItem>
-      </Menu>
+          id="basic-button"
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+          size="small"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+        >
+          <MenuItem onClick={handleClose}>정보수정</MenuItem>
+          <MenuItem onClick={handleClose}>로그아웃</MenuItem>
+        </Menu>
       </RightSection>
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'Tutorial'} closeModal={closeModal} />
     </StyledUpperNavbar>
