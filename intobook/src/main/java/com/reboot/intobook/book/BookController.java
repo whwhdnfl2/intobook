@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
-@Api(tags={"Book API"}, description="알라딘에서 도서정보 불러오기")
+@Api(tags={"Book API"}, description="알라딘에서 가져오는 도서정보 관련")
 public class BookController {
 
     private final BookService bookService;

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/userbook")
-@Api( tags = {"유저가 저장한 책에 대한 API를 제공하는 Controller"})
+@Api( tags = {"UserBook API"}, description = "책장(유저가 저장한 책) 관련")
 public class UserBookController {
 
     private final UserBookService userBookService;

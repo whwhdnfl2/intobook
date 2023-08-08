@@ -3,6 +3,7 @@ package com.reboot.intobook.user.controller;
 import com.reboot.intobook.fcm.FCMService;
 import com.reboot.intobook.user.service.UserService;
 import com.reboot.intobook.utils.JwtUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Api(tags={"User API"}, description="유저 관련")
 public class UserController {
     @Value("${jwt.secretKey}")
     String secretKey;

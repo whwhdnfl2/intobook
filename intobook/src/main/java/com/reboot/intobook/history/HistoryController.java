@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 
-@Api(tags = "History API")
+@Api(tags = {"History API"}, description = "단순 책 기록 관련")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/historys")
