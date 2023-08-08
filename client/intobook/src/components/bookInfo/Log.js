@@ -3,7 +3,7 @@ import MenuPopup from '../common/MenuPopup';
 import { Card, CardContent } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useSetRecoilState } from 'recoil';
-import { LogAtom } from '../../recoil/book/BookAtom';
+import { LogAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { styled } from 'styled-components';
 
 const Log = ({ log }) => {
@@ -39,6 +39,9 @@ const Log = ({ log }) => {
         : `${hours}시간`
       : `${minutes}분`;
 
+  const st = new Date(startTime);
+  const et = new Date(endTime);
+
   // 이후에는 로그당 독서 시간 받아오기
   const comment = log?.comment || '한줄평을 작성해보세요';
 
@@ -47,6 +50,8 @@ const Log = ({ log }) => {
   const open = Boolean(anchorEl);
 
   const setSelectedLog = useSetRecoilState(LogAtom);
+  const setSelectedStartTime = useSetRecoilState(SelectedStartTimeAtom);
+  const setSelectedEndTime = useSetRecoilState(SelectedEndTimeAtom);
 
   const openMenuHandler = (e) => {
     setAnchorEl(e.currentTarget);
@@ -56,6 +61,14 @@ const Log = ({ log }) => {
       endTime,
       comment: log?.comment,
       readingTime: log?.readingTime
+    });
+    setSelectedStartTime({
+      hours: st.getHours(),
+      minutes: st.getMinutes()
+    });
+    setSelectedEndTime({
+      hours: et.getHours(),
+      minutes: et.getMinutes()
     });
   };
 
