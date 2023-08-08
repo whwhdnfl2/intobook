@@ -4,10 +4,11 @@ import { TutorialPage, BookshelvesPage, AlarmPage, HomePage, StatisticsPage, Boo
 import UpperNavbar from './components/common/UpperNavbar';
 import Navbar from './components/common/Navbar';
 import { useRecoilValue } from 'recoil';
-import { IsLoggedIn } from './recoil/user/UserAtom';
+// import { IsLoggedIn } from './recoil/user/UserAtom';
 
 function App() {
-  const isLoggedIn = useRecoilValue(IsLoggedIn);
+  // const isLoggedIn = useRecoilValue(IsLoggedIn);
+  const isLoggedIn = true
 
   return (
     <div className='App'>
