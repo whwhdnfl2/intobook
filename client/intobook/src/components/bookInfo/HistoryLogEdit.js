@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LogAtom, LogEditAtom } from '../../recoil/book/BookAtom';
+import { editBookHistory } from '../../api/historyApi';
 import { styled } from 'styled-components';
 
 const HistoryLogEdit = () => {
-  const [selectedLog, setSelectedLog] = useRecoilState(LogAtom);
+  const selectedLog = useRecoilValue(LogAtom);
   const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
 
 
   console.log(selectedLog, 13333)
+  console.log(editedComment, 555)
 
+  // 날짜 데이터 포맷
   function formatDate(inputDate) {
     const date = new Date(inputDate);
     const formattedDate = `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(1)}월 ${String(date.getDate()).padStart(1)}일`;
     return formattedDate;
   }
 
+  // 시간 데이터 포맷
   function formatTime(inputTime) {
     const date = new Date(inputTime);
     const formattedTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
@@ -27,22 +31,24 @@ const HistoryLogEdit = () => {
   const startTime = formatTime(selectedLog.startTime);
   const endTime = formatTime(selectedLog.endTime);
 
+  // 수정된 한줄평 editedComment에 반영하기
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
   };
 
+  // DB에 수정 요청 보낼 때 DateTime 포맷
+  const editStartTime = selectedLog.startTime.split(".")[0];
+  const editEndTime = selectedLog.endTime.split(".")[0];
+
   const editLogHandler = async () => {
     try {
-      // await editBookHistory(logValues.historyPk, startTime, endTime, editedComment);
-      // 저장후 히스토리
+      await editBookHistory(selectedLog.historyPk, editStartTime, editEndTime, editedComment);
     } catch (err) {
       console.error(err);
     } finally {
-      // closeModal()
+      setIsOpenLogEdit(false);
     }
   };
-
-
 
   return (
     <LogEditContainer>
