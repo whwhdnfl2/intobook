@@ -31,7 +31,7 @@ const BookList = ({bookStatus, orderBy, pageKind}) => {
       flex-direction: column;
       gap: 15px;
       margin : 10px 10px 10px 10px;
-      font-size: var(--font-h6);
+      font-size: var(--font-h5);
     `;
 
     return ( 

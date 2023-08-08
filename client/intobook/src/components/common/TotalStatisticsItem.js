@@ -39,15 +39,16 @@ const TextDiv = styled.div`
 `;
 
 const Title = styled.div`
-  color: #AFB1B6;
+  color: var(--black);
   font-family: var(--main-font);
-  font-size: var(--font-h6);
+  font-size: var(--font-h5);
   margin-bottom: 3px;
-`;
-
-const Content = styled.div`
+  `;
+  
+  const Content = styled.div`
+  color: #3400C8;
   font-family: var(--main-font);
-  font-size: var(--font-h6);
+  font-size: var(--font-h5);
 `;
 
 export default TotalStatisticsItem;

@@ -11,7 +11,6 @@ const LogEdit = ({ closeModal }) => {
   const handleTextareaChange = (e) => {
     setEditedComment(e.target.value);
   };
-  console.log(logValues, 111)
 
   const editCommentHandler = async () => {
     // historyPk 필요

@@ -3,26 +3,23 @@ import AccessAlarmsOutlinedIcon from '@mui/icons-material/AccessAlarmsOutlined';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import { styled } from 'styled-components';
 
-const BookAverageStatistics = () => {
-  // API 통신
-  const speed = '23'
-  const readingTime = '31'
+const AverageStatistics = ({ readingTime, readSpeed }) => {
 
   return (
     <StatisticsDiv>
       <Div>
         <IconDiv>
-          <AccessAlarmsOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />
+          <AccessAlarmsOutlinedIcon sx={{ marginLeft: '2px', width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
-        <Title>책에 푹 빠져든 속도</Title>
+        <Title>책에 푹 빠져든 시간</Title>
         <Content>{readingTime}분</Content>
       </Div>
       <Div>
         <IconDiv>
-          <SpeedOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />
+          <SpeedOutlinedIcon sx={{ width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 속도</Title>
-        <Content>{speed}p/1h</Content>
+        <Content>{readSpeed}p/1h</Content>
       </Div>
     </StatisticsDiv>
   );
@@ -42,7 +39,7 @@ const Div = styled.div`
   height: 160px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: var(--main-color);
+  background: #5061FF;
 `;
 
 const IconDiv = styled.div`
@@ -50,7 +47,7 @@ const IconDiv = styled.div`
   height: 36px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #CAD0FF;
+  background: #CACFFF;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,4 +70,4 @@ const Content = styled.div`
   font-weight: 600;
 `;
 
-export default BookAverageStatistics;
+export default AverageStatistics;

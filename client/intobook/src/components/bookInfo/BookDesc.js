@@ -15,20 +15,25 @@ const BookDesc = ({ bookInfo }) => {
     status === 'NOWREADING' ? '읽고 있는 책이에요' :
       status === 'READING' ? '읽다 멈춘 책이에요' : '다 읽은 책이에요'
 
+  const statusColor =
+    status === 'NOWREADING' ? 'var(--main-green-color)' :
+      status === 'READING' ? '#FFCD1D' : '#FF604B';
+
   return (
     <BookInfoDiv>
       <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
         customStyle={{ width: '80px', height: '120px', border: '2px solid white', marginRight: '10px' }}
       />
       <BookInfoContentDiv>
-        <div style={{ fontSize: 'var(--font-h3)', color: 'var(--white)' }}>{title}</div>
+        <div style={{ fontSize: 'var(--font-h4)', color: 'var(--white)', width: '150px' }}>{title}</div>
         <TempDiv>
           <div>
-            <div style={{ fontSize: 'var(--font-h5)', marginBottom: '3px' }}>{author}</div>
-            <div style={{ fontSize: 'var(--font-h6)', color: '#AFB1B6' }}>{bookInfo?.publisher}</div>
-            <span style={{ fontSize: 'var(--font-h6)', color: '#AFB1B6' }}>{bookInfo?.page}p</span>
+            <div style={{ fontSize: 'var(--font-h4)', marginBottom: '3px' }}>{author}</div>
+            <div style={{ fontSize: 'var(--font-h5)', marginBottom: '4px', color: '#AFB1B6' }}>{bookInfo?.publisher}</div>
+            <span style={{ fontSize: 'var(--font-h5)', color: '#AFB1B6' }}>{bookInfo?.page}p</span>
           </div>
-          <LabelDiv>{statusInfo}</LabelDiv>
+          {/* <LabelDiv>{statusInfo}</LabelDiv> */}
+          <LabelDiv style={{ backgroundColor: statusColor }}>{statusInfo}</LabelDiv>
         </TempDiv>
       </BookInfoContentDiv>
     </BookInfoDiv>
@@ -39,7 +44,7 @@ const BookInfoDiv = styled.div`
   width: 310px;
   height: 140px;
   flex-shrink: 0;
-  background-color: #5A7FFF;
+  background-color: var(--main-color);
   border-radius: 20px;
   display: flex;
   padding-left: 10px;

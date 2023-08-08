@@ -24,7 +24,6 @@ export const editBookHistory = async (historyPk, comment) => {
         comment,
       },
     })
-    console.log(res.data);
     return res.data;
   } catch (err) {
     return err
@@ -35,7 +34,6 @@ export const editBookHistory = async (historyPk, comment) => {
 export const deleteBookHistory = async (historyPk) => {
   try {
     const res = await axiosInstance.delete(`/historys/${historyPk}`)
-    console.log(res.data)
     return res.data;
   } catch (err) {
     return err

@@ -37,7 +37,7 @@ const BookHistoryLog = ({ userBookId }) => {
 const HistoryLogContainer = styled.div`
   width: 300px;
   height: 350px;
-  margin: 0 auto;
+  margin: 10px auto;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
