@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
+import React from 'react';
 import { deleteBookHistory } from '../../api/historyApi';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { HistoryLogsAtom, LogAtom, LogEditAtom } from '../../recoil/book/BookAtom';
 import { Menu, MenuItem } from '@mui/material';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { HistoryLogsAtom, LogAtom } from '../../recoil/book/BookAtom';
 
 const MenuPopup = ({ anchorEl, open, onClose }) => {
-  const [openModal, setOpenModal] = useState(false);
   const log = useRecoilValue(LogAtom);
   const [historyLog, setHistoryLog] = useRecoilState(HistoryLogsAtom);
+  const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
 
   const deleteLogHandler = async () => {
     try {
@@ -41,11 +40,9 @@ const MenuPopup = ({ anchorEl, open, onClose }) => {
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={() => { onClose(); setOpenModal(true); }} sx={{ fontSize: '12px' }} >수정하기</MenuItem>
-        {/* <MenuItem onClick={onClose} sx={{ fontSize: '12px' }}>삭제하기</MenuItem> */}
+        <MenuItem onClick={() => { onClose(); setIsOpenLogEdit(true); }} sx={{ fontSize: '12px' }} >수정하기</MenuItem>
         <MenuItem onClick={deleteLogHandler} sx={{ fontSize: '12px' }}>삭제하기</MenuItem>
       </Menu>
-      <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'LogEdit'} />
     </>
   );
 };

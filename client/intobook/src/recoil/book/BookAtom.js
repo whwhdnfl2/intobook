@@ -5,6 +5,11 @@ export const BookInfoTabAtom = atom({
     default: 'statistics'
 });
 
+export const LogEditAtom = atom({
+    key: 'LogEditAtom',
+    default: false
+});
+
 export const HistoryLogsAtom = atom({
     key: 'HistoryLogsAtom',
     default: []
