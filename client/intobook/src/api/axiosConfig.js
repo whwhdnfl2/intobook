@@ -19,8 +19,11 @@ axiosInstance.interceptors.request.use(
 (config) => {
   
   const accessToken = getCookie('accessToken');
-  console.log(accessToken);
-  
+  console.log('토큰',accessToken);
+
+  // const [isLoggedIn, setIsLoggedIn] = useRecoilState(IsLoggedIn);
+
+  // setIsLoggedIn(accessToken);
 
   config.headers['Content-Type'] = 'application/json';
   config.headers['Authorization'] = `Bearer ${accessToken}`;

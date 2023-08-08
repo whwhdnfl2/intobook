@@ -5,12 +5,14 @@ import { styled } from 'styled-components';
 import { Button } from '@mui/material';
 import { getToken } from 'firebase/messaging';
 import { messaging } from '../firebase';
+import { useRecoilState } from 'recoil';
+import { IsLoggedIn } from '../recoil/user/UserAtom';
 
 const HomePage = () => {
   // HomePage 마운트(?)될 때 
     // 블루투스/북갈피 상태 업데이트하기(bookmarkAtom default 값 사용X, 커스텀 훅 사용)
     // 리딩북 가져오기
-
+    console.log('홈페이지에서 상태',sessionStorage.getItem('isLoggedIn'))
   // reocil 전역 상태에서 값 받아오기
   const nickname = '북빠';
 
@@ -32,23 +34,6 @@ const HomePage = () => {
         })
       }})};
 
-
-    function setCookie(cookie_name, value, days) {
-      var exdate = new Date();
-      exdate.setDate(exdate.getDate() + days);
-      // 설정 일수만큼 현재시간에 만료값으로 지정
-    
-      var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
-      document.cookie = cookie_name + '=' + cookie_value;
-    }
-  
-    let query = window.location.search;
-    let param = new URLSearchParams(query);
-    let accessToken = param.get("accessToken");
-    if (accessToken !== null) {
-      setCookie('accessToken', accessToken.slice(7), '3');
-    }
-    // console.log(getCookie('accessToken'));
 
   return (
     <Layout>
