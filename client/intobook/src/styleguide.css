@@ -8,7 +8,7 @@
 :root {
     --main-color: #5A7FFF;
     --main-green-color: #00A887;
-    --main-base-color: #E1F1FF;
+    --main-base-color: #EDF7FF;
     /* --main-base-color: #F7FFE9; */
     --black: #18191a;
     --white: #ffffff;
@@ -18,9 +18,8 @@
     --font-h1: 32px;
     --font-h2: 28px;
     --font-h3: 24px;
-    --font-h4: 20px;
-    --font-h5: 18px;
-    --font-h6: 12px;
+    --font-h4: 18px;
+    --font-h5: 12px;
 
     --main-font: "BM HANNA_TTF-Regular", Helvetica;
     --content-font: "Inter", Helvetica;

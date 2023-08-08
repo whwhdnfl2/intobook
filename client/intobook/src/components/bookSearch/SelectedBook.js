@@ -112,7 +112,7 @@ const StatusButton = styled.button`
   color: var(--white);
   text-align: center;
   font-family: var(--main-font);
-  font-size: var(--font-h6);
+  font-size: var(--font-h5);
   letter-spacing: 0.4px;
 `;
 

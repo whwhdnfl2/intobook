@@ -26,8 +26,6 @@ const Log = ({ log }) => {
     }
   }
 
-  console.log(log, 133333)
-  
   const formattedStartTime = formatDateTime(startTime);
   const formattedEndTime = formatDateTime(endTime, false);
   

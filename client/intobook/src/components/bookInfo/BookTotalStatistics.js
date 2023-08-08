@@ -60,10 +60,9 @@ const StatisticsDiv = styled.div`
   height: 120px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: #68A4E3;
+  background: #C2D7FF;
   margin: 15px auto 15px auto;
   display: flex; 
-  // flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 `;

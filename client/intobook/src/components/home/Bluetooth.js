@@ -11,7 +11,7 @@ const Bluetooth = () => {
     <BluetoothDiv
       style={{
         color: isConnected ? 'var(--main-color)' : 'var(--bg-gray)',
-        fontSize: isConnected ? 'var(--font-h5)' : 'var(--font-h2)',
+        fontSize: isConnected ? 'var(--font-h4)' : 'var(--font-h2)',
       }}
     >
       <IconWrapper>

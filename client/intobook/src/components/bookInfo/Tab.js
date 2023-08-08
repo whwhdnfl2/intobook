@@ -35,7 +35,7 @@ const Tab = () => {
 
 const TabContainer = styled.div`
   display: flex;
-  margin: 10px 12px;
+  margin: 8px 12px;
 `;
 
 const TabItem = styled.span`
@@ -44,6 +44,7 @@ const TabItem = styled.span`
   color: ${props => props.selected ? 'var(--main-color)' : '#818181'};
   cursor: pointer;
   border-bottom: ${props => props.selected ? '3px solid var(--main-color)' : 'none'};
+  fonst-size: var(--font-h4);
 `;
 
 export default Tab;

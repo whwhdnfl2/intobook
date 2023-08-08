@@ -9,14 +9,14 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
     <StatisticsDiv>
       <Div>
         <IconDiv>
-          <AccessAlarmsOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />
+          <AccessAlarmsOutlinedIcon sx={{ marginLeft: '2px', width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 시간</Title>
         <Content>{readingTime}분</Content>
       </Div>
       <Div>
         <IconDiv>
-          <SpeedOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />
+          <SpeedOutlinedIcon sx={{ width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 속도</Title>
         <Content>{readSpeed}p/1h</Content>
@@ -39,7 +39,7 @@ const Div = styled.div`
   height: 160px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: var(--main-color);
+  background: #5061FF;
 `;
 
 const IconDiv = styled.div`
@@ -47,7 +47,7 @@ const IconDiv = styled.div`
   height: 36px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #CAD0FF;
+  background: #CACFFF;
   display: flex;
   justify-content: center;
   align-items: center;
