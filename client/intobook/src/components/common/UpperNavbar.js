@@ -1,17 +1,15 @@
 import { useState } from 'react';
 import * as React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars } from '@mui/icons-material';
 import HelpIcon from '@mui/icons-material/Help';
 import MenuIcon from '@mui/icons-material/Menu';
-import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { IsLoggedIn } from '../../recoil/user/UserAtom';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import Modal from './Modal';
 
 const StyledUpperNavbar = styled.div`
@@ -45,8 +43,9 @@ const HiddenHelpIcon = styled(HelpIcon)`
 `;
 
 const UpperNavbar = () => {
-
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(IsLoggedIn); //
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,6 +53,13 @@ const UpperNavbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogout = () => {
+    // setIsLoggedIn(false);
+    sessionStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+    window.location.reload(); // 페이지 리로드
+  }
 
 
   const [openModal, setOpenModal] = useState(false);
@@ -105,7 +111,7 @@ const UpperNavbar = () => {
           }}
         >
           <MenuItem onClick={handleClose}>정보수정</MenuItem>
-          <MenuItem onClick={handleClose}>로그아웃</MenuItem>
+          <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
         </Menu>
       </RightSection>
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'Tutorial'} closeModal={closeModal} />
