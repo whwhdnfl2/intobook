@@ -5,7 +5,6 @@ import UpperNavbar from './components/common/UpperNavbar';
 import Navbar from './components/common/Navbar';
 import { useRecoilValue } from 'recoil';
 import { IsLoggedIn } from './recoil/user/UserAtom';
-import { RecoilRoot } from 'recoil';
 
 function App() {
   // const isLoggedIn = useRecoilValue(IsLoggedIn);
