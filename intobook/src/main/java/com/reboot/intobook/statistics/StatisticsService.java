@@ -18,9 +18,9 @@ public class StatisticsService {
     private final HistoryRepository historyRepository;
     public GetUserStaticResponse getUserStatic( Long userPk ){
         // 유저의 userBookList 구하기
-        List<UserBook> userBookList = userBookRepository.findByUserPk(userPk);
+        List<UserBook> userBookList = userBookRepository.findByUserUserPk(userPk);
         // 유저의 historyList 구하기
-        List<GetHistoryResponse> historyList = historyRepository.findByUserPk(userPk);
+        List<GetHistoryResponse> historyList = historyRepository.findByUserUserPk(userPk);
 
         // totalReadPage 계산
         int totalReadPage = 0;
