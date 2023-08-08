@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { BookDesc, BookStatistics, BookHistoryLog, Tab } from './../components/bookInfo';
+import { BookDesc, BookStatistics, BookHistoryLog, Tab, HistoryLogEdit } from './../components/bookInfo';
 import { Layout } from './../styles/CommonStyle';
 import { useRecoilValue } from 'recoil';
-import { BookInfoTabAtom } from './../recoil/book/BookAtom';
+import { BookInfoTabAtom, LogEditAtom } from './../recoil/book/BookAtom';
 import { getUserBookInfo } from '../api/userbookApi';
 import { styled } from 'styled-components';
 
@@ -11,6 +11,7 @@ const BookInfoPage = () => {
   const { userBookId } = useParams();
   const [bookInfo, setBookInfo] = useState(null);
   const selectedTab = useRecoilValue(BookInfoTabAtom);
+  const isOpenLogEdit = useRecoilValue(LogEditAtom);
 
   useEffect(() => {
     const getBookInfo = async () => {
@@ -28,7 +29,7 @@ const BookInfoPage = () => {
         {selectedTab === 'statistics' ? (
           <BookStatistics />
         ) : (
-          <BookHistoryLog userBookId={userBookId} />
+          isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
         )}
       </BookInfoContent>
     </Layout>

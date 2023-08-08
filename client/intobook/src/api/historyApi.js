@@ -16,14 +16,16 @@ export const getBookHistory = async (userBookPk, page) => {
 };
 
 // 로그 수정하기
-export const editBookHistory = async (historyPk, comment) => {
+export const editBookHistory = async (historyPk, startTime, endTime, comment) => {
   try {
-    const res = await axiosInstance.patch(`/historys`, null, {
+    const res = await axiosInstance.patch(`/historys/${historyPk}`, null, {
       params: {
-        historyPk,
+        startTime,
+        endTime,
         comment,
       },
     })
+    console.log(res.data)
     return res.data;
   } catch (err) {
     return err
