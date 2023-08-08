@@ -18,16 +18,18 @@ public class UserBookListResponseDto {
     private Long userBookPk;
     private String title;
     private String coverImage;
+    private String author;
     private int nowPage;
     private LocalDateTime startedAt;
     private LocalDateTime completedAt;
     private UserBookStatus status;
     private int page;
     @Builder
-    public UserBookListResponseDto(Long userBookPk, String title, String coverImage, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt, UserBookStatus status, int page) {
+    public UserBookListResponseDto(Long userBookPk, String title, String coverImage, String author, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt, UserBookStatus status, int page) {
         this.userBookPk = userBookPk;
         this.title = title;
         this.coverImage = coverImage;
+        this.author = author;
         this.nowPage = nowPage;
         this.startedAt = startedAt;
         this.completedAt = completedAt;
@@ -40,6 +42,7 @@ public class UserBookListResponseDto {
                 .userBookPk(userBook.getUserBookPk())
                 .title(userBook.getBook().getTitle())
                 .coverImage(userBook.getBook().getCoverImage())
+                .author(userBook.getBook().getAuthor())
                 .nowPage(userBook.getNowPage())
                 .startedAt(userBook.getStartedAt())
                 .completedAt(userBook.getCompletedAt())
