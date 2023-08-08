@@ -8,19 +8,20 @@ import { useRecoilValue } from 'recoil';
 
 function App() {
   // const isLoggedIn = useRecoilValue(IsLoggedIn);
-  const isLoggedIn = true
+  const isLoggedIn = true;
 
   return (
     <div className='App'>
       <BrowserRouter>
-        {isLoggedIn && <UpperNavbar/>}
+        {isLoggedIn && <UpperNavbar />}
         <div className='main-frame'>
           <Routes>
-          {isLoggedIn ? (
+            {/* {isLoggedIn ? (
           <Route path="/" element={<HomePage />} />
           ) : (
             <Route path="/" element={<LoginPage />} />
-          )}
+          )} */}
+            <Route path="/" element={<HomePage />} />
             <Route path="/tutorial" element={<TutorialPage />} />
             <Route path='/search' element={<BookSearchPage />} />
             <Route path="/bookshelves" element={<BookshelvesPage />} />

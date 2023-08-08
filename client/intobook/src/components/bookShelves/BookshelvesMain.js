@@ -5,7 +5,7 @@ import BookshelvesContent from './BookshelvesContent'; // 책장 내용 컴포�
 import { styled } from 'styled-components';
 
 const BookshelvesMain = () => {
-  const [selectedTab, setSelectedTab] = useState('READING'); // 'all', 'read', 'reading' 중 하나로 초기화
+  const [selectedTab, setSelectedTab] = useState(''); // 'all', 'read', 'reading' 중 하나로 초기화
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
