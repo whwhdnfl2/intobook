@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>블루투스 테스트</title>
+</head>
+<body>
+    <button id="scan">블루투스 스캔</button>
+    <button id="disconnect">연결 끊기</button>
+    <button id="reconnect">다시 연결</button>
+    <button id="send">데이터 보내기</button>
+    <button id="get">데이터 받기</button>
+
+    <script>
+        var bluetoothDevice;
+        var Bcharacteristic;
+
+        document.querySelector('#scan').addEventListener("click", () => {
+            navigator.bluetooth.requestDevice({
+             filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
+            })
+                .then(device => {
+                    // Human-readable name of the device.
+                    console.log('Connecting to GATT Server...');
+                    bluetoothDevice = device;
+                    // Attempts to connect to remote GATT Server.
+                    return bluetoothDevice.gatt.connect(); })
+                .then(server => {
+                    // Getting Service…
+                    console.log('Getting Service...');
+                    return server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');
+                })
+                .then(service => {
+                    // Getting Characteristic…
+                    console.log('Getting Characteristic...');
+                    return service.getCharacteristic('0000ffe1-0000-1000-8000-00805f9b34fb');
+                })
+                .then(characteristic => {
+                    Bcharacteristic = characteristic;
+                    return Bcharacteristic.startNotifications().then(_ => {
+                        console.log('> Notifications started');
+                        Bcharacteristic.addEventListener('characteristicvaluechanged', handleNotifications);
+                    });
+                })
+                .catch(error => { console.error(error); });
+        })
+
+        function handleCharacteristicValueChanged(event) {
+            const value = event.target.value;
+            console.log('Received ' + value);
+            // TODO: Parse Heart Rate Measurement value.
+            // See https://github.com/WebBluetoothCG/demos/blob/gh-pages/heart-rate-sensor/heartRateSensor.js
+        }
+
+        document.querySelector('#disconnect').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                onDisconnectButtonClick();
+            }
+        });
+
+        document.querySelector('#reconnect').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                onReconnectButtonClick();
+            }
+        });
+
+        document.querySelector('#send').addEventListener('click', function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                sendCharacteristic(Bcharacteristic);
+            }
+        });
+
+        document.querySelector('#get').addEventListener("click", function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (isWebBluetoothEnabled()) {
+                getCharacteristic(Bcharacteristic);
+            }
+        });
+
+        function connect() {
+            console.log('Connecting to Bluetooth Device...');
+            return bluetoothDevice.gatt.connect()
+                .then(server => {
+                    console.log('> Bluetooth Device connected');
+                });
+        }
+
+
+        function onDisconnectButtonClick() {
+            if (!bluetoothDevice) {
+                return;
+            }
+
+            if (bluetoothDevice.gatt.connected) {
+                bluetoothDevice.gatt.disconnect();
+                console.log('Disconnecting from Bluetooth Device Successfully');
+            } else {
+                console.log('> Bluetooth Device is already disconnected');
+            }
+        }
+
+        function onReconnectButtonClick() {
+            if (!bluetoothDevice) {
+                return;
+            }
+            if (bluetoothDevice.gatt.connected) {
+                console.log('> Bluetooth Device is already connected');
+                return;
+            }
+            connect()
+                .catch(error => {
+                    console.log('Argh! ' + error);
+                });
+        }
+
+        function isWebBluetoothEnabled() {
+            if (navigator.bluetooth) {
+                return true;
+            } else {
+                console.log('Web Bluetooth API is not available.\n' +
+                    'Please make sure the "Experimental Web Platform features" flag is enabled.');
+                return false;
+            }
+        }
+
+        function handleNotifications(event) {
+            let value = event.target.value;
+            // console.log(value);
+            let a = [];
+            // Convert raw data bytes to hex values just for the sake of showing something
+            // In the "real" world, you'd use data.getUint8, data.getUint16 or even
+            // TextDecoder to process raw data bytes.
+            // for (let i = 0; i < value.byteLength; i++) {
+            //     a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+            // }
+            // console.log('> ' + a.join(' '));
+
+            let tmp2="";
+            for (let i = 0; i < value.byteLength; i++) { // 압력센서값
+
+                if( value.getUint8(i) == 32 ){ // 공백의 ASCII 코드값 32
+                    a.push( ('0000' + tmp2).slice(-4) ); // 항상 4자리수로 출력하도록 맞춰서 넣음
+                    tmp2="";
+                }else{
+                    tmp2 +=  String.fromCharCode( value.getUint8(i) );
+                }
+            }
+
+            console.log('> ' + a.join(' '));
+        }
+
+        function sendCharacteristic(characteristic) { // 데이터 전송
+            console.log("데이터를 전송중입니다...");
+            console.log(characteristic);
+            // characteristic.value = new Uint8Array([0x04, 0x03, 0x02, 0x01]);
+            // characteristic.writeValueWithResponse(new Uint8Array([0x04, 0x03, 0x02, 0x01]));
+            characteristic.writeValueWithoutResponse(new Uint8Array([ 0x02, 0x01, 0x04, 0x03, 0x04, 0x03]));
+        }
+
+        function getCharacteristic(characteristic) { // 데이터 받기
+            characteristic.startNotifications().then(() => {
+                console.log("데이터를 받는중입니다...");
+
+                // console.log(characteristic);
+
+                var data = characteristic.readValue();
+                // console.log(data);
+
+            })
+        }
+
+
+
+    </script>
+</body>
+</html>
