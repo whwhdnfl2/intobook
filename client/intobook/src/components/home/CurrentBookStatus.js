@@ -45,7 +45,7 @@ const CurrentBookStatus = () => {
 
   return (
     <>
-      <CurrentBookContainer>
+      <CurrentBookContainer sx={{ background: nowReadingBook? '#859FF8' : 'var(--white)' }}>
         {nowReadingBook && (
           <Container>
             <Content>{title}</Content>
@@ -71,7 +71,12 @@ const CurrentBookStatus = () => {
             }
           </Container>
         )}
-        {!nowReadingBook && (<Typography>책을 등록해보세요</Typography>)}
+        {!nowReadingBook && (
+          <div>
+            <Content style={{ color: 'black' }}>지금 읽고 있는 책이 없네요!</Content>
+            <Content style={{ color: 'black' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
+          </div>
+        )}
       </CurrentBookContainer>
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
     </>
@@ -104,7 +109,6 @@ const CurrentBookContainer = styled(Box)`
   width: 220px;
   height: 90px;
   border-radius: 20px;
-  background: #859FF8;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
   display: flex;
