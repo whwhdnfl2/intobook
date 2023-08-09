@@ -9,7 +9,7 @@ import { AccessToken } from './recoil/user/UserAtom';
 
 function App() {
 
-  // const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
 
   const [token, setToken] = useRecoilState(AccessToken);
 
@@ -18,10 +18,10 @@ function App() {
   return (
       <div className='App'>
         <BrowserRouter>
-          {token && <UpperNavbar />}
+          {isLoggedIn && <UpperNavbar />}
           <div className='main-frame'>
             <Routes>
-              <Route path="/" element={token ? <HomePage /> : <LoginPage />} />
+              <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
               {/* <Route path="/" element={<HomePage />} /> */}
               <Route path="/tutorial" element={<TutorialPage />} />
               <Route path='/search' element={<BookSearchPage />} />
@@ -32,7 +32,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
             </Routes>
           </div>
-          {token && <Navbar />}
+          {isLoggedIn && <Navbar />}
         </BrowserRouter>
       </div>
   );

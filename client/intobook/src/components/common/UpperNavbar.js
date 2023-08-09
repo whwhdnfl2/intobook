@@ -35,7 +35,8 @@ const UpperNavbar = () => {
   function handleLogout() {
     deleteCookie('accessToken'); // 쿠키 삭제
     setToken(null); // 상태 업데이트
-    navigate('/'); // 로그인 페이지로 이동
+    sessionStorage.removeItem('isLoggedIn');
+    navigate('/login'); // 로그인 페이지로 이동
   }
 
 

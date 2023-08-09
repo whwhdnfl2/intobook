@@ -31,7 +31,7 @@ const LoginPage = () => {
   let accessToken = param.get("accessToken");
   if (accessToken !== null) {
     setCookie('accessToken', accessToken.slice(7), '3');
-    // sessionStorage.setItem('isLoggedIn', true);
+    sessionStorage.setItem('isLoggedIn', true);
     setToken(accessToken.slice(7))
   }
 
