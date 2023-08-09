@@ -1,5 +1,4 @@
 import React from 'react';
-import { BarChart } from '@mui/x-charts';
 
 const WeeklyStatistic = () => {
   const lastWeek = [1, 2, 3, 4, 5, 6, 7];
@@ -14,13 +13,7 @@ const WeeklyStatistic = () => {
 
   return (
     <div>
-      일주일 통계
-      <BarChart
-        xAxis={[{ scaleType: 'band', data: xAxisLabels }]}
-        series={seriesData}
-        width={360}
-        height={300}
-      />
+      외않되
     </div>
   );
 };
