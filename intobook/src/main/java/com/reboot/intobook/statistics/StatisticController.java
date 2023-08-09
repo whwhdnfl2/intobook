@@ -1,6 +1,5 @@
 package com.reboot.intobook.statistics;
 
-import com.reboot.intobook.statistics.dto.GetNWeeksReadResponse;
 import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import io.swagger.annotations.Api;

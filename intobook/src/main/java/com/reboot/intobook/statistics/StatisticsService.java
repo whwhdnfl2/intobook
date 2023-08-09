@@ -22,7 +22,7 @@ public class StatisticsService {
         // 유저의 userBookList 구하기
         List<UserBook> userBookList = userBookRepository.findByUserUserPk(userPk);
         // 유저의 historyList 구하기
-        List<GetHistoryResponse> historyList = historyRepository.findByUserUserPk(userPk);
+        List<History> historyList = historyRepository.findByUserUserPk(userPk);
 
         // totalReadPage 계산
         int totalReadPage = 0;
@@ -35,7 +35,7 @@ public class StatisticsService {
 
         // totalReadTime 계산
         int totalReadTime = 0;
-        for( GetHistoryResponse h: historyList ){
+        for( History h: historyList ){
             totalReadTime += h.getReadingTime();
         }
 
@@ -61,7 +61,7 @@ public class StatisticsService {
                 .build();
     }
 
-    private int findMaxReadDaysInRow(List<GetHistoryResponse> historyList) {
+    private int findMaxReadDaysInRow(List<History> historyList) {
         if (historyList == null || historyList.isEmpty()) {
             return 0;
         }
