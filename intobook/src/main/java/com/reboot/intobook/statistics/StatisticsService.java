@@ -2,7 +2,7 @@ package com.reboot.intobook.statistics;
 
 import com.reboot.intobook.history.HistoryRepository;
 import com.reboot.intobook.history.dto.GetHistoryResponse;
-import com.reboot.intobook.statistics.dto.GetUserStaticResponse;
+import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import com.reboot.intobook.userbook.UserBookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 public class StatisticsService {
     private final UserBookRepository userBookRepository;
     private final HistoryRepository historyRepository;
-    public GetUserStaticResponse getUserStatic( Long userPk ){
+    public GetUserStatisticsResponse getUserStatic(Long userPk ){
         // 유저의 userBookList 구하기
         List<UserBook> userBookList = userBookRepository.findByUserUserPk(userPk);
         // 유저의 historyList 구하기
@@ -48,7 +48,7 @@ public class StatisticsService {
             timePerRead = totalReadTime / historyList.size();
         }
 
-        return GetUserStaticResponse.builder()
+        return GetUserStatisticsResponse.builder()
                 .totalReadBook( userBookList.size() )
                 .maxReadDaysInRow( maxReadDaysInRow )
                 .totalReadPage( totalReadPage )

@@ -1,6 +1,6 @@
 package com.reboot.intobook.statistics;
 
-import com.reboot.intobook.statistics.dto.GetUserStaticResponse;
+import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class StatisticController {
 
     @GetMapping("/user")
     @ApiOperation(value="해당 회원의 통계 조회")
-    public ResponseEntity<GetUserStaticResponse> getUserStatic(){
+    public ResponseEntity<GetUserStatisticsResponse> getUserStatic(){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
-        GetUserStaticResponse response = statisticsService.getUserStatic(userPk);
+        GetUserStatisticsResponse response = statisticsService.getUserStatic(userPk);
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

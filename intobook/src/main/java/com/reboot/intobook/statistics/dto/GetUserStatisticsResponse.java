@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class GetUserStaticResponse {
+public class GetUserStatisticsResponse {
     private int totalReadBook;
     private int maxReadDaysInRow;
     private int totalReadPage;
