@@ -7,7 +7,7 @@ const StatisticsPage = () => {
 
     return (
         <div>
-            {username} 오늘도 피그마만 했다.
+            {username} 님의 독서 유형은..
             <BookCharacter />
             <TotalStatistic />
             <WeeklyStatistic />

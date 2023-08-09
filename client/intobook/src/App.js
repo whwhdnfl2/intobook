@@ -8,8 +8,8 @@ import { IsLoggedIn } from './recoil/user/UserAtom';
 
 function App() {
   // const isLoggedIn = useRecoilValue(IsLoggedIn);
-  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-  // const isLoggedIn = true;
+  // const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+  const isLoggedIn = true;
   
   return (
       <div className='App'>
@@ -18,7 +18,7 @@ function App() {
           <div className='main-frame'>
             <Routes>
               <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
-              {/* <Route path="/" element={<HomePage />} /> */}
+              <Route path="/" element={<HomePage />} />
               <Route path="/tutorial" element={<TutorialPage />} />
               <Route path='/search' element={<BookSearchPage />} />
               <Route path="/bookshelves" element={<BookshelvesPage />} />
