@@ -8,7 +8,6 @@ import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -29,7 +28,7 @@ public class StatisticsService {
         }
 
         //maxReadSequence 계산
-        int maxReadSequence = findMaxConsecutiveDays( historyList );
+        int maxReadDaysInRow = findMaxReadDaysInRow( historyList );
 
         // totalReadTime 계산
         int totalReadTime = 0;
@@ -51,7 +50,7 @@ public class StatisticsService {
 
         return GetUserStaticResponse.builder()
                 .totalReadBook( userBookList.size() )
-                .maxReadDaysInRow( maxReadSequence )
+                .maxReadDaysInRow( maxReadDaysInRow )
                 .totalReadPage( totalReadPage )
                 .totalReadTime( totalReadTime )
                 .pagePerHour( pagePerHour )
@@ -60,28 +59,12 @@ public class StatisticsService {
     }
 
 
-    public int findMaxConsecutiveDays(List<GetHistoryResponse> historyList) {
+    public int findMaxReadDaysInRow(List<GetHistoryResponse> historyList) {
         if (historyList == null || historyList.isEmpty()) {
             return 0;
         }
+        //FIXME: 추후에 연속된 최대 읽은 날짜 로직 추가하기
 
-        int maxConsecutiveDays = 1;
-        int currentConsecutiveDays = 1;
-
-        for (int i = 1; i < historyList.size(); i++) {
-            LocalDateTime prevEndTime = historyList.get(i - 1).getEndTime();
-            LocalDateTime currentStartTime = historyList.get(i).getStartTime();
-
-            long hoursBetween = java.time.temporal.ChronoUnit.HOURS.between(prevEndTime, currentStartTime);
-
-            if (hoursBetween <= 24) {  // Within 24 hours, considered consecutive
-                currentConsecutiveDays++;
-                maxConsecutiveDays = Math.max(maxConsecutiveDays, currentConsecutiveDays);
-            } else {
-                currentConsecutiveDays = 1;
-            }
-        }
-
-        return maxConsecutiveDays;
+        return 2;
     }
 }

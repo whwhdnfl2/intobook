@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StatisticController {
     private final StatisticsService statisticsService;
 
-    @GetMapping("")
+    @GetMapping("/user")
     @ApiOperation(value="해당 회원의 통계 조회")
     public ResponseEntity<GetUserStaticResponse> getUserStatic(){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
