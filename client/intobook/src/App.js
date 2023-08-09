@@ -3,13 +3,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { TutorialPage, BookshelvesPage, AlarmPage, HomePage, StatisticsPage, BookSearchPage, BookInfoPage, LoginPage } from './pages';
 import UpperNavbar from './components/common/UpperNavbar';
 import Navbar from './components/common/Navbar';
-import { useRecoilValue } from 'recoil';
-import { IsLoggedIn } from './recoil/user/UserAtom';
+import fetchFCMtoken from './utils/bluetooth/fetchFCMtoken';
 
 function App() {
-  // const isLoggedIn = useRecoilValue(IsLoggedIn);
-  // const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
-  const isLoggedIn = true;
+
+  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+  fetchFCMtoken();
   
   return (
       <div className='App'>

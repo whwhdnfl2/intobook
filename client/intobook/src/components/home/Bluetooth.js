@@ -1,7 +1,8 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { BluetoothAtom } from './../../recoil/bookmark/bookmarkAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { BluetoothAtom, BookmarkStatusAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
+import BluetoothConnect from '../../utils/bluetooth/BluetoothConnect';
 import { styled } from 'styled-components';
 
 const Bluetooth = () => {
@@ -15,7 +16,7 @@ const Bluetooth = () => {
       }}
     >
       <IconWrapper>
-        <BluetoothIcon />
+        <BluetoothIcon onClick={BluetoothConnect}/>
       </IconWrapper>
       <span>
         {isConnected ? '북갈피 블루투스 연결중' : '북갈피 블루투스 미연결'}
