@@ -55,9 +55,7 @@ const UpperNavbar = () => {
   };
 
   const handleLogout = () => {
-    // setIsLoggedIn(false);
     sessionStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
     window.location.reload(); // 페이지 리로드
   }
 
