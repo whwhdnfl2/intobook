@@ -41,3 +41,11 @@ export const SelectedEndTimeAtom = atom({
         minutes: 0,
     }
 });
+
+export const TargetTimeAtom = atom({
+    key: 'TargetTimeAtom',
+    default: {
+        hours: 0,
+        minutes: 0,
+    }
+});

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { useRecoilState } from "recoil";
-import { SelectedTimeAtom } from './../../recoil/book/BookAtom';
+import { TargetTimeAtom } from './../../recoil/book/BookAtom';
 
 const Wheel = (props) => {
   const perspective = props.perspective || "center";
@@ -77,8 +77,7 @@ const Wheel = (props) => {
     return values;
   }
 
-  // const [selectedTime, setSelectedTime] = useRecoilState(SelectedTimeAtom);
-
+  const [targetTime, setTargetTime] = useRecoilState(TargetTimeAtom);
 
   // 선택된 값 없데이트
   useEffect(() => {
@@ -87,17 +86,15 @@ const Wheel = (props) => {
       const selectedValue = slideValues()[selectedIndex].value;
 
       if (props.target === "hours") {
-        console.log("Selected Hour:", selectedValue);
-        // setSelectedTime({
-        //   hours: selectedValue,
-        //   minutes: selectedTime.minutes
-        // }) 
+        setTargetTime({
+          hours: selectedValue,
+          minutes: targetTime.minutes
+        });
       } else if (props.target === "minutes") {
-        console.log("Selected Minute:", selectedValue);
-        // setSelectedTime({
-        //   hours: selectedTime.hours,
-        //   minutes: selectedValue
-        // }) 
+        setTargetTime({
+          hours: targetTime.hours,
+          minutes: selectedValue
+        });
       }
     }
   }, [sliderState]);
