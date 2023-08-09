@@ -28,7 +28,7 @@ const ReadingBook = () => {
         <GridContainer>
           <CurrentBook>
             <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
-              {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: 'none' }} />}
+              {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: '2px solid white' }} />}
             </Link>
             {!nowReadingBook && (
               <AddCircleOutlineIcon
@@ -39,7 +39,7 @@ const ReadingBook = () => {
           </CurrentBook>
           <CurrentBookStatus />
         </GridContainer>
-        <ProgressBar progress={progress} containerWidth={320} />
+        <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />
       </StyledEngineProvider>
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} />
     </>
@@ -57,14 +57,14 @@ const GridContainer = styled(Container)`
 `;
 
 const CurrentBook = styled(Box)`
-width: 80px;
-height: 110px;
-background: #859FF8;
-box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-border-radius: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
+  width: 80px;
+  height: 110px;
+  background: #859FF8;
+  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default ReadingBook;

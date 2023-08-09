@@ -47,15 +47,18 @@ const CurrentBookStatus = () => {
     <>
       <CurrentBookContainer>
         {nowReadingBook && (
-          <div>
+          <Container>
             <Content>{title}</Content>
             {(isConnected && isBookmarkOut) && <Content>새로운 히스토리를 만들어가는 중!</Content>}
             {(!isConnected || (isConnected && !isBookmarkOut)) &&
-              <div>
+              <Container>
                 {nowReadingBook?.completedAt ? (
                   <div>
-                    <Content style={{ marginBottom: 0 }}>마지막 히스토리로 부터</Content>
-                    <Content>{lastLog} 지났습니다.</Content>
+                    <Content>마지막 히스토리로 부터</Content>
+                    <Content style={{ marginBottom: '5px' }}>
+                      <Span>{lastLog} </Span> 
+                      지났습니다.
+                    </Content>
                   </div>
                 ) : (
                   <Content>첫 히스토리를 쌓으러 가보세요!</Content>
@@ -64,13 +67,13 @@ const CurrentBookStatus = () => {
                   <img src={transfer} alt='책 변경 아이콘' />
                   <div>다른 책 읽기</div>
                 </ImgContainer>
-              </div>
+              </Container>
             }
-          </div>
+          </Container>
         )}
         {!nowReadingBook && (<Typography>책을 등록해보세요</Typography>)}
       </CurrentBookContainer>
-      <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} />
+      <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
     </>
   );
 };
@@ -92,13 +95,14 @@ function formatTimeDifference(lastDate) {
   } else {
     const days = Math.floor(timeDifference / 86400);
     const hours = Math.floor((timeDifference % 86400) / 3600);
-    return `${days}일 ${hours}시간`;
+    const minutes = Math.floor((timeDifference % 3600) / 60);
+    return `${days}일 ${hours}시간 ${minutes}분`;
   }
 }
 
 const CurrentBookContainer = styled(Box)`
   width: 220px;
-  height: 110px;
+  height: 90px;
   border-radius: 20px;
   background: #859FF8;
   box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -106,15 +110,27 @@ const CurrentBookContainer = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px 0;
 `;
 
-const Content = styled(Typography)`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
+const Content = styled.div`
   color: var(--white);
   text-align: center;
   font-family: var(--main-font);
-  font-size: var(--font-h5);
   letter-spacing: 0.8px;
-  margin-bottom: 5px;
+  font-size: var(--font-h5);
+  margin: 5px 0 8px 0;
+  `;
+  
+  const Span = styled.span`
+  color: var(--main-color);
+  font-size: 15px;
 `;
 
 const ImgContainer = styled.div`
