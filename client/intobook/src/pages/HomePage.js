@@ -9,11 +9,11 @@ const HomePage = () => {
     // 리딩북 가져오기
 
   // reocil 전역 상태에서 값 받아오기
-  const nickname = '북빠';
+  const nickname = '북빠지다'
 
   return (
     <Layout>
-      <WelcomeText>Hello, {nickname}님-!</WelcomeText>
+      <WelcomeText>안녕하세요, {nickname}님!</WelcomeText>
       <CheckButton>확인</CheckButton>
       <Bluetooth />
       <Bookmark />
@@ -25,7 +25,7 @@ const HomePage = () => {
 
 const WelcomeText = styled.div`
   font-size: var(--font-h4);
-  color: var(--main-green-color);
+  color: var(--main-color);
 `
 
 export default HomePage;

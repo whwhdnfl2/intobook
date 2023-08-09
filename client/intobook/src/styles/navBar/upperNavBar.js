@@ -16,14 +16,15 @@ export const LeftSection = styled.div`
 export const RightSection = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 5px;
+  gap: 0.5rem;
 `;
 
 export const CenteredLogo = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
+  justify-content: flex-start;
+  margin-left: 10px;
   flex-grow: 1;
 `;
 

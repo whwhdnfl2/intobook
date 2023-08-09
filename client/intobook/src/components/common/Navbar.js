@@ -1,37 +1,66 @@
-import { Link } from 'react-router-dom';
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import BookRoundedIcon from '@mui/icons-material/BookRounded';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import StyledBottomNavigation from '../../styles/navBar/navBar';
+import { useNavigate } from 'react-router-dom';
 
 const SimpleBottomNavigation = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState('recents');
+  const navigate = useNavigate(); // useNavigate 훅 사용
+
+  const handleStatisticsClick = () => {
+    setValue('Statistics');
+    navigate('/statistics');
+  };
+
+  const handleHomeClick = () => {
+    setValue('Home');
+    navigate('/');
+  };
+
+  const handleBookshelvesClick = () => {
+    setValue('Bookshelves');
+    navigate('/bookshelves');
+  };
 
   return (
-    <Box sx={{ width: 500 }}>
+    <StyledBottomNavigation>
       <BottomNavigation
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
+      value={value}
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        display: 'flex',
+        width: '100%',
+        maxWidth: 380, // 최대 너비 설정
+        borderRadius: '10px',
+        boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
+      }}
       >
-        <Link to='/statistics'>
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        </Link>
-        <Link to="/">
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        </Link>
-        <Link to="/bookshelves">
-          <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-        </Link>
-      </BottomNavigation>
-    </Box>
+      <BottomNavigationAction
+        label="Statistics"
+        value="Statistics"
+        icon={<BarChartRoundedIcon />}
+        onClick={handleStatisticsClick}
+      />
+      <BottomNavigationAction
+        label="Home"
+        value="Home"
+        icon={<HomeRoundedIcon />}
+        onClick={handleHomeClick}
+      />
+      <BottomNavigationAction
+        label="Bookshelves"
+        value="Bookshelves"
+        icon={<BookRoundedIcon />}
+        onClick={handleBookshelvesClick}
+      />
+    </BottomNavigation>
+    </StyledBottomNavigation>
   );
-}
+};
 
 export default SimpleBottomNavigation;
