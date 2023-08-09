@@ -61,9 +61,7 @@ public class StatisticsService {
                 .build();
     }
 
-
-    // FIXME: findMaxReadDaysInRow 함수 private로 변경
-    public int findMaxReadDaysInRow(List<GetHistoryResponse> historyList) {
+    private int findMaxReadDaysInRow(List<GetHistoryResponse> historyList) {
         if (historyList == null || historyList.isEmpty()) {
             return 0;
         }
@@ -80,12 +78,12 @@ public class StatisticsService {
         List<History> findHistoryList = historyRepository.findAllByUserBookUserBookPk(userBookPk)
                 .orElseThrow(() -> new NoSuchElementException("History List Not Found"));
 
-        // TODO: 값 채우는 로직 정교화하기 & divide by zero 막기 로직 추가ㄹ
+        // TODO: 값 채우는 로직 정교화하기 & divide by zero 막기 로직 추가
         int userBookReadPages = findUserBook.getNowPage();
         int userBookPages = findUserBook.getBook().getPage();
 
         long maxReadingTime = 0;
-        long totalReadingTime = 0;
+        long totalReadingTime = 1;
         long averageReadingTime = 0;
 
         for( History history: findHistoryList){
