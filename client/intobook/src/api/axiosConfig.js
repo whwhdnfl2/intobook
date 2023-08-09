@@ -3,8 +3,7 @@ import { useRecoilState } from 'recoil';
 import { IsLoggedIn } from '../recoil/user/UserAtom';
 
 const axiosInstance = Axios.create({
-  baseURL: 'http://localhost:8080',
-  // baseURL: process.env.REACT_APP_API_URL,  // 추후 .env 파일에 생성
+  baseURL: process.env.REACT_APP_API_URL,  // 추후 .env 파일에 생성
   headers: {
     "Content-Type": "application/json",
   },
