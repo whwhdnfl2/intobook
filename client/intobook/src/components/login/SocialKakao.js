@@ -9,6 +9,8 @@ const SocialKakao = () => {
 
   const handleLogin = () => {
       window.location.href = kakaoURL;
+      // console.log(sessionStorage.getItem('isLoggedIn'))
+      // console.log('잘되고잇냐')
   };
 
   return (
