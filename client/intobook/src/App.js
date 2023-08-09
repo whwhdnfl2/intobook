@@ -6,6 +6,7 @@ import Navbar from './components/common/Navbar';
 import fetchFCMtoken from './utils/bluetooth/fetchFCMtoken';
 import { useRecoilState } from 'recoil';
 import { AccessToken } from './recoil/user/UserAtom';
+import { useEffect } from 'react';
 
 function App() {
 
@@ -14,12 +15,19 @@ function App() {
   const [token, setToken] = useRecoilState(AccessToken);
 
   fetchFCMtoken();
+
+  function setScreenSize() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
   
   return (
       <div className='App'>
         <BrowserRouter>
           {isLoggedIn && <UpperNavbar />}
-          <div className='main-frame'>
             <Routes>
               <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
               {/* <Route path="/" element={<HomePage />} /> */}
@@ -31,7 +39,6 @@ function App() {
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/login" element={<LoginPage />} />
             </Routes>
-          </div>
           {isLoggedIn && <Navbar />}
         </BrowserRouter>
       </div>

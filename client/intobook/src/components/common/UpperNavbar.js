@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
-import { StyledUpperNavbar, LeftSection, RightSection, CenteredLogo, HiddenHelpIcon } from '../../styles/navBar/upperNavBar';
+import { StyledUpperNavbar, RightSection, CenteredLogo, HiddenHelpIcon } from '../../styles/navBar/upperNavBar';
 import HelpIcon from '@mui/icons-material/Help';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import intobookFullLogo from '../../assets/img/intobookFullLogo.png';
 import { AccessToken } from '../../recoil/user/UserAtom';
 import Modal from './Modal';
 
@@ -46,24 +47,22 @@ const UpperNavbar = () => {
     setOpenModal(false);
   };
 
+  const navigateHome = () => {
+    navigate('/')
+  }
+
 
   return (
     <StyledUpperNavbar>
-      <LeftSection>
-        <HiddenHelpIcon />
-        <HiddenHelpIcon />
-        <HiddenHelpIcon />
-        <HiddenHelpIcon />
-      </LeftSection>
 
       <CenteredLogo className='logo'>
-        Book
+        <img src={intobookFullLogo} alt="로고" style={{width:'150px',height:'40px'}} onClick={navigateHome}/>
       </CenteredLogo>
 
       <RightSection>
-        <HelpIcon onClick={() => { setOpenModal(true) }} />
+        <HelpIcon onClick={() => { setOpenModal(true) }} color="primary" />
 
-        <NotificationsIcon color="action" />
+        <NotificationsIcon color="primary" />
 
         <IconButton
           id="basic-button"
@@ -73,9 +72,9 @@ const UpperNavbar = () => {
           onClick={handleClick}
           size="small"
           edge="start"
-          color="inherit"
+          color="primary"
           aria-label="menu"
-          sx={{ mr: 2 }}
+          sx={{ mr: 0 }}
         >
           <MenuIcon />
         </IconButton>

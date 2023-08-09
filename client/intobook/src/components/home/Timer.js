@@ -49,12 +49,13 @@ const Timer = () => {
 };
 
 const TimerDiv = styled.div`
-  width: 320px;
+  width: 360px;
   height: 124px;
   background-color: var(--main-color);
   border-radius: 20px;
   margin-bottom: 20px;
   text-align: center;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 `
 
 export default Timer;

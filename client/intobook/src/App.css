@@ -1,21 +1,24 @@
+:root {
+  --vh: 100%;
+}
+
 .App {
-  background-color: var(--main-base-color);
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  width: 100vw;
+  background-color: var(--main-base-color);
   height: 100vh;
-  max-width: 360px;
-  margin: auto;
-  /* overflow-x:auto; */
+  max-width: 400px;
+  margin-right: auto; 
+  margin-left: auto;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: var(--main-font);
 }
 
 .App > * {
   flex-shrink: 0;
   pointer-events: auto;
-}
-
-.main-frame {
-  border-style: none;
-  font-family: var(--main-font);
 }
