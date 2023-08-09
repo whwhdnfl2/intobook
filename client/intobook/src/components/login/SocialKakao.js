@@ -5,7 +5,7 @@ import { IsLoggedIn } from '../../recoil/user/UserAtom';
 
 const SocialKakao = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(IsLoggedIn);
-  const kakaoURL = `http://localhost:8080` 
+  const kakaoURL = process.env.REACT_APP_API_URL;
 
   const handleLogin = () => {
       window.location.href = kakaoURL;
