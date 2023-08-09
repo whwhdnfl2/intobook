@@ -2,6 +2,8 @@ package com.reboot.intobook.statistics;
 
 import com.reboot.intobook.history.HistoryRepository;
 import com.reboot.intobook.history.dto.GetHistoryResponse;
+import com.reboot.intobook.history.entity.History;
+import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import com.reboot.intobook.userbook.UserBookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -59,12 +62,53 @@ public class StatisticsService {
     }
 
 
+    // FIXME: findMaxReadDaysInRow 함수 private로 변경
     public int findMaxReadDaysInRow(List<GetHistoryResponse> historyList) {
         if (historyList == null || historyList.isEmpty()) {
             return 0;
         }
-        //FIXME: 추후에 연속된 최대 읽은 날짜 로직 추가하기
+        //TODO: 추후에 연속된 최대 읽은 날짜 로직 추가하기
 
         return 2;
+    }
+
+    public GetUserBookStatisticResponse getUserBookStatistics(Long userBookPk) {
+        // 엔티티 조회
+        UserBook findUserBook = userBookRepository.findById(userBookPk)
+                .orElseThrow(() -> new NoSuchElementException("Member Not Found"));
+
+        List<History> findHistoryList = historyRepository.findAllByUserBookUserBookPk(userBookPk)
+                .orElseThrow(() -> new NoSuchElementException("History List Not Found"));
+
+        // TODO: 값 채우는 로직 정교화하기 & divide by zero 막기 로직 추가ㄹ
+        int userBookReadPages = findUserBook.getNowPage();
+        int userBookPages = findUserBook.getBook().getPage();
+
+        long maxReadingTime = 0;
+        long totalReadingTime = 0;
+        long averageReadingTime = 0;
+
+        for( History history: findHistoryList){
+            totalReadingTime += history.getReadingTime();
+            maxReadingTime = Math.max(maxReadingTime, history.getReadingTime());
+        }
+        averageReadingTime = totalReadingTime / findHistoryList.size();
+
+        double averageSpeed = userBookReadPages / totalReadingTime;
+
+        long remainingTime = (long) (( userBookPages - userBookReadPages ) / averageSpeed);
+
+
+        return GetUserBookStatisticResponse.builder()
+                .userBookReadPages(userBookReadPages)
+                .userBookPages(userBookPages)
+                .startedAt(findUserBook.getStartedAt())
+                .maxReadingTime(maxReadingTime)
+                .totalReadingTime(totalReadingTime)
+                .averageReadingTime(averageReadingTime)
+                .remainingTime(remainingTime)
+                .userBookStatus(findUserBook.getStatus())
+                .averageSpeed(averageSpeed)
+                .completedAt(findUserBook.getCompletedAt()).build();
     }
 }
