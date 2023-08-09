@@ -6,6 +6,7 @@ import Navbar from './components/common/Navbar';
 import fetchFCMtoken from './utils/bluetooth/fetchFCMtoken';
 
 function App() {
+
   const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
   fetchFCMtoken();
   
@@ -16,7 +17,7 @@ function App() {
           <div className='main-frame'>
             <Routes>
               <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
-              {/* <Route path="/" element={<HomePage />} /> */}
+              <Route path="/" element={<HomePage />} />
               <Route path="/tutorial" element={<TutorialPage />} />
               <Route path='/search' element={<BookSearchPage />} />
               <Route path="/bookshelves" element={<BookshelvesPage />} />

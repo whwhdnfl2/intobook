@@ -5,3 +5,4 @@ export { default as Log } from './Log';
 export { default as Tab } from './Tab';
 export { default as BookTotalStatistics } from './BookTotalStatistics';
 export { default as HistoryLogEdit } from './HistoryLogEdit';
+export { default as DateTime } from './DateTime';
