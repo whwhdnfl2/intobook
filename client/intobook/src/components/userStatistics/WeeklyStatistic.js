@@ -13,7 +13,7 @@ const WeeklyStatistic = () => {
 
   return (
     <div>
-      외않되
+      그래프!!
     </div>
   );
 };
