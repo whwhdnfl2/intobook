@@ -1,5 +1,12 @@
 import { atom } from 'recoil';
 
+//액세스 토큰
+export const AccessToken = atom({
+    key: 'AccessToken',
+    default: null
+})
+
+
 // 로그인 여부
 export const IsLoggedIn = atom({
     key: 'IsLoggedIn',

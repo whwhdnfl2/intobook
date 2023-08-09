@@ -1,51 +1,23 @@
 import { useState } from 'react';
 import * as React from 'react';
-import styled from 'styled-components';
+import { StyledUpperNavbar, LeftSection, RightSection, CenteredLogo, HiddenHelpIcon } from '../../styles/navBar/upperNavBar';
 import HelpIcon from '@mui/icons-material/Help';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { IsLoggedIn } from '../../recoil/user/UserAtom';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { AccessToken } from '../../recoil/user/UserAtom';
 import Modal from './Modal';
 
-const StyledUpperNavbar = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 10px;
-`
-
-const LeftSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const RightSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const CenteredLogo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
-  flex-grow: 1;
-`;
-
-const HiddenHelpIcon = styled(HelpIcon)`
-  visibility: hidden;
-`;
 
 const UpperNavbar = () => {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(IsLoggedIn); //
+  const navigate = useNavigate();
+  const [token, setToken] = useRecoilState(AccessToken);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,9 +26,16 @@ const UpperNavbar = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    sessionStorage.removeItem('isLoggedIn');
-    window.location.reload(); // 페이지 리로드
+  //쿠키 삭제
+  function deleteCookie(cookie_name) {
+    document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  }
+
+  // 로그아웃 동작
+  function handleLogout() {
+    deleteCookie('accessToken'); // 쿠키 삭제
+    setToken(null); // 상태 업데이트
+    navigate('/'); // 로그인 페이지로 이동
   }
 
 
@@ -82,9 +61,9 @@ const UpperNavbar = () => {
 
       <RightSection>
         <HelpIcon onClick={() => { setOpenModal(true) }} />
-        {/* <Badge badgeContent={4} color="primary"> */}
+
         <NotificationsIcon color="action" />
-        {/* </Badge> */}
+
         <IconButton
           id="basic-button"
           aria-controls={open ? 'basic-menu' : undefined}

@@ -4,20 +4,25 @@ import { TutorialPage, BookshelvesPage, AlarmPage, HomePage, StatisticsPage, Boo
 import UpperNavbar from './components/common/UpperNavbar';
 import Navbar from './components/common/Navbar';
 import fetchFCMtoken from './utils/bluetooth/fetchFCMtoken';
+import { useRecoilState } from 'recoil';
+import { AccessToken } from './recoil/user/UserAtom';
 
 function App() {
 
-  const isLoggedIn = JSON.parse(sessionStorage.getItem('isLoggedIn'));
+  // const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+  const [token, setToken] = useRecoilState(AccessToken);
+
   fetchFCMtoken();
   
   return (
       <div className='App'>
         <BrowserRouter>
-          {isLoggedIn && <UpperNavbar />}
+          {token && <UpperNavbar />}
           <div className='main-frame'>
             <Routes>
-              <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={token ? <HomePage /> : <LoginPage />} />
+              {/* <Route path="/" element={<HomePage />} /> */}
               <Route path="/tutorial" element={<TutorialPage />} />
               <Route path='/search' element={<BookSearchPage />} />
               <Route path="/bookshelves" element={<BookshelvesPage />} />
@@ -27,7 +32,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
             </Routes>
           </div>
-          {isLoggedIn && <Navbar />}
+          {token && <Navbar />}
         </BrowserRouter>
       </div>
   );

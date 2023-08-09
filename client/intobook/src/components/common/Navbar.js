@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { StyledNavbar } from '../../styles/navBar';
+import { StyledNavbar } from './../../styles/navBar/navBar';
 
 
 const Navbar = () => {
