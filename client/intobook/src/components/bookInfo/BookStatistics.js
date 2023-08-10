@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ProgressBar } from '../common';
 import BookTotalStatistics from './BookTotalStatistics';
 import AverageStatistics from '../common/AverageStatistics';
 import { getUserBookStatistics } from './../../api/statisticsApi';
 
-const BookStatistics = ({ bookInfo }) => {
+const BookStatistics = ({ userBookId, status }) => {
   const [statisticsValue, setStatisticsValue] = useState({});
-  const userBookId = bookInfo?.userBookPk;
 
   useEffect(() => {
     try {
@@ -24,15 +22,11 @@ const BookStatistics = ({ bookInfo }) => {
     return res;
   };
 
-  const nowPage = 150;  // 추후 변경 필요 bookInfo?.nowPage
-  const progress = Math.floor((nowPage / bookInfo?.page) * 100);
   const avgReadingTime = statisticsValue?.averageReadingTime;
   const readingSpeed = statisticsValue?.averageSpeed;
-  const status = bookInfo?.status
 
   return (
     <div>
-      <ProgressBar progress={progress} containerWidth={300} />
       <BookTotalStatistics val={statisticsValue} status={status} />
       <AverageStatistics readingTime={avgReadingTime} readSpeed={readingSpeed} />
     </div>

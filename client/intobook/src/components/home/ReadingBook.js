@@ -29,7 +29,6 @@ const ReadingBook = () => {
   const searchHandler = () => {
     if (isConnected && isBookmarkOut) {
       // 안내 모달 띄우기
-      console.log('1111')
       setOpenModal(true);
     } else {
       setIsOpen(true);

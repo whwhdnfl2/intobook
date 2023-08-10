@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { BookDesc, BookStatistics, BookHistoryLog, Tab, HistoryLogEdit } from './../components/bookInfo';
-import { Layout } from './../styles/CommonStyle';
+import { ProgressBar } from './../components/common';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom, LogEditAtom } from './../recoil/book/BookAtom';
 import { getUserBookInfo } from '../api/userbookApi';
+import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 
 const BookInfoPage = () => {
@@ -21,13 +22,21 @@ const BookInfoPage = () => {
     getBookInfo()
   }, [userBookId]);
 
+  const nowPage = 150;  // 추후 변경 필요 bookInfo?.nowPage
+  const progress = Math.floor((nowPage / bookInfo?.page) * 100);
+  const status = bookInfo?.status;
+
   return (
     <Layout>
       <BookDesc bookInfo={bookInfo} />
       <BookInfoContent>
         <Tab />
         {selectedTab === 'statistics' ? (
-          <BookStatistics bookInfo={bookInfo} />
+          <div>
+            <ProgressBar progress={progress} containerWidth={300} />
+            <BookStatistics userBookId={userBookId} status={status} />
+          </div>
+          
         ) : (
           isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
         )}

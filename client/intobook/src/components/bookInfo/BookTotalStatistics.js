@@ -8,8 +8,8 @@ import { formatDate, formatTime } from './../../utils/dateTimeUtils';
 import { styled } from 'styled-components';
 
 const BookTotalStatistics = ({ val, status }) => {
-  const startDate = formatDate(val?.startedAt);
-  const completeDate = formatDate(val?.completedAt);
+  const startDate = formatDate(val?.startedAt, 'dateDot');
+  const completeDate = formatDate(val?.completedAt, 'dateDot');
   const readingTime = formatTime(val?.totalReadingTime);
   const bestTime = formatTime(val?.maxReadingTime);
   const remainingTime = formatTime(val?.remainingTime);

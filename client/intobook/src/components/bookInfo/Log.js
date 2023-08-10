@@ -5,29 +5,14 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { useSetRecoilState } from 'recoil';
 import { LogAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { styled } from 'styled-components';
+import { formatDate, formatTimeInDate } from '../../utils/dateTimeUtils';
 
 const Log = ({ log }) => {
   const startTime = log?.startTime;
   const endTime = log?.endTime;
 
-  // 시간 형태 변형 함수
-  function formatDateTime(dateTimeString, includeDate = true) {
-    const dateTime = new Date(dateTimeString);
-    const year = dateTime.getFullYear();
-    const month = (dateTime.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateTime.getDate().toString().padStart(2, '0');
-    const hours = dateTime.getHours().toString().padStart(2, '0');
-    const minutes = dateTime.getMinutes().toString().padStart(2, '0');
-
-    if (includeDate) {
-      return `${year}.${month}.${day} ${hours}:${minutes}`;
-    } else {
-      return `${hours}:${minutes}`;
-    }
-  }
-
-  const formattedStartTime = formatDateTime(startTime);
-  const formattedEndTime = formatDateTime(endTime, false);
+  const formattedStartTime = `${formatDate(startTime, 'dateDot')} ${formatTimeInDate(startTime)}`
+  const formattedEndTime = formatTimeInDate(endTime);
 
   const minutes = log?.readingTime % 60;
   const hours = (log?.readingTime - minutes) / 60;
