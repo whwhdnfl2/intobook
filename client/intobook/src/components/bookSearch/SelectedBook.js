@@ -1,13 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookCover from './../common/bookCover';
-import { updateUserBookStatus, addUserBook } from './../../api/userbookApi';
+import { addUserBook } from './../../api/userbookApi';
+import { useSetRecoilState } from 'recoil';
+import { ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Box, Stack, SwipeableDrawer, Typography, Card, CardContent } from '@mui/material';
 import { SearchBottomeSheetDiv } from '../../styles/bookSearch/SearchBottomSheetStyle';
 import { styled } from 'styled-components';
 
 const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   const navigate = useNavigate();
+  const setNowReadingBook = useSetRecoilState(ReadingBookAtom);
+
   const status = selectedInfo?.status
   const bookId = selectedInfo?.bookId
 
@@ -35,16 +39,9 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
 
   const registerBookHandler = async () => {
     try {
-      if (!status) { // 책장에 없는 책일 경우
-        const res = await addUserBook(bookId);
-  
-        if (res === 'success') {
-          navigate('/')
-        }
-      } else if (status === 'READING') {
-        // const res = await updateUserBookStatus(bookInfo.userBookPk, 'NOWREADING');
-      }
-      
+      await addUserBook(bookId);
+      setNowReadingBook(selectedInfo);
+      navigate('/');
     } catch (err) {
       console.error(err);
     }

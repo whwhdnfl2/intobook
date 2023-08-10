@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil';
 import intobookFullLogo from '../../assets/img/intobookFullLogo.png';
 import { AccessToken } from '../../recoil/user/UserAtom';
 import Modal from './Modal';
+import { logout } from '../../api/logoutApi';
 
 
 const UpperNavbar = () => {
@@ -33,10 +34,11 @@ const UpperNavbar = () => {
   }
 
   // 로그아웃 동작
-  function handleLogout() {
-    deleteCookie('accessToken'); // 쿠키 삭제
+  const handleLogout = async () => {
+    const res = await logout(); //로그아웃api 호출
+    deleteCookie('accessToken'); // 쿠키에서 액세스토큰 삭제
     setToken(null); // 상태 업데이트
-    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isLoggedIn');  //세션에서 isLoggedIn 삭제
     navigate('/login'); // 로그인 페이지로 이동
   }
 
