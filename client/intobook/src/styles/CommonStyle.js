@@ -3,6 +3,8 @@ import { styled } from 'styled-components';
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
   height: 77vh;
+  margin-right: 10px;
+  margin-left: 10px;
+  /* border: 1px solid black;*/
 `;

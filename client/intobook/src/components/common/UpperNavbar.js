@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import * as React from 'react';
-import { StyledUpperNavbar, RightSection, CenteredLogo, HiddenHelpIcon } from '../../styles/navBar/upperNavBar';
+import { StyledUpperNavbar, RightSection, CenteredLogo } from '../../styles/navBar/upperNavBar';
 import HelpIcon from '@mui/icons-material/Help';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import intobookFullLogo from '../../assets/img/intobookFullLogo.png';
 import { AccessToken } from '../../recoil/user/UserAtom';
@@ -55,14 +55,19 @@ const UpperNavbar = () => {
   return (
     <StyledUpperNavbar>
 
-      <CenteredLogo className='logo'>
-        <img src={intobookFullLogo} alt="로고" style={{width:'150px',height:'40px'}} onClick={navigateHome}/>
-      </CenteredLogo>
+        {/* 왜 링크를 넣으면 css가 깨질까? */}
+        <CenteredLogo className='logo'>
+          <img src={intobookFullLogo} alt="로고" style={{width:'150px',height:'40px'}} onClick={navigateHome}/>
+        </CenteredLogo>
+      
+      
 
       <RightSection>
         <HelpIcon onClick={() => { setOpenModal(true) }} color="primary" />
 
+        <Link to='/alarm'>
         <NotificationsIcon color="primary" />
+        </Link>
 
         <IconButton
           id="basic-button"

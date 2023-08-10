@@ -3,6 +3,7 @@ import { Bookmark, Bluetooth, ReadingBook, CheckButton, Timer } from '../compone
 import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const HomePage = () => {
   // HomePage 마운트(?)될 때 
@@ -19,14 +20,20 @@ const HomePage = () => {
   },[])
 
   return (
-    <Layout>
-      <WelcomeText>안녕하세요, {nickname}님!</WelcomeText>
-      <CheckButton>확인</CheckButton>
-      <Bluetooth />
-      <Bookmark />
-      <Timer />
-      <ReadingBook />
-    </Layout>
+    <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    >
+      <Layout>
+        <WelcomeText>안녕하세요, {nickname}님!</WelcomeText>
+        <CheckButton>확인</CheckButton>
+        <Bluetooth />
+        <Bookmark />
+        <Timer />
+        <ReadingBook />
+      </Layout>
+    </motion.div>
   );
 };
 
