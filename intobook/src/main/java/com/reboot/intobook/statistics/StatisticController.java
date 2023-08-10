@@ -1,5 +1,6 @@
 package com.reboot.intobook.statistics;
 
+import com.reboot.intobook.statistics.dto.GetAttentionStatisticsResponse;
 import com.reboot.intobook.statistics.dto.GetNWeeksReadResponse;
 import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
@@ -43,6 +44,15 @@ public class StatisticController {
     public ResponseEntity<GetNWeeksReadResponse> getNweeksStatistic( @RequestParam(required = false, defaultValue = "2") int weekCnt ){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         GetNWeeksReadResponse response = statisticsService.getNweeksStatistic( weekCnt, userPk );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/attention")
+    @ApiOperation(value = "책에 집중하는 정도에 대한 통계 조회")
+    public ResponseEntity<GetAttentionStatisticsResponse> getAttentionStatistics(){
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        GetAttentionStatisticsResponse response = statisticsService.getAttentionStatistics( userPk );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
