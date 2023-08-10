@@ -18,7 +18,11 @@ const fetchFCMtoken = () => {
                 console.log('error', err);
             })
         }
-    })
+      }).catch((err) => {
+        console.log('error', err);
+      })
+    }
+  })
 };
 
 export default fetchFCMtoken;

@@ -5,37 +5,39 @@ import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import EmojiEvents from '@mui/icons-material/EmojiEvents';
 import Layers from '@mui/icons-material/Layers';
 import { styled } from 'styled-components';
+import { formatDate, formatTime } from './../../utils/dateTimeUtils';
 
-const UserTotalStatistic = () => {
+const UserTotalStatistic = ({ val }) => {
   // api 통신 통해 값 받아오기
-  const totalReaded = '12권';
-  const bestStreak = '10일';
-  const readPages = '121,234쪽';
-  const totalTime = '123시간 23분';
+  const bestStreak = val?.maxReadDaysInRow;
+  const totalReadBook = val?.totalReadBook;
+  const totalReadPage = val?.totalReadPage;
+  const totalReadTime = val?.totalReadTime;
+
 
   return (
     <StatisticsDiv>
       <ItemDivContainer>
         <TotalStatisticsItem
           title={'총 읽은 권수'}
-          content={totalReaded}
+          content={`${totalReadBook} 권`}
           icon={<MenuBook sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
         />
         <TotalStatisticsItem
           title={'총 독서 시간'}
-          content={totalTime}
+          content={`${totalReadTime} 분`}
           icon={<WatchLaterOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
       <ItemDivContainer>
         <TotalStatisticsItem
           title={'총 읽은 쪽수'}
-          content={readPages}
+          content={`${totalReadPage} 쪽`}
           icon={<Layers sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
         />
         <TotalStatisticsItem
           title={'최장 연속 독서일'}
-          content={bestStreak}
+          content={`${bestStreak} 일`}
           icon={<EmojiEvents sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
