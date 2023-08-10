@@ -21,7 +21,7 @@ public class BookController {
 
     @GetMapping("")
     @ApiOperation(value="알라딘에서 책 리스트 조회",
-    notes="키워드를 통해 알라딘에서 책 리스트를 조회한다. 50권씩 조회")
+    notes="키워드를 통해 알라딘에서 책 리스트를 조회한다. 12권씩 조회")
     @ApiImplicitParams({
             @ApiImplicitParam(
                     name="keyword",
@@ -30,7 +30,7 @@ public class BookController {
             ),
             @ApiImplicitParam(
                     name="start",
-                    value="페이지 수 (1 -> 1~50번째 책 조회, 2-> 51~100번째 책 조회)",
+                    value="페이지 수 (1 -> 1~12번째 책 조회, 2-> 13~24번째 책 조회)",
                     example = "1"
             )
     })
