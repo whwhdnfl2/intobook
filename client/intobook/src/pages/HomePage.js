@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Bookmark, Bluetooth, ReadingBook, CheckButton, Timer } from '../components/home';
 import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   // HomePage 마운트(?)될 때 
@@ -10,6 +11,12 @@ const HomePage = () => {
 
   // reocil 전역 상태에서 값 받아오기
   const nickname = '북빠지다'
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    navigate('/')
+  },[])
 
   return (
     <Layout>

@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-// 책 정보 탭
+// 히스토리pk
 export const HistoryPkAtom = atom({
     key: 'HistoryPkAtom',
     default: 'null'

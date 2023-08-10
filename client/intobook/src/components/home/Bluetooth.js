@@ -1,17 +1,18 @@
 import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { BluetoothAtom, BookmarkStatusAtom } from './../../recoil/bookmark/bookmarkAtom';
+import { useRecoilState } from 'recoil';
+import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
-// import BluetoothConnect from '../../utils/bluetooth/BluetoothConnect';
 import { styled } from 'styled-components';
 import { createBookHistory, completeBookHistory } from '../../api/historyApi';
 import { HistoryPkAtom } from '../../recoil/history/historyAtom';
+// import BluetoothConnect from '../../utils/bluetooth/BluetoothConnect';
 
 const Bluetooth = () => {
 
   //블루투스 연결상태 상태 및 책갈피 상태 가져오기(둘 다 초기상태 false)
   const [isBluetoothConnected, setIsBluetoothConnected] = useRecoilState(BluetoothAtom);
   const [bookmark, setBookmark] = useRecoilState(BookmarkStatusAtom);
+  const [nowBook,setNowBook] = useRecoilState(ReadingBookAtom)
   const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom)
 
   let bluetoothDevice;
@@ -31,6 +32,7 @@ const Bluetooth = () => {
                 // Human-readable name of the device.
                 console.log('Connecting to GATT Server...');
                 bluetoothDevice = device;
+                console.log('여긴잘나오면서',bluetoothDevice)
                 // Attempts to connect to remote GATT Server.
                 return bluetoothDevice.gatt.connect();
             })
@@ -52,6 +54,9 @@ const Bluetooth = () => {
                 });
             })
             .catch(error => { console.error(error); });
+    } else {
+      setIsBluetoothConnected(false);
+      console.log('왜안나옴?',bluetoothDevice)
     }
 }
 
@@ -82,8 +87,8 @@ const HandleNotifications = async (event) => {
     //책을 펼쳤을 때 history api 요청(response로 pk를 받아와서 저장)
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
     if (illuminance1 === illuminance2 && pressure <= 10) {
-        const res = await createBookHistory(19)
-        console.log('성공',res)
+        const res = await createBookHistory(nowBook?.userBookPk)
+        console.log('성공하면 받는 historyPk',res)
         setHistoryPkAtom(res)
         setBookmark(true);
     } else if (illuminance1 !== illuminance2 && pressure >= 10) {

@@ -1,16 +1,16 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist({
+    key: "User",
+    storage: sessionStorage,
+})
 
 //액세스 토큰
 export const AccessToken = atom({
     key: 'AccessToken',
-    default: null
-})
-
-
-// 로그인 여부
-export const IsLoggedIn = atom({
-    key: 'IsLoggedIn',
-    default: false
+    default: null,
+    effects_UNSTABLE : [persistAtom]
 })
 
 // 사용자이름(닉네임)

@@ -1,17 +1,28 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
-// 블루투스/북갈피 통신되면 default 값 없애기
+const { persistAtom: persistBluetooth } = recoilPersist({
+    key: "BluetoothHistory",
+    storage: sessionStorage,
+});
+
+const { persistAtom: persistBookmarkStatus } = recoilPersist({
+    key: "BookmarkStatusHistory",
+    storage: sessionStorage,
+});
 
 // 블루투스 연결 상태
 export const BluetoothAtom = atom({
     key: 'BluetoothAtom',
-    default: false
+    default: false,
+    effects_UNSTABLE: [persistBluetooth]
 });
 
 // 북갈피 현재 상태
 export const BookmarkStatusAtom = atom({
     key: 'BookmarkStatusAtom',
-    default: false
+    default: false,
+    effects_UNSTABLE: [persistBookmarkStatus]
 });
 
 

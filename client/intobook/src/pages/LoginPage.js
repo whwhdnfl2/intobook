@@ -25,12 +25,13 @@ const LoginPage = () => {
   }
 
   useEffect(()=>{
+    console.log('여기는 로그인페이지')
     let query = window.location.search;
     let param = new URLSearchParams(query);
     let accessToken = param.get("accessToken");
     if (accessToken !== null) {
       setCookie('accessToken', accessToken.slice(7), '3');
-      sessionStorage.setItem('isLoggedIn', true);
+      // sessionStorage.setItem('isLoggedIn', true);
       setToken(accessToken.slice(7))
   }
   },[])
