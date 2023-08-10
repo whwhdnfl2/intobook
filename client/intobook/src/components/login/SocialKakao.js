@@ -1,11 +1,9 @@
 import React from 'react';
 import KakaoLoginLogo from "../../assets/img/login/kakao_login_medium_wide.png";
-import { useRecoilState } from 'recoil';
-import { IsLoggedIn } from '../../recoil/user/UserAtom';
 
 const SocialKakao = () => {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(IsLoggedIn);
-  const kakaoURL = process.env.REACT_APP_API_URL + "/카카오로그인";
+
+  const kakaoURL = process.env.REACT_APP_API_URL;
 
   const handleLogin = () => {
       window.location.href = kakaoURL;
