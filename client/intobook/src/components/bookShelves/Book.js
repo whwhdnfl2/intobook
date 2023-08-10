@@ -18,7 +18,7 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
 
   return (
     <>
-    <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: width} }}  >
+    <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: width}, cursor: 'pointer' }}  >
       <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
         customStyle={{ ...customStyle }}
       />

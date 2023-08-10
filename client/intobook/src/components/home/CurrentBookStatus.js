@@ -4,7 +4,7 @@ import Modal from './../common/Modal';
 import { transfer } from '../../assets/img/home'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { styled } from 'styled-components';
 
 const CurrentBookStatus = () => {
