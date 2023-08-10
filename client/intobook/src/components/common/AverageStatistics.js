@@ -1,9 +1,11 @@
 import React from 'react';
 import AccessAlarmsOutlinedIcon from '@mui/icons-material/AccessAlarmsOutlined';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
+import { formatTime } from './../../utils/dateTimeUtils';
 import { styled } from 'styled-components';
 
 const AverageStatistics = ({ readingTime, readSpeed }) => {
+  const avgReadingTime = formatTime(readingTime);
 
   return (
     <StatisticsDiv>
@@ -12,7 +14,7 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
           <AccessAlarmsOutlinedIcon sx={{ marginLeft: '2px', width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 시간</Title>
-        <Content>{readingTime}분</Content>
+        <Content>{avgReadingTime}</Content>
       </Div>
       <Div>
         <IconDiv>

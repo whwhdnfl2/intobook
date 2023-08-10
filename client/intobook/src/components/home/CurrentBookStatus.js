@@ -6,6 +6,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Box } from '@mui/material';
 import { styled } from 'styled-components';
+import { formatTimeDifference } from '../../utils/dateTimeUtils';
 
 const CurrentBookStatus = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -82,28 +83,6 @@ const CurrentBookStatus = () => {
     </>
   );
 };
-
-function formatTimeDifference(lastDate) {
-  const currentDate = new Date();
-  const previousDate = new Date(lastDate);
-  const timeDifference = Math.floor((currentDate - previousDate) / 1000); // 차이를 초로 계산
-
-  if (timeDifference < 60) {
-    return `${timeDifference}초`;
-  } else if (timeDifference < 3600) {
-    const minutes = Math.floor(timeDifference / 60);
-    return `${minutes}분`;
-  } else if (timeDifference < 86400) {
-    const hours = Math.floor(timeDifference / 3600);
-    const minutes = Math.floor((timeDifference % 3600) / 60);
-    return `${hours}시간 ${minutes}분`;
-  } else {
-    const days = Math.floor(timeDifference / 86400);
-    const hours = Math.floor((timeDifference % 86400) / 3600);
-    const minutes = Math.floor((timeDifference % 3600) / 60);
-    return `${days}일 ${hours}시간 ${minutes}분`;
-  }
-}
 
 const CurrentBookContainer = styled(Box)`
   width: 220px;

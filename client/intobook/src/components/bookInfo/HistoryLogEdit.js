@@ -4,6 +4,7 @@ import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from
 import { editBookHistory } from '../../api/historyApi';
 import { styled } from 'styled-components';
 import DateTime from './DateTime';
+import { formatDate } from './../../utils/dateTimeUtils';
 
 const HistoryLogEdit = () => {
   const selectedLog = useRecoilValue(LogAtom);
@@ -14,14 +15,7 @@ const HistoryLogEdit = () => {
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
 
-  // 날짜 데이터 포맷
-  function formatDate(inputDate) {
-    const date = new Date(inputDate);
-    const formattedDate = `${date.getFullYear()}년 ${String(date.getMonth() + 1).padStart(1)}월 ${String(date.getDate()).padStart(1)}일`;
-    return formattedDate;
-  }
-
-  const date = formatDate(selectedLog.startTime);
+  const date = formatDate(selectedLog.startTime, 'dateLetter');
 
   // 수정된 한줄평 editedComment에 반영하기
   const handleTextareaChange = (e) => {
