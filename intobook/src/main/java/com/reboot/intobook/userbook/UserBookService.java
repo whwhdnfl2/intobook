@@ -34,8 +34,9 @@ public class UserBookService {
         UserBook userBook = userBookRepository.findByUserAndBook(user, book);
         nowReadingToReading(user);
         if (userBook != null) {
-            if (!userBook.isDeleted()) return false;
-            userBook.setDeleted(false);
+            if (userBook.isDeleted()) {
+                userBook.setDeleted(false);
+            }
             userBook.setStatus(UserBookStatus.NOWREADING);
         }else {
             userBook = new UserBook(user, book, UserBookStatus.NOWREADING);
@@ -57,7 +58,7 @@ public class UserBookService {
 
         Page<UserBook> userBookList = null;
         if (status == null) {
-            userBookList = userBookRepository.findByUser(user, pageRequest);
+            userBookList = userBookRepository.findByUserAndStatusNotAndIsDeletedFalse(user, UserBookStatus.NOWREADING, pageRequest);
         }else {
             userBookList =  userBookRepository.findByUserAndStatus(user, status, pageRequest);
         }
@@ -87,6 +88,7 @@ public class UserBookService {
                 .orElse(null);
         if (userBook == null) return false;
         userBook.setDeleted(true);
+        updateUserBookStatus(userBookPk, UserBookStatus.DELETE);
         return userBookRepository.save(userBook) != null;
     }
 
