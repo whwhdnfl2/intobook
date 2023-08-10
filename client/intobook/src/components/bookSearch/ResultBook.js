@@ -7,20 +7,20 @@ import SelectedBook from './SelectedBook';
 const ResultBook = ({ bookCover }) => {
   const tempTitle = bookCover?.title;
   const tempAauthor = bookCover?.author;
-  
+
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
-  const publisher = bookCover?.publisher ? bookCover?.publisher : '출판사'; 
+  const publisher = bookCover?.publisher ? bookCover?.publisher : '출판사';
   const bookId = bookCover?.isbn13 || bookCover?.isbn;
   const status = bookCover?.status;
   const coverImage = bookCover?.cover ? bookCover?.cover : bookCover?.coverImage
 
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const clickHandler = () => {
     setIsOpen(true);
   };
-  
+
   const selectedInfo = {
     cover: bookCover?.cover,
     title,
@@ -32,15 +32,15 @@ const ResultBook = ({ bookCover }) => {
 
   return (
     <>
-    <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: {xs: '88px'}}} onClick={clickHandler}  >
-      <BookCover image={coverImage} alt={title + 'image'}
-        customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
-      />
-        <CardContent sx={{ height: '42px', padding: '2px'}} >
+      <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '88px' }, cursor: 'pointer' }} onClick={clickHandler}  >
+        <BookCover image={coverImage} alt={title + 'image'}
+          customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
+        />
+        <CardContent sx={{ height: '42px', padding: '2px' }} >
           <TitleTypography
-            fontWeight={'bold'} 
-            fontSize={'12px'} 
-            align='center' 
+            fontWeight={'bold'}
+            fontSize={'12px'}
+            align='center'
             letterSpacing={'-0.5px'}
           >
             {title}
@@ -52,8 +52,8 @@ const ResultBook = ({ bookCover }) => {
             ({publisher})
           </Typography>
         </CardContent>
-    </Card>
-    <SelectedBook isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} selectedInfo={selectedInfo} />
+      </Card>
+      <SelectedBook isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={clickHandler} selectedInfo={selectedInfo} />
     </>
   );
 };

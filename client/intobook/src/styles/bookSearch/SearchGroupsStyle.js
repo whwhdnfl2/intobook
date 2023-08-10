@@ -8,6 +8,7 @@ export const SearchGroup = styled.div`
   min-width: 338px;
   gap: 14px;
   text-decoration: none;
+  cursor: pointer;
 `;
 
 export const SearchIcon = styled.img`

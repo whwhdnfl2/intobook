@@ -1,11 +1,11 @@
 import React from 'react';
 import { SearchGroup, SearchIcon, SearchMethod } from '../../styles/bookSearch/SearchGroupsStyle';
 
-const SearchGroups = (props) => {
-  const { iconSrc, methodText } = props;
+const SearchGroups = ({ iconSrc, methodText, onClick }) => {
+  // const { iconSrc, methodText } = props;
 
   return (
-    <SearchGroup>
+    <SearchGroup onClick={onClick}>
       <SearchIcon src={iconSrc} alt='icon' />
       <SearchMethod><span>{methodText}</span></SearchMethod>
     </SearchGroup>
