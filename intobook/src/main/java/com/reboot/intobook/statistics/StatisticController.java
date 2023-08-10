@@ -1,5 +1,6 @@
 package com.reboot.intobook.statistics;
 
+import com.reboot.intobook.statistics.dto.GetNWeeksReadResponse;
 import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import io.swagger.annotations.Api;
@@ -28,10 +29,19 @@ public class StatisticController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/userBook")
+    @GetMapping("/userBook/{userBookPk}")
     @ApiOperation(value = "특정 유저책의 통계 조회")
     public ResponseEntity<GetUserBookStatisticResponse> getUserBookStatistic(@PathVariable Long userBookPk ){
         GetUserBookStatisticResponse response = statisticsService.getUserBookStatistics(userBookPk);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/week")
+    @ApiOperation(value = "요일별 독서량 통계 조회")
+    public ResponseEntity<GetNWeeksReadResponse> getNweeksStatistic( @RequestParam(required = false, defaultValue = "2") int weekCnt ){
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        GetNWeeksReadResponse response = statisticsService.getNweeksStatistic( weekCnt, userPk );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
