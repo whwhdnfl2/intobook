@@ -33,9 +33,11 @@ const SimpleBottomNavigation = () => {
       style={{
         position: 'fixed',
         bottom: 0,
+        left: '50%', // 화면 왼쪽에서 50% 위치로 설정
+        transform: 'translateX(-50%)', // 가로 방향 중앙 정렬을 위한 변환
         display: 'flex',
         width: '100%',
-        maxWidth: 380, // 최대 너비 설정
+        maxWidth: 360, // 최대 너비 설정
         borderRadius: '10px',
         boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
       }}

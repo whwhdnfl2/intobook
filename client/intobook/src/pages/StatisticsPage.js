@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AverageStatistics } from "../components/common";
 import { BookCharacter, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics } from '../api/statisticsApi';
+import { motion } from 'framer-motion';
 
 const StatisticsPage = () => {
   const username = "zaru"
@@ -30,13 +31,19 @@ const StatisticsPage = () => {
   const timePerRead = userStatisticsValue?.timePerRead;
 
   return (
-    <div>
-      {username} 님의 독서 유형은..
-      <BookCharacter />
-      <TotalStatistic val={userStatisticsValue}  />
-      <WeeklyStatistic />
-      <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
-    </div>
+    <motion.div
+      initial={{ opacity: 0, x: -100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 100 }}
+    >
+      <div>
+        {username} 님의 독서 유형은..
+        <BookCharacter />
+        <TotalStatistic val={userStatisticsValue}  />
+        <WeeklyStatistic />
+        <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+      </div>
+    </motion.div>
   );
 }
 

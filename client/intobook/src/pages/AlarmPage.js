@@ -1,9 +1,12 @@
+import { Layout } from './../styles/CommonStyle';
+
+
 const AlarmPage = () => {
-    return ( 
-        <div>
-            여기는 알람 페이지!
-        </div>
-     );
+    return (
+        <Layout>
+            총 n건의 알림이 있어요!
+        </Layout>
+    );
 }
- 
+
 export default AlarmPage;
