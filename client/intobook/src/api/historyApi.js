@@ -41,3 +41,27 @@ export const deleteBookHistory = async (historyPk) => {
     return err
   }
 };
+
+//로그 시작 기록하기(히스토리 생성)
+export const createBookHistory = async (userBookPk) => {
+  try {
+    const res = await axiosInstance.post(`historys/${userBookPk}`)
+    return res.data;
+  } catch (err) {
+    return err
+  }
+}
+
+//로그 종료 생성하기
+export const completeBookHistory = async (historyPk,pressure) => {
+  try {
+    const res = await axiosInstance.post(`historys/updateHistoryPressure/${historyPk}`,null,{
+      params: {
+      pressure
+    }}
+    )
+    return res.data;
+  } catch (err) {
+    return err
+  }
+}
