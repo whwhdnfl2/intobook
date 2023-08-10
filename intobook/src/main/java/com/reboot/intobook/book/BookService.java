@@ -94,7 +94,7 @@ public class BookService {
                 .queryParam("TTBKey", apiKey)
                 .queryParam("Query", keyword)
                 .queryParam("Start", startIndex)
-                .queryParam("MaxResults", 50)
+                .queryParam("MaxResults", 12)
                 .queryParam("Output", "JS")
                 .queryParam("Version", 20131101)
                 .build()
