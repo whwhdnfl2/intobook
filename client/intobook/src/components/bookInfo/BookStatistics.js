@@ -25,6 +25,8 @@ const BookStatistics = ({ userBookId, status }) => {
   const avgReadingTime = statisticsValue?.averageReadingTime;
   const readingSpeed = statisticsValue?.averageSpeed;
 
+  console.log(statisticsValue)
+
   return (
     <div>
       <BookTotalStatistics val={statisticsValue} status={status} />
