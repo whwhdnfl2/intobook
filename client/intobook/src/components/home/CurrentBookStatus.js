@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getReadingBookInfo } from '../../api/userbookApi';
 import Modal from './../common/Modal';
 import { transfer } from '../../assets/img/home'
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Box } from '@mui/material';
 import { styled } from 'styled-components';
@@ -15,18 +14,9 @@ const CurrentBookStatus = () => {
     setOpenModal(false);
   };
 
-  const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);
+  const nowReadingBook = useRecoilValue(ReadingBookAtom);
   const isConnected = useRecoilValue(BluetoothAtom);
   const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);
-
-  useEffect(() => {
-    const getReadingBook = async () => {
-      const detailInfo = await getReadingBookInfo();
-      setNowReadingBook(detailInfo);
-    };
-    getReadingBook();
-
-  }, [setNowReadingBook]);
 
   const tempTitle = nowReadingBook?.title;
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
