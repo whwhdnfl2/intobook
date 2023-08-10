@@ -4,17 +4,15 @@ import NotStartedOutlinedIcon from '@mui/icons-material/NotStartedOutlined';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import TimerOutlinedIcon from '@mui/icons-material/TimerOutlined';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { formatDate, formatTime } from './../../utils/dateTimeUtils';
 import { styled } from 'styled-components';
 
-const BookTotalStatistics = () => {
-  // api 통신 통해 값 받아오기
-  const startDate = '2023.08.07';
-  const readingTime = '117시간 36분';
-  const estimatedTime = '1시간 50분';
-  const concentrationTime = '25분';
-  const endDate = '2023.08.18';
-
-  const status = 'COMPLETE'
+const BookTotalStatistics = ({ val, status }) => {
+  const startDate = formatDate(val?.startedAt, 'dateDot');
+  const completeDate = formatDate(val?.completedAt, 'dateDot');
+  const readingTime = formatTime(val?.totalReadingTime);
+  const bestTime = formatTime(val?.maxReadingTime);
+  const remainingTime = formatTime(val?.remainingTime);
 
   return (
     <StatisticsDiv>
@@ -27,14 +25,14 @@ const BookTotalStatistics = () => {
         {status !== 'COMPLETE' &&
           <TotalStatisticsItem
             title={'완독까지 남은 시간'}
-            content={estimatedTime}
+            content={remainingTime}
             icon={<MenuBookIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
             />
           }
         {status === 'COMPLETE' &&
           <TotalStatisticsItem
           title={'완독 일자'}
-          content={endDate}
+          content={completeDate}
           icon={<MenuBookIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
           />
         }
@@ -47,7 +45,7 @@ const BookTotalStatistics = () => {
         />
         <TotalStatisticsItem
           title={'최고 집중 시간'}
-          content={concentrationTime}
+          content={bestTime}
           icon={<TimerOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
