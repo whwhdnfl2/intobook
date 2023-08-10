@@ -27,7 +27,7 @@ const BookInfoPage = () => {
       <BookInfoContent>
         <Tab />
         {selectedTab === 'statistics' ? (
-          <BookStatistics />
+          <BookStatistics bookInfo={bookInfo} />
         ) : (
           isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
         )}
