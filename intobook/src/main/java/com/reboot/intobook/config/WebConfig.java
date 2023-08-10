@@ -14,10 +14,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Value("${preEndPoint}")
     public String preEndPoint;
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix(preEndPoint, HandlerTypePredicate.forAnnotation(RestController.class));
-    }
+//    @Override
+//    public void configurePathMatch(PathMatchConfigurer configurer) {
+//        configurer.addPathPrefix(preEndPoint, HandlerTypePredicate.forAnnotation(RestController.class));
+//    }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
