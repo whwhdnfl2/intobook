@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SocialKakao from '../components/login/SocialKakao';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
@@ -12,8 +12,6 @@ height: 130vh;
 `
 
 const LoginPage = () => {
-  
-  console.log('IsLoggedIn?',sessionStorage.getItem('isLoggedIn'))
 
   const [Token, setToken] = useRecoilState(AccessToken)
 
@@ -26,14 +24,16 @@ const LoginPage = () => {
     document.cookie = cookie_name + '=' + cookie_value;
   }
 
-  let query = window.location.search;
-  let param = new URLSearchParams(query);
-  let accessToken = param.get("accessToken");
-  if (accessToken !== null) {
-    setCookie('accessToken', accessToken.slice(7), '3');
-    sessionStorage.setItem('isLoggedIn', true);
-    setToken(accessToken.slice(7))
+  useEffect(()=>{
+    let query = window.location.search;
+    let param = new URLSearchParams(query);
+    let accessToken = param.get("accessToken");
+    if (accessToken !== null) {
+      setCookie('accessToken', accessToken.slice(7), '3');
+      sessionStorage.setItem('isLoggedIn', true);
+      setToken(accessToken.slice(7))
   }
+  },[])
 
   return ( 
     <StyledLoginButton>
