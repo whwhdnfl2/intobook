@@ -15,7 +15,7 @@ spring:
           kakao:
             client-id: d65bd1ef2f9d2f8056ef153efcc983e7
             client-secret: XJnjnScvebxqQNWEwtohdUMI9x17WTln
-            redirect-uri: http://localhost:8080/api/login/oauth2/code/kakao
+            redirect-uri: https://intobook.kro.kr/api/login/oauth2/code/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope: profile_nickname, account_email
