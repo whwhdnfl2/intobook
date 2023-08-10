@@ -30,15 +30,25 @@ const BookInfoPage = () => {
     <Layout>
       <BookDesc bookInfo={bookInfo} />
       <BookInfoContent>
-        <Tab />
-        {selectedTab === 'statistics' ? (
-          <div>
-            <ProgressBar progress={progress} containerWidth={300} />
-            <BookStatistics userBookId={userBookId} status={status} />
-          </div>
-          
+        {bookInfo && bookInfo.completedAt !== null ? (
+          <>
+            <Tab />
+            {selectedTab === 'statistics' ? (
+              <div>
+                <ProgressBar progress={progress} containerWidth={300} />
+                <BookStatistics userBookId={userBookId} status={status} />
+              </div>
+            ) : (
+              isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
+            )}
+          </>
         ) : (
-          isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
+          <EmptyContentDiv>
+            <EmptyContent>
+              아직 히스토리가 없네요<br />
+              책을 읽어볼까요?
+            </EmptyContent>
+          </EmptyContentDiv>
         )}
       </BookInfoContent>
     </Layout>
@@ -54,6 +64,20 @@ const BookInfoContent = styled.div`
   border: 1px solid var(--main-color);
   padding-top: 10px;
   margin-top: 10px;
+`;
+
+const EmptyContentDiv = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const EmptyContent = styled.div`
+  text-align: center;
+  line-height: 40px;
+  font-size: var(--font-h4);
 `;
 
 export default BookInfoPage;
