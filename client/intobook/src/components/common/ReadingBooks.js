@@ -118,6 +118,7 @@ const StatusButton = styled.button`
   font-family: var(--main-font);
   font-size: var(--font-h5);
   letter-spacing: 0.4px;
+  cursor: pointer;
 `;
 
 export default ReadingBooks;

@@ -58,6 +58,7 @@ const StatusButton = styled.button`
   font-size: var(--font-h5);
   letter-spacing: 0.4px;
   align-self: flex-end;
+  cursor: pointer;
 `;
 
 export default BookmarkInfo;

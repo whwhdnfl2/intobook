@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Stack, SwipeableDrawer, Typography, Card, CardContent } from '@mui/material';
 import BookCover from './../common/bookCover';
+import { updateUserBookStatus, addUserBook } from './../../api/userbookApi';
+import { Box, Stack, SwipeableDrawer, Typography, Card, CardContent } from '@mui/material';
 import { SearchBottomeSheetDiv } from '../../styles/bookSearch/SearchBottomSheetStyle';
 import { styled } from 'styled-components';
-import { addUserBook } from '../../api/userbookApi';
 
 const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   const navigate = useNavigate();
@@ -34,13 +34,20 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   };
 
   const registerBookHandler = async () => {
-    if (!status) { // 책장에 없는 책일 경우
-      const res = await addUserBook(bookId);
-
-      if (res === 'success') {
-        navigate('/')
+    try {
+      if (!status) { // 책장에 없는 책일 경우
+        const res = await addUserBook(bookId);
+  
+        if (res === 'success') {
+          navigate('/')
+        }
+      } else if (status === 'READING') {
+        // const res = await updateUserBookStatus(bookInfo.userBookPk, 'NOWREADING');
       }
-    };
+      
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -114,6 +121,7 @@ const StatusButton = styled.button`
   font-family: var(--main-font);
   font-size: var(--font-h5);
   letter-spacing: 0.4px;
+  cursor: pointer;
 `;
 
 export default SelectedBook;
