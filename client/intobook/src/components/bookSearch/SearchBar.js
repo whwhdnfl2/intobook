@@ -2,20 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
 import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
 import { searchBooks } from './../../api/searchApi';
+import { useRecoilState } from 'recoil';
+import { SearchKeywordAtom } from '../../recoil/book/BookAtom';
 
-const SearchBar = ({ title, updateSearchResults }) => {
-  const [searchKeyword, setSearchKeyword] = useState('');
+const SearchBar = ({ title }) => {
+  const [keyword, setKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useRecoilState(SearchKeywordAtom);
+
   const searchBarInputRef = useRef(null);
 
   const inputChangeHandler = (event) => {
-    setSearchKeyword(event.target.value);
+    setKeyword(event.target.value);
   };
 
-  const searchHandler = async () => {
-    if (searchKeyword.trim() !== '') {
-      // 검색 api 호출
-      const searchValues = await searchBooks(searchKeyword, 1);
-      updateSearchResults(searchValues.item);
+  // const searchHandler = async () => {
+  //   if (searchKeyword.trim() !== '') {
+  //     // 검색 api 호출
+  //     const searchValues = await searchBooks(searchKeyword, 1);
+  //     updateSearchResults(searchValues.item);
+  //   }
+  // };
+
+  const searchHandler = () => {
+    if (keyword.trim() !== '') {
+      setSearchKeyword(keyword);
     }
   };
 
@@ -37,12 +47,12 @@ const SearchBar = ({ title, updateSearchResults }) => {
         <Line />
         <SearchBarInput 
           placeholder='책 제목, 저자명, 키워드 등을 입력하세요.'
-          value={searchKeyword}
+          value={keyword}
           onChange={inputChangeHandler}
           ref={searchBarInputRef}
           onKeyDown={enterKeyPressHandler}
         />
-        {searchKeyword && (
+        {keyword && (
           <SearchIcon 
             onClick={searchHandler}
             src={searchIcon} 

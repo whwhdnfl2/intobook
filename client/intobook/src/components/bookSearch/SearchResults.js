@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Stack, Box } from '@mui/material';
 import ResultBook from './ResultBook';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 
-const SearchResults = ({ bookSearchResults }) => {
-  const resultsArray = bookSearchResults || []
+const SearchResults = ({ bookSearchResults, isLoading }) => {
+  // const resultsArray = bookSearchResults || []
+
+  const [resultsArray, setResultsArray] = useState(bookSearchResults || []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setResultsArray(prevResults => [...prevResults, ...bookSearchResults]);
+    }
+  }, [bookSearchResults, isLoading]);
 
   return (
     <ResultsContainer>
