@@ -16,6 +16,7 @@ import static javax.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
+@Builder
 @NoArgsConstructor(access =  AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -48,12 +49,6 @@ public class History {
 
     private String comment;
 
-    // 생성 메서드
-    @Builder
-    private History(UserBook userBook, User user){
-        this.userBook = userBook;
-        this.user = user;
-    }
     public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( String comment, LocalDateTime startTime, LocalDateTime endTime){
         this.comment = comment;
         this.startTime = startTime;
