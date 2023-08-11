@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom'
+import fetchFCMtoken from '../../utils/bluetooth/fetchFCMtoken';
 
 
 const CheckButton = () => {
@@ -32,11 +33,16 @@ const CheckButton = () => {
     });
   };
 
+  const fcmTokenHandler = () => {
+    fetchFCMtoken();
+  }
+
   return (
     <div style={{ display: 'flex', gap: 10, marginTop: 10}}>
       <Button variant="contained" onClick={bluetoothHandler}>블루투스</Button>
       <Button variant="contained" onClick={bookmarkhHandler}>책갈피</Button>
       <Button variant="contained" onClick={readingBookHandler}>리딩책</Button>
+      <Button variant="contained" onClick={fcmTokenHandler}>fmc테스트</Button>
     </div>
   );
 };
