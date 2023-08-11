@@ -53,15 +53,15 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
         BackdropProps={{
           style:
           {
-            width: '360px', margin: 'auto'
+            width: '400px', margin: 'auto'
           }
         }}
         PaperProps={{
           sx: {
-            width: '360px', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
+            width: '400px', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
           }
         }}>
-        <Stack width={360} height={295} >
+        <Stack width={400} height={295} >
           <SearchBottomeSheetDiv>
             <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '360px' }, textAlign: 'center' }} >
               <BookCover image={selectedInfo?.cover} alt={selectedInfo?.title + 'image'}

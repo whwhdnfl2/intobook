@@ -15,11 +15,11 @@
     --bg-gray: #dcdcdc;
     --gray: #575757;
 
-    --font-h1: 32px;
-    --font-h2: 28px;
-    --font-h3: 24px;
-    --font-h4: 18px;
-    --font-h5: 12px;
+    --font-h1: 2rem;
+    --font-h2: 1.75rem;
+    --font-h3: 1.5rem;
+    --font-h4: 1.125rem;
+    --font-h5: 0.75rem;
 
     --main-font: "BM HANNA_TTF-Regular", Helvetica;
     --content-font: "Inter", Helvetica;

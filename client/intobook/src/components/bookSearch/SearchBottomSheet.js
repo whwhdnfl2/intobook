@@ -14,7 +14,6 @@ const SearchBottomSheet = ({ isOpen, setIsOpen }) => {
   };
 
   const addInBookShelvesHandler = () => {
-    console.log(1111)
     setIsOpen(false);
     setOpenModal(true);
   };
@@ -25,15 +24,15 @@ const SearchBottomSheet = ({ isOpen, setIsOpen }) => {
         BackdropProps={{
           style:
           {
-            width: '360px', margin: 'auto'
+            width: '400px', margin: 'auto'
           }
         }}
         PaperProps={{
           sx: {
-            width: '360px', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
+            width: '400px', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
           }
         }}>
-        <Stack width={360} height={254} >
+        <Stack width={400} height={254} >
           <SearchBottomeSheetDiv>
             <Title>
               <span>읽을 책 등록하기</span>

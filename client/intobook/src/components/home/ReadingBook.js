@@ -71,17 +71,19 @@ const ReadingBook = () => {
     <>
       <StyledEngineProvider injectFirst>
         <GridContainer>
-          <CurrentBook sx={{ background: nowReadingBook ? '#859FF8' : 'var(--white)' }}>
-            <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
-              {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: '2px solid white' }} />}
-            </Link>
-            {!nowReadingBook && (
-              <AddCircleOutlineIcon
-                onClick={searchHandler}
-                style={{ color: 'var(--main-green-color)', fontSize: '26px', cursor: 'pointer' }}
-              />
-            )}
-          </CurrentBook>
+          <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
+            {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: '2px solid white', width: '80px', height: '110px' }} />}
+          </Link>
+          {!nowReadingBook && (
+            <>
+              <CurrentBook sx={{ background: nowReadingBook ? '#859FF8' : 'var(--white)' }}>
+                <AddCircleOutlineIcon
+                  onClick={searchHandler}
+                  style={{ color: 'var(--main-green-color)', fontSize: '26px', cursor: 'pointer' }}
+                />
+              </CurrentBook>
+            </>
+          )}
           <CurrentBookStatus />
         </GridContainer>
         <div
