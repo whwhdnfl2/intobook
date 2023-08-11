@@ -44,6 +44,9 @@ public class UserService {
         Optional<User> temp = userRepository.findByUserPk(userPk);
         if(temp.isPresent()){
             User user = temp.get();
+            if(fcmToken.charAt(0) == '"'){
+                fcmToken = fcmToken.substring(1,fcmToken.length() - 1);
+            }
             user.setFcmToken(fcmToken);
             userRepository.saveAndFlush(user);
         }else{
