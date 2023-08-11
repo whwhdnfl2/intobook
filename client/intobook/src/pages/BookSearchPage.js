@@ -1,8 +1,10 @@
+
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/bookSearch/SearchBar';
 import SearchResults from './../components/bookSearch/SearchResults';
 import { searchBooks } from './../api/searchApi';
 import { Layout } from './../styles/CommonStyle';
+import { searchBooks } from './../api/searchApi';
 import { useRecoilValue } from 'recoil';
 import { SearchKeywordAtom } from '../recoil/book/BookAtom';
 

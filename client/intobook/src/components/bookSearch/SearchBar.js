@@ -14,6 +14,7 @@ const SearchBar = ({ title }) => {
   };
 
   const searchHandler = async () => {
+
     if (keyword.trim() !== '') {
       setSearchKeyword(keyword);
     }
