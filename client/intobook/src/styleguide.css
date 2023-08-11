@@ -1,8 +1,15 @@
-@font-face {
+/* @font-face {
     font-family: "BM HANNA_TTF-Regular";
     font-style: normal;
     font-weight: 400;
     src: url("assets/font/BM-HANNA.ttf") format("truetype");
+} */
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
 }
 
 :root {

@@ -1,8 +1,9 @@
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom'
 import fetchFCMtoken from '../../utils/bluetooth/fetchFCMtoken';
+import { styled } from 'styled-components';
 
 
 const CheckButton = () => {
@@ -46,5 +47,14 @@ const CheckButton = () => {
     </div>
   );
 };
+
+const Button = styled.div`
+  border: 1px solid white;
+  color : white;
+  border-radius: 50px;
+  padding: 0.5rem 0.5rem;
+  /*box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);*/
+  cursor: pointer;
+`
 
 export default CheckButton;

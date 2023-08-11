@@ -28,10 +28,10 @@ const HomePage = () => {
       <Layout>
         <WelcomeText>안녕하세요, {nickname}님!</WelcomeText>
         <CheckButton>확인</CheckButton>
+        <ReadingBook />
         <Bluetooth />
         <Bookmark />
         <Timer />
-        <ReadingBook />
       </Layout>
     </motion.div>
   );

@@ -56,10 +56,14 @@ const UpperNavbar = () => {
     <StyledUpperNavbar>
 
         {/* 왜 링크를 넣으면 css가 깨질까? */}
-        <CenteredLogo className='logo'>
+        {/* <CenteredLogo className='logo'>
           <img src={intobookFullLogo} alt="로고" style={{width:'150px',height:'40px'}} onClick={navigateHome}/>
-        </CenteredLogo>
+        </CenteredLogo> */}
       
+      <CenteredLogo className='logo'>
+          BOOK!빠지다
+      </CenteredLogo>
+
       
 
       <RightSection>

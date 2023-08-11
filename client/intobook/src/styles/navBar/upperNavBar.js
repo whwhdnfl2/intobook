@@ -18,7 +18,8 @@ export const RightSection = styled.div`
 
 export const CenteredLogo = styled.div`
   align-items: center;
-  margin-left: 1rem;
+  font-size: var(--font-h1);
+  margin-left: 1.2rem;
   flex-grow: 1;
 `;
 

@@ -36,7 +36,7 @@ const CurrentBookStatus = () => {
 
   return (
     <>
-      <CurrentBookContainer sx={{ background: nowReadingBook? '#859FF8' : 'var(--white)' }}>
+      <CurrentBookContainer sx={{ background: nowReadingBook? 'var(--main-color)' : 'var(--white)' }}>
         {nowReadingBook && (
           <Container>
             <Content>{title}</Content>
@@ -84,6 +84,7 @@ const CurrentBookContainer = styled(Box)`
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+  border: 1px solid white;
 `;
 
 const Container = styled.div`
@@ -95,7 +96,7 @@ const Container = styled.div`
 const Content = styled.div`
   color: var(--white);
   text-align: center;
-  font-family: var(--main-font);
+  /*font-family: var(--main-font);*/
   letter-spacing: 0.8px;
   font-size: var(--font-h5);
   margin: 5px 0 8px 0;

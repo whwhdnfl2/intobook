@@ -37,9 +37,10 @@ const SimpleBottomNavigation = () => {
         transform: 'translateX(-50%)', // 가로 방향 중앙 정렬을 위한 변환
         display: 'flex',
         width: '100%',
-        maxWidth: 360, // 최대 너비 설정
+        maxWidth: 450, // 최대 너비 설정
         borderRadius: '10px',
         boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
+        background: 'rgba(255, 255, 255, 0.8)', // 배경색에 투명도를 줄 rgba 색상 값 설정
       }}
       >
       <BottomNavigationAction

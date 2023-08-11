@@ -25,8 +25,8 @@ const Bluetooth = () => {
         setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
 
         navigator.bluetooth.requestDevice({
-            // filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
-            acceptAllDevices: true
+            filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
+            // acceptAllDevices: true
         })
             .then(device => {
                 // Human-readable name of the device.
@@ -56,7 +56,7 @@ const Bluetooth = () => {
             .catch(error => { console.error(error); });
     } else {
       setIsBluetoothConnected(false);
-      console.log('왜안나옴?',bluetoothDevice)
+      console.log('왜안나올까..?',bluetoothDevice)
     }
 }
 
@@ -87,12 +87,15 @@ const HandleNotifications = async (event) => {
     //책을 펼쳤을 때 history api 요청(response로 pk를 받아와서 저장)
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
     if (illuminance1 === illuminance2 && pressure <= 10) {
+      console.log('책이 펼쳐졌을때')
         const res = await createBookHistory(nowBook?.userBookPk)
-        console.log('성공하면 받는 historyPk',res)
         setHistoryPkAtom(res)
         setBookmark(true);
     } else if (illuminance1 !== illuminance2 && pressure >= 10) {
+        // setHistoryPkAtom(23)
+        console.log('책 덮였을때',pressure)
         const res = await completeBookHistory(historyPkAtom,pressure)
+        console.log('성공했으면?',res)
         setBookmark(false);
     }
 }
@@ -100,8 +103,8 @@ const HandleNotifications = async (event) => {
   return (
     <BluetoothDiv
       style={{
-        color: isBluetoothConnected ? 'var(--main-color)' : 'var(--bg-gray)',
-        fontSize: isBluetoothConnected ? 'var(--font-h4)' : 'var(--font-h2)',
+        color: isBluetoothConnected ? 'white' : 'var(--bg-gray)',
+        fontSize: isBluetoothConnected ? 'var(--font-h4)' : 'var(--font-h4)',
       }}
     >
       <IconWrapper>
