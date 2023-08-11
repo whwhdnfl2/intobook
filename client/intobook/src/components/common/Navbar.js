@@ -33,14 +33,16 @@ const SimpleBottomNavigation = () => {
       style={{
         position: 'fixed',
         bottom: 0,
-        left: '50%', // 화면 왼쪽에서 50% 위치로 설정
-        transform: 'translateX(-50%)', // 가로 방향 중앙 정렬을 위한 변환
+        left: '50%',
+        transform: 'translateX(-50%)',
         display: 'flex',
         width: '100%',
-        maxWidth: 450, // 최대 너비 설정
-        borderRadius: '10px',
-        boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)', // 그림자 추가
-        background: 'rgba(255, 255, 255, 0.8)', // 배경색에 투명도를 줄 rgba 색상 값 설정
+        maxWidth: '450px',
+        paddingRight: '1.2rem',
+        paddingLeft: '1.2rem',
+        borderRadius: '50px',
+        boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)',
+        background: 'rgba(255, 255, 255, 0.8)',
       }}
       >
       <BottomNavigationAction
