@@ -1,5 +1,11 @@
 import { atom } from 'recoil';
 
+// 검색 키워드
+export const SearchKeywordAtom = atom({
+    key: 'SearchKeywordAtom',
+    default: ''
+});
+
 // 책 정보 탭
 export const BookInfoTabAtom = atom({
     key: 'BookInfoTabAtom',
