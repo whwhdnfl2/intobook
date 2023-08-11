@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 public class GetAttentionStatisticsResponse {
     private int attention;
-    private double multiRead ;
-    private boolean isBurning ;
-    private List<WeekDay> mostActiveWeekDay  ;
-    private ActiveTime mostActiveTime  ;
-    private int favoriteGenre ;
+    private double multiRead;
+    private boolean isBurning;
+    private WeekDay mostActiveWeekDay;
+    private ActiveTime mostActiveTime;
+    private int favoriteGenre;
 }

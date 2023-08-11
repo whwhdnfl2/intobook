@@ -20,4 +20,6 @@ public interface UserBookRepository extends JpaRepository<UserBook, Long> {
     List<UserBook> findByUserUserPk(Long userPk);
     Page<UserBook> findByUserAndStatus(User user, UserBookStatus status, Pageable pageable);
     UserBook findAllByUserAndStatus(User user, UserBookStatus userBookStatus);
+
+
 }
