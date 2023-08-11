@@ -21,15 +21,15 @@ export const getUserStatistics = async () => {
 };
 
 // 주간 통계 가져오기
-// export const getWeeklyStatistics = async () => {
-//   try {
-//     const res = await axiosInstance.get(`/statistics/week`, {
-//       params: {
-//         weekCnt: weekCnt
-//       }
-//     });
-//     return res.data;
-//   } catch (err) {
-//     return err
-//   }
-// };
+export const getWeeklyStatistics = async (weekCnt = 2) => {
+  try {
+    const res = await axiosInstance.get(`/statistics/week`, {
+      params: {
+        weekCnt: weekCnt
+      }
+    });
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
