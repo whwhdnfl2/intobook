@@ -7,7 +7,7 @@ const SearchResults = ({ bookSearchResults }) => {
   const resultsArray = bookSearchResults || []
 
   return (
-    <ResultsContainer>
+    <ResultsContainer id='results-container'>
       <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
         {resultsArray.map((item, idx) => (
           <Box key={idx}>
