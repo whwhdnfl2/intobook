@@ -52,12 +52,16 @@ public class FCMService {
             send(message);
 
         }else{
+            log.info("send 실패 ㅠㅠ");
+
             throw new Exception("fcm test 실패");
         }
     }
 
     public void send(Message message) {
+        
         FirebaseMessaging.getInstance().sendAsync(message);
+        log.info("send 실행된거임");
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
