@@ -2,9 +2,12 @@ package com.reboot.intobook.statistics;
 
 import com.reboot.intobook.history.HistoryRepository;
 import com.reboot.intobook.history.entity.History;
+import com.reboot.intobook.statistics.dto.GetAttentionStatisticsResponse;
 import com.reboot.intobook.statistics.dto.GetNWeeksReadResponse;
 import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
+import com.reboot.intobook.statistics.entity.ActiveTime;
+import com.reboot.intobook.statistics.entity.WeekDay;
 import com.reboot.intobook.userbook.UserBookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -126,9 +130,7 @@ public class StatisticsService {
         // 주차별 갯수 계산
         LocalDateTime baseDateTime = findNWeekLastestHistoryList.get(0).getStartTime();
 
-        log.info("================================================");
         for (History h : findNWeekLastestHistoryList) {
-            log.info( h.getStartTime().toString() );
             LocalDateTime dateTime = h.getStartTime();
             LocalDate date = dateTime.toLocalDate();
 
@@ -163,7 +165,7 @@ public class StatisticsService {
             }
         }
 
-        // 가장 최신 날짜로 정렬
+        // 날짜 오름차순 정렬
         filteredHistoryList.sort( (h1, h2) -> h1.getStartTime().compareTo(h2.getStartTime()) );
 
         // 데이터 개수 적을 때, 개수 보정 dummy data
@@ -175,6 +177,83 @@ public class StatisticsService {
         }
 
         return filteredHistoryList;
+    }
+
+    public GetAttentionStatisticsResponse getAttentionStatistics(Long userPk) {
+        // 필요한 엔티티 조회
+        List<History> findHistoryList = historyRepository.findByUserUserPk(userPk);
+        List<UserBook> findUserBookList = userBookRepository.findByUserUserPk(userPk);
+        
+        // 날짜 내림차순 정렬(가장 최신 내용이 앞에 있음)
+        findHistoryList.sort( (h1, h2) -> h2.getStartTime().compareTo(h1.getStartTime()) );
+
+        // 최근 10개의 historyList
+        List<History> recent10HistoryList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) recent10HistoryList.add( findHistoryList.get(i) );
+
+        // 하나씩 통계 만들기
+        int attention = getCountOver30MinAttention(recent10HistoryList);
+
+        double multiRead = getMultiRead(recent10HistoryList);
+
+        boolean isBurning = getIsBurning(recent10HistoryList);
+        
+        List<WeekDay> mostActiveWeekDay = getMostActiveWeekDay(findHistoryList);
+        
+        ActiveTime mostActiveTime = getMostActiveTime(findHistoryList);
+        
+        int favoriteGenre = getfavoriteGenre(findUserBookList);
+
+        return GetAttentionStatisticsResponse.builder()
+                .attention(attention)
+                .multiRead(multiRead)
+                .isBurning(isBurning)
+                .mostActiveWeekDay(mostActiveWeekDay)
+                .mostActiveTime(mostActiveTime)
+                .favoriteGenre(favoriteGenre)
+                .build();
+    }
+
+    private int getCountOver30MinAttention(List<History> recent10HistoryList) {
+        int count = 0;
+        for( History history: recent10HistoryList ){
+            if( history.getReadingTime() >= 30 ) count++;
+        }
+        return count;
+    }
+
+    private double getMultiRead(List<History> recent10HistoryList) {
+        return 2.0;
+    }
+
+    private boolean getIsBurning(List<History> recent10HistoryList) {
+        return true;
+    }
+
+    private List<WeekDay> getMostActiveWeekDay(List<History> findHistoryList) {
+        int weekActive[] = new int[8]; // 1: MON, 2: TUE, 3: WED ...
+
+        for( History history: findHistoryList ){
+            // weekActive 계산하기
+            int idx = history.getStartTime().getDayOfWeek().getValue();
+            weekActive[idx]++;
+
+        }
+        return null;
+    }
+
+    private ActiveTime getMostActiveTime(List<History> findHistoryList) {
+        int timeActive[] = new int[ ActiveTime.values().length ];
+        for( History history: findHistoryList ){
+            // timeActive 계산하기
+            int hour = history.getStartTime().toLocalTime().getHour();
+
+        }
+        return ActiveTime.MORNING;
+    }
+
+    private int getfavoriteGenre(List<UserBook> findUserBookList) {
+        return 8;
     }
 
 }
