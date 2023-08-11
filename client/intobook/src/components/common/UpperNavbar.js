@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as React from 'react';
-import { StyledUpperNavbar, RightSection, CenteredLogo } from '../../styles/navBar/upperNavBar';
+import { StyledUpperNavbar, RightSection } from '../../styles/navBar/upperNavBar';
 import HelpIcon from '@mui/icons-material/Help';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
@@ -13,6 +13,7 @@ import intobookFullLogo from '../../assets/img/intobookFullLogo.png';
 import { AccessToken } from '../../recoil/user/UserAtom';
 import Modal from './Modal';
 import { logout } from '../../api/logoutApi';
+import AppTitle from './AppTitle';
 
 const UpperNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -60,11 +61,7 @@ const UpperNavbar = () => {
           <img src={intobookFullLogo} alt="로고" style={{width:'150px',height:'40px'}} onClick={navigateHome}/>
         </CenteredLogo> */}
       
-      <CenteredLogo className='logo'>
-          BOOK!빠지다
-      </CenteredLogo>
-
-      
+      <AppTitle />    
 
       <RightSection>
         <HelpIcon onClick={() => { setOpenModal(true) }} color="primary" />
