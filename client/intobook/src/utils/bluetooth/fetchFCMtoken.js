@@ -1,5 +1,6 @@
 import { getToken } from 'firebase/messaging';
 import { messaging } from './../../firebase';
+import { transmitFCMtoken } from '../../api/transmitFCMtoken';
 
 const fetchFCMtoken = () => {
     // console.log('Requesting permission...');
@@ -7,10 +8,12 @@ const fetchFCMtoken = () => {
     Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
             // console.log('Notification permission granted.')
-            getToken(messaging).then((currentToken) => {
+            getToken(messaging).then(async (currentToken) => {
                 if (currentToken) {
-                    // console.log('FCM Token : ', currentToken)
-                    console.log('push-messaging is permitted')
+                    console.log('FCM Token : ', currentToken)
+
+                    const res = await transmitFCMtoken(currentToken)
+
                 } else {
                     console.log('FCM Token Unavailable')
                 }
@@ -18,9 +21,9 @@ const fetchFCMtoken = () => {
                 console.log('error', err);
             })
         }
-      }).catch((err) => {
+    }).catch((err) => {
         console.log('error', err);
-      })
-    };
+    })
+};
 
 export default fetchFCMtoken;
