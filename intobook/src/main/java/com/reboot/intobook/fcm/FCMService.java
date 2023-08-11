@@ -37,10 +37,18 @@ public class FCMService {
 
     //fcm알림 테스트를 위한 method
     public void test() throws Exception {
+        log.info("이게 실행 1");
+
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<User> temp = userRepository.findByUserPk(userPk);
+        log.info("이게 실행 2");
+
         if(temp.isPresent()){
+            log.info("이게 실행 3");
+
             User user = temp.get();
+            log.info("이게 실행 4");
+
 
             String fcmToken = user.getFcmToken();
             Message message = Message.builder()
@@ -48,6 +56,7 @@ public class FCMService {
                     .putData("content", "등록하신 판매 입찰이 낙찰되었습니다.")
                     .setToken(fcmToken)
                     .build();
+            log.info("이게 실행 5");
 
             send(message);
 
