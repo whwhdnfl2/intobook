@@ -7,6 +7,7 @@ import com.reboot.intobook.statistics.dto.GetNWeeksReadResponse;
 import com.reboot.intobook.statistics.dto.GetUserBookStatisticResponse;
 import com.reboot.intobook.statistics.dto.GetUserStatisticsResponse;
 import com.reboot.intobook.statistics.entity.ActiveTime;
+import com.reboot.intobook.statistics.entity.Jenre;
 import com.reboot.intobook.statistics.entity.WeekDay;
 import com.reboot.intobook.userbook.UserBookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
@@ -14,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -184,6 +184,8 @@ public class StatisticsService {
     public GetAttentionStatisticsResponse getAttentionStatistics(Long userPk) {
         // 필요한 엔티티 조회
         List<History> recent10HistoryList = historyRepository.findTop10ByUserUserPkOrderByHistoryPkDesc(userPk);
+        Collections.reverse(recent10HistoryList);
+
         List<UserBook> findUserBookList = userBookRepository.findByUserUserPk(userPk);
 
         // 하나씩 통계 만들기
@@ -197,7 +199,7 @@ public class StatisticsService {
         
         ActiveTime mostActiveTime = getMostActiveTime(recent10HistoryList);
         
-        int favoriteGenre = getfavoriteGenre(findUserBookList);
+        Jenre favoriteGenre = getFavoriteGenre(findUserBookList);
 
         return GetAttentionStatisticsResponse.builder()
                 .attention(attention)
@@ -234,8 +236,8 @@ public class StatisticsService {
     private boolean getIsBurning(List<History> recent10HistoryList) {
         int l = recent10HistoryList.size();
         for (int i = 7; i < l; i++) {
-            LocalDateTime pre = recent10HistoryList.get(i).getEndTime();
-            LocalDateTime now = recent10HistoryList.get(i).getEndTime();
+            LocalDateTime pre = recent10HistoryList.get(i).getStartTime();
+            LocalDateTime now = recent10HistoryList.get(i).getStartTime();
             Duration duration = Duration.between(pre, now);
             Duration twoWeeks = Duration.ofDays(14);
             if (duration.compareTo(twoWeeks) < 0) return true;
@@ -250,6 +252,7 @@ public class StatisticsService {
         for( History history: findHistoryList ){
             // weekActive 계산하기
             int idx = history.getStartTime().getDayOfWeek().getValue();
+            System.out.println("요일 : " + idx + " : " + history.getStartTime());
             weekActive[idx]++;
             if (maxValue <= weekActive[idx]) {
                 maxIdx = idx;
@@ -261,16 +264,40 @@ public class StatisticsService {
 
     private ActiveTime getMostActiveTime(List<History> findHistoryList) {
         int timeActive[] = new int[ ActiveTime.values().length ];
+        int maxValue = 0;
+        int maxIdx = 0;
+        int idx;
         for( History history: findHistoryList ){
             // timeActive 계산하기
             int hour = history.getStartTime().toLocalTime().getHour();
+            idx = hour / 6;
+            timeActive[idx]++;
+            if (timeActive[idx] >= maxValue) {
+                maxValue = timeActive[idx];
+                maxIdx = idx;
+            }
 
         }
-        return ActiveTime.MORNING;
+        return ActiveTime.values()[maxIdx];
     }
 
-    private int getfavoriteGenre(List<UserBook> findUserBookList) {
-        return 8;
+
+
+    private Jenre getFavoriteGenre(List<UserBook> findUserBookList) {
+        int[] jenreActive = new int[ Jenre.values().length ];
+        int maxIdx = 0;
+        int maxValue = 0;
+        for (UserBook userBook : findUserBookList) {
+            String isbn = userBook.getBook().getIsbn();
+            int jenreNum = isbn.charAt(isbn.length()-3) - '0';
+            jenreActive[jenreNum]++;
+            System.out.println("장르 : " + jenreNum);
+            if (jenreActive[jenreNum] > maxValue) {
+                maxIdx = jenreNum;
+                maxValue = jenreActive[jenreNum];
+            }
+        }
+        return Jenre.values()[maxIdx];
     }
 
 }
