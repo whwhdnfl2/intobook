@@ -5,6 +5,7 @@ import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 import { searchBooks } from './../../api/searchApi';
 import useInfiniteScroll from './../../utils/useInfiniteScroll';
 
+
 const SearchResults = ({ searchKeyword }) => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,8 +55,8 @@ const SearchResults = ({ searchKeyword }) => {
   }, [searchKeyword]);
 
   return (
-    <ResultsContainer id='results-container'>
-      <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
+      <ResultsContainer id='results-container'>
+      <Stack direction='row' flexWrap='wrap' justifyContent='center' columnGap={3.5} rowGap={1.5}>
         {bookSearchResults.map((item, idx) => (
           <Box key={idx} ref={targetRef}>
             <ResultBook bookCover={item} />
@@ -68,6 +69,7 @@ const SearchResults = ({ searchKeyword }) => {
         )}
       </Stack>
     </ResultsContainer>
+    
   );
 };
 
