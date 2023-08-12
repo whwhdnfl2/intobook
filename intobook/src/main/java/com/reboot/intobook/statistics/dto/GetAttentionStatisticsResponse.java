@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class GetAttentionStatisticsResponse {
     private int attention;
-    private double multiRead;
+    private boolean multiRead;
     private boolean isBurning;
     private WeekDay mostActiveWeekDay;
     private ActiveTime mostActiveTime;
