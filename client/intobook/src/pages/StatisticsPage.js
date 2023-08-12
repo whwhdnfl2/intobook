@@ -81,13 +81,23 @@ const StatisticsPage = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {username} 님의 독서 유형은..
-      <RecentStatistic characterData={characterValue} />
-      <TotalStatistic val={userStatisticsValue} />
-      <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
-      <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+      <LayoutSecond>
+        <StyleContainer>
+          {<p style={{color: 'white'}}>{username} 님의 독서 유형은..</p>}
+          <RecentStatistic characterData={characterValue} />
+          <TotalStatistic val={userStatisticsValue}  />
+          <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
+          <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+        </StyleContainer>
+      </LayoutSecond>
     </motion.div>
   );
 }
 
 export default StatisticsPage;
+
+// {username} 님의 독서 유형은..
+// <RecentStatistic characterData={characterValue} />
+// <TotalStatistic val={userStatisticsValue} />
+// <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
+// <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />

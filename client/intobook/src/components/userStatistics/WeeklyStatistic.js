@@ -3,11 +3,11 @@ import { MyResponsiveBar } from './';
 
 
 const WeeklyStatistic = (weeklyData) => {
-  
+
   const day = ['월', '화', '수', '목', '금', '토', '일']
   const lastWeek = weeklyData?.lastWeek
   const thisWeek = weeklyData?.thisWeek
-  
+
   const data = [];
 
   if (lastWeek && thisWeek) {
@@ -22,7 +22,7 @@ const WeeklyStatistic = (weeklyData) => {
   };
 
   return (
-    <div style={{height: '300px', width:'320px'}}>
+    <div style={{ height: '300px', width: '320px' }}>
       <p>나를 이겨라~~! 주간 그래프</p>
       <MyResponsiveBar data={data} />
     </div>
