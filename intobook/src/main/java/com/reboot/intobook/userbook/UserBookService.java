@@ -23,7 +23,7 @@ public class UserBookService {
     private final UserBookRepository userBookRepository;
 
     public void nowReadingToReading (User user) {
-        UserBook preReadingBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        UserBook preReadingBook = userBookRepository.findByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (preReadingBook == null) return;
         preReadingBook.setStatus(UserBookStatus.READING);
         userBookRepository.save(preReadingBook);
@@ -44,6 +44,7 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
+    @Transactional
     public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, UserBookOrderBy orderBy, int page){
         Sort sort;
         if (orderBy == UserBookOrderBy.title) {
@@ -58,9 +59,11 @@ public class UserBookService {
 
         Page<UserBook> userBookList = null;
         if (status == null) {
-            userBookList = userBookRepository.findByUserAndStatusNotAndIsDeletedFalse(user, UserBookStatus.NOWREADING, pageRequest);
+            userBookList = userBookRepository.findByUserAndIsDeletedFalse(user, pageRequest);
+        }else if ( status == UserBookStatus.READING ){
+            userBookList =  userBookRepository.findByUserAndStatusOrStatus(user, status, UserBookStatus.NOWREADING, pageRequest);
         }else {
-            userBookList =  userBookRepository.findByUserAndStatus(user, status, pageRequest);
+            userBookList =  userBookRepository.findByUserAndStatusOrStatus(user, status, status, pageRequest);
         }
         return userBookList.map(userBook -> UserBookListResponseDto.toEntity(userBook));
     }
@@ -110,7 +113,7 @@ public class UserBookService {
     }
 
     public UserBookResponseDto findNowReadingUserBook(User user) {
-        UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        UserBook userBook = userBookRepository.findByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (userBook == null) return null;
         return UserBookResponseDto.toEntity(userBook);
     }
