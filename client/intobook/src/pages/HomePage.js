@@ -4,10 +4,9 @@ import { Layout } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import BluetoothComponent from '../components/home/BluetoothComponent';
 
 const HomePage = () => {
-
-  const nickname = '북빠지다'
 
   const navigate = useNavigate();
 
@@ -32,11 +31,10 @@ const HomePage = () => {
         animate="visible"
         variants={slideInVariants}
         transition={{ duration: 0.5 }}
-        >안녕하세요, {nickname}님!</WelcomeText>
-        <Bluetooth />
-        <Bookmark />
-        <Timer />
-        <ReadingBook />
+        >테스트용 문구입니다</WelcomeText>
+        <BluetoothComponent />
+        {/* <BookmarkComponent  />
+        <ReadingBookComponent /> */}
         <CheckButton>확인</CheckButton>
       </Layout>
     </motion.div>

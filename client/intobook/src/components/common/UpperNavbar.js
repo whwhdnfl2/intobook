@@ -12,7 +12,6 @@ const UpperNavbar = () => {
         top: 0,
         display: 'flex',
         justifyContent: 'space-between',
-        border: '1px solid gray',
         margin: '1rem'
       }}
     >
