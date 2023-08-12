@@ -80,6 +80,7 @@ const BookCharacter = ({val}) => {
     8: "https://item.kakaocdn.net/do/553f47ae1857d2c0ccb4825b98c8a1c24022de826f725e10df604bf1b9725cfd",
   }
 
+// null일 때 어떤 이미지 넣어줄지 고민하기
 let imageKey = null;
 
 if (attention >= 5) {
