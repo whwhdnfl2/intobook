@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 // 검색 키워드
 export const SearchKeywordAtom = atom({
     key: 'SearchKeywordAtom',
-    default: ''
+    default: '아름다운 동네'
 });
 
 // 책 정보 탭
