@@ -50,8 +50,11 @@ public class StatisticController {
 
     @GetMapping("/attention")
     @ApiOperation(value = "책에 집중하는 정도에 대한 통계 조회")
-    public ResponseEntity<GetAttentionStatisticsResponse> getAttentionStatistics(){
+    public ResponseEntity<?> getAttentionStatistics(){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (statisticsService.countHistory(userPk) < 10) {
+            return new ResponseEntity<String>("히스토리 기록 부족", HttpStatus.NO_CONTENT);
+        }
         GetAttentionStatisticsResponse response = statisticsService.getAttentionStatistics( userPk );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

@@ -1,5 +1,5 @@
 package com.reboot.intobook.statistics.entity;
 
 public enum ActiveTime {
-    DAWN, MORNING, AFTERNOON, EVENING
+    새벽, 아침, 낮, 저녁
 }

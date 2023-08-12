@@ -20,5 +20,8 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
 
     List<GetHistoryResponse> findByUser(User user);
     List<History> findByUserUserPk(Long userPk);
+
+    List<History> findTop10ByUserUserPkOrderByHistoryPkDesc(Long userPk);
+    Long countByUserUserPk(Long userPk);
     Optional<List<History>> findAllByUserBookUserBookPk(Long userBookPk);
 }
