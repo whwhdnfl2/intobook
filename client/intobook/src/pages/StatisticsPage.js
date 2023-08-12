@@ -4,6 +4,7 @@ import { BookCharacter, TotalStatistic, WeeklyStatistic } from './../components/
 import { getUserStatistics,getWeeklyStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
+import { Layout, LayoutSecond, StyleContainer } from '../styles/CommonStyle';
 
 
 const StatisticsPage = () => {
@@ -59,11 +60,15 @@ const StatisticsPage = () => {
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
     >
-      {username} 님의 독서 유형은..
-      <BookCharacter />
-      <TotalStatistic val={userStatisticsValue}  />
-      <WeeklyStatistic weeklyData={weeklyStatistics}/>
-      <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+      <LayoutSecond>
+        <StyleContainer>
+          {<p style={{color: 'white'}}>{username} 님의 독서 유형은..</p>}
+          <BookCharacter />
+          <TotalStatistic val={userStatisticsValue}  />
+          <WeeklyStatistic weeklyData={weeklyStatistics}/>
+          <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+        </StyleContainer>
+      </LayoutSecond>
     </motion.div>
   );
 }

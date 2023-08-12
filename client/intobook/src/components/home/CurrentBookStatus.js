@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './../common/Modal';
 import { transfer } from '../../assets/img/home'
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Box } from '@mui/material';
 import { styled } from 'styled-components';
 import { formatTimeDifference } from '../../utils/dateTimeUtils';
+import { BasicButton } from '../common/BasicButton';
+import { ProgressBar } from '../common';
+import { getReadingBookInfo } from '../../api/userbookApi';
+import SearchBottomSheet from '../bookSearch/SearchBottomSheet';
 
 const CurrentBookStatus = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const closeModal = () => {
     setOpenModal(false);
   };
 
-  const nowReadingBook = useRecoilValue(ReadingBookAtom);
   const isConnected = useRecoilValue(BluetoothAtom);
   const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);
+  const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);
 
   const tempTitle = nowReadingBook?.title;
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
@@ -24,8 +29,54 @@ const CurrentBookStatus = () => {
   // 지난 로그 기록 기준 1초마다 갱신
   const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
   const [timeDifference, setTimeDifference] = useState(lastLog);
+  const [openBookInfoModal, setOpenBookInfoModal] = useState(false);
+  const nowPage = nowReadingBook?.nowPage + 90;
+  const progress = nowReadingBook?.page ? Math.floor((nowPage / nowReadingBook.page) * 100) : 0;
+  const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
+
+  const searchHandler = () => {
+    if (isConnected && isBookmarkOut) {
+      // 안내 모달 띄우기
+      setOpenBookInfoModal(true);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  const closeBookInfoModal = () => {
+    setOpenBookInfoModal(false);
+  };
+
+  const closeCompleteBookModal = () => {
+    setOpenCompleteBookModal(false);
+  };
 
   useEffect(() => {
+    const getReadingBook = async () => {
+      const detailInfo = await getReadingBookInfo();
+      setNowReadingBook(detailInfo);
+
+      // 진행률 95% 이상일 때 모달 띄우기
+      if (detailInfo?.nowPage && detailInfo?.page) {
+        const nowPage = detailInfo.nowPage + 30;
+        const progress = Math.floor((nowPage / detailInfo.page) * 100);
+
+        if (progress >= 95) {
+          // localStorage 값 설정
+          const modalVal = localStorage.getItem('hasCloseCompleteBookModal')
+          if (modalVal === null) {
+            localStorage.setItem('hasCloseCompleteBookModal', 'false');
+          }
+          // localStorage 값이 true가 아닐 때만 모달 띄우기
+          if (modalVal !== 'true') {
+            setOpenCompleteBookModal(true);
+          }
+        }
+      }
+    };
+    getReadingBook();
+
+
     const interval = setInterval(() => {
       const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
       setTimeDifference(lastLog);
@@ -36,13 +87,16 @@ const CurrentBookStatus = () => {
 
   return (
     <>
-      <CurrentBookContainer sx={{ background: nowReadingBook? 'var(--main-color)' : 'var(--white)' }}>
         {nowReadingBook && (
-          <Container>
-            <Content>{title}</Content>
-            {(isConnected && isBookmarkOut) && <Content>새로운 히스토리를 만들어가는 중!</Content>}
+          <>
+            {(isConnected && isBookmarkOut) && 
+            <>
+              <Content>{title}</Content>
+              <Content>새로운 히스토리를 만들어가는 중!</Content>
+            </>
+            }
             {(!isConnected || (isConnected && !isBookmarkOut)) &&
-              <Container>
+              <>
                 {nowReadingBook?.completedAt ? (
                   <div>
                     <Content>마지막 히스토리로 부터</Content>
@@ -50,42 +104,47 @@ const CurrentBookStatus = () => {
                       <Span>{lastLog} </Span> 
                       지났습니다.
                     </Content>
+                    <div
+                      style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
+                      onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
+                    >
+                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />}
+                    </div>
                   </div>
                 ) : (
-                  <Content>첫 히스토리를 쌓으러 가보세요!</Content>
+                  <>
+                    <Content>첫 히스토리를 쌓으러 가보세요!</Content>
+                    <div
+                      style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
+                      onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
+                    >
+                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />}
+                    </div>
+                  </>
                 )}
                 <ImgContainer onClick={() => { setOpenModal(true) }} >
-                  <img src={transfer} alt='책 변경 아이콘' />
-                  <div>다른 책 읽기</div>
+                  <BasicButton content={"다른 책 등록하기"}/>
                 </ImgContainer>
-              </Container>
+              </>
             }
-          </Container>
+          </>
         )}
         {!nowReadingBook && (
           <div>
             <Content style={{ color: 'black' }}>지금 읽고 있는 책이 없네요!</Content>
             <Content style={{ color: 'black' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
+            <ImgContainer onClick={() => { setOpenModal(true) }} >
+                  <BasicButton content={"책 찾으러 가기"}/>
+                </ImgContainer>
           </div>
         )}
-      </CurrentBookContainer>
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
+      <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
+      <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
+      <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} height={'160px'} />
     </>
   );
 };
-
-const CurrentBookContainer = styled(Box)`
-  width: 220px;
-  height: 90px;
-  border-radius: 20px;
-  box-shadow: 4px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-  border: 1px solid white;
-`;
 
 const Container = styled.div`
   display: flex;

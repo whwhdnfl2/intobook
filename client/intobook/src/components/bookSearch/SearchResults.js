@@ -5,6 +5,7 @@ import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 import { useRecoilValue } from 'recoil';
 import { SearchKeywordAtom } from './../../recoil/book/BookAtom';
 import { searchBooks } from './../../api/searchApi';
+import { StyleContainer } from '../../styles/CommonStyle';
 
 const SearchResults = () => {
   const searchKeyword = useRecoilValue(SearchKeywordAtom);
@@ -72,8 +73,8 @@ const SearchResults = () => {
   }, [bookSearchResults, isLoading]);
 
   return (
-    <ResultsContainer id='results-container'>
-      <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
+      <ResultsContainer id='results-container'>
+      <Stack direction='row' flexWrap='wrap' justifyContent='center' columnGap={3.5} rowGap={1.5}>
         {bookSearchResults.map((item, idx) => (
           <Box key={idx} ref={((idx + 1) % 10 === 0) ? elementRef : null}>
             <ResultBook bookCover={item} />
@@ -82,6 +83,7 @@ const SearchResults = () => {
       </Stack>
       {hasMore && <div ref={elementRef} style={{ height: '10px' }}> 로딩 중</div>}
     </ResultsContainer>
+    
   );
 };
 

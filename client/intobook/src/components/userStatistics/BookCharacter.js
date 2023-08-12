@@ -17,31 +17,31 @@ const BookCharacter = () => {
         <CharacterImage src={bookMbti} alt="캐릭터" />
         <TextContainer>
           {attention >= 5?(
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right'}}>
+            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right', color: 'white'}}>
             # 평균 독서시간 30분 이상 <br/>
             여유를 즐길 줄 아는 독서가
             </Text>
           ):(
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}>
+            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right', color: 'white' }}>
               # 평균 독서시간 30분 미만 <br/>
             바쁘다 바빠 갓생 사는 독서가
             </Text>
           )}
           {multiRead >= 1?(
-            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right' }}>
+            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right', color: 'white' }}>
               # 한 번에 한권의 책만 읽는  <br/>
               한 우물형 독서가
             </Text>
           ):(
-            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right' }}>
+            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right', color: 'white' }}>
               # 한 번에 여러 권의 책을 읽는  <br/>
               박학다식형 독서가
             </Text>
           )}
           {burning ?(
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}># 지금 푹 빠져드는 중</Text>
+            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right', color: 'white' }}># 지금 푹 빠져드는 중</Text>
           ):(
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}># 지금 여유롭게 빠져드는 중</Text>
+            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right', color: 'white' }}># 지금 여유롭게 빠져드는 중</Text>
           )}
         </TextContainer>
       </CharacterContainer>
@@ -62,9 +62,10 @@ const BookCharacter = () => {
 
 const CharacterContainer = styled.div`
   display: flex;
+  width: 100%;
+  flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  margin: 12px 0px 36px;
+  justify-content: center;
 `;
 
 const CharacterImage = styled.img`
@@ -73,13 +74,11 @@ const CharacterImage = styled.img`
   height: 200px;
   border-radius: 100%;
   position: relative;
-  left: -40px;
   border: 1px solid lightgrey; 
 `;
 
 const TextContainer = styled.div`
-  /* display: flex; */
-  float: right;
+  display: flex;
   flex-direction: column;
 `; 
 
