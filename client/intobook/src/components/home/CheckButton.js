@@ -42,15 +42,14 @@ const CheckButton = () => {
     <div style={{ display: 'flex', gap: 10, marginTop: 10}}>
       <Button variant="contained" onClick={bluetoothHandler}>블루투스</Button>
       <Button variant="contained" onClick={bookmarkhHandler}>책갈피</Button>
-      <Button variant="contained" onClick={readingBookHandler}>리딩책</Button>
       <Button variant="contained" onClick={fcmTokenHandler}>fmc테스트</Button>
     </div>
   );
 };
 
 const Button = styled.div`
-  border: 1px solid white;
-  color : white;
+  border: 1px solid var(--main-point-color);
+  color : var(--main-point-color);
   border-radius: 50px;
   padding: 0.5rem 0.5rem;
   /*box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);*/

@@ -19,6 +19,11 @@ const HomePage = () => {
     navigate('/')
   },[])
 
+  const slideInVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: 0 },
+  };
+
   return (
     <motion.div
     initial={{ opacity: 0 }}
@@ -26,20 +31,27 @@ const HomePage = () => {
     exit={{ opacity: 0 }}
     >
       <Layout>
-        <WelcomeText>안녕하세요, {nickname}님!</WelcomeText>
-        <CheckButton>확인</CheckButton>
-        <ReadingBook />
+        <WelcomeText
+        initial="hidden"
+        animate="visible"
+        variants={slideInVariants}
+        transition={{ duration: 0.5 }}
+        >안녕하세요, {nickname}님!</WelcomeText>
         <Bluetooth />
         <Bookmark />
         <Timer />
+        <ReadingBook />
+        <CheckButton>확인</CheckButton>
       </Layout>
     </motion.div>
   );
 };
 
-const WelcomeText = styled.div`
+const WelcomeText = styled(motion.div)`
   font-size: var(--font-h4);
   color: var(--main-color);
+  position: absolute;
+  transform: translateX(-50%);
 `
 
 export default HomePage;

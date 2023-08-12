@@ -5,6 +5,8 @@ import BookshelvesContent from './BookshelvesContent'; // 책장 내용 컴포�
 import { useRecoilState } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom } from '../../recoil/bookmark/bookmarkAtom';
 import { completeBookHistory } from '../../api/historyApi';
+import BookmarkCharacter from '../character/CharacterWrapper';
+
 
 const BookshelvesMain = () => {
 
@@ -13,17 +15,14 @@ const BookshelvesMain = () => {
   // setBookmark(true);
   // setBluetooth(true);
 
-  const testFunc = async () => {
-    const res = await completeBookHistory(23,250)
-  }
-
-  testFunc();
-
   const [selectedTab, setSelectedTab] = useState(''); // 'all', 'read', 'reading' 중 하나로 초기화
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
+
+  const [bookmarkstatus] = useState("off")
+  const [bluetoothstatus] = useState("on")
 
   return (
     <div>
@@ -33,6 +32,7 @@ const BookshelvesMain = () => {
         <Tab label="읽고 있는 책" value="READING" />
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
+      <BookmarkCharacter  bluetoothStatus={bluetoothstatus} bookmarkStatus={bookmarkstatus}/>
     </div>
   );
 };

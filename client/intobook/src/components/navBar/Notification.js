@@ -10,6 +10,6 @@ export const Notification = () => (
             fontSize: "20px",
         }}
     >
-        <FontAwesomeIcon icon={faBell} style={{ color: "white" }}/>
+        <FontAwesomeIcon icon={faBell} style={{ color: "var(--main-point-color)" }}/>
     </motion.div>
 );

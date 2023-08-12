@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
+import { useNavigate, Link } from 'react-router-dom';
 import styled from "styled-components";
+import { logout } from "../../api/logoutApi";
+import { AccessToken } from "../../recoil/user/UserAtom";
+import { useRecoilState } from "recoil";
 
 const DropdownContainer = styled.div`
     position: relative;
@@ -34,10 +38,25 @@ const DropdownItem = styled.div`
 
 const HamburgerBar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate();
+    const [token, setToken] = useRecoilState(AccessToken);
 
     const handleToggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
+
+      //쿠키 삭제
+    function deleteCookie(cookie_name) {
+    document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+      // 로그아웃 동작
+    const handleLogout = async () => {
+    const res = await logout(); //로그아웃api 호출
+    deleteCookie('accessToken'); // 쿠키에서 액세스토큰 삭제
+    setToken(null); // 상태 업데이트
+    navigate('/');
+    }
 
     return (
         <DropdownContainer>
@@ -56,7 +75,7 @@ const HamburgerBar = () => {
                     </DropdownItem>
                     <DropdownItem>
                         <FontAwesomeIcon icon={faSignOutAlt} size="lg" />
-                        <span> 로그아웃</span>
+                        <span onClick={handleLogout}> 로그아웃</span>
                     </DropdownItem>
                 </DropdownContent>
             )}
