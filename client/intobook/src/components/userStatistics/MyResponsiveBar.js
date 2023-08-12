@@ -55,16 +55,16 @@ const MyResponsiveBar = ({ data }) => (
         ]
       ]
     }}
-    // axisBottom={{
-    //     tickSize: 5,
-    //     tickPadding: 5,
-    //     tickRotation: 0,
-    //     legend: 'country',
-    //     legendPosition: 'middle',
-    //     legendOffset: 32
-    // }}
+    axisBottom={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: '요일',
+        legendPosition: 'middle',
+        legendOffset: 32
+    }}
     axisLeft={null}
-    axisBottom={null}
+    // axisBottom={null}
     // axisLeft={{
     //     tickSize: 5,
     //     tickPadding: 5,
