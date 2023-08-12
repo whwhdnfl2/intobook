@@ -252,7 +252,6 @@ public class StatisticsService {
         for( History history: findHistoryList ){
             // weekActive 계산하기
             int idx = history.getStartTime().getDayOfWeek().getValue();
-            System.out.println("요일 : " + idx + " : " + history.getStartTime());
             weekActive[idx]++;
             if (maxValue <= weekActive[idx]) {
                 maxIdx = idx;
@@ -291,7 +290,6 @@ public class StatisticsService {
             String isbn = userBook.getBook().getIsbn();
             int jenreNum = isbn.charAt(isbn.length()-3) - '0';
             jenreActive[jenreNum]++;
-            System.out.println("장르 : " + jenreNum);
             if (jenreActive[jenreNum] > maxValue) {
                 maxIdx = jenreNum;
                 maxValue = jenreActive[jenreNum];
