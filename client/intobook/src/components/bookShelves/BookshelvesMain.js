@@ -4,6 +4,9 @@ import Tab from '@mui/material/Tab';
 import BookshelvesContent from './BookshelvesContent'; // 책장 내용 컴포넌트를 import 해주세요
 import { useRecoilState } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom } from '../../recoil/bookmark/bookmarkAtom';
+import { completeBookHistory } from '../../api/historyApi';
+import BookmarkCharacter from '../character/CharacterWrapper';
+
 
 const BookshelvesMain = () => {
 
@@ -18,6 +21,9 @@ const BookshelvesMain = () => {
     setSelectedTab(newValue);
   };
 
+  const [bookmarkstatus] = useState("on")
+  const [bluetoothstatus] = useState("on")
+
   return (
     <div>
       <Tabs value={selectedTab} onChange={handleTabChange}>
@@ -26,6 +32,7 @@ const BookshelvesMain = () => {
         <Tab label="읽고 있는 책" value="READING" />
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
+      <BookmarkCharacter  bluetoothStatus={bluetoothstatus} bookmarkStatus={bookmarkstatus}/>
     </div>
   );
 };

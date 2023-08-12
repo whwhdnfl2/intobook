@@ -107,7 +107,7 @@ const GridContainer = styled(Container)`
   padding: 0;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 50px;
 `;
 
 const CurrentBook = styled(Box)`

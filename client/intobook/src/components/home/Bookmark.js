@@ -30,8 +30,8 @@ const Bookmark = () => {
 };
 
 const BookmarkImg = styled.img`
-  width: 172px;
-  height: 196px;
+  width: 100px;
+  height: 116px;
   margin: 0 auto;
 `;
 

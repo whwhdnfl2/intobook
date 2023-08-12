@@ -1,15 +1,21 @@
-@font-face {
+/* @font-face {
     font-family: "BM HANNA_TTF-Regular";
     font-style: normal;
     font-weight: 400;
     src: url("assets/font/BM-HANNA.ttf") format("truetype");
+} */
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
 }
 
 :root {
     --main-color: #5A7FFF;
-    --main-green-color: #00A887;
+    --main-point-color: #2B49B4;
     --main-base-color: #EDF7FF;
-    /* --main-base-color: #F7FFE9; */
     --black: #18191a;
     --white: #ffffff;
     --bg-gray: #dcdcdc;
