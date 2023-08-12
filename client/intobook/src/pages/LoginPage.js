@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { AccessToken } from '../recoil/user/UserAtom';
 import { LogoAnimation } from '../components/login/LogoAnimation';
+import { LayoutSecond } from '../styles/CommonStyle';
 
 const StyledLoginPage = styled.div`
     display: flex;
@@ -41,12 +42,12 @@ const LoginPage = () => {
   },[])
 
   return ( 
-    <StyledLoginPage>
+    <LayoutSecond>
       <LogoContainer>
         <LogoAnimation/>
       </LogoContainer>
       <SocialKakao />
-    </StyledLoginPage>
+    </LayoutSecond>
   );
 }
 
