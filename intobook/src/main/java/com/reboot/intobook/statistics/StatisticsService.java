@@ -33,10 +33,13 @@ public class StatisticsService {
         // 유저의 historyList 구하기
         List<History> historyList = historyRepository.findByUserUserPk(userPk);
 
-        // totalReadPage 계산
+        // totalReadBook, totalReadPage 계산
         int totalReadPage = 0;
+        int totalReadBook = 0;
         for( UserBook ub: userBookList ){
             totalReadPage += ub.getNowPage();
+            // 완독한 책만 더해줌
+            if (ub.getStatus() == UserBookStatus.COMPLETE) totalReadBook += 1;
         }
 
         //maxReadSequence 계산
@@ -61,12 +64,12 @@ public class StatisticsService {
         }
 
         return GetUserStatisticsResponse.builder()
-                .totalReadBook( userBookList.size() )
+                .totalReadBook( totalReadBook )
                 .maxReadDaysInRow( maxReadDaysInRow )
                 .totalReadPage( totalReadPage )
                 .totalReadTime( totalReadTime )
                 .pagePerHour( pagePerHour )
-                .timePerRead(timePerRead)
+                .timePerRead( timePerRead )
                 .build();
     }
 
