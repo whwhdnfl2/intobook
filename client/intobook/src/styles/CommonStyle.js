@@ -3,9 +3,17 @@ import { styled } from 'styled-components';
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
-  height: 90vh;
-  margin: 0 1.5rem;
+  min-height: 100vh;
   gap: 1rem;
-  /*padding: 5px 5px;*/
   border: 1px solid lightgray;
+  background-color: var(--main-color); /* 원하는 배경색 */
+`;
+
+export const Layout_2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  gap: 1rem;
+  border: 1px solid lightgray;
+  background-color: pink; /* 원하는 배경색 */
 `;

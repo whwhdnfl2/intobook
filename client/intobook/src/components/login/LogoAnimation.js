@@ -18,17 +18,16 @@ export const LogoAnimation = () => (
             style={{
                 width: "120px",
                 height: "120px",
-                backgroundColor: "white",
+                backgroundColor: "var(--main-color)",
                 marginRight: "auto",
                 marginLeft: "auto",
-                marginBottom: "70%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 fontSize: "70px",
                 fontWeight: "bold",
                 fontFamily: "Arial, sans-serif",
-                color: "blue",
+                color: "white",
                 boxShadow: "8px 10px 6px rgba(0, 0, 0, 0.2)"
             }}
             animate={{

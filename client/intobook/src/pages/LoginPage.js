@@ -3,12 +3,18 @@ import SocialKakao from '../components/login/SocialKakao';
 import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { AccessToken } from '../recoil/user/UserAtom';
+import { LogoAnimation } from '../components/login/LogoAnimation';
 
-const StyledLoginButton = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-height: 130vh;
+const StyledLoginPage = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    justify-content: center;
+`
+
+const LogoContainer = styled.div`
+    margin: 7rem 0; /* Adjust the margin as needed */
 `
 
 const LoginPage = () => {
@@ -25,21 +31,22 @@ const LoginPage = () => {
   }
 
   useEffect(()=>{
-    console.log('여기는 로그인페이지')
     let query = window.location.search;
     let param = new URLSearchParams(query);
     let accessToken = param.get("accessToken");
     if (accessToken !== null) {
       setCookie('accessToken', accessToken.slice(7), '3');
-      // sessionStorage.setItem('isLoggedIn', true);
       setToken(accessToken.slice(7))
   }
   },[])
 
   return ( 
-    <StyledLoginButton>
+    <StyledLoginPage>
+      <LogoContainer>
+        <LogoAnimation/>
+      </LogoContainer>
       <SocialKakao />
-    </StyledLoginButton>
+    </StyledLoginPage>
   );
 }
 

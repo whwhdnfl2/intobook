@@ -60,8 +60,8 @@ const HamburgerBar = () => {
 
     return (
         <DropdownContainer>
-            <MenuIcon onClick={handleToggleDropdown} whileTap={{ scale: 0.9 }}>
-                <FontAwesomeIcon icon={faBars} size="lg"/>
+            <MenuIcon onClick={handleToggleDropdown}>
+                <FontAwesomeIcon icon={faBars} size="2x"/>
             </MenuIcon>
             {isDropdownOpen && (
                 <DropdownContent

@@ -6,11 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const HomePage = () => {
-  // HomePage 마운트(?)될 때 
-    // 블루투스/북갈피 상태 업데이트하기(bookmarkAtom default 값 사용X, 커스텀 훅 사용)
-    // 리딩북 가져오기
 
-  // reocil 전역 상태에서 값 받아오기
   const nickname = '북빠지다'
 
   const navigate = useNavigate();

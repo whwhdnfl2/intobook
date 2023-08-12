@@ -3,18 +3,14 @@
 }
 
 .App {
+  background-color: brown;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background-color: var(--main-base-color);
-  height: 100%;
+  min-height: 100vh;
   max-width: 400px;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 5px;
-  padding-left: 5px;
-  padding-top: 5px;
-  padding-bottom: 200px;
   font-family: var(--main-font);
   color: var(--main-point-color);
   border: 1px dashed gray;
