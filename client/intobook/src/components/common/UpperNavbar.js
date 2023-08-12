@@ -2,22 +2,29 @@ import React from 'react';
 import { StyledUpperNavbar} from '../../styles/navBar/upperNavBar';
 import AppTitle from './AppTitle';
 import HamburgerBar from './../navBar/HamburgerBar';
+import { StyleContainer } from '../../styles/CommonStyle';
 
 const UpperNavbar = () => {
 
   return (
-    <StyledUpperNavbar
+      <StyledUpperNavbar
       style={{
         position: 'fixed',
-        top: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
         display: 'flex',
+        width: '90%',
+        maxWidth: '360px',
+        paddingRight: '1.2rem',
+        paddingLeft: '1.2rem',
         justifyContent: 'space-between',
-        margin: '1rem'
+        marginTop: '0.5rem'
       }}
     >
       <AppTitle />
       <HamburgerBar />
     </StyledUpperNavbar>
+    
   );
 }
 
