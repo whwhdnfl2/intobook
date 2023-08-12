@@ -81,4 +81,12 @@ public class UserController {
         }
     }
 
+    @GetMapping("/nickname")
+    @ApiOperation(value = "로그인한 유저의 닉네임을 조회한다")
+    public ResponseEntity<?> getUserNickname() {
+        Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        String nickname = userService.getUserNickname(userPk);
+        return new ResponseEntity<String>(nickname, HttpStatus.OK);
+    }
+
 }

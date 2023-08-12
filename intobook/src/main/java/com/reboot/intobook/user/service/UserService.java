@@ -53,4 +53,9 @@ public class UserService {
             throw new Exception("insertFcmToken 실패");
         }
     }
+
+    public String getUserNickname(Long userPk) {
+        Optional<User> user = userRepository.findByUserPk(userPk);
+        return user.get().getNickname();
+    }
 }
