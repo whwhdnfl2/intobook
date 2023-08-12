@@ -12,22 +12,28 @@ const SearchResults = () => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
 
   const elementRef = useRef(null);
+
+  const scrollToTop = () => {
+    const container = document.getElementById('results-container');
+    if (container) {
+      container.scrollTop = 0;
+    }
+  };
 
   async function getMoreBookSearchResults() {
     setIsLoading(true);
   
     try {
+      setIsLoading(true);
       const searchValues = await searchBooks(searchKeyword, page);
       console.log('api 요청', searchValues);
       
       if (searchValues.item.length === 0) {
-        console.log('데이터 없어', searchValues.item.length);
         setHasMore(false);
       } else {
-        console.log('데이터 있어', searchValues.item);
         setBookSearchResults(prev => [...prev, ...searchValues.item]);
         setPage(prevPage => prevPage + 1);
       }
@@ -38,29 +44,30 @@ const SearchResults = () => {
   }
   
   function onIntersection (entries) {
-    console.log('들어왔?')
     const firstEntry = entries[0]
-    if (firstEntry.isIntersecting && hasMore && !isLoading) {
+    if (firstEntry.isIntersecting && hasMore) {
       getMoreBookSearchResults();
     }
   }
 
   useEffect(() => {
-    setPage(1);
+    scrollToTop();
+    setIsLoading(true);
     setBookSearchResults([]);
-    setIsLoading(false);
-    setHasMore(true);
+    searchBooks(searchKeyword, 1)
+    .then(val => { 
+      setBookSearchResults(val.item)
+      setPage(2);
+      setIsLoading(false);
+      setHasMore(true);
+    })
+    
   }, [searchKeyword]);
 
-
   useEffect(() => {
-    console.log(searchKeyword, 111)
     const observer = new IntersectionObserver(onIntersection)
-    console.log('observer', observer)
-    console.log(222, elementRef.current)
-    console.log(333, elementRef)
+    console.log(elementRef)
     if (observer && elementRef.current) {
-      console.log('여기는?')
       observer.observe(elementRef.current);
     }
 
@@ -69,18 +76,22 @@ const SearchResults = () => {
         observer.disconnect();
       }
     }
-  }, [bookSearchResults, isLoading]);
+  }, [bookSearchResults]);
 
   return (
     <ResultsContainer id='results-container'>
       <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
         {bookSearchResults.map((item, idx) => (
-          <Box key={idx} ref={((idx + 1) % 10 === 0) ? elementRef : null}>
-            <ResultBook bookCover={item} />
+          <Box key={idx} ref={((idx + 1) % 6 === 0) ? elementRef : null}>
+            <ResultBook bookCover={item} isLoading={isLoading} />
           </Box>
         ))}
+      {isLoading && (
+        <div style={{ height: '10px'}}>
+          LOADING
+        </div>
+      )}
       </Stack>
-      {hasMore && <div ref={elementRef} style={{ height: '10px' }}> 로딩 중</div>}
     </ResultsContainer>
   );
 };
