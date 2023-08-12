@@ -1,26 +1,30 @@
 import React from 'react';
 import { MyResponsiveBar } from './';
 
+
 const WeeklyStatistic = (weeklyData) => {
+  
+  const day = ['월', '화', '수', '목', '금', '토', '일']
+  const lastWeek = weeklyData?.lastWeek
+  const thisWeek = weeklyData?.thisWeek
+  
+  const data = [];
 
-  const thisWeek = weeklyData?.weeklyData?.[0]
-  console.log(thisWeek)
-  // const lastWeek = weeklyData?.weeklyData?.[1]
-
-  const data = [
-    { day: '월', lastweek: 800, thisweek: 30 },
-    { day: '화', lastweek: 520, thisweek: 20 },
-    { day: '수', lastweek: 33, thisweek: 20 },
-    { day: '목', lastweek: 520, thisweek: 100 },
-    { day: '금', lastweek: 4, thisweek: 24 },
-    { day: '토', lastweek: 10, thisweek: 55 },
-    { day: '일', lastweek: 520, thisweek: 10 }
-  ];
+  if (lastWeek && thisWeek) {
+    for (let i = 0; i < day.length; i++) {
+      const item = {
+        day: day[i],
+        lastweek: lastWeek[i],
+        thisweek: thisWeek[i]
+      };
+      data.push(item);
+    }
+  };
 
   return (
     <div style={{height: '300px', width:'320px'}}>
+      <p>나를 이겨라~~! 주간 그래프</p>
       <MyResponsiveBar data={data} />
-      냠냠..
     </div>
   );
 };

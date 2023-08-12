@@ -33,3 +33,13 @@ export const getWeeklyStatistics = async (weekCnt = 2) => {
     return err;
   }
 };
+
+// 캐릭터 통계 가져오기
+export const getCharacterStatistics = async () => {
+  try {
+    const res = await axiosInstance.get(`/statistics/attention`);
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};
