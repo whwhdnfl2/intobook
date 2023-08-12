@@ -2,10 +2,9 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
-import { styled } from 'styled-components';
 import { createBookHistory, completeBookHistory } from '../../api/historyApi';
 import { HistoryPkAtom } from '../../recoil/history/historyAtom';
-// import BluetoothConnect from '../../utils/bluetooth/BluetoothConnect';
+import { styled } from 'styled-components';
 
 const Bluetooth = () => {
 
@@ -101,32 +100,21 @@ const HandleNotifications = async (event) => {
 }
 
   return (
-    <BluetoothDiv
-      style={{
-        color: isBluetoothConnected ? 'var(--main-point-color)' : 'var(--bg-gray)',
-        fontSize: isBluetoothConnected ? 'var(--font-h5)' : 'var(--font-h5)',
-      }}
-    >
-      <IconWrapper>
-        <BluetoothIcon onClick={BluetoothConnect}/>
-      </IconWrapper>
-      <span>
-        {isBluetoothConnected ? '북갈피 블루투스 연결중' : '북갈피 블루투스 미연결'}
-      </span>
-    </BluetoothDiv>
+        <StyledBLE onClick={BluetoothConnect} isActive={isBluetoothConnected}>
+            <BluetoothIcon/>
+        </StyledBLE>
   );
 };
 
-const BluetoothDiv = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 30px auto;
-`;
-
-const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-`;
+const StyledBLE = styled.div`
+    width: 50px;
+    height: 50px;
+    background-color:${({ isActive }) => isActive ? '#5A7FFF' : '#827796'};
+    border-radius:30px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 
 export default Bluetooth;

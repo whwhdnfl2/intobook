@@ -3,6 +3,7 @@ import { AverageStatistics } from "../components/common";
 import { RecentStatistic, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics, getWeeklyStatistics, getCharacterStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
+import { Layout, LayoutSecond, StyleContainer } from '../styles/CommonStyle';
 
 const StatisticsPage = () => {
   const username = "zaru"

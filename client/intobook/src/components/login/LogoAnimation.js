@@ -2,33 +2,20 @@ import { motion } from "framer-motion";
 
 export const LogoAnimation = () => (
     <>
-        {/* <svg width="100" height="100">
-            <motion.circle
-                cx="50"
-                cy="50"
-                r="40"
-                fill="none"
-                stroke="black"
-                strokeWidth="3"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-            />
-        </svg> */}
         <motion.div
             style={{
                 width: "120px",
                 height: "120px",
-                backgroundColor: "white",
+                backgroundColor: "var(--white)",
                 marginRight: "auto",
                 marginLeft: "auto",
-                marginBottom: "70%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 fontSize: "70px",
                 fontWeight: "bold",
                 fontFamily: "Arial, sans-serif",
-                color: "blue",
+                color: "var(--main-color)",
                 boxShadow: "8px 10px 6px rgba(0, 0, 0, 0.2)"
             }}
             animate={{

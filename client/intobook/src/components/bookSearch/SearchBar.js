@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
 import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
-import { useSetRecoilState } from 'recoil';
-import { SearchKeywordAtom } from '../../recoil/book/BookAtom';
 
-const SearchBar = ({ title }) => {
+const SearchBar = ({ title, updateSearchKeyword }) => {
   const [keyword, setKeyword] = useState('');
-  const setSearchKeyword = useSetRecoilState(SearchKeywordAtom);
   const searchBarInputRef = useRef(null);
 
   const inputChangeHandler = (event) => {
@@ -14,9 +11,9 @@ const SearchBar = ({ title }) => {
   };
 
   const searchHandler = async () => {
-
     if (keyword.trim() !== '') {
-      setSearchKeyword(keyword);
+      setKeyword(keyword);
+      updateSearchKeyword(keyword)
     }
   };
 
@@ -29,6 +26,7 @@ const SearchBar = ({ title }) => {
   useEffect(() => { // 검색 페이지로 이동시 input창에 자동 포커스
     searchBarInputRef.current.focus();
   }, []);
+
 
   return (
     <SearchBarContainer>

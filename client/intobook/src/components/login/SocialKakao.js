@@ -1,6 +1,5 @@
 import React from 'react';
 import KakaoLoginLogo from "../../assets/img/login/kakao_login_medium_wide.png";
-import { LogoAnimation } from './LogoAnimation';
 
 const SocialKakao = () => {
 
@@ -11,11 +10,7 @@ const SocialKakao = () => {
   };
 
   return (
-    // 카카오 로그인 버튼, 버튼 클릭 시 handleLogin 함수가 실행됩니다.
-    <div onClick={handleLogin}>
-      <LogoAnimation/>
-      <img src={KakaoLoginLogo} alt="Kakao Login Logo" />
-    </div>
+      <img src={KakaoLoginLogo} alt="Kakao Login Logo" onClick={handleLogin}/>
   );
 };
 

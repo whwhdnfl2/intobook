@@ -21,9 +21,6 @@ const BookshelvesMain = () => {
     setSelectedTab(newValue);
   };
 
-  const [bookmarkstatus] = useState("on")
-  const [bluetoothstatus] = useState("on")
-
   return (
     <div>
       <Tabs value={selectedTab} onChange={handleTabChange}>
@@ -32,7 +29,6 @@ const BookshelvesMain = () => {
         <Tab label="읽고 있는 책" value="READING" />
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
-      <BookmarkCharacter  bluetoothStatus={bluetoothstatus} bookmarkStatus={bookmarkstatus}/>
     </div>
   );
 };

@@ -2,86 +2,74 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Stack, Box } from '@mui/material';
 import ResultBook from './ResultBook';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
-import { useRecoilValue } from 'recoil';
-import { SearchKeywordAtom } from './../../recoil/book/BookAtom';
 import { searchBooks } from './../../api/searchApi';
+import useInfiniteScroll from './../../utils/useInfiniteScroll';
 
-const SearchResults = () => {
-  const searchKeyword = useRecoilValue(SearchKeywordAtom);
 
+const SearchResults = ({ searchKeyword }) => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
-
-  const elementRef = useRef(null);
+  const [page, setPage] = useState(2);
 
   async function getMoreBookSearchResults() {
-    setIsLoading(true);
-  
-    try {
-      const searchValues = await searchBooks(searchKeyword, page);
-      console.log('api 요청', searchValues);
-      
-      if (searchValues.item.length === 0) {
-        console.log('데이터 없어', searchValues.item.length);
-        setHasMore(false);
-      } else {
-        console.log('데이터 있어', searchValues.item);
-        setBookSearchResults(prev => [...prev, ...searchValues.item]);
-        setPage(prevPage => prevPage + 1);
+    if (!isLoading && hasMore) {
+      setIsLoading(true);
+      try {
+        const searchValues = await searchBooks(searchKeyword, page);
+
+        if (searchValues.item.length === 0) {
+          setHasMore(false);
+        } else {
+          setBookSearchResults(prev => [...prev, ...searchValues.item]);
+          setPage(prevPage => prevPage + 1);
+        }
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
-  }
-  
-  function onIntersection (entries) {
-    console.log('들어왔?')
-    const firstEntry = entries[0]
-    if (firstEntry.isIntersecting && hasMore && !isLoading) {
-      getMoreBookSearchResults();
     }
   }
 
+  const targetRef = useInfiniteScroll(getMoreBookSearchResults);
+  
+  const scrollToTop = () => {
+    const container = document.getElementById('results-container');
+    if (container) {
+      container.scrollTop = 0;
+    }
+  };
+
   useEffect(() => {
-    setPage(1);
-    setBookSearchResults([]);
-    setIsLoading(false);
-    setHasMore(true);
+    if (searchKeyword) {
+      scrollToTop();
+      setIsLoading(true);
+      setBookSearchResults([]);
+      searchBooks(searchKeyword, 1).then(val => { 
+        setBookSearchResults(val.item);
+        setPage(2);
+        setIsLoading(false);
+        setHasMore(true);
+      });
+    }
   }, [searchKeyword]);
 
-
-  useEffect(() => {
-    console.log(searchKeyword, 111)
-    const observer = new IntersectionObserver(onIntersection)
-    console.log('observer', observer)
-    console.log(222, elementRef.current)
-    console.log(333, elementRef)
-    if (observer && elementRef.current) {
-      console.log('여기는?')
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (observer) {
-        observer.disconnect();
-      }
-    }
-  }, [bookSearchResults, isLoading]);
-
   return (
-    <ResultsContainer id='results-container'>
-      <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={3.5} rowGap={1.5}>
+      <ResultsContainer id='results-container'>
+      <Stack direction='row' flexWrap='wrap' justifyContent='center' columnGap={3.5} rowGap={1.5}>
         {bookSearchResults.map((item, idx) => (
-          <Box key={idx} ref={((idx + 1) % 10 === 0) ? elementRef : null}>
+          <Box key={idx} ref={targetRef}>
             <ResultBook bookCover={item} />
           </Box>
         ))}
+        {isLoading && (
+          <div style={{ height: '10px'}}>
+            LOADING
+          </div>
+        )}
       </Stack>
-      {hasMore && <div ref={elementRef} style={{ height: '10px' }}> 로딩 중</div>}
     </ResultsContainer>
+    
   );
 };
 
