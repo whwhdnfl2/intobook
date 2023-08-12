@@ -11,6 +11,7 @@ import com.reboot.intobook.statistics.entity.Jenre;
 import com.reboot.intobook.statistics.entity.WeekDay;
 import com.reboot.intobook.userbook.UserBookRepository;
 import com.reboot.intobook.userbook.entity.UserBook;
+import com.reboot.intobook.userbook.entity.UserBookStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -191,7 +192,7 @@ public class StatisticsService {
         // 하나씩 통계 만들기
         int attention = getCountOver30MinAttention(recent10HistoryList);
 
-        double multiRead = getMultiRead(recent10HistoryList);
+        boolean multiRead = getMultiRead(recent10HistoryList);
 
         boolean isBurning = getIsBurning(recent10HistoryList);
         
@@ -219,29 +220,34 @@ public class StatisticsService {
         return count;
     }
 
-    private double getMultiRead(List<History> recent10HistoryList) {
+    private boolean getMultiRead(List<History> recent10HistoryList) {
         Set<String> bookSet = new HashSet<>();
         String preBook = "";
         double cnt = 0;
         for (History history : recent10HistoryList) {
             String nowBook = history.getUserBook().getBook().getIsbn();
-            bookSet.add(nowBook);
+            if (history.getUserBook().getStatus() == UserBookStatus.COMPLETE){
+                bookSet.add(nowBook);
+            }
             if (nowBook.equals(preBook)) cnt++;
             preBook = nowBook;
         }
-
-        return Math.round(cnt/bookSet.size()*100)/100.0;
+        bookSet.add(recent10HistoryList.get(9).getUserBook().getBook().getIsbn());
+        if (bookSet.isEmpty()) return false;
+        return Math.round(cnt/bookSet.size()) < 1.8;
     }
 
     private boolean getIsBurning(List<History> recent10HistoryList) {
         int l = recent10HistoryList.size();
-        for (int i = 7; i < l; i++) {
+        LocalDateTime now = LocalDateTime.now();
+        int cnt = 0;
+        for (int i = 0; i < l; i++) {
             LocalDateTime pre = recent10HistoryList.get(i).getStartTime();
-            LocalDateTime now = recent10HistoryList.get(i).getStartTime();
             Duration duration = Duration.between(pre, now);
-            Duration twoWeeks = Duration.ofDays(14);
-            if (duration.compareTo(twoWeeks) < 0) return true;
+            Duration twoWeeks = Duration.ofDays(10);
+            if (duration.compareTo(twoWeeks) < 0) cnt++;
         }
+        if (cnt >= 7) return true;
         return false;
     }
 
