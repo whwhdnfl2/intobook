@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledUpperNavbar = styled.div`
-  padding-right: 20px;
-  padding-left: 20px;
+  margin: 0 1.5rem;
   display: flex;
   justify-content : flex-end;
   gap: 10rem;

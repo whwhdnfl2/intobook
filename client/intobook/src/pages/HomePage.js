@@ -17,7 +17,7 @@ const HomePage = () => {
 
   useEffect(()=>{
     navigate('/')
-  },[])
+  }, [])
 
   const slideInVariants = {
     hidden: { x: "-100%" },

@@ -21,7 +21,7 @@ const BookshelvesMain = () => {
     setSelectedTab(newValue);
   };
 
-  const [bookmarkstatus] = useState("off")
+  const [bookmarkstatus] = useState("on")
   const [bluetoothstatus] = useState("on")
 
   return (

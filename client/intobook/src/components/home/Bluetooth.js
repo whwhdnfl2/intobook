@@ -103,8 +103,8 @@ const HandleNotifications = async (event) => {
   return (
     <BluetoothDiv
       style={{
-        color: isBluetoothConnected ? 'white' : 'var(--bg-gray)',
-        fontSize: isBluetoothConnected ? 'var(--font-h4)' : 'var(--font-h4)',
+        color: isBluetoothConnected ? 'var(--main-point-color)' : 'var(--bg-gray)',
+        fontSize: isBluetoothConnected ? 'var(--font-h5)' : 'var(--font-h5)',
       }}
     >
       <IconWrapper>

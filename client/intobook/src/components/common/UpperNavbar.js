@@ -28,7 +28,7 @@ const UpperNavbar = () => {
     <StyledUpperNavbar>
       <AppTitle />
       <AppMenuSection>
-        <HamburgerBar/>
+        <HamburgerBar />
       </AppMenuSection>
     </StyledUpperNavbar>
       // <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'Tutorial'} closeModal={closeModal} />
