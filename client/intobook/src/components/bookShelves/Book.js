@@ -10,9 +10,6 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
   
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
-  // const publisher = bookInfo?.publisher ? bookInfo?.publisher : '출판사'; 
-  // const bookId = bookInfo?.isbn13 || bookInfo?.isbn;
-  // const status = bookInfo?.status;
   const nowPage = bookInfo?.nowPage + 30;
   const progress = Math.floor((nowPage / bookInfo?.page) * 100);
 
@@ -34,9 +31,6 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
           <Typography fontSize={'8px'} color={'#AFB1B6'} letterSpacing={'-1px'}>
             {author}
           </Typography>
-          {/* <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
-            ({publisher})
-          </Typography> */}
         </div>  
     </Card>
     </>
