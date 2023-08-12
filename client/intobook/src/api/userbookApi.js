@@ -10,7 +10,7 @@ export const userbooks = async (orderBy, page, status) => {
         status: status
       },
     });
-    return res.data.content;
+    return res.data;
   } catch (err) {
     console.log(err);
     return err;

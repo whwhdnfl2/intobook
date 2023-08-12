@@ -32,7 +32,7 @@ const ResultBook = ({ bookCover }) => {
 
   return (
     <>
-      <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '88px' }, cursor: 'pointer' }} onClick={clickHandler}  >
+      <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '88px' }, cursor: 'pointer' }} onClick={clickHandler}>
         <BookCover image={coverImage} alt={title + 'image'}
           customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
         />
