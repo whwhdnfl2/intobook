@@ -2,13 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Stack, Box } from '@mui/material';
 import ResultBook from './ResultBook';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
-import { useRecoilValue } from 'recoil';
-import { SearchKeywordAtom } from './../../recoil/book/BookAtom';
 import { searchBooks } from './../../api/searchApi';
 
-const SearchResults = () => {
-  const searchKeyword = useRecoilValue(SearchKeywordAtom);
-
+const SearchResults = ({ searchKeyword }) => {
   const [bookSearchResults, setBookSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -29,7 +25,6 @@ const SearchResults = () => {
     try {
       setIsLoading(true);
       const searchValues = await searchBooks(searchKeyword, page);
-      console.log('api 요청', searchValues);
       
       if (searchValues.item.length === 0) {
         setHasMore(false);
@@ -51,22 +46,23 @@ const SearchResults = () => {
   }
 
   useEffect(() => {
-    scrollToTop();
-    setIsLoading(true);
-    setBookSearchResults([]);
-    searchBooks(searchKeyword, 1)
-    .then(val => { 
-      setBookSearchResults(val.item)
-      setPage(2);
-      setIsLoading(false);
-      setHasMore(true);
-    })
-    
+    if (searchKeyword){
+      scrollToTop();
+      setIsLoading(true);
+      setBookSearchResults([]);
+      searchBooks(searchKeyword, 1)
+      .then(val => { 
+        setBookSearchResults(val.item)
+        setPage(2);
+        setIsLoading(false);
+        setHasMore(true);
+      })
+      
+    }
   }, [searchKeyword]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(onIntersection)
-    console.log(elementRef)
     if (observer && elementRef.current) {
       observer.observe(elementRef.current);
     }
