@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Book } from '../bookShelves'
 import { useNavigate } from 'react-router-dom';
 import { userbooks, updateUserBookStatus } from './../../api/userbookApi';
@@ -8,6 +8,7 @@ import { Stack, Box } from '@mui/material';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 import { styled } from 'styled-components';
+import useInfiniteScroll from './../../utils/useInfiniteScroll';
 
 const ReadingBooks = ({ closeModal }) => {
   const [readingBookList, setReadingBookList] = useState([]);
@@ -15,20 +16,32 @@ const ReadingBooks = ({ closeModal }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getReadingBooks();
-  }, [])
+  // 무한 스크롤 관련
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
 
-  // status가 'READING'인 책 
-  const getReadingBooks = async () => {
+  // 'READING' 상태 책 조회하기
+  async function getReadingBooks() {
+    setIsLoading(true);
     try {
-      const bookList = await userbooks('startedAt', 0, 'READING');
-      setReadingBookList((prev) => bookList);
-      return bookList;
+      const res = await userbooks('startedAt', page, 'READING');
+
+      if (res.content.length === 0) {
+        setHasMore(false);
+      } else {
+        setReadingBookList((prev) => [...prev, ...res.content]);
+        setPage(prev => prev + 1);
+      }
+      return res.content;
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
+
+  const targetRef = useInfiniteScroll(getReadingBooks);
 
   // 검색하여 책 등록하기
   const goToSearchPageHandler = () => {
@@ -47,7 +60,6 @@ const ReadingBooks = ({ closeModal }) => {
     }
   };
 
-
   return (
     <ModalContent>
       <TitleContainter>
@@ -57,14 +69,15 @@ const ReadingBooks = ({ closeModal }) => {
       <ScrollableResultsContainer>
         <Stack direction='row' flexWrap='wrap' justifyContent='start' columnGap={'25px'} rowGap={'15px'}>
           {readingBookList.length > 0 ? (
-            readingBookList.map((book) => (
-              <Box key={book.userBookPk}>
+            readingBookList.map((book, idx) => (
+              <Box key={idx}>
                 <div onClick={() => editStatusHandler(book)} >
                   <Book bookInfo={book} customStyle={{ width: '72px', height: '98px', marginBottom: '5px' }} width={'73px'} />
                 </div>
               </Box>
             ))
           ) : (<p>책이 없습니다.</p>)}
+          {hasMore && !isLoading && (<div ref={targetRef} >로딩중</div>)}
         </Stack>
       </ScrollableResultsContainer>
       <BtnContainter>
