@@ -23,11 +23,11 @@ const MyResponsiveBar = ({ data }) => (
     defs={[
       {
         id: 'lines',
-        type: 'lines',
+        type: 'patternLines',
         background: 'inherit',
         color: '#eed312',
-        rotation: 0,
-        lineWidth: 6,
+        rotation: -0,
+        lineWidth: 0,
         spacing: 10
       }
     ]}

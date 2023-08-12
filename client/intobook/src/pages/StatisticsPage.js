@@ -3,8 +3,6 @@ import { AverageStatistics } from "../components/common";
 import { BookCharacter, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics,getWeeklyStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
-import { styled } from 'styled-components';
-
 
 const StatisticsPage = () => {
   const username = "zaru"
@@ -47,7 +45,8 @@ const StatisticsPage = () => {
     return res;
   };
 
-  const weeklyStatistics = weeklyStatisticsValue?.weeks
+  const thisWeek = weeklyStatisticsValue?.weeks?.[0]
+  const lastWeek = weeklyStatisticsValue?.weeks?.[1]
 
   // 평균 통계 데이터
   const pagePerHour = userStatisticsValue?.pagePerHour;
@@ -62,21 +61,10 @@ const StatisticsPage = () => {
       {username} 님의 독서 유형은..
       <BookCharacter />
       <TotalStatistic val={userStatisticsValue}  />
-      <WeeklyStatistic weeklyData={weeklyStatistics}/>
+      <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek}/>
       <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
     </motion.div>
   );
 }
-
-// const StatisticsContainer = styled.div`
-//   overflow-y: auto;
-//   scrollbar-width: none;
-//   -ms-overflow-style: none;
-//   &::-webkit-scrollbar {
-//     width: 0;
-//   }
-  /* display: flex;
-  justify-content: center; */
-// `;
 
 export default StatisticsPage;
