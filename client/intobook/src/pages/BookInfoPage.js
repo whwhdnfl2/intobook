@@ -5,8 +5,9 @@ import { ProgressBar } from './../components/common';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom, LogEditAtom } from './../recoil/book/BookAtom';
 import { getUserBookInfo } from '../api/userbookApi';
-import { Layout } from './../styles/CommonStyle';
+import { Layout, LayoutSecond, StyleBackContainer, StyleContainer } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
+import { StyledBox } from '../styles/home/StyledBox';
 
 const BookInfoPage = () => {
   const { userBookId } = useParams();
@@ -27,7 +28,9 @@ const BookInfoPage = () => {
   const status = bookInfo?.status;
 
   return (
-    <Layout>
+    <LayoutSecond>
+    
+    <StyleBackContainer>
       <BookDesc bookInfo={bookInfo} />
       <BookInfoContent>
         {bookInfo && bookInfo.completedAt !== null ? (
@@ -51,7 +54,9 @@ const BookInfoPage = () => {
           </EmptyContentDiv>
         )}
       </BookInfoContent>
-    </Layout>
+    </StyleBackContainer>
+
+    </LayoutSecond>
   );
 };
 

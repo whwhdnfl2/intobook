@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ProgressBar, BookCover, Modal } from './../common';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
-import CurrentBookStatus from './CurrentBookStatus';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { getReadingBookInfo } from '../../api/userbookApi';
@@ -56,7 +55,7 @@ const ReadingBook = () => {
   const searchHandler = () => {
     if (isConnected && isBookmarkOut) {
       // 안내 모달 띄우기
-      openBookInfoModal(true);
+      setOpenBookInfoModal(true);
     } else {
       setIsOpen(true);
     }
@@ -69,8 +68,6 @@ const ReadingBook = () => {
 
   return (
     <>
-      <StyledEngineProvider injectFirst>
-        <GridContainer>
           <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
             {nowReadingBook && <BookCover image={coverImg} customStyle={{ border: '2px solid white', width: '80px', height: '110px' }} />}
           </Link>
@@ -84,15 +81,7 @@ const ReadingBook = () => {
               </CurrentBook>
             </>
           )}
-          <CurrentBookStatus />
-        </GridContainer>
-        <div
-          style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
-          onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
-        >
-          {nowReadingBook && <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />}
-        </div>
-      </StyledEngineProvider>
+      
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
       <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
       <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} height={'160px'} />

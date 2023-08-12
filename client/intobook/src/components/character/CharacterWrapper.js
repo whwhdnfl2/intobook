@@ -32,7 +32,7 @@ const CharacterWrapper = styled.div`
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: #708FFF;
+    background: #CBBDF4;
     position: relative;
     animation: ${moveAnimation} 3s infinite;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -126,8 +126,8 @@ animation: ${floatingAnimation} 2s infinite alternate;
 const BookmarkCharacter = ({ bluetoothStatus, bookmarkStatus }) => {
     return (
         // 조건에 따라 컴포넌트 렌더링
-        bluetoothStatus === "on" ? (
-            bookmarkStatus === "on" ? (
+        bluetoothStatus === true ? (
+            bookmarkStatus === true ? (
                 <CharacterWrapper>
                     <Eye position="left" />
                     <Eye position="right" />
