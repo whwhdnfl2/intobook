@@ -5,6 +5,7 @@ import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import BluetoothComponent from '../components/home/BluetoothComponent';
+import ConnectComponent from '../components/home/ConnectComponent';
 
 const HomePage = () => {
 
@@ -33,8 +34,8 @@ const HomePage = () => {
         transition={{ duration: 0.5 }}
         >테스트용 문구입니다</WelcomeText>
         <BluetoothComponent />
-        {/* <BookmarkComponent  />
-        <ReadingBookComponent /> */}
+        <ConnectComponent  />
+        {/* <ReadingBookComponent /> */}
         <CheckButton>확인</CheckButton>
       </Layout>
     </motion.div>
