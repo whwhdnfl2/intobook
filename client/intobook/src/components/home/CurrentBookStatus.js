@@ -108,7 +108,7 @@ const CurrentBookStatus = () => {
                       style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
                       onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
                     >
-                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />}
+                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
                     </div>
                   </div>
                 ) : (
@@ -118,7 +118,7 @@ const CurrentBookStatus = () => {
                       style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
                       onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
                     >
-                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={320} bbg={'#D9D9D9'} />}
+                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
                     </div>
                   </>
                 )}
@@ -153,11 +153,10 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  color: var(--white);
   text-align: center;
   /*font-family: var(--main-font);*/
   letter-spacing: 0.8px;
-  font-size: var(--font-h5);
+  font-size: var(--font-h4);
   margin: 5px 0 8px 0;
   `;
   
