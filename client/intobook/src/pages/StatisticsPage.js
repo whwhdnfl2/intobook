@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AverageStatistics } from "../components/common";
-import { RecentStatistic, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
+import { BookCharacter, RecentStatistic, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics,getWeeklyStatistics, getCharacterStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
 import { Layout, LayoutSecond, StyleContainer } from '../styles/CommonStyle';
@@ -86,7 +86,7 @@ const StatisticsPage = () => {
           {<p style={{color: 'white'}}>{username} 님의 독서 유형은..</p>}
           <BookCharacter />
           <TotalStatistic val={userStatisticsValue}  />
-          <WeeklyStatistic weeklyData={weeklyStatistics}/>
+          <WeeklyStatistic weeklyData={weeklyStatisticsValue}/>
           <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
         </StyleContainer>
       </LayoutSecond>
