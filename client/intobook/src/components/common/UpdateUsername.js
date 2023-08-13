@@ -12,15 +12,15 @@ const UpdateUsername = ({ closeModal }) => {
 
   const handleUpdate = async () => {
     try {
-      const updatedUsername = await updateUsername(newUsername);
-      setUsername(updatedUsername); // Recoil 상태 업데이트
+      await updateUsername(newUsername);
       closeModal(); // 모달 닫기
-      console.log(username)
     } catch (error) {
       console.error('유저네임 업데이트 에러:', error);
+    } finally {
+      setUsername(newUsername); // Recoil 상태 업데이트
     }
   };
-
+  
   return (
     <ModalContent>
       <p>현재 유저네임: {username}</p>
@@ -28,6 +28,7 @@ const UpdateUsername = ({ closeModal }) => {
         label="새 유저네임"
         value={newUsername}
         onChange={(e) => setNewUsername(e.target.value)}
+        inputProps={{ maxLength: 12 }}
       />
       <StyledButton variant="contained" onClick={handleUpdate}>
         유저네임 업데이트
