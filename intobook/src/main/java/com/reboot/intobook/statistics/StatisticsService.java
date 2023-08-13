@@ -89,8 +89,10 @@ public class StatisticsService {
 
         List<History> findHistoryList = historyRepository.findAllByUserBookUserBookPk(userBookPk)
                 .orElseThrow(() -> new NoSuchElementException("History List Not Found"));
-
-        // TODO: 값 채우는 로직 정교화하기 & divide by zero 막기 로직 추가
+        if (findHistoryList.isEmpty()) {
+            return null;
+        }
+        // TODO: 값 채우는 로직 정교화하기
         int userBookReadPages = findUserBook.getNowPage();
         int userBookPages = findUserBook.getBook().getPage();
 
