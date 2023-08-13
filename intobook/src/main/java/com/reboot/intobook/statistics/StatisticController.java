@@ -32,10 +32,13 @@ public class StatisticController {
 
     @GetMapping("/userBook/{userBookPk}")
     @ApiOperation(value = "특정 유저책의 통계 조회")
-    public ResponseEntity<GetUserBookStatisticResponse> getUserBookStatistic(@PathVariable Long userBookPk ){
+    public ResponseEntity<?> getUserBookStatistic(@PathVariable Long userBookPk ){
         GetUserBookStatisticResponse response = statisticsService.getUserBookStatistics(userBookPk);
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        if (response != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("기록이 없습니다");
+        }
     }
 
     @GetMapping("/week")
