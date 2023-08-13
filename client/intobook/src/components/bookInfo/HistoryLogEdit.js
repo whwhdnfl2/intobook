@@ -50,6 +50,7 @@ const HistoryLogEdit = () => {
   const saveStart = originStartTime === saveStartTime ? removeMillisecond(selectedLog.startTime) : `${saveDate}T${saveStartTime}:00`;
   const saveEnd = originEndTime === saveEndTime ? removeMillisecond(selectedLog.endTime) : `${saveDate}T${saveEndTime}:00`;
 
+
   // 로그 수정하기
   const editLogHandler = async () => {
     const selectedStartTimeInMinutes = startHour * 60 + startMinute;
