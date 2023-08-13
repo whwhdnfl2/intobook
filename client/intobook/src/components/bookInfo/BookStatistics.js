@@ -19,7 +19,7 @@ const BookStatistics = ({ userBookId, status }) => {
 
   const updateUserBookStatistics = async (userBookPk) => {
     const res = await getUserBookStatistics(userBookPk);
-    return res;
+    return res.data;
   };
 
   const avgReadingTime = statisticsValue?.averageReadingTime;
