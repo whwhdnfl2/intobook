@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
@@ -14,8 +14,8 @@ const Bluetooth = () => {
   const [nowBook,setNowBook] = useRecoilState(ReadingBookAtom)
   const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom)
 
-  let bluetoothDevice;
-  let Bcharacteristic;
+  let [bluetoothDevice, setBluetoothDevice] = useState(null);
+  let [Bcharacteristic, setBcharacteristic] = useState(null);
 
   const BluetoothConnect = () => {
     
@@ -24,14 +24,14 @@ const Bluetooth = () => {
         setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
 
         navigator.bluetooth.requestDevice({
-            filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
-            // acceptAllDevices: true
+            // filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
+            acceptAllDevices: true
         })
             .then(device => {
                 // Human-readable name of the device.
                 console.log('Connecting to GATT Server...');
-                bluetoothDevice = device;
-                console.log('여긴잘나오면서',bluetoothDevice)
+                setBluetoothDevice(device);
+                console.log('비동기라 여기선 안찍히는듯',bluetoothDevice)
                 // Attempts to connect to remote GATT Server.
                 return bluetoothDevice.gatt.connect();
             })
@@ -54,8 +54,9 @@ const Bluetooth = () => {
             })
             .catch(error => { console.error(error); });
     } else {
-      setIsBluetoothConnected(false);
-      console.log('왜안나올까..?',bluetoothDevice)
+    setIsBluetoothConnected(false);
+    console.log('여기서 블루투스 연결을 끊어줘야',bluetoothDevice)
+    console.log('끊을때 alert로 한번 더 물어봐야하나?')
     }
 }
 
@@ -86,15 +87,14 @@ const HandleNotifications = async (event) => {
     //책을 펼쳤을 때 history api 요청(response로 pk를 받아와서 저장)
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
     if (illuminance1 === illuminance2 && pressure <= 10) {
-      console.log('책이 펼쳐졌을때')
+        console.log('책이 펼쳐졌을때')
         const res = await createBookHistory(nowBook?.userBookPk)
         setHistoryPkAtom(res)
         setBookmark(true);
     } else if (illuminance1 !== illuminance2 && pressure >= 10) {
-        // setHistoryPkAtom(23)
         console.log('책 덮였을때',pressure)
-        const res = await completeBookHistory(historyPkAtom,pressure)
-        console.log('성공했으면?',res)
+        await completeBookHistory(historyPkAtom,pressure)
+        
         setBookmark(false);
     }
 }

@@ -21,7 +21,7 @@ const ReadingBook = () => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
       setNowReadingBook(detailInfo);
-      console.log('지금 읽는 책이 없으면 어떻게 되는거야?',detailInfo)
+      
       // 진행률 95% 이상일 때 모달 띄우기
       // if (detailInfo?.nowPage && detailInfo?.page) {
       //   const nowPage = detailInfo.nowPage + 30;
