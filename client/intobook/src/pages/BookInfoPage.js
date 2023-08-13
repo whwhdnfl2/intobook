@@ -34,8 +34,6 @@ const BookInfoPage = () => {
   const progress = Math.floor((nowPage / bookInfo?.page) * 100);
   const status = bookInfo?.status;
 
-  console.log(hasHistory)
-
   return (
     <LayoutSecond>
     
