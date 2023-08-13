@@ -4,9 +4,12 @@ import { RecentStatistic, TotalStatistic, WeeklyStatistic } from './../component
 import { getUserStatistics, getWeeklyStatistics, getCharacterStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
 import { Layout, LayoutSecond, StyleContainer } from '../styles/CommonStyle';
+import { useRecoilValue } from "recoil";
+import { UserNameAtom } from '../recoil/user/UserAtom';
 
 const StatisticsPage = () => {
-  const username = "zaru"
+  const username = useRecoilValue(UserNameAtom);
+
 
   // 캐릭터 통계 api 요청
   const [characterValue, setCharacterValue] = useState({});
@@ -73,8 +76,6 @@ const StatisticsPage = () => {
   const pagePerHour = userStatisticsValue?.pagePerHour;
   const timePerRead = userStatisticsValue?.timePerRead;
 
-  // console.log('통계페이지', characterValue)
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -95,9 +96,3 @@ const StatisticsPage = () => {
 }
 
 export default StatisticsPage;
-
-// {username} 님의 독서 유형은..
-// <RecentStatistic characterData={characterValue} />
-// <TotalStatistic val={userStatisticsValue} />
-// <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
-// <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
