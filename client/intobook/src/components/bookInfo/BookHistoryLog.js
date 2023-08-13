@@ -21,7 +21,11 @@ const BookHistoryLog = ({ userBookId }) => {
       if (res.items.length === 0) {
         setHasMore(false);
       } else {
-        setHistoryLogs((prev) => [...prev, ...res.items]);
+        if (page === 0) {
+          setHistoryLogs(res.items); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
+        } else {
+          setHistoryLogs((prev) => [...prev, ...res.items]);
+        }
         setPage(prev => prev + 1);
       }
     } catch (err) {

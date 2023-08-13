@@ -4,7 +4,7 @@ import axiosInstance from './axiosConfig';
 export const getUserBookStatistics = async (userBookPk) => {
   try {
     const res = await axiosInstance.get(`/statistics/userBook/${userBookPk}`);
-    return res.data;
+    return res;
   } catch (err) {
     return err
   }

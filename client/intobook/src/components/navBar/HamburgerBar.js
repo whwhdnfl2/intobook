@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { logout } from "../../api/logoutApi";
 import { AccessToken } from "../../recoil/user/UserAtom";
@@ -65,13 +65,30 @@ const HamburgerBar = () => {
         navigate('/');
     }
 
+    const dropdownRef = useRef(null);
+
+    // Dropdown 외부 클릭 시 드롭다운 닫기
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
         <DropdownContainer>
             <MenuIcon onClick={handleToggleDropdown}>
                 <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
             </MenuIcon>
             {isDropdownOpen && (
-                <DropdownContent
+                <DropdownContent ref={dropdownRef}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}

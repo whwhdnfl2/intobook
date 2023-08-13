@@ -5,13 +5,14 @@ import { ProgressBar } from './../components/common';
 import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom, LogEditAtom } from './../recoil/book/BookAtom';
 import { getUserBookInfo } from '../api/userbookApi';
-import { Layout, LayoutSecond, StyleBackContainer, StyleContainer } from './../styles/CommonStyle';
+import { getUserBookStatistics } from './../api/statisticsApi';
+import { LayoutSecond, StyleBackContainer } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
-import { StyledBox } from '../styles/home/StyledBox';
 
 const BookInfoPage = () => {
   const { userBookId } = useParams();
   const [bookInfo, setBookInfo] = useState(null);
+  const [hasHistory, setHasHistory] = useState(204);
   const selectedTab = useRecoilValue(BookInfoTabAtom);
   const isOpenLogEdit = useRecoilValue(LogEditAtom);
 
@@ -20,12 +21,20 @@ const BookInfoPage = () => {
       const bookInfo = await getUserBookInfo(userBookId);
       setBookInfo(bookInfo);
     };
-    getBookInfo()
+
+    const getHistoryStatus = async () => {
+      const res = await getUserBookStatistics(userBookId);
+      setHasHistory(res.status);
+    };
+    getBookInfo();
+    getHistoryStatus();
   }, [userBookId]);
 
   const nowPage = 150;  // 추후 변경 필요 bookInfo?.nowPage
   const progress = Math.floor((nowPage / bookInfo?.page) * 100);
   const status = bookInfo?.status;
+
+  console.log(hasHistory)
 
   return (
     <LayoutSecond>
@@ -33,7 +42,7 @@ const BookInfoPage = () => {
     <StyleBackContainer>
       <BookDesc bookInfo={bookInfo} />
       <BookInfoContent>
-        {bookInfo && bookInfo.completedAt !== null ? (
+        {bookInfo && hasHistory === 200 ? (
           <>
             <Tab />
             {selectedTab === 'statistics' ? (
