@@ -4,22 +4,19 @@ import { motion } from "framer-motion";
 
 const AppTitle = () => {
   return (
-    <div>
-      <>
+      <div style={{ display: 'flex', alignItems: 'center'}}>
         <motion.div
           style={{
             width: "32px",
             height: "32px",
-            backgroundColor: "white",
-            marginTop: "0.3rem",
-            marginLeft: "1rem",
+            backgroundColor: "var(--white)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             fontSize: "24px",
             fontWeight: "bold",
             fontFamily: "Arial, sans-serif",
-            color: "blue",
+            color: "var(--main-color)",
             boxShadow: "4px 5px 3px rgba(0, 0, 0, 0.1)",
           }}
           animate={{
@@ -33,8 +30,8 @@ const AppTitle = () => {
         >
           B
         </motion.div>
-      </>
-    </div>
+        <span style={{marginLeft:'2px', color:'white'}}>OOK!빠지다</span>
+      </div>
   );
 };
 
