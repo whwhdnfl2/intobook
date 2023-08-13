@@ -24,9 +24,13 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
   };
 
   useEffect(() => { // 검색 페이지로 이동시 input창에 자동 포커스
-    searchBarInputRef.current.focus();
+    const setFocus = () => {
+      searchBarInputRef.current.focus();
+      window.scrollTo(0, 0); // 스크롤 위치 조정
+    };
+  
+    setFocus();
   }, []);
-
 
   return (
     <SearchBarContainer>

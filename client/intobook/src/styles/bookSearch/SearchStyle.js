@@ -8,5 +8,4 @@ export const ResultsContainer = styled.div`
   &::-webkit-scrollbar {
     width: 0;
   }
-  display: flex;
 `;

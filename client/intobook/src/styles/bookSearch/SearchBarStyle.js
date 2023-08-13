@@ -57,11 +57,13 @@ export const Line = styled.div`
 export const SearchBarInput = styled.input`
   padding-left: 10px;
   width: 70%;
-  height: 100%;
+  height: 45px;
   background-color: none;
   border: 0;
   border-radius: 20px;
   outline: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 
   &::placeholder {
     color: #00000080;
