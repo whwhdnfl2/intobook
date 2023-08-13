@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Typography} from '@mui/material';
 import BookshelvesMain from '../components/bookShelves/BookshelvesMain';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Layout } from './../styles/CommonStyle';
+import { Layout, StyleContainer, StyleSecondContainer } from './../styles/CommonStyle';
+import { StyledBox } from '../styles/home/StyledBox';
 
 
 const BookshelvesPage = () => {
-  const username = "북빠"
+  const username = useState('북빠지다')
   
   return (
     <motion.div
@@ -16,10 +17,10 @@ const BookshelvesPage = () => {
     exit={{ opacity: 0 }}
     >
       <Layout>
-        <TitleContainer>
-          {<TitleTypography>{username}님의 책장</TitleTypography>}
-        </TitleContainer>
-        <BookshelvesMain />
+        <StyleSecondContainer>
+          {<p>{username}님의 책장</p>}
+          <BookshelvesMain />
+        </StyleSecondContainer>
       </Layout>
     </motion.div>
   );
@@ -34,7 +35,7 @@ const TitleContainer = styled.div`
 const TitleTypography = styled(Typography)`
   variant : h5;
   component : h1;
-  color: var(--main-color);
+  color: var(--main-base-color);
 `;
 
 export default BookshelvesPage;

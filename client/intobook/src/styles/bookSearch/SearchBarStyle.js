@@ -57,7 +57,7 @@ export const Line = styled.div`
 export const SearchBarInput = styled.input`
   padding-left: 10px;
   width: 70%;
-  height: 45px;
+  height: 45px;  /* 검색바 통통해지는 부분 */
   background-color: none;
   border: 0;
   border-radius: 20px;

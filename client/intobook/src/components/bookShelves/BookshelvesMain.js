@@ -1,19 +1,10 @@
 import React, { useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import BookshelvesContent from './BookshelvesContent'; // 책장 내용 컴포넌트를 import 해주세요
-import { useRecoilState } from 'recoil';
-import { BookmarkStatusAtom, BluetoothAtom } from '../../recoil/bookmark/bookmarkAtom';
-import { completeBookHistory } from '../../api/historyApi';
-import BookmarkCharacter from '../character/CharacterWrapper';
-
+import BookshelvesContent from './BookshelvesContent';
+import { styled } from '@mui/material/styles';
 
 const BookshelvesMain = () => {
-
-  // const [bookmark, setBookmark] = useRecoilState(BookmarkStatusAtom)
-  // const [bluetooth, setBluetooth ] = useRecoilState(BluetoothAtom)
-  // setBookmark(true);
-  // setBluetooth(true);
 
   const [selectedTab, setSelectedTab] = useState(''); // 'all', 'read', 'reading' 중 하나로 초기화
 
@@ -24,13 +15,26 @@ const BookshelvesMain = () => {
   return (
     <div>
       <Tabs value={selectedTab} onChange={handleTabChange}>
-        <Tab label="전체" value="" />
-        <Tab label="읽은 책" value="COMPLETE" />
-        <Tab label="읽고 있는 책" value="READING" />
+        <OverrideCustomTab ab label="전체" value="" selected={selectedTab === ''}/>
+        <OverrideCustomTab  label="읽은 책" value="COMPLETE" selected={selectedTab === 'COMPLETE'}/>
+        <OverrideCustomTab  label="읽고 있는 책" value="READING" selected={selectedTab === 'READING'}/>
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
     </div>
   );
 };
+
+const CustomTab = styled(Tab)(({ theme, selected }) => ({
+  color: selected ? '#FFFFFF' : 'var(--main-point-color)',
+  fontWeight: selected ? theme.typography.fontWeightRegular : theme.typography.fontWeightBold,
+  fontFamily: 'NanumSquareNeo-Variable'
+}));
+
+const OverrideCustomTab = styled(CustomTab)({
+  // Override the selected tab color here
+  '&.Mui-selected': {
+    color: '#FFFFFF',
+  },
+});
 
 export default BookshelvesMain;

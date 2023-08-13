@@ -9,9 +9,8 @@ import { styled } from "styled-components";
 
 const BluetoothComponent = () => {
   const [bluetoothStatus, setBluetoothStatus] = useRecoilState(BluetoothAtom);
-  const [bookmarkStatus, setBookmarkStatus] =
-    useRecoilState(BookmarkStatusAtom);
-  //유저네임받아와서 수정하기
+  const [bookmarkStatus, setBookmarkStatus] = useRecoilState(BookmarkStatusAtom);
+  //유저 네임받아와서 수정하기
   const [username, setUsername] = useState("북빠지다");
 
   let StatusText = "";
@@ -36,8 +35,8 @@ const BluetoothComponent = () => {
 };
 
 const StatueText = styled.div`
-  color: white; /* 흰색 스타일 */
-  font-size: var(--font-h5); /* 원하는 폰트 사이즈 등 스타일을 추가 */
+  color: white;
+  font-size: var(--font-h6); /* 메인 문구 폰트 사이즈 */
 `;
 
 export default BluetoothComponent;

@@ -85,6 +85,7 @@ const CurrentBookStatus = () => {
     return () => clearInterval(interval);
   }, [nowReadingBook?.completedAt]);
 
+  console.log('현재책이?',nowReadingBook,progress);
   return (
     <>
         {nowReadingBook && (
@@ -131,8 +132,8 @@ const CurrentBookStatus = () => {
         )}
         {!nowReadingBook && (
           <div>
-            <Content style={{ color: 'black' }}>지금 읽고 있는 책이 없네요!</Content>
-            <Content style={{ color: 'black' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
+            <Content style={{ color: 'var(--main-point-color)' }}>지금 읽고 있는 책이 없네요!</Content>
+            <Content style={{ color: 'var(--main-point-color)' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
             <ImgContainer onClick={() => { setOpenModal(true) }} >
                   <BasicButton content={"책 찾으러 가기"}/>
                 </ImgContainer>
@@ -156,7 +157,7 @@ const Content = styled.div`
   text-align: center;
   /*font-family: var(--main-font);*/
   letter-spacing: 0.8px;
-  font-size: var(--font-h4);
+  font-size: var(--font-h5);
   margin: 5px 0 8px 0;
   `;
   
