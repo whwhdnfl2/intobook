@@ -7,11 +7,14 @@ export const StyledBox = styled.div`
     border-radius: 20px;
     background-color: rgba(235, 235, 235, 0.6);
     display: flex;
+    align-items: center;
 `
 
 export const BluetoothWrapper = styled.div`
     flex: 1;
     padding: 10px;
+    display: flex;
+    justify-content: center;
 `;
 
 export const BookWrapper = styled.div`

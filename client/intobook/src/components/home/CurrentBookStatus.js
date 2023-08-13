@@ -85,7 +85,6 @@ const CurrentBookStatus = () => {
     return () => clearInterval(interval);
   }, [nowReadingBook?.completedAt]);
 
-  console.log('dhk',nowReadingBook)
   return (
     <>
         {nowReadingBook  && (

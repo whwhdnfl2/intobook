@@ -23,7 +23,7 @@ const ConnectComponent = () => {
             </BluetoothWrapper>
             <ContentsContainer>
                 {<p>{contentText}</p>}
-                <BasicButton content={"버튼입니다"}/>
+                <BasicButton content={"책갈피 튜토리얼"} />
             </ContentsContainer>
         </StyledBox>
     );
