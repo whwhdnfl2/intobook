@@ -15,7 +15,8 @@ const HistoryLogEdit = () => {
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
 
-  const date = formatDate(selectedLog.startTime, 'dateLetter');
+  const startDate = formatDate(selectedLog.startTime, 'dateLetter');
+  const endDate = formatDate(selectedLog.endTime, 'dateLetter');
 
   const originStartTime = formatTimeInDate(selectedLog.startTime);
   const originEndTime = formatTimeInDate(selectedLog.endTime);
@@ -31,10 +32,14 @@ const HistoryLogEdit = () => {
   };
 
   // DB에 수정 요청 보낼 때 DateTime 포맷
-  const saveDate = date.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
+  const saveStartDate = startDate.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  });
+
+  const saveEndDate = endDate.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
     if (originStartTime.split(':')[0] > 21 && originEndTime.split(':')[0] > 21 && endHour < 3) {
       return `${year}-${month.padStart(2, '0')}-${parseInt(day.padStart(2, '0')) + 1}`;
-    } else{
+    } else {
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
   });
@@ -42,13 +47,13 @@ const HistoryLogEdit = () => {
   const removeMillisecond = (date) => {
     const [datePart, timePart] = date.split('T');
     return `${datePart}T${timePart.split('.')[0]}`;
-  }  
+  }
 
   const saveStartTime = `${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}`;
   const saveEndTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
 
-  const saveStart = originStartTime === saveStartTime ? removeMillisecond(selectedLog.startTime) : `${saveDate}T${saveStartTime}:00`;
-  const saveEnd = originEndTime === saveEndTime ? removeMillisecond(selectedLog.endTime) : `${saveDate}T${saveEndTime}:00`;
+  const saveStart = originStartTime === saveStartTime ? removeMillisecond(selectedLog.startTime) : `${saveStartDate}T${saveStartTime}:00`;
+  const saveEnd = originEndTime === saveEndTime ? removeMillisecond(selectedLog.endTime) : `${saveEndDate}T${saveEndTime}:00`;
 
 
   // 로그 수정하기
@@ -80,7 +85,7 @@ const HistoryLogEdit = () => {
   return (
     <LogEditContainer>
       <Title>히스토리 수정</Title>
-      <Content>{date}</Content>
+      <Content>{startDate}</Content>
       <TimeContainer>
 
         <TimeDiv>
