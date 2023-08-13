@@ -64,9 +64,9 @@ public class UserBookService {
         if (status == null) {
             userBookList = userBookRepository.findByUserAndIsDeletedFalse(user, pageRequest);
         }else if ( status == UserBookStatus.READING ){
-            userBookList =  userBookRepository.findByUserAndStatusOrStatus(user, status, UserBookStatus.NOWREADING, pageRequest);
+            userBookList =  userBookRepository.findByUserAndStatusIn(user, new UserBookStatus[] {status, UserBookStatus.NOWREADING}, pageRequest);
         }else {
-            userBookList =  userBookRepository.findByUserAndStatusOrStatus(user, status, status, pageRequest);
+            userBookList =  userBookRepository.findByUserAndStatusIn(user, new UserBookStatus[] {status}, pageRequest);
         }
         return userBookList.map(userBook -> UserBookListResponseDto.toEntity(userBook));
     }

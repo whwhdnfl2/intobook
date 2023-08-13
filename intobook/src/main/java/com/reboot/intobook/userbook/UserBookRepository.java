@@ -18,7 +18,7 @@ public interface UserBookRepository extends JpaRepository<UserBook, Long> {
     UserBook findByUserAndBookIsbn(User user, String isbn);
     Page<UserBook> findByUserAndIsDeletedFalse(User user, Pageable pageable);
     List<UserBook> findByUserUserPk(Long userPk);
-    Page<UserBook> findByUserAndStatusOrStatus(User user, UserBookStatus status1, UserBookStatus status2, Pageable pageable);
+    Page<UserBook> findByUserAndStatusIn(User user, UserBookStatus[] statuses, Pageable pageable);
     List<UserBook> findAllByUserAndStatus(User user, UserBookStatus userBookStatus);
 
 
