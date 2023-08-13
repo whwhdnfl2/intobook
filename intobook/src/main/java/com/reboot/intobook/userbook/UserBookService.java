@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,12 @@ public class UserBookService {
     private final UserBookRepository userBookRepository;
 
     public void nowReadingToReading (User user) {
-        UserBook preReadingBook = userBookRepository.findByUserAndStatus(user, UserBookStatus.NOWREADING);
+        List<UserBook> preReadingBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (preReadingBook == null) return;
-        preReadingBook.setStatus(UserBookStatus.READING);
-        userBookRepository.save(preReadingBook);
+        for (UserBook userBook : preReadingBook) {
+            userBook.setStatus(UserBookStatus.READING);
+            userBookRepository.save(userBook);
+        }
     }
 
     @Transactional
@@ -113,7 +116,7 @@ public class UserBookService {
     }
 
     public UserBookResponseDto findNowReadingUserBook(User user) {
-        UserBook userBook = userBookRepository.findByUserAndStatus(user, UserBookStatus.NOWREADING);
+        UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING).get(0);
         if (userBook == null) return null;
         return UserBookResponseDto.toEntity(userBook);
     }
