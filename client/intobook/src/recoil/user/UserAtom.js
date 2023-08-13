@@ -16,7 +16,8 @@ export const AccessToken = atom({
 // 사용자이름(닉네임)
 export const UserNameAtom = atom({
     key: 'UserNameAtom',
-    default: ''
+    default: '',
+    effects_UNSTABLE : [persistAtom]
 });
 
 // 사용자가 저장한 책

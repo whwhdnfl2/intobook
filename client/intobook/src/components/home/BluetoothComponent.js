@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   BluetoothAtom,
   BookmarkStatusAtom,
@@ -6,12 +6,14 @@ import {
 import BookmarkCharacter from "../character/CharacterWrapper";
 import { useState } from "react";
 import { styled } from "styled-components";
+import { UserNameAtom } from "../../recoil/user/UserAtom";
 
 const BluetoothComponent = () => {
   const [bluetoothStatus, setBluetoothStatus] = useRecoilState(BluetoothAtom);
-  const [bookmarkStatus, setBookmarkStatus] = useRecoilState(BookmarkStatusAtom);
-  //유저 네임받아와서 수정하기
-  const [username, setUsername] = useState("북빠지다");
+  const [bookmarkStatus, setBookmarkStatus] =
+    useRecoilState(BookmarkStatusAtom);
+    
+  const username = useRecoilValue(UserNameAtom);
 
   let StatusText = "";
 
@@ -36,7 +38,7 @@ const BluetoothComponent = () => {
 
 const StatueText = styled.div`
   color: white;
-  font-size: var(--font-h6); /* 메인 문구 폰트 사이즈 */
+  font-size: var(--font-h6);
 `;
 
 export default BluetoothComponent;

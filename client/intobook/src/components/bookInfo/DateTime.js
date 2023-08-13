@@ -36,12 +36,6 @@ const DateTime = ({ onSave, targetType }) => {
         minutes: targetTime.minutes
       });
     } else if (targetType === 'end') {
-      // 추후 마친 시간이 시작 시간보다 작으면 막기
-      // if (targetTime.hours < selectedStartTime.hours) {
-      //   alert("종료 시간은 시작 시간보다 빠를 수 없습니다.");
-      //   return;
-      // }
-
       setSelectedEndTime({
         hours: targetTime.hours,
         minutes: targetTime.minutes

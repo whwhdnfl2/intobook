@@ -4,7 +4,7 @@ import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from
 import { editBookHistory } from '../../api/historyApi';
 import { styled } from 'styled-components';
 import DateTime from './DateTime';
-import { formatDate } from './../../utils/dateTimeUtils';
+import { formatDate, formatTimeInDate } from './../../utils/dateTimeUtils';
 
 const HistoryLogEdit = () => {
   const selectedLog = useRecoilValue(LogAtom);
@@ -15,7 +15,16 @@ const HistoryLogEdit = () => {
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
 
-  const date = formatDate(selectedLog.startTime, 'dateLetter');
+  const startDate = formatDate(selectedLog.startTime, 'dateLetter');
+  const endDate = formatDate(selectedLog.endTime, 'dateLetter');
+
+  const originStartTime = formatTimeInDate(selectedLog.startTime);
+  const originEndTime = formatTimeInDate(selectedLog.endTime);
+
+  const startHour = selectedStartTime.hours;
+  const startMinute = selectedStartTime.minutes;
+  const endHour = selectedEndTime.hours;
+  const endMinute = selectedEndTime.minutes;
 
   // 수정된 한줄평 editedComment에 반영하기
   const handleTextareaChange = (e) => {
@@ -23,24 +32,49 @@ const HistoryLogEdit = () => {
   };
 
   // DB에 수정 요청 보낼 때 DateTime 포맷
-  const saveDate = date.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
+  const saveStartDate = startDate.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
   });
 
-  const saveStartTime = `${selectedStartTime.hours.toString().padStart(2, '0')}:${selectedStartTime.minutes.toString().padStart(2, '0')}:00`;
-  const saveEndTime = `${selectedEndTime.hours.toString().padStart(2, '0')}:${selectedEndTime.minutes.toString().padStart(2, '0')}:00`;
+  const saveEndDate = endDate.replace(/(\d+)년 (\d+)월 (\d+)일/, (_, year, month, day) => {
+    if (originStartTime.split(':')[0] > 21 && originEndTime.split(':')[0] > 21 && endHour < 3) {
+      return `${year}-${month.padStart(2, '0')}-${parseInt(day.padStart(2, '0')) + 1}`;
+    } else {
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+  });
 
-  const saveStart = `${saveDate}T${saveStartTime}`;
-  const saveEnd = `${saveDate}T${saveEndTime}`;
+  const removeMillisecond = (date) => {
+    const [datePart, timePart] = date.split('T');
+    return `${datePart}T${timePart.split('.')[0]}`;
+  }
+
+  const saveStartTime = `${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}`;
+  const saveEndTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
+
+  const saveStart = originStartTime === saveStartTime ? removeMillisecond(selectedLog.startTime) : `${saveStartDate}T${saveStartTime}:00`;
+  const saveEnd = originEndTime === saveEndTime ? removeMillisecond(selectedLog.endTime) : `${saveEndDate}T${saveEndTime}:00`;
+
 
   // 로그 수정하기
   const editLogHandler = async () => {
-    try {
-      await editBookHistory(selectedLog.historyPk, saveStart, saveEnd, editedComment);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsOpenLogEdit(false);
+    const selectedStartTimeInMinutes = startHour * 60 + startMinute;
+    const selectedEndTimeInMinutes = endHour * 60 + endMinute;
+
+    if (
+      selectedEndTimeInMinutes >= selectedStartTimeInMinutes || // 종료시간이 시작시간보다 커야 함
+      (selectedStartTimeInMinutes >= 22 * 60 + 30 && // 시작시간이 22:30 이후인 경우
+        (selectedEndTimeInMinutes >= 0 && selectedEndTimeInMinutes <= 2 * 60)) // 종료시간이 00:00부터 02:00 사이면 괜찮음
+    ) {
+      try {
+        await editBookHistory(selectedLog.historyPk, saveStart, saveEnd, editedComment);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsOpenLogEdit(false);
+      }
+    } else {
+      alert('시간을 확인하세요')
     }
   };
 
@@ -51,7 +85,7 @@ const HistoryLogEdit = () => {
   return (
     <LogEditContainer>
       <Title>히스토리 수정</Title>
-      <Content>{date}</Content>
+      <Content>{startDate}</Content>
       <TimeContainer>
 
         <TimeDiv>
