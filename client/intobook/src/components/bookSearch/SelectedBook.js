@@ -67,7 +67,7 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
               <BookCover image={selectedInfo?.cover} alt={selectedInfo?.title + 'image'}
                 customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
               />
-              <CardContent sx={{ width: '180px', height: '42px', padding: '2px', margin: '0 auto' }} >
+              <CardContent sx={{ width: '200px', height: '42px', padding: '2px', margin: '0 auto' }} >
                 <TitleTypography
                   fontWeight={'bold'}
                   fontSize={'12px'}
@@ -76,12 +76,9 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
                 >
                   {selectedInfo?.title}
                 </TitleTypography>
-                <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
+                <TitleTypography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
                   {selectedInfo?.author}
-                </Typography>
-                <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
-                  ({selectedInfo?.publisher})
-                </Typography>
+                </TitleTypography>
               </CardContent>
               <Typography fontSize={'15px'} align='center' color={'black'} fontWeight={700} marginY={'12px'} lineHeight={'normal'} >
                 {getStatusText()}
@@ -103,6 +100,7 @@ const TitleTypography = styled(Typography)`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  max-height: 36px;
 `;
 
 const StatusButton = styled.button`

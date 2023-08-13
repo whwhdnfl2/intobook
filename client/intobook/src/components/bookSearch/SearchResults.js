@@ -55,7 +55,7 @@ const SearchResults = ({ searchKeyword }) => {
   }, [searchKeyword]);
 
   return (
-      <ResultsContainer id='results-container'>
+    <ResultsContainer id='results-container'>
       <Stack direction='row' flexWrap='wrap' justifyContent='center' columnGap={3.5} rowGap={1.5}>
         {bookSearchResults.map((item, idx) => (
           <Box key={idx} ref={targetRef}>

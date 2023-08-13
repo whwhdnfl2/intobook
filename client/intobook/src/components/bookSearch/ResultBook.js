@@ -10,7 +10,7 @@ const ResultBook = ({ bookCover }) => {
 
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
-  const publisher = bookCover?.publisher ? bookCover?.publisher : '출판사';
+  console.log(bookCover)
   const bookId = bookCover?.isbn13 || bookCover?.isbn;
   const status = bookCover?.status;
   const coverImage = bookCover?.cover ? bookCover?.cover : bookCover?.coverImage
@@ -25,7 +25,6 @@ const ResultBook = ({ bookCover }) => {
     cover: bookCover?.cover,
     title,
     author,
-    publisher,
     bookId,
     status
   }
@@ -47,9 +46,6 @@ const ResultBook = ({ bookCover }) => {
           </TitleTypography>
           <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
             {author}
-          </Typography>
-          <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
-            ({publisher})
           </Typography>
         </CardContent>
       </Card>
