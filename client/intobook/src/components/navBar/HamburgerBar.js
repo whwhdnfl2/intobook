@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { logout } from "../../api/logoutApi";
 import { AccessToken } from "../../recoil/user/UserAtom";
 import { useRecoilState } from "recoil";
+import UpdateUsername from '../common/UpdateUsername';
+
 
 const DropdownContainer = styled.div`
     position: relative;
@@ -38,6 +40,7 @@ const DropdownItem = styled.div`
 
 const HamburgerBar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
     const navigate = useNavigate();
     const [token, setToken] = useRecoilState(AccessToken);
 
@@ -45,23 +48,27 @@ const HamburgerBar = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-      //쿠키 삭제
+    const handleToggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
+    //쿠키 삭제
     function deleteCookie(cookie_name) {
-    document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = cookie_name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     }
 
-      // 로그아웃 동작
+    // 로그아웃 동작
     const handleLogout = async () => {
-    const res = await logout(); //로그아웃api 호출
-    deleteCookie('accessToken'); // 쿠키에서 액세스토큰 삭제
-    setToken(null); // 상태 업데이트
-    navigate('/');
+        const res = await logout(); //로그아웃api 호출
+        deleteCookie('accessToken'); // 쿠키에서 액세스토큰 삭제
+        setToken(null); // 상태 업데이트
+        navigate('/');
     }
 
     return (
         <DropdownContainer>
             <MenuIcon onClick={handleToggleDropdown}>
-                <FontAwesomeIcon icon={faBars} size="2x" style={{color:'white'}}/>
+                <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
             </MenuIcon>
             {isDropdownOpen && (
                 <DropdownContent
@@ -69,7 +76,7 @@ const HamburgerBar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                 >
-                    <DropdownItem>
+                    <DropdownItem onClick={handleToggleModal}> {/* 정보수정 클릭 시 모달 열기 */}
                         <FontAwesomeIcon icon={faCog} size="lg" />
                         <span> 정보수정</span>
                     </DropdownItem>
@@ -79,6 +86,7 @@ const HamburgerBar = () => {
                     </DropdownItem>
                 </DropdownContent>
             )}
+            {isModalOpen && <UpdateUsername closeModal={handleToggleModal} />} {/* 모달 열림 상태일 때 모달 컴포넌트 렌더링 */}
         </DropdownContainer>
     );
 };

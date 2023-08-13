@@ -15,7 +15,7 @@ export const getUsername = async () => {
 export const updateUsername = async (nickname) => {
   try {
     const res = await
-    axiosInstance.patch(`/users/updateNickname`, {
+    axiosInstance.patch(`/users/updateNickname`, null, {
       params: {
         nickname: nickname,
       }
