@@ -29,6 +29,7 @@ const DropdownContent = styled(motion.div)`
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: right;
+    cursor: pointer;
 `;
 
 const DropdownItem = styled.div`

@@ -10,7 +10,6 @@ const ResultBook = ({ bookCover }) => {
 
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
-  console.log(bookCover)
   const bookId = bookCover?.isbn13 || bookCover?.isbn;
   const status = bookCover?.status;
   const coverImage = bookCover?.cover ? bookCover?.cover : bookCover?.coverImage
