@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -97,7 +98,12 @@ public class HistoryService {
     @Transactional
     public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( Long historyPk, String comment, LocalDateTime startTime, LocalDateTime endTime) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+        LocalDateTime tempStartTime = startTime != null ? startTime : history.getStartTime();
+        LocalDateTime tempEndTime = endTime != null ? endTime : history.getEndTime();
+        if (tempStartTime.compareTo(tempEndTime) > 0) throw new IllegalArgumentException("잘못된 시간 입력입니다");
         history.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(comment, startTime, endTime);
+        UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
+        if (endTime != null) userBook.setCompletedAt(endTime);
     }
 
     @Transactional
@@ -105,7 +111,7 @@ public class HistoryService {
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
         history.updateEndTimeAndReadingTime();
         UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
-        userBook.updateCompleteAt(LocalDateTime.now());
+        userBook.setCompletedAt(LocalDateTime.now());
     }
 
     @Transactional
