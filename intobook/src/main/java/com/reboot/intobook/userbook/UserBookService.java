@@ -113,8 +113,8 @@ public class UserBookService {
     }
 
     public UserBookResponseDto findNowReadingUserBook(User user) {
-        UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING).get(0);
+        List<UserBook> userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (userBook == null) return null;
-        return UserBookResponseDto.toEntity(userBook);
+        return UserBookResponseDto.toEntity(userBook.get(0));
     }
 }
