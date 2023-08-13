@@ -25,7 +25,7 @@ const ProgressBar = ({ progress, containerWidth, containerHeight, bg, bbg, desc=
 const Progress = styled.div`
   color: var(--gray);
   font-family: var(--main-font);
-  font-size: 12px;
+  font-size: var(--font-h7);
   font-style: normal;
   font-weight: 400;
   line-height: normal;

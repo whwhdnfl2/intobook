@@ -3,8 +3,7 @@ import {Typography} from '@mui/material';
 import BookshelvesMain from '../components/bookShelves/BookshelvesMain';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Layout, StyleContainer, StyleSecondContainer } from './../styles/CommonStyle';
-import { StyledBox } from '../styles/home/StyledBox';
+import { Layout, StyleSecondContainer } from './../styles/CommonStyle';
 
 
 const BookshelvesPage = () => {

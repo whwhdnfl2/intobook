@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
-import { FormControl, MenuItem, Select } from '@mui/material';
 import BookList from './BookList';
 import styled from 'styled-components';
 
 const StyledFormControl = styled.div`
 display: flex;
 align-items: center;
-height: 40px;
-border: 1px solid #ccc;
+height: 30px;
 border-radius: 4px;
 padding: 0 8px;
-background-color: white;
-margin-top: 10px;
-margin-bottom: 10px;
-`;
-
-const SelectLabel = styled.label`
-margin-right: 8px;
+background-color: rgba(255, 255, 255,0.5);
+margin-top: 5px;
+margin-bottom: 5px;
 `;
 
 const SelectBox = styled.select`
@@ -37,7 +31,6 @@ const BookshelvesContent = ({ selectedTab }) => {
     <div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
       <StyledFormControl>
-        {/* <SelectLabel htmlFor="select">정렬</SelectLabel> */}
         <SelectBox id="select" value={filter} onChange={handleFilterChange}>
           <option value="startedAt">등록순</option>
           <option value="author">저자순</option>

@@ -54,8 +54,8 @@ const CurrentBookStatus = () => {
   useEffect(() => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
-      setNowReadingBook(detailInfo);
-
+      if (detailInfo !== 500){ setNowReadingBook(detailInfo);}
+      else { setNowReadingBook(null);}
       // 진행률 95% 이상일 때 모달 띄우기
       if (detailInfo?.nowPage && detailInfo?.page) {
         const nowPage = detailInfo.nowPage + 30;
@@ -85,14 +85,14 @@ const CurrentBookStatus = () => {
     return () => clearInterval(interval);
   }, [nowReadingBook?.completedAt]);
 
-  console.log('현재책이?',nowReadingBook,progress);
+  console.log('dhk',nowReadingBook)
   return (
     <>
-        {nowReadingBook && (
+        {nowReadingBook  && (
           <>
+            <Content>{title}</Content>
             {(isConnected && isBookmarkOut) && 
             <>
-              <Content>{title}</Content>
               <Content>새로운 히스토리를 만들어가는 중!</Content>
             </>
             }
@@ -155,9 +155,8 @@ const Container = styled.div`
 
 const Content = styled.div`
   text-align: center;
-  /*font-family: var(--main-font);*/
   letter-spacing: 0.8px;
-  font-size: var(--font-h5);
+  font-size: var(--font-h6);
   margin: 5px 0 8px 0;
   `;
   
