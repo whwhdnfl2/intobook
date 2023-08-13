@@ -16,6 +16,7 @@
     --main-color: #5A7FFF;
     --main-point-color: #2B49B4;
     --main-base-color: #EDF7FF;
+    --main-purple-color: #734CFF;
     --black: #18191a;
     --white: #ffffff;
     --bg-gray: #dcdcdc;
@@ -26,8 +27,8 @@
     --font-h3: 1.5rem;
     --font-h4: 1.125rem;
     --font-h5: 0.95rem;
-    --font-h5: 0.75rem;
-    --font-h5: 0.6rem;
+    --font-h6: 0.75rem;
+    --font-h7: 0.6rem;
 
     --main-font: "BM HANNA_TTF-Regular", Helvetica;
     --content-font: "Inter", Helvetica;

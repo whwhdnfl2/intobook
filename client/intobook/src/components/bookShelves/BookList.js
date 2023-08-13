@@ -10,7 +10,7 @@ import { styled } from 'styled-components';
 
 const ListContainer = styled.div`
   width: 350px;
-  height: 450px;
+  height: 30rem;
   margin: 10px auto;
   overflow-y: auto;
   scrollbar-width: none;

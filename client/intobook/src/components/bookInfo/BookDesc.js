@@ -25,12 +25,12 @@ const BookDesc = ({ bookInfo }) => {
         customStyle={{ width: '80px', height: '120px', border: '2px solid white', marginRight: '10px' }}
       />
       <BookInfoContentDiv>
-        <div style={{ fontSize: 'var(--font-h4)', width: '150px' }}>{title}</div>
+        <div style={{ fontSize: 'var(--font-h5)', width: '150px' }}>{title}</div>
         <TempDiv>
           <div>
-            <div style={{ fontSize: 'var(--font-h5)', marginBottom: '3px' }}>{author}</div>
-            <div style={{ fontSize: 'var(--font-h5)', marginBottom: '4px', color: 'var(--main-color)' }}>{bookInfo?.publisher}</div>
-            <span style={{ fontSize: 'var(--font-h5)', color: 'var(--main-color)' }}>{bookInfo?.page}p</span>
+            <div style={{ fontSize: 'var(--font-h7)', marginBottom: '3px' }}>{author}</div>
+            <div style={{ fontSize: 'var(--font-h7)', marginBottom: '4px', color: 'var(--main-color)' }}>{bookInfo?.publisher}</div>
+            <span style={{ fontSize: 'var(--font-h7)', color: 'var(--main-color)' }}>{bookInfo?.page}p</span>
           </div>
           {/* <LabelDiv>{statusInfo}</LabelDiv> */}
           <LabelDiv style={{ backgroundColor: statusColor }}>{statusInfo}</LabelDiv>
@@ -66,7 +66,7 @@ const LabelDiv = styled.div`
   background: var(--main-green-color);
   color: var(--white);
   font-family: var(--main-font);
-  font-size: var(--main-h5);
+  font-size: var(--font-h5);
   display: flex;
   justify-content: center;
   align-items: center;

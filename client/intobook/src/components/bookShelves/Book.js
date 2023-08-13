@@ -19,7 +19,7 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
       <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
         customStyle={{ ...customStyle }}
       />
-      <ProgressBar progress={progress} containerHeight={7} bg={'var(--main-color)'}  desc={false} />
+      <ProgressBar progress={progress} containerHeight={7} bg={'var(--main-point-color)'}  desc={false} />
         <div style={{ height: '42px', padding: '2px', margin: '5px 0' }} >
           <TitleTypography
             fontWeight={'700'} 

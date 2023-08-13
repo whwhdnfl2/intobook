@@ -8,8 +8,7 @@ export const Layout = styled.div`
   min-height: 100vh;
   gap: 1rem;
   background-image: url(/backgroundImg.png);
-  background-size: cover;
-  background-position: center center;
+  background-size: full;
   /*border: 1px solid lightgray;*/
 `;
 
@@ -54,15 +53,26 @@ export const StyleContainer = styled.div`
     margin: 5rem 0;
 `
 
-export const StyleBackContainer = styled.div`
+export const StyleSecondContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:2rem;
+    gap:0.1rem;
+    margin: 3rem 0;
+`
+
+
+export const StyleBackContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    gap:1rem;
     margin: 5rem 0;
     background-color: rgba(235, 235, 235, 0.6);
     border-radius: 20px;
     width: 90%;
     min-width: 340px;
+    min-height: 90vh;
 `

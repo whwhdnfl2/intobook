@@ -58,6 +58,6 @@
   "description": "독서 습관을 형성해주는 서비스, 북빠지다",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#5A7FFF",
-  "background_color": "#E1F1FF"
+  "theme_color": "#2B49B4",
+  "background_color": "#5A7FFF"
 }

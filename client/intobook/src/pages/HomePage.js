@@ -30,6 +30,7 @@ const HomePage = () => {
       <Layout>
         <StyleContainer>
           <BluetoothComponent />
+          <Timer/>
           <ConnectComponent  />
           <ReadingBookComponent />
           <CheckButton>확인</CheckButton>

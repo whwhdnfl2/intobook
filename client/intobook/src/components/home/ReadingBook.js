@@ -10,35 +10,35 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { styled } from 'styled-components';
 
 const ReadingBook = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const isConnected = useRecoilValue(BluetoothAtom);
-  const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);
-  const [openBookInfoModal, setOpenBookInfoModal] = useState(false);
-  const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
-  const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);
+  const [isOpen, setIsOpen] = useState(false);  //이건 무슨 상태이지
+  const isConnected = useRecoilValue(BluetoothAtom);  //블투연결되어있는지
+  const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);  //책갈피 인인지, 아웃인지
+  const [openBookInfoModal, setOpenBookInfoModal] = useState(false);  //책정보 모달
+  const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);  //지금 읽는 책이 있는지 없는지
+  // const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);  //완료시 뜨는 모달
 
   useEffect(() => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
       setNowReadingBook(detailInfo);
-
+      console.log('지금 읽는 책이 없으면 어떻게 되는거야?',detailInfo)
       // 진행률 95% 이상일 때 모달 띄우기
-      if (detailInfo?.nowPage && detailInfo?.page) {
-        const nowPage = detailInfo.nowPage + 30;
-        const progress = Math.floor((nowPage / detailInfo.page) * 100);
+      // if (detailInfo?.nowPage && detailInfo?.page) {
+      //   const nowPage = detailInfo.nowPage + 30;
+      //   const progress = Math.floor((nowPage / detailInfo.page) * 100);
 
-        if (progress >= 95) {
-          // localStorage 값 설정
-          const modalVal = localStorage.getItem('hasCloseCompleteBookModal')
-          if (modalVal === null) {
-            localStorage.setItem('hasCloseCompleteBookModal', 'false');
-          }
-          // localStorage 값이 true가 아닐 때만 모달 띄우기
-          if (modalVal !== 'true') {
-            setOpenCompleteBookModal(true);
-          }
-        }
-      }
+      //   if (progress >= 95) {
+      //     // localStorage 값 설정
+      //     const modalVal = localStorage.getItem('hasCloseCompleteBookModal')
+      //     if (modalVal === null) {
+      //       localStorage.setItem('hasCloseCompleteBookModal', 'false');
+      //     }
+      //     // localStorage 값이 true가 아닐 때만 모달 띄우기
+      //     if (modalVal !== 'true') {
+      //       setOpenCompleteBookModal(true);
+      //     }
+      //   }
+      // }
     };
     getReadingBook();
 
@@ -48,9 +48,9 @@ const ReadingBook = () => {
     setOpenBookInfoModal(false);
   };
 
-  const closeCompleteBookModal = () => {
-    setOpenCompleteBookModal(false);
-  };
+  // const closeCompleteBookModal = () => {
+  //   setOpenCompleteBookModal(false);
+  // };
 
   const searchHandler = () => {
     if (isConnected && isBookmarkOut) {
@@ -63,9 +63,7 @@ const ReadingBook = () => {
 
   const coverImg = nowReadingBook?.coverImage;
   const userBookId = nowReadingBook?.userBookPk;
-  const nowPage = nowReadingBook?.nowPage + 90;
-  const progress = nowReadingBook?.page ? Math.floor((nowPage / nowReadingBook.page) * 100) : 0;
-
+  
   return (
     <>
           <Link to={`/userbook/${userBookId}`} style={{ textDecoration: 'none' }}>
@@ -73,10 +71,10 @@ const ReadingBook = () => {
           </Link>
           {!nowReadingBook && (
             <>
-              <CurrentBook sx={{ background: nowReadingBook ? '#859FF8' : 'var(--white)' }}>
+              <CurrentBook sx={{ background: 'var(--white)' }}>
                 <AddCircleOutlineIcon
                   onClick={searchHandler}
-                  style={{ color: 'var(--main-green-color)', fontSize: '26px', cursor: 'pointer' }}
+                  style={{ color: 'var(--main-point-color)', fontSize: '26px', cursor: 'pointer' }}
                 />
               </CurrentBook>
             </>
@@ -84,7 +82,6 @@ const ReadingBook = () => {
       
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
       <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
-      <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} height={'160px'} />
     </>
   );
 };

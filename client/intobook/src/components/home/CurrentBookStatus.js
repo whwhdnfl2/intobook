@@ -54,8 +54,8 @@ const CurrentBookStatus = () => {
   useEffect(() => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
-      setNowReadingBook(detailInfo);
-
+      if (detailInfo !== 500){ setNowReadingBook(detailInfo);}
+      else { setNowReadingBook(null);}
       // 진행률 95% 이상일 때 모달 띄우기
       if (detailInfo?.nowPage && detailInfo?.page) {
         const nowPage = detailInfo.nowPage + 30;
@@ -85,13 +85,14 @@ const CurrentBookStatus = () => {
     return () => clearInterval(interval);
   }, [nowReadingBook?.completedAt]);
 
+  console.log('dhk',nowReadingBook)
   return (
     <>
-        {nowReadingBook && (
+        {nowReadingBook  && (
           <>
+            <Content>{title}</Content>
             {(isConnected && isBookmarkOut) && 
             <>
-              <Content>{title}</Content>
               <Content>새로운 히스토리를 만들어가는 중!</Content>
             </>
             }
@@ -131,8 +132,8 @@ const CurrentBookStatus = () => {
         )}
         {!nowReadingBook && (
           <div>
-            <Content style={{ color: 'black' }}>지금 읽고 있는 책이 없네요!</Content>
-            <Content style={{ color: 'black' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
+            <Content style={{ color: 'var(--main-point-color)' }}>지금 읽고 있는 책이 없네요!</Content>
+            <Content style={{ color: 'var(--main-point-color)' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
             <ImgContainer onClick={() => { setOpenModal(true) }} >
                   <BasicButton content={"책 찾으러 가기"}/>
                 </ImgContainer>
@@ -154,9 +155,8 @@ const Container = styled.div`
 
 const Content = styled.div`
   text-align: center;
-  /*font-family: var(--main-font);*/
   letter-spacing: 0.8px;
-  font-size: var(--font-h4);
+  font-size: var(--font-h6);
   margin: 5px 0 8px 0;
   `;
   
