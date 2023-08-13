@@ -9,5 +9,4 @@ export const ResultsContainer = styled.div`
     width: 0;
   }
   display: flex;
-  justify-content: center;
 `;
