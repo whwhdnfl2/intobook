@@ -49,7 +49,7 @@ public class StatisticsService {
         // totalReadTime 계산
         int totalReadTime = 0;
         for( History h: historyList ){
-            totalReadTime += h.getReadingTime();
+            totalReadTime += (int) h.getReadingTime();
         }
 
         // pagePerHour 계산
@@ -78,7 +78,6 @@ public class StatisticsService {
         if (historyList == null || historyList.isEmpty()) {
             return 0;
         }
-        //TODO: 추후에 연속된 최대 읽은 날짜 로직 추가하기
         int maxCon = 1;
         int tempCon = 1;
         LocalDate pre = historyList.get(0).getStartTime().toLocalDate();
@@ -118,7 +117,7 @@ public class StatisticsService {
         long averageReadingTime = 0;
 
         for( History history: findHistoryList){
-            totalReadingTime += history.getReadingTime();
+            totalReadingTime += (int) history.getReadingTime();
             maxReadingTime = Math.max(maxReadingTime, history.getReadingTime());
         }
         averageReadingTime = totalReadingTime / findHistoryList.size();
