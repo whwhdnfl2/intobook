@@ -78,8 +78,24 @@ public class StatisticsService {
             return 0;
         }
         //TODO: 추후에 연속된 최대 읽은 날짜 로직 추가하기
-
-        return 2;
+        int maxCon = 1;
+        int tempCon = 1;
+        LocalDate pre = historyList.get(0).getStartTime().toLocalDate();
+        int l = historyList.size();
+        LocalDate now;
+        for (int i = 1; i < l; i++) {
+            now = historyList.get(i).getStartTime().toLocalDate();
+            Duration difference = Duration.between(pre.atStartOfDay(), now.atStartOfDay());
+            System.out.println("지금 : " + now + " 이전 : " + pre + " 차이 : " + difference.toDays());
+            if (difference.toDays() == 1) {
+                tempCon++;
+                maxCon = Math.max(maxCon, tempCon);
+            }else if (difference.toDays() > 1){
+                tempCon = 1;
+            }
+            pre = now;
+        }
+        return maxCon;
     }
 
     public GetUserBookStatisticResponse getUserBookStatistics(Long userBookPk) {
