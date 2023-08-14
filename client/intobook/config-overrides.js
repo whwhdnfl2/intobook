@@ -4,14 +4,14 @@ module.exports = function override(config, env) {
     if (env === 'development') {
         config.devServer = {
             ...config.devServer,
-            port: 8080,
+            port: 3000,
             liveReload: true,
             host: "localhost",
             allowedHosts: "all",
             open: true,
             client: {
               overlay: true,
-              webSocketURL: { hostname: "localhost", port: 8080 },
+              webSocketURL: { hostname: "localhost", port: 3000 },
             },
             compress: true,
           };
