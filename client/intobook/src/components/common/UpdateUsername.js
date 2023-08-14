@@ -25,13 +25,19 @@ const UpdateUsername = ({ closeModal }) => {
     <ModalContent>
       <p>현재 유저네임: {username}</p>
       <TextField
-        label="새 유저네임"
+        label="1~12자 내외의 닉네임"
         value={newUsername}
         onChange={(e) => setNewUsername(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleUpdate();
+          }
+        }}
         inputProps={{ maxLength: 12 }}
       />
-      <StyledButton variant="contained" onClick={handleUpdate}>
-        유저네임 업데이트
+      <StyledButton variant="contained" onClick={handleUpdate} disabled={newUsername.trim() === ''}>
+        변경하기
       </StyledButton>
     </ModalContent>
   );
