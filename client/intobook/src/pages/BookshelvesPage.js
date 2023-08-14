@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import {Typography} from '@mui/material';
+import { Typography } from '@mui/material';
 import BookshelvesMain from '../components/bookShelves/BookshelvesMain';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Layout, StyleSecondContainer } from './../styles/CommonStyle';
+import { useRecoilValue } from "recoil";
+import { UserNameAtom } from '../recoil/user/UserAtom';
 
 
 const BookshelvesPage = () => {
-  const username = useState('북빠지다')
-  
+  const username = useRecoilValue(UserNameAtom);
+
   return (
     <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
       <Layout>
         <StyleSecondContainer>

@@ -7,8 +7,8 @@ import { UserNameAtom } from '../../recoil/user/UserAtom';
 
 
 const UpdateUsername = ({ closeModal }) => {
-  const [newUsername, setNewUsername] = useState('');
   const [username, setUsername] = useRecoilState(UserNameAtom);
+  const [newUsername, setNewUsername] = useState('');
 
   const handleUpdate = async () => {
     try {
@@ -17,38 +17,44 @@ const UpdateUsername = ({ closeModal }) => {
     } catch (error) {
       console.error('유저네임 업데이트 에러:', error);
     } finally {
-      setUsername(newUsername); // Recoil 상태 업데이트
+      setUsername(newUsername);
     }
   };
-  
+
   return (
     <ModalContent>
-      <p>현재 유저네임: {username}</p>
+      <p>현재 닉네임: {username}</p>
       <TextField
-        label="새 유저네임"
+        label="1~12자 내외의 닉네임"
         value={newUsername}
         onChange={(e) => setNewUsername(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleUpdate();
+          }
+        }}
         inputProps={{ maxLength: 12 }}
       />
-      <StyledButton variant="contained" onClick={handleUpdate}>
-        유저네임 업데이트
+      <StyledButton variant="contained" onClick={handleUpdate} disabled={newUsername.trim() === ''}>
+        변경하기
       </StyledButton>
     </ModalContent>
-  );
+  )
 };
 
 const ModalContent = styled.div`
-  min-width: 240px;
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+      min-width: 240px;
+      background-color: white;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      `;
 
 // 여기 왜 important안하면 적용이 안될까
 const StyledButton = styled(Button)`
-  margin-top: 20px !important;
-`;
+      margin-top: 20px !important;
+      `;
 
 export default UpdateUsername;
