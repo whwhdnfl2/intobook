@@ -114,7 +114,7 @@ public class UserBookService {
 
     public UserBookResponseDto findNowReadingUserBook(User user) {
         List<UserBook> userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
-        if (userBook == null) return null;
+        if (userBook == null || userBook.isEmpty()) return null;
         return UserBookResponseDto.toEntity(userBook.get(0));
     }
 }
