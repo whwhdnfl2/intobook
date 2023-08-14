@@ -1,51 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
-import { styled } from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom, TimerStartTimeAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { css, keyframes } from 'styled-components';
+import { styled } from 'styled-components';
+
 
 const Timer = () => {
   const isConnected = useRecoilValue(BluetoothAtom);
   const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);
   const readingBook = useRecoilValue(ReadingBookAtom);
 
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-
-  let timer;
+  const [timerValue, setTimerValue] = useState({ minutes: 0, seconds: 0 });
+  const [timerStartTime, setTimerStartTime] = useRecoilState(TimerStartTimeAtom);
 
   useEffect(() => {
+    let timer = null;
+
     if (isConnected && isBookmarkOut && readingBook) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (!timerStartTime) {
+        setTimerStartTime(Date.now()); // Timer 시작 시간을 저장
+      }
+
       timer = setInterval(() => {
-        setSeconds(prevSeconds => {
-          if (prevSeconds === 59) {
-            setMinutes(prevMinutes => prevMinutes + 1);
-            return 0;
-          }
-          return prevSeconds + 1;
-        });
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - timerStartTime;
+
+        const minutes = Math.floor(elapsedTime / (1000 * 60));
+        const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+        setTimerValue({ minutes, seconds });
       }, 1000);
     }
 
-    if (!isBookmarkOut || !isConnected) {
-      setMinutes(0);
-      setSeconds(0);
-    }
-
-    return () => clearInterval(timer);
-  }, [isConnected, isBookmarkOut, readingBook]);
-
-  if (!(isConnected && isBookmarkOut && readingBook)) {
-    return null; // 조건이 충족되지 않을 때 렌더링하지 않음
-  }
+    return () => {
+      clearInterval(timer);
+      if (!(isConnected && isBookmarkOut && readingBook)) {
+        setTimerStartTime(null);
+        setTimerValue({ minutes: 0, seconds: 0 });
+      }
+    };
+  }, [isConnected, isBookmarkOut, readingBook, timerStartTime, setTimerStartTime]);
 
   return (
-      <TimerDiv
-      isActive={(isConnected && isBookmarkOut && readingBook)}
-      >
-        <h2>{minutes < 10 ? '0' + minutes : minutes} : {seconds < 10? '0' + seconds : seconds}</h2>
-      </TimerDiv>
+    <div>
+      {isConnected && isBookmarkOut && readingBook && (
+        <TimerDiv isactive={(isConnected && isBookmarkOut && readingBook)}>
+          <h2>
+            {timerValue.minutes < 10 ? '0' + timerValue.minutes : timerValue.minutes} :{' '}
+            {timerValue.seconds < 10 ? '0' + timerValue.seconds : timerValue.seconds}
+          </h2>
+        </TimerDiv>
+      )}
+    </div>
   );
 };
 
@@ -68,11 +74,11 @@ const TimerDiv = styled.div`
   background: linear-gradient(45deg, rgba(255, 167, 90, 0.4), rgba(135, 206, 235, 0.4));
 
   ${props =>
-    props.isActive &&
+    props.isactive &&
     css`
       animation: ${floatAnimation} 2s infinite;
       animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-      box-shadow: 0 0 2x;
+      box-shadow: 0 0 2px;
     `}
 `
 
