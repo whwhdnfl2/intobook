@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 @Slf4j
@@ -140,64 +141,25 @@ public class StatisticsService {
                 .completedAt(findUserBook.getCompletedAt()).build();
     }
 
-    public GetNWeeksReadResponse getNweeksStatistic( int weekCnt, long userPk ) {
+    public GetNWeeksReadResponse getWeeksStatistic( long userPk ) {
         List<History> findHistoryList = historyRepository.findByUserUserPk(userPk);
-        List<History> findNWeekLastestHistoryList = getHistoryBeforeNWeeks( findHistoryList, weekCnt );
 
         // 주차별 갯수를 저장하는 List<int[]> 생성
-        List<int[]> weekCountsList = new ArrayList<>();
+        int[][] weekCountsList = new int[2][7];
 
-        // 주차별 갯수 계산
-        LocalDateTime baseDateTime = findNWeekLastestHistoryList.get(0).getStartTime();
-
-        for (History h : findNWeekLastestHistoryList) {
-            LocalDateTime dateTime = h.getStartTime();
-            LocalDate date = dateTime.toLocalDate();
-
-            boolean dummy = h.getUser() == null ? true : false; // 개수 보정을 위한 더미인지 확인 flag
-            int dayIndex = date.getDayOfWeek().getValue() - 1; // 월요일부터 시작하도록 보정
-            int weekIndex = (int) (baseDateTime.toLocalDate().until(date, ChronoUnit.WEEKS));
-
-            while (weekIndex >= weekCountsList.size()) {
-                weekCountsList.add(new int[7]);
-            }
-
-            if( !dummy ) {
-                weekCountsList.get(weekIndex)[dayIndex]++;
-            }
+        LocalDate today = LocalDate.now();
+        LocalDate lastMonday = (today.minusDays(6)).with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        LocalDate tempDay = lastMonday;
+        for (History history : findHistoryList) {
+            int diff = (int)ChronoUnit.DAYS.between(lastMonday, history.getStartTime().toLocalDate());
+            if (diff < 0 || diff >= 14) continue;
+            weekCountsList[diff/7][diff%7] += history.getReadingTime();
         }
 
         return GetNWeeksReadResponse.builder()
                 .weeks(weekCountsList).build();
     }
 
-    private List<History> getHistoryBeforeNWeeks( List<History> findHistoryList, int weekCnt ) {
-        LocalDate NWeeksAgo = LocalDate.now().minusWeeks( weekCnt - 1 );
-        int weekDay = NWeeksAgo.getDayOfWeek().getValue(); // 1~7까지
-
-        // 기준이 되는 날짜: n주 전 일요일
-        LocalDate NWeeksAgoSunday = NWeeksAgo.minusDays(weekDay);
-
-        List<History> filteredHistoryList = new ArrayList<>();
-        for (History history : findHistoryList) {
-            if ( NWeeksAgoSunday.isBefore( history.getStartTime().toLocalDate()) ) {
-                filteredHistoryList.add(history);
-            }
-        }
-
-        // 날짜 오름차순 정렬
-        filteredHistoryList.sort( (h1, h2) -> h1.getStartTime().compareTo(h2.getStartTime()) );
-
-        // 데이터 개수 적을 때, 개수 보정 dummy data
-        LocalDateTime first = filteredHistoryList.get(0).getStartTime();
-        int before = first.getDayOfWeek().getValue(); // 1 2 3 4 5 6 7
-        for (int i = 0; i < before; i++) {
-            LocalDateTime tmp = first.minusDays(i);
-            filteredHistoryList.add(0, History.builder().startTime(tmp).build());
-        }
-
-        return filteredHistoryList;
-    }
 
     public Long countHistory(Long userPk) {
         return historyRepository.countByUserUserPk(userPk);

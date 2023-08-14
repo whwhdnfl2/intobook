@@ -44,9 +44,9 @@ public class StatisticController {
     @GetMapping("/week")
     @ApiOperation(value = "요일별 독서량 통계 조회",
             notes = "weekCnt는 값을 넣지 않으면 기본으로 2주로 자동설정, 데이터 값이 없으면 있는 만큼만 나타남")
-    public ResponseEntity<GetNWeeksReadResponse> getNweeksStatistic( @RequestParam(required = false, defaultValue = "2") int weekCnt ){
+    public ResponseEntity<GetNWeeksReadResponse> getWeeksStatistic( ){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
-        GetNWeeksReadResponse response = statisticsService.getNweeksStatistic( weekCnt, userPk );
+        GetNWeeksReadResponse response = statisticsService.getWeeksStatistic( userPk );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
