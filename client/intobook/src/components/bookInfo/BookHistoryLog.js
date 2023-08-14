@@ -21,10 +21,21 @@ const BookHistoryLog = ({ userBookId }) => {
       if (res.items.length === 0) {
         setHasMore(false);
       } else {
+        const newLogs = res.items.map((item, index) => {
+          if (index === 0 && page === 0) {
+            return {
+              ...item,
+              isFirst: true, // 첫 페이지의 첫 번째 항목일 경우
+            };
+          }
+          return item;
+        });
         if (page === 0) {
-          setHistoryLogs(res.items); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
+          // setHistoryLogs(res.items); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
+          setHistoryLogs(newLogs); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
         } else {
-          setHistoryLogs((prev) => [...prev, ...res.items]);
+          // setHistoryLogs((prev) => [...prev, ...res.items]);
+          setHistoryLogs((prev) => [...prev, ...newLogs]);
         }
         setPage(prev => prev + 1);
       }

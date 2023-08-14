@@ -49,7 +49,8 @@ const Log = ({ log }) => {
       startTime,
       endTime,
       comment: log?.comment,
-      readingTime: log?.readingTime
+      readingTime: log?.readingTime,
+      isFirst: log?.isFirst ? log.isFirst : false
     });
     setSelectedStartTime({
       hours: st.getHours(),
@@ -82,7 +83,6 @@ const Log = ({ log }) => {
     };
   }, []);
 
-
   const deleteLogHandler = async () => {
     try {
       await deleteBookHistory(log.historyPk);
@@ -95,7 +95,6 @@ const Log = ({ log }) => {
     }
   };
 
-
   return (
     <DropdownContainer>
 
@@ -106,7 +105,7 @@ const Log = ({ log }) => {
               <LogDateTime>{formattedStartTime} ~ {formattedEndTime}</LogDateTime>
               <span>({formattedReadingTime})</span>
             </LogInfoDiv>
-            <MoreHorizIcon onClick={openDropdownHandler} />
+            <MoreHorizIcon onClick={openDropdownHandler} style={{ cursor: 'pointer' }} />
           </LogInfo>
           <LogComment>{comment}</LogComment>
           {isDropdownOpen && (
