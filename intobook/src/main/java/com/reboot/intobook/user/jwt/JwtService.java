@@ -42,7 +42,6 @@ public class JwtService {
      */
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String EMAIL_CLAIM = "email";
     private static final String USERPK_CLAIM = "userPk";
     private static final String BEARER = "Bearer ";
 
@@ -51,7 +50,7 @@ public class JwtService {
     /**
      * AccessToken 생성 메소드
      */
-    public String createAccessToken(String email, Long userPk) {
+    public String createAccessToken(Long userPk) {
         Date now = new Date();
         return JWT.create() // JWT 토큰을 생성하는 빌더 반환
                 .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정 -> AccessToken이므로 AccessToken
@@ -61,7 +60,6 @@ public class JwtService {
                 //추가적으로 식별자나, 이름 등의 정보를 더 추가하셔도 됩니다.
                 //추가하실 경우 .withClaim(클래임 이름, 클래임 값) 으로 설정해주시면 됩니다
 
-                .withClaim(EMAIL_CLAIM, email)
                 .withClaim(USERPK_CLAIM, userPk)
                 .sign(Algorithm.HMAC512(secretKey.getBytes()));
         // HMAC512 알고리즘 사용, application-jwt.yml에서 지정한 secret 키로 암호화
@@ -130,14 +128,14 @@ public class JwtService {
      * 유효하다면 getClaim()으로 이메일 추출
      * 유효하지 않다면 빈 Optional 객체 반환
      */
-    public Optional<String> extractEmail(String accessToken) {
+    public Optional<Long> extractUserPk(String accessToken) {
         try {
             // 토큰 유효성 검사하는 데에 사용할 알고리즘이 있는 JWT verifier builder 반환
             return Optional.ofNullable(JWT.require(Algorithm.HMAC512(secretKey.getBytes()))
                     .build() // 반환된 빌더로 JWT verifier 생성
                     .verify(accessToken) // accessToken을 검증하고 유효하지 않다면 예외 발생
-                    .getClaim(EMAIL_CLAIM) // claim(Emial) 가져오기
-                    .asString());
+                    .getClaim(USERPK_CLAIM) // claim(Emial) 가져오기
+                    .asLong());
         } catch (Exception e) {
             log.error("액세스 토큰이 유효하지 않습니다.");
             return Optional.empty();
@@ -161,8 +159,8 @@ public class JwtService {
     /**
      * RefreshToken DB 저장(업데이트)
      */
-    public void updateRefreshTokenAndFcmToken(String email, String refreshToken, String fcmToken) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public void updateRefreshTokenAndFcmToken(Long userPk, String refreshToken, String fcmToken) {
+        Optional<User> userOptional = userRepository.findByUserPk(userPk);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.updateRefreshToken(refreshToken);

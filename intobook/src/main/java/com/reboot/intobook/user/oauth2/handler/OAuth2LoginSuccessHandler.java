@@ -38,12 +38,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Value("${redirect.url}")
     private String url;
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User, String fcmToken) throws IOException {
-        String accessToken = jwtService.createAccessToken(oAuth2User.getEmail(), oAuth2User.getUserPk());
+        String accessToken = jwtService.createAccessToken(oAuth2User.getUserPk());
         String refreshToken = jwtService.createRefreshToken();
         log.info("리다이렉트 " +url);
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
         response.sendRedirect(url + "?accessToken=" + "Bearer " + accessToken + "&refreshToken=" + "Bearer " + refreshToken);
-        jwtService.updateRefreshTokenAndFcmToken(oAuth2User.getEmail(), refreshToken, fcmToken);
+        jwtService.updateRefreshTokenAndFcmToken(oAuth2User.getUserPk(), refreshToken, fcmToken);
     }
 }
