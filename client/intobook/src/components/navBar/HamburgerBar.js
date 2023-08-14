@@ -94,7 +94,7 @@ const HamburgerBar = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                 >
-                    <DropdownItem onClick={handleToggleModal}> {/* 정보수정 클릭 시 모달 열기 */}
+                    <DropdownItem onClick={handleToggleModal}>
                         <FontAwesomeIcon icon={faCog} size="lg" />
                         <span> 정보수정</span>
                     </DropdownItem>
@@ -104,7 +104,7 @@ const HamburgerBar = () => {
                     </DropdownItem>
                 </DropdownContent>
             )}
-            {isModalOpen && <UpdateUsername closeModal={handleToggleModal} />} {/* 모달 열림 상태일 때 모달 컴포넌트 렌더링 */}
+            {isModalOpen && <UpdateUsername closeModal={handleToggleModal} />}
         </DropdownContainer>
     );
 };
