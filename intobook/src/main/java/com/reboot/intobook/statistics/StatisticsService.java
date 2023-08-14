@@ -49,7 +49,7 @@ public class StatisticsService {
         // totalReadTime 계산
         int totalReadTime = 0;
         for( History h: historyList ){
-            totalReadTime += (int) h.getReadingTime();
+            totalReadTime += h.getReadingTime();
         }
 
         // pagePerHour 계산
@@ -113,16 +113,17 @@ public class StatisticsService {
         int userBookPages = findUserBook.getBook().getPage();
 
         long maxReadingTime = 0;
-        long totalReadingTime = 1;
+        long totalReadingTime = 0;
         long averageReadingTime = 0;
 
         for( History history: findHistoryList){
-            totalReadingTime += (int) history.getReadingTime();
+            totalReadingTime += history.getReadingTime();
             maxReadingTime = Math.max(maxReadingTime, history.getReadingTime());
         }
         averageReadingTime = totalReadingTime / findHistoryList.size();
 
-        double averageSpeed = userBookReadPages / totalReadingTime;
+        double averageSpeed = 0;
+        if (totalReadingTime > 0) averageSpeed = userBookReadPages / totalReadingTime;
 
         long remainingTime = (long) (( userBookPages - userBookReadPages ) / averageSpeed);
 
