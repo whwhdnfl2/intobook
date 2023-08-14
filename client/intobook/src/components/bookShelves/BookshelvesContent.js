@@ -35,7 +35,7 @@ const BookshelvesContent = ({ selectedTab }) => {
           <option value="startedAt">등록순</option>
           <option value="author">저자순</option>
           <option value="title">제목순</option>
-          <option value="nowPage">진행률순</option>
+          <option value="progress">진행률순</option>
         </SelectBox>
       </StyledFormControl>
       </div>
