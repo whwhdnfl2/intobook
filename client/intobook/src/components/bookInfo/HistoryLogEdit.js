@@ -4,6 +4,7 @@ import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from
 import { editBookHistory } from '../../api/historyApi';
 import { styled } from 'styled-components';
 import DateTime from './DateTime';
+import { motion } from "framer-motion";
 import { formatDate, formatTimeInDate } from './../../utils/dateTimeUtils';
 
 const HistoryLogEdit = () => {
@@ -89,16 +90,38 @@ const HistoryLogEdit = () => {
       <Title>히스토리 수정</Title>
       <Content>{startDate}</Content>
       <TimeContainer>
-        <TimeDiv isfirst={isFirst.toString()}>
+        <TimeDiv
+          isfirst={isFirst.toString()}
+          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}
+          whileTap={{
+            scale: 1.05,
+            background: 'var(--bg-gray)',
+            transition: { duration: 0.05, ease: 'easeInOut' } // 여기에서 속도 조절
+          }}
+          initial={{ scale: 1, background: 'var(--white)' }}
+          animate={{ scale: 1, background: 'var(--white)' }}
+          exit={{ scale: 1, background: 'var(--white)' }}
+        >
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path d="M0 0H12V6L8 10L12 14V20H0V14L4 10L0 6V0ZM10 14.5L6 10.5L2 14.5V18H10V14.5ZM6 9.5L10 5.5V2H2V5.5L6 9.5ZM4 4H8V4.75L6 6.75L4 4.75V4Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}>
+          <ContentDiv>
             <SubTitle>시작 시간</SubTitle>
             <Content>{selectedStartTime.hours}:{selectedStartTime.minutes}</Content>
           </ContentDiv>
         </TimeDiv>
-        <TimeDiv isfirst={isFirst.toString()}>
+        <TimeDiv
+          isfirst={isFirst.toString()}
+          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}
+          whileTap={{
+            scale: 1.05,
+            background: 'var(--bg-gray)',
+            transition: { duration: 0.05, ease: 'easeInOut' } // 여기에서 속도 조절
+          }}
+          initial={{ scale: 1, background: 'var(--white)' }}
+          animate={{ scale: 1, background: 'var(--white)' }}
+          exit={{ scale: 1, background: 'var(--white)' }}
+        >
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 20H0V14L4 10L0 6V0H12V6L8 10L12 14M2 5.5L6 9.5L10 5.5V2H2M6 10.5L2 14.5V18H10V14.5M8 16H4V15.2L6 13.2L8 15.2V16Z" fill="#C2D7FF" />
           </svg>
@@ -160,7 +183,7 @@ const TimeContainer = styled.div`
   justify-content: space-between;
 `;
 
-const TimeDiv = styled.div`
+const TimeDiv = styled(motion.div)`
   width: 125px;
   height: 60px;
   flex-shrink: 0;
@@ -170,7 +193,7 @@ const TimeDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px 0;
-  cursor: ${props => props.isfirst === 'true' ? 'pointer': 'default'};
+  cursor: ${props => props.isfirst === 'true' ? 'pointer' : 'default'};
   `;
 
 const ContentDiv = styled.div`
