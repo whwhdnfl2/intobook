@@ -25,8 +25,9 @@ public class UserBookResponseDto {
     private LocalDateTime completedAt;
     private UserBookStatus status;
     private int page;
+    private int progress;
     @Builder
-    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt, UserBookStatus status, int page) {
+    public UserBookResponseDto(Long userBookPk, String title, String coverImage, String author, String publisher, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt, UserBookStatus status, int page, int progress) {
         this.userBookPk = userBookPk;
         this.title = title;
         this.coverImage = coverImage;
@@ -37,6 +38,7 @@ public class UserBookResponseDto {
         this.completedAt = completedAt;
         this.status = status;
         this.page = page;
+        this.progress = progress;
     }
 
     public static UserBookResponseDto toEntity(UserBook userBook) {
@@ -51,6 +53,7 @@ public class UserBookResponseDto {
                 .completedAt(userBook.getCompletedAt())
                 .status(userBook.getStatus())
                 .page(userBook.getBook().getPage())
+                .progress(userBook.getProgress())
                 .build();
     }
 }

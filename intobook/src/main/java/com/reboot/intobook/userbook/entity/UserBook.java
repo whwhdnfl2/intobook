@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -50,4 +51,16 @@ public class UserBook {
     @Enumerated(EnumType.STRING)
     @NotNull
     private UserBookStatus status;
+
+    @ColumnDefault("0")
+    private int progress;
+
+    @PreUpdate
+    private void updateProgress() {
+        if (this.book != null && this.book.getPage() != 0) {
+            this.progress = (this.nowPage * 100) / this.book.getPage();
+        }
+        this.progress = Math.max(0, this.progress);
+        this.progress = Math.min(100, this.progress);
+    }
 }

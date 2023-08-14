@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/userbook")
@@ -108,6 +110,17 @@ public class UserBookController {
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
         }else {
             return new ResponseEntity<String>(FAIL, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{userBookPk}")
+    @ApiOperation(value = "책의 페이지, 읽은 시간 변경하는 메소드")
+    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk, @RequestParam(required = false) int nowPage, @RequestParam(required = false) LocalDateTime completedAt) {
+        try {
+            userBookService.updateUserBook(userBookPk, nowPage, completedAt);
+            return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

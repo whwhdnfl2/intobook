@@ -107,8 +107,12 @@ public class UserBookService {
 
     @Transactional
     public void updateUserBook(Long userBookPk, int nowPage, LocalDateTime completedAt) {
-        UserBook userBook = userBookRepository.findById(userBookPk).orElseThrow(() -> new IllegalArgumentException());
-        if (nowPage != 0) userBook.setNowPage(nowPage);
+        UserBook userBook = userBookRepository.findById(userBookPk).orElseThrow(() -> new IllegalArgumentException("wrong userBookPk"));
+        System.out.println(nowPage + " : " +userBook.getBook().getPage());
+        if (nowPage != 0) {
+            if (nowPage < 0 || nowPage > userBook.getBook().getPage()) throw new IllegalArgumentException("wrong page");
+            userBook.setNowPage(nowPage);
+        }
         if (completedAt != null) userBook.setCompletedAt(completedAt);
     }
 
