@@ -18,7 +18,6 @@ const Bluetooth = () => {
   let [Bcharacteristic, setBcharacteristic] = useState(null);
 
   const BluetoothConnect = () => {
-    
     //블루투스 연결상태가 false일 때, 연결
     if (!isBluetoothConnected) {
         setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
