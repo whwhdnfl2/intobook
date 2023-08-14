@@ -25,9 +25,14 @@ export const BookmarkStatusAtom = atom({
     effects_UNSTABLE: [persistBookmarkStatus]
 });
 
-
 // 책갈피와 연동 중인 책
 export const ReadingBookAtom = atom({
     key: 'ReadingBookAtom',
     default: {}
+});
+
+// 타이머 시작 시간
+export const TimerStartTimeAtom = atom({
+    key: 'TimerStartTimeAtom',
+    default: null
 });

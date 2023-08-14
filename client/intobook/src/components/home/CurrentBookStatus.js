@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './../common/Modal';
-import { transfer } from '../../assets/img/home'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BookmarkStatusAtom, BluetoothAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
-import { Box } from '@mui/material';
-import { styled } from 'styled-components';
 import { formatTimeDifference } from '../../utils/dateTimeUtils';
 import { BasicButton } from '../common/BasicButton';
 import { ProgressBar } from '../common';
 import { getReadingBookInfo } from '../../api/userbookApi';
 import SearchBottomSheet from '../bookSearch/SearchBottomSheet';
+import { styled } from 'styled-components';
 
 const CurrentBookStatus = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -42,7 +40,6 @@ const CurrentBookStatus = () => {
       setIsOpen(true);
     }
   };
-
   const closeBookInfoModal = () => {
     setOpenBookInfoModal(false);
   };
@@ -52,13 +49,21 @@ const CurrentBookStatus = () => {
   };
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
+      setTimeDifference(lastLog);
+    }, 1000); // 1초마다 업데이트
+
+    return () => clearInterval(interval);
+  }, [nowReadingBook?.completedAt]);
+
+  useEffect(() => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
-      if (detailInfo !== 500){ setNowReadingBook(detailInfo);}
-      else { setNowReadingBook(null);}
-      // 진행률 95% 이상일 때 모달 띄우기
+      setNowReadingBook(detailInfo);
+      // 진행률 95% 이상일 때 모달 띄우기(nowPage가 0이면 확인 불가)
       if (detailInfo?.nowPage && detailInfo?.page) {
-        const nowPage = detailInfo.nowPage + 30;
+        const nowPage = detailInfo.nowPage + 100;
         const progress = Math.floor((nowPage / detailInfo.page) * 100);
 
         if (progress >= 95) {
@@ -76,68 +81,61 @@ const CurrentBookStatus = () => {
     };
     getReadingBook();
 
-
-    const interval = setInterval(() => {
-      const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
-      setTimeDifference(lastLog);
-    }, 1000); // 1초마다 업데이트
-
-    return () => clearInterval(interval);
-  }, [nowReadingBook?.completedAt]);
+  }, [setNowReadingBook]);
 
   return (
     <>
-        {nowReadingBook  && (
-          <>
-            <Content>{title}</Content>
-            {(isConnected && isBookmarkOut) && 
+      {nowReadingBook && (
+        <>
+          <Content>{title}</Content>
+          {(isConnected && isBookmarkOut) &&
             <>
               <Content>새로운 히스토리를 만들어가는 중!</Content>
             </>
-            }
-            {(!isConnected || (isConnected && !isBookmarkOut)) &&
-              <>
-                {nowReadingBook?.completedAt ? (
-                  <div>
-                    <Content>마지막 히스토리로 부터</Content>
-                    <Content style={{ marginBottom: '5px' }}>
-                      <Span>{lastLog} </Span> 
-                      지났습니다.
-                    </Content>
-                    <div
-                      style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
-                      onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
-                    >
-                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
-                    </div>
+          }
+          {(!isConnected || (isConnected && !isBookmarkOut)) &&
+            <>
+              {nowReadingBook?.completedAt ? (
+                <div>
+                  <Content>마지막 히스토리로 부터</Content>
+                  <Content style={{ marginBottom: '5px' }}>
+                    <Span>{lastLog} </Span>
+                    지났습니다.
+                  </Content>
+                  <div
+                    style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
+                    onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
+                  >
+                    {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
                   </div>
-                ) : (
-                  <>
-                    <Content>첫 히스토리를 쌓으러 가보세요!</Content>
-                    <div
-                      style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
-                      onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
-                    >
-                      {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
-                    </div>
-                  </>
-                )}
-                <ImgContainer onClick={() => { setOpenModal(true) }} >
-                  <BasicButton content={"다른 책 등록하기"}/>
-                </ImgContainer>
-              </>
-            }
-          </>
-        )}
-        {!nowReadingBook && (
-          <div>
-            <Content style={{ color: 'var(--main-point-color)' }}>지금 읽고 있는 책이 없네요!</Content>
-            <Content style={{ color: 'var(--main-point-color)' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
-            <ImgContainer onClick={() => { setOpenModal(true) }} >
-                  <BasicButton content={"책 찾으러 가기"}/>
-                </ImgContainer>
-          </div>
-        )}
+                </div>
+              ) : (
+                <>
+                  <Content>첫 히스토리를 쌓으러 가보세요!</Content>
+                  <div
+                    style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
+                    onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
+                  >
+                    {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
+                  </div>
+                </>
+              )}
+              <ImgContainer onClick={() => { setOpenModal(true) }} >
+                <BasicButton content={"다른 책 등록하기"} />
+              </ImgContainer>
+            </>
+          }
+        </>
+      )}
+      {!nowReadingBook && (
+        <div>
+          <Content style={{ color: 'var(--main-point-color)' }}>지금 읽고 있는 책이 없네요!</Content>
+          <Content style={{ color: 'var(--main-point-color)' }}>북갈피에 읽을 책을 등록해보세요 :)</Content>
+          <ImgContainer onClick={() => { setOpenModal(true) }} >
+            <BasicButton content={"책 찾으러 가기"} />
+          </ImgContainer>
+        </div>
+      )}
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
       <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
@@ -158,8 +156,8 @@ const Content = styled.div`
   font-size: var(--font-h6);
   margin: 5px 0 8px 0;
   `;
-  
-  const Span = styled.span`
+
+const Span = styled.span`
   color: var(--main-color);
   font-size: 15px;
 `;
