@@ -11,8 +11,8 @@ const Bluetooth = () => {
   //블루투스 연결상태 상태 및 책갈피 상태 가져오기(둘 다 초기상태 false)
   const [isBluetoothConnected, setIsBluetoothConnected] = useRecoilState(BluetoothAtom);
   const [bookmark, setBookmark] = useRecoilState(BookmarkStatusAtom);
-  const [nowBook,setNowBook] = useRecoilState(ReadingBookAtom)
-  const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom)
+  const [nowBook,setNowBook] = useRecoilState(ReadingBookAtom);
+  const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom);
 
   let [bluetoothDevice, setBluetoothDevice] = useState(null);
   let [Bcharacteristic, setBcharacteristic] = useState(null);
@@ -24,8 +24,8 @@ const Bluetooth = () => {
         setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
 
         navigator.bluetooth.requestDevice({
-            // filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
-            acceptAllDevices: true
+            filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
+            // acceptAllDevices: true
         })
             .then(device => {
                 // Human-readable name of the device.
