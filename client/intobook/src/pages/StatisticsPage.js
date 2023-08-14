@@ -68,8 +68,6 @@ const StatisticsPage = () => {
     return res;
   };
 
-  console.log(weeklyStatisticsValue)
-
   // 주간 통계 데이터
   const lastWeek = weeklyStatisticsValue?.weeks?.[0]
   const thisWeek = weeklyStatisticsValue?.weeks?.[1]
