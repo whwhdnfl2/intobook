@@ -6,11 +6,11 @@ const MyResponsiveBar = ({ data }) => (
   <ResponsiveBar
     data={data}
     keys={[
-      'lastweek',
-      'thisweek'
+      '지난주',
+      '이번주'
     ]}
     indexBy="day"
-    margin={{ top: 24, right: 0, bottom: 72, left: 60 }}
+    margin={{ top: 24, right: 84, bottom: 72, left: 24 }}
     padding={0.2}
     // width={320}
     height={300}
@@ -19,7 +19,7 @@ const MyResponsiveBar = ({ data }) => (
     groupMode="grouped"
     valueScale={{ type: 'linear' }}
     indexScale={{ type: 'band', round: true }}
-    colors={{ scheme: 'pastel1' }}
+    colors={{ scheme: 'paired' }}
     defs={[
       {
         id: 'lines',
@@ -34,13 +34,13 @@ const MyResponsiveBar = ({ data }) => (
     fill={[
       {
         match: {
-          id: 'lastweek'
+          id: '지난주'
         },
         id: 'lines'
       },
       {
         match: {
-          id: 'thisweek'
+          id: '이번주'
         },
         id: 'lines'
       }
@@ -56,12 +56,12 @@ const MyResponsiveBar = ({ data }) => (
       ]
     }}
     axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: 0,
-        legend: '요일',
-        legendPosition: 'middle',
-        legendOffset: 32
+      tickSize: 5,
+      tickPadding: 5,
+      tickRotation: 0,
+      legend: '요일',
+      legendPosition: 'middle',
+      legendOffset: 32
     }}
     axisLeft={null}
     // axisBottom={null}
@@ -89,7 +89,7 @@ const MyResponsiveBar = ({ data }) => (
     legends={[
       {
         dataFrom: 'keys',
-        anchor: 'top-right',
+        anchor: 'right',
         direction: 'column',
         justify: false,
         translateX: 120,
@@ -112,7 +112,7 @@ const MyResponsiveBar = ({ data }) => (
     ]}
     role="application"
     ariaLabel="Nivo bar chart demo"
-    barAriaLabel={e => e.id + ": " + e.formattedValue + " in country: " + e.indexValue}
+    barAriaLabel={e => e.id + ": " + e.formattedValue + " in days: " + e.indexValue}
   />
 )
 

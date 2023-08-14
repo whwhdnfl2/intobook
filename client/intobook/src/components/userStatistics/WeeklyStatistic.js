@@ -12,8 +12,8 @@ const WeeklyStatistic = (weeklyData) => {
     for (let i = 0; i < day.length; i++) {
       const item = {
         day: day[i],
-        lastweek: lastWeek[i],
-        thisweek: thisWeek[i]
+        지난주: lastWeek[i],
+        이번주: thisWeek[i]
       };
       data.push(item);
     };
