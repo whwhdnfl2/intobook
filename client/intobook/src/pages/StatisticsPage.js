@@ -69,8 +69,8 @@ const StatisticsPage = () => {
   };
 
   // 주간 통계 데이터
-  const thisWeek = weeklyStatisticsValue?.weeks?.[0]
-  const lastWeek = weeklyStatisticsValue?.weeks?.[1]
+  const lastWeek = weeklyStatisticsValue?.weeks?.[0]
+  const thisWeek = weeklyStatisticsValue?.weeks?.[1]
 
   // 평균 통계 데이터
   const pagePerHour = userStatisticsValue?.pagePerHour;
