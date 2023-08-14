@@ -98,12 +98,20 @@ public class HistoryService {
     @Transactional
     public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( Long historyPk, String comment, LocalDateTime startTime, LocalDateTime endTime) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
-        LocalDateTime tempStartTime = startTime != null ? startTime : history.getStartTime();
-        LocalDateTime tempEndTime = endTime != null ? endTime : history.getEndTime();
-        if (tempStartTime.compareTo(tempEndTime) > 0) throw new IllegalArgumentException("잘못된 시간 입력입니다");
+        Long recentHistoryPk = historyRepository.findTop1ByUserOrderByHistoryPkDesc((history.getUser())).getHistoryPk();
+        if (historyPk == recentHistoryPk) {
+            LocalDateTime tempStartTime = startTime != null ? startTime : history.getStartTime();
+            LocalDateTime tempEndTime = endTime != null ? endTime : history.getEndTime();
+            if (tempStartTime.compareTo(tempEndTime) > 0) throw new IllegalArgumentException("잘못된 시간 입력입니다");
+            if (endTime != null && !endTime.equals(history.getEndTime())) {
+                UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
+                userBook.setCompletedAt(endTime);
+            }
+        }else {
+            startTime = null;
+            endTime = null;
+        }
         history.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(comment, startTime, endTime);
-        UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
-        if (endTime != null) userBook.setCompletedAt(endTime);
     }
 
     @Transactional
@@ -125,6 +133,4 @@ public class HistoryService {
         History findHistory = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
         historyRepository.delete(findHistory);
     }
-
-
 }
