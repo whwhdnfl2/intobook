@@ -11,7 +11,7 @@ const RecentStatistic = ({ characterData }) => {
   const mostDay = characterData?.mostActiveWeekDay;
   const mostTime = characterData?.mostActiveTime;
   const mostGenre = characterData?.favoriteGenre;
-
+  
   return (
     <React.Fragment>
       <CharacterContainer>
