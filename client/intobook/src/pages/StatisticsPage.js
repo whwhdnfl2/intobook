@@ -68,9 +68,11 @@ const StatisticsPage = () => {
     return res;
   };
 
+  console.log(weeklyStatisticsValue)
+
   // 주간 통계 데이터
-  const thisWeek = weeklyStatisticsValue?.weeks?.[0]
-  const lastWeek = weeklyStatisticsValue?.weeks?.[1]
+  const lastWeek = weeklyStatisticsValue?.weeks?.[0]
+  const thisWeek = weeklyStatisticsValue?.weeks?.[1]
 
   // 평균 통계 데이터
   const pagePerHour = userStatisticsValue?.pagePerHour;
@@ -84,9 +86,9 @@ const StatisticsPage = () => {
     >
       <LayoutSecond>
         <StyleContainer>
-          {<p style={{color: 'white'}}>{username} 님의 독서 유형은..</p>}
+          {<p style={{ color: 'white' }}>{username} 님의 독서 유형은..</p>}
           <RecentStatistic characterData={characterValue} />
-          <TotalStatistic val={userStatisticsValue}  />
+          <TotalStatistic val={userStatisticsValue} />
           <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
           <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
         </StyleContainer>
