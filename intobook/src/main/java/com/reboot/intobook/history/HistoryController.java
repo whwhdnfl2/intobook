@@ -91,12 +91,18 @@ public class HistoryController {
 
     @PatchMapping("/{historyPk}")
     @ApiOperation(value="comment 수정하는 api")
-    public ResponseEntity<GetHistoryListResponse> updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(@PathVariable("historyPk") long historyPk, @RequestParam("comment") String comment, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("startTime") LocalDateTime startTime, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam("endTime") LocalDateTime endTime ){
+    public ResponseEntity<GetHistoryListResponse> updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(
+            @PathVariable("historyPk") long historyPk,
+            @RequestParam("comment") String comment,
+            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam(value = "startTime", required = false) LocalDateTime startTime,
+            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam(value = "endTime", required = false) LocalDateTime endTime ){
         try{
             historyService.updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime(historyPk, comment, startTime, endTime);
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch (NoSuchElementException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (IllegalArgumentException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

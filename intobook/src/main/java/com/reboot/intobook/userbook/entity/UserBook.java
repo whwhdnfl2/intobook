@@ -50,8 +50,4 @@ public class UserBook {
     @Enumerated(EnumType.STRING)
     @NotNull
     private UserBookStatus status;
-
-    public void updateCompleteAt(LocalDateTime completedAt){
-        this.completedAt = completedAt;
-    }
 }

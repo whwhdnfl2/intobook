@@ -32,10 +32,13 @@ public class StatisticController {
 
     @GetMapping("/userBook/{userBookPk}")
     @ApiOperation(value = "특정 유저책의 통계 조회")
-    public ResponseEntity<GetUserBookStatisticResponse> getUserBookStatistic(@PathVariable Long userBookPk ){
+    public ResponseEntity<?> getUserBookStatistic(@PathVariable Long userBookPk ){
         GetUserBookStatisticResponse response = statisticsService.getUserBookStatistics(userBookPk);
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        if (response != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("기록이 없습니다");
+        }
     }
 
     @GetMapping("/week")
@@ -50,8 +53,11 @@ public class StatisticController {
 
     @GetMapping("/attention")
     @ApiOperation(value = "책에 집중하는 정도에 대한 통계 조회")
-    public ResponseEntity<GetAttentionStatisticsResponse> getAttentionStatistics(){
+    public ResponseEntity<?> getAttentionStatistics(){
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        if (statisticsService.countHistory(userPk) < 10) {
+            return new ResponseEntity<String>("히스토리 기록 부족", HttpStatus.NO_CONTENT);
+        }
         GetAttentionStatisticsResponse response = statisticsService.getAttentionStatistics( userPk );
 
         return ResponseEntity.status(HttpStatus.OK).body(response);

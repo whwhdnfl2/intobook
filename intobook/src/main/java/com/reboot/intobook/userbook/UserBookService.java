@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +24,12 @@ public class UserBookService {
     private final UserBookRepository userBookRepository;
 
     public void nowReadingToReading (User user) {
-        UserBook preReadingBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        List<UserBook> preReadingBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (preReadingBook == null) return;
-        preReadingBook.setStatus(UserBookStatus.READING);
-        userBookRepository.save(preReadingBook);
+        for (UserBook userBook : preReadingBook) {
+            userBook.setStatus(UserBookStatus.READING);
+            userBookRepository.save(userBook);
+        }
     }
 
     @Transactional
@@ -44,6 +47,7 @@ public class UserBookService {
         return userBookRepository.save(userBook) != null;
     }
 
+    @Transactional
     public Page<UserBookListResponseDto> findUserBookList(User user, UserBookStatus status, UserBookOrderBy orderBy, int page){
         Sort sort;
         if (orderBy == UserBookOrderBy.title) {
@@ -58,9 +62,11 @@ public class UserBookService {
 
         Page<UserBook> userBookList = null;
         if (status == null) {
-            userBookList = userBookRepository.findByUserAndStatusNotAndIsDeletedFalse(user, UserBookStatus.NOWREADING, pageRequest);
+            userBookList = userBookRepository.findByUserAndIsDeletedFalse(user, pageRequest);
+        }else if ( status == UserBookStatus.READING ){
+            userBookList =  userBookRepository.findByUserAndStatusIn(user, new UserBookStatus[] {status, UserBookStatus.NOWREADING}, pageRequest);
         }else {
-            userBookList =  userBookRepository.findByUserAndStatus(user, status, pageRequest);
+            userBookList =  userBookRepository.findByUserAndStatusIn(user, new UserBookStatus[] {status}, pageRequest);
         }
         return userBookList.map(userBook -> UserBookListResponseDto.toEntity(userBook));
     }
@@ -100,18 +106,15 @@ public class UserBookService {
     }
 
     @Transactional
-    public boolean updateUserBook(Long userBookPk, int nowPage, LocalDateTime startedAt, LocalDateTime completedAt) {
-        UserBook userBook = userBookRepository.findById(userBookPk).orElse(null);
-        if (userBook == null) return false;
-        userBook.setNowPage(nowPage);
-        userBook.setStartedAt(startedAt);
-        userBook.setCompletedAt(completedAt);
-        return userBookRepository.save(userBook) != null;
+    public void updateUserBook(Long userBookPk, int nowPage, LocalDateTime completedAt) {
+        UserBook userBook = userBookRepository.findById(userBookPk).orElseThrow(() -> new IllegalArgumentException());
+        if (nowPage != 0) userBook.setNowPage(nowPage);
+        if (completedAt != null) userBook.setCompletedAt(completedAt);
     }
 
     public UserBookResponseDto findNowReadingUserBook(User user) {
-        UserBook userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
+        List<UserBook> userBook = userBookRepository.findAllByUserAndStatus(user, UserBookStatus.NOWREADING);
         if (userBook == null) return null;
-        return UserBookResponseDto.toEntity(userBook);
+        return UserBookResponseDto.toEntity(userBook.get(0));
     }
 }

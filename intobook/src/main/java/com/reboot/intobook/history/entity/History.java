@@ -51,9 +51,9 @@ public class History {
 
     public void updateHistoryCommentAndStartTimeAndEndTimeAndReadingTime( String comment, LocalDateTime startTime, LocalDateTime endTime){
         this.comment = comment;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.readingTime = ChronoUnit.MINUTES.between(startTime, endTime);
+        if (startTime != null) this.startTime = startTime;
+        if (endTime != null) this.endTime = endTime;
+        if (this.endTime != null && (startTime != null || endTime != null)) this.readingTime = ChronoUnit.MINUTES.between(this.startTime, this.endTime);
     }
 
     public void updateEndTimeAndReadingTime(){
