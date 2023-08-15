@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import BluetoothComponent from '../components/home/BluetoothComponent';
 import ConnectComponent from '../components/home/ConnectComponent';
 import ReadingBookComponent from '../components/home/ReadingBookComponent';
+import fetchFCMtoken from '../utils/bluetooth/fetchFCMtoken';
 
 const HomePage = () => {
 
@@ -13,6 +14,7 @@ const HomePage = () => {
 
   useEffect(()=>{
     navigate('/')
+    fetchFCMtoken();
   }, [])
 
   const slideInVariants = {

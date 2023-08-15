@@ -106,8 +106,8 @@ const HandleNotifications = async (event) => {
 };
 
 const StyledBLE = styled.div`
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-color:${({ isActive }) => isActive ? '#5A7FFF' : '#827796'};
     border-radius:30px;
     color: white;

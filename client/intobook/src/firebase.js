@@ -1,6 +1,7 @@
 // firebase를 초기화하고 firebase 앱 객체를 만듦
 import {initializeApp} from 'firebase/app';
 import {getMessaging} from 'firebase/messaging';
+import { getAnalytics } from "firebase/analytics";
 
 //firebase 구성객체
 const firebaseConfig = {
@@ -15,5 +16,6 @@ const firebaseConfig = {
 
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
 
