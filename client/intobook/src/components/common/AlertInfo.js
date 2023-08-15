@@ -1,15 +1,15 @@
 import React from 'react';
 import { Snackbar, Alert, Slide } from '@mui/material'
 
-const AlertInfo = ({ text, openAlert, setOpenAlert }) => {
-  console.log('왜 안열리지')
+const AlertInfo = ({ text, openAlert, setOpenAlert, closeAlert }) => {
 
-  const closeAlert = (event, reason) => {
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
     setOpenAlert(false);
+    closeAlert()
   };
 
   function TransitionUp(props) {
@@ -20,7 +20,7 @@ const AlertInfo = ({ text, openAlert, setOpenAlert }) => {
     <div>
       <Snackbar TransitionComponent={TransitionUp} open={openAlert}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        autoHideDuration={2000} onClose={closeAlert}
+        autoHideDuration={2000} onClose={handleClose}
       >
         <Alert severity="success"
           sx={{

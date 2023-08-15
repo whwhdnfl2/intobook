@@ -29,6 +29,8 @@ const DateTime = ({ onSave, targetType }) => {
     }
   }, [selectedStartTime.hours, selectedStartTime.minutes, selectedEndTime.hours, selectedEndTime.minutes, targetType, setTargetTime])
 
+  console.log(targetType, 11123)
+
   const saveHandler = () => {
     if (targetType === 'start') {
       setSelectedStartTime({

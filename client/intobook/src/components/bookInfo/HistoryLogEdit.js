@@ -3,10 +3,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { editBookHistory } from '../../api/historyApi';
 import { AlertInfo } from './../common';
-import { styled } from 'styled-components';
 import DateTime from './DateTime';
 import { motion } from "framer-motion";
 import { formatDate, formatTimeInDate } from './../../utils/dateTimeUtils';
+import { UpdateSuccessAtom } from '../../recoil/history/historyAtom';
+import { styled } from 'styled-components';
 
 const HistoryLogEdit = () => {
   const selectedLog = useRecoilValue(LogAtom);
@@ -14,9 +15,11 @@ const HistoryLogEdit = () => {
   const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
   const [isOpenTimeEdit, setIsOpenTimeEdit] = useState(false);
   const [editTarget, setEditTarget] = useState('start')
-  const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
+  const setUpdateSuccess = useSetRecoilState(UpdateSuccessAtom);
+  const [openAlert, setOpenAlert] = useState(false);
+
 
   const startDate = formatDate(selectedLog.startTime, 'dateLetter');
   const endDate = formatDate(selectedLog.endTime, 'dateLetter');
@@ -60,7 +63,6 @@ const HistoryLogEdit = () => {
   const saveStart = originStartTime === saveStartTime ? removeMillisecond(selectedLog.startTime) : `${saveStartDate}T${saveStartTime}:00`;
   const saveEnd = originEndTime === saveEndTime ? removeMillisecond(selectedLog.endTime) : `${saveEndDate}T${saveEndTime}:00`;
 
-
   // 로그 수정하기
   const editLogHandler = async () => {
     const selectedStartTimeInMinutes = startHour * 60 + startMinute;
@@ -76,12 +78,12 @@ const HistoryLogEdit = () => {
       } catch (err) {
         console.error(err);
       } finally {
-        setOpenUpdateAlert(true);
         setIsOpenLogEdit(false);
-        console.log('수정완')
+        setUpdateSuccess(true);
       }
     } else {
-      alert('시간을 확인하세요')
+      // alert('시간을 확인하세요')
+      setOpenAlert(true);
     }
   };
 
@@ -90,8 +92,6 @@ const HistoryLogEdit = () => {
   };
 
   return (
-    <>
-
     <LogEditContainer>
       <Title>히스토리 수정</Title>
       <Content>{startDate}</Content>
@@ -118,7 +118,7 @@ const HistoryLogEdit = () => {
         </TimeDiv>
         <TimeDiv
           isfirst={isFirst.toString()}
-          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}
+          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('end') } : null}
           whileTap={{
             scale: 1.05,
             background: 'var(--bg-gray)',
@@ -131,7 +131,7 @@ const HistoryLogEdit = () => {
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 20H0V14L4 10L0 6V0H12V6L8 10L12 14M2 5.5L6 9.5L10 5.5V2H2M6 10.5L2 14.5V18H10V14.5M8 16H4V15.2L6 13.2L8 15.2V16Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}>
+          <ContentDiv onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('end') } : null}>
             <SubTitle>마친 시간</SubTitle>
             <Content>{selectedEndTime.hours}:{selectedEndTime.minutes}</Content>
           </ContentDiv>
@@ -153,13 +153,12 @@ const HistoryLogEdit = () => {
           </div>
         </div>
       )}
+      {openAlert &&
+        <AlertInfo text={'시간을 다시 설정해주세요'} openAlert={openAlert}
+          setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)}
+        />
+      }
     </LogEditContainer>
-    {openUpdateAlert &&
-      <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
-        setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)}
-      />
-    }
-    </>
   );
 };
 
