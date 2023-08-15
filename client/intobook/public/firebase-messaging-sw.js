@@ -8,7 +8,7 @@ self.addEventListener("activate", function (e) {
 });
 
 self.addEventListener("push", function (e) {
-    console.log("push!!!: ", e.data.json());
+    // console.log("push하면 오는 데이터: ", e.data.json());
     if (!e.data.json()) return;
 
     const resultData = e.data.json().data;
