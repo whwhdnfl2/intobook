@@ -27,7 +27,7 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px' }) => {
 };
 
 const DialogContents = styled(DialogContent)`
-  // padding-right: 17px;
+  
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;

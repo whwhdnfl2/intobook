@@ -17,43 +17,44 @@ const RecentStatistic = ({ characterData }) => {
     <>
       <CharacterContainer>
         {/* <BookCharacter val={[attention, multiRead, burning]} /> */}
-        <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/>
+        {/* <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/> */}
+        <CharacterStatistic con1={true} con2={false} con3={false}/>
         <TextContainer>
           {attention >= 5 ? (
             <>
             <Text style={{}}>
-              # 평균 독서시간 <strong>30분 이상</strong> <br />
+            <strong>여유</strong>를 즐길 줄 아는 독서가
             </Text>
             <SmallText>
-              여유를 즐길 줄 아는 독서가
+              # 평균 독서시간 30분 이상 <br />
             </SmallText>
             </>
           ) : (
             <>
             <Text style={{}}>
-            # 바쁘다 바빠 갓생 사는 독서가 <br/>
+            # 바쁘다 바빠 <strong>갓생</strong> 독서가 <br/>
             </Text>
             <SmallText>
-              평균 독서시간 <strong>30분 미만</strong>
+              평균 독서시간 30분 미만
             </SmallText>
             </>
           )}
           {multiRead ? (
             <>
             <Text style={{}}>
-            # 한 번에 <strong>한권</strong>의 책만 읽는  <br />
+            # 한 우물형 독서가
             </Text>
             <SmallText>
-            한 우물형 독서가
+            한 번에 <strong>한권</strong>의 책만 읽는  <br />
             </SmallText>
             </>
           ) : (
             <>
             <Text style={{}}>
-            # 박학다식형 독서가 <br/>
+            # <strong>박학다식형</strong> 독서가 <br/>
             </Text>
             <SmallText>
-            한 번에 <strong>여러 권</strong>의 책을 읽는
+            한 번에 여러 권의 책을 읽는
             </SmallText>
             </>
           )}
@@ -82,6 +83,7 @@ const RecentStatistic = ({ characterData }) => {
 
 const CharacterContainer = styled.div`
   width: 19rem;
+  height: 150px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,7 +94,8 @@ const CharacterContainer = styled.div`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--main-point-color);
+  gap: 6px;
 `;
 
 const Text = styled.span`
@@ -101,7 +104,7 @@ const Text = styled.span`
 
 const SmallText = styled.span`
   font-size: var(--font-h6);
-  color: lightgray;
+  color: gray;
 `;
 
 const ColoredBox = styled.div`
