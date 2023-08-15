@@ -5,7 +5,7 @@ import { formatTime } from './../../utils/dateTimeUtils';
 import { styled } from 'styled-components';
 
 const AverageStatistics = ({ readingTime, readSpeed }) => {
-  const avgReadingTime = formatTime(readingTime);
+  const avgReadingTime = formatTime(readingTime) ? formatTime(readingTime) : '0분';
 
   return (
     <StatisticsDiv>
@@ -21,7 +21,7 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
           <SpeedOutlinedIcon sx={{ width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 속도</Title>
-        <Content>{readSpeed}p/1h</Content>
+        <Content>{readSpeed}p/min</Content>
       </Div>
     </StatisticsDiv>
   );

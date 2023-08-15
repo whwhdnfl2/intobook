@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { editBookHistory } from '../../api/historyApi';
+import { AlertInfo } from './../common';
 import { styled } from 'styled-components';
 import DateTime from './DateTime';
+import { motion } from "framer-motion";
 import { formatDate, formatTimeInDate } from './../../utils/dateTimeUtils';
 
 const HistoryLogEdit = () => {
@@ -12,6 +14,7 @@ const HistoryLogEdit = () => {
   const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
   const [isOpenTimeEdit, setIsOpenTimeEdit] = useState(false);
   const [editTarget, setEditTarget] = useState('start')
+  const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
 
@@ -25,6 +28,8 @@ const HistoryLogEdit = () => {
   const startMinute = selectedStartTime.minutes;
   const endHour = selectedEndTime.hours;
   const endMinute = selectedEndTime.minutes;
+
+  const isFirst = selectedLog.isFirst;
 
   // 수정된 한줄평 editedComment에 반영하기
   const handleTextareaChange = (e) => {
@@ -71,7 +76,9 @@ const HistoryLogEdit = () => {
       } catch (err) {
         console.error(err);
       } finally {
+        setOpenUpdateAlert(true);
         setIsOpenLogEdit(false);
+        console.log('수정완')
       }
     } else {
       alert('시간을 확인하세요')
@@ -83,25 +90,48 @@ const HistoryLogEdit = () => {
   };
 
   return (
+    <>
+
     <LogEditContainer>
       <Title>히스토리 수정</Title>
       <Content>{startDate}</Content>
       <TimeContainer>
-
-        <TimeDiv>
+        <TimeDiv
+          isfirst={isFirst.toString()}
+          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}
+          whileTap={{
+            scale: 1.05,
+            background: 'var(--bg-gray)',
+            transition: { duration: 0.05, ease: 'easeInOut' } // 여기에서 속도 조절
+          }}
+          initial={{ scale: 1, background: 'var(--white)' }}
+          animate={{ scale: 1, background: 'var(--white)' }}
+          exit={{ scale: 1, background: 'var(--white)' }}
+        >
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path d="M0 0H12V6L8 10L12 14V20H0V14L4 10L0 6V0ZM10 14.5L6 10.5L2 14.5V18H10V14.5ZM6 9.5L10 5.5V2H2V5.5L6 9.5ZM4 4H8V4.75L6 6.75L4 4.75V4Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv onClick={() => { setIsOpenTimeEdit(true); setEditTarget('start') }}>
+          <ContentDiv>
             <SubTitle>시작 시간</SubTitle>
             <Content>{selectedStartTime.hours}:{selectedStartTime.minutes}</Content>
           </ContentDiv>
         </TimeDiv>
-        <TimeDiv>
+        <TimeDiv
+          isfirst={isFirst.toString()}
+          onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}
+          whileTap={{
+            scale: 1.05,
+            background: 'var(--bg-gray)',
+            transition: { duration: 0.05, ease: 'easeInOut' } // 여기에서 속도 조절
+          }}
+          initial={{ scale: 1, background: 'var(--white)' }}
+          animate={{ scale: 1, background: 'var(--white)' }}
+          exit={{ scale: 1, background: 'var(--white)' }}
+        >
           <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 20H0V14L4 10L0 6V0H12V6L8 10L12 14M2 5.5L6 9.5L10 5.5V2H2M6 10.5L2 14.5V18H10V14.5M8 16H4V15.2L6 13.2L8 15.2V16Z" fill="#C2D7FF" />
           </svg>
-          <ContentDiv onClick={() => { setIsOpenTimeEdit(true); setEditTarget('end') }}>
+          <ContentDiv onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('start') } : null}>
             <SubTitle>마친 시간</SubTitle>
             <Content>{selectedEndTime.hours}:{selectedEndTime.minutes}</Content>
           </ContentDiv>
@@ -124,6 +154,12 @@ const HistoryLogEdit = () => {
         </div>
       )}
     </LogEditContainer>
+    {openUpdateAlert &&
+      <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
+        setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)}
+      />
+    }
+    </>
   );
 };
 
@@ -159,7 +195,7 @@ const TimeContainer = styled.div`
   justify-content: space-between;
 `;
 
-const TimeDiv = styled.div`
+const TimeDiv = styled(motion.div)`
   width: 125px;
   height: 60px;
   flex-shrink: 0;
@@ -169,7 +205,7 @@ const TimeDiv = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px 0;
-  cursor: pointer;
+  cursor: ${props => props.isfirst === 'true' ? 'pointer' : 'default'};
   `;
 
 const ContentDiv = styled.div`

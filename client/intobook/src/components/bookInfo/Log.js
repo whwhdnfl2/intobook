@@ -8,10 +8,13 @@ import { useSetRecoilState, useRecoilState } from 'recoil';
 import { LogAtom, SelectedStartTimeAtom, SelectedEndTimeAtom, HistoryLogsAtom, LogEditAtom } from '../../recoil/book/BookAtom';
 import { deleteBookHistory } from './../../api/historyApi';
 import { formatDate, formatTimeInDate } from '../../utils/dateTimeUtils';
+import { Modal, AlertInfo } from './../common';
 import { styled } from 'styled-components';
 
 const Log = ({ log }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [openDeleteLogModal, setOpenDeleteLogModal] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [historyLog, setHistoryLog] = useRecoilState(HistoryLogsAtom);
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
 
@@ -43,13 +46,14 @@ const Log = ({ log }) => {
   const setSelectedEndTime = useSetRecoilState(SelectedEndTimeAtom);
 
   const openDropdownHandler = (e) => {
-    handleToggleDropdown();
+    setIsDropdownOpen(true);
     setSelectedLog({
       historyPk: log?.historyPk,
       startTime,
       endTime,
       comment: log?.comment,
-      readingTime: log?.readingTime
+      readingTime: log?.readingTime,
+      isFirst: log?.isFirst ? log.isFirst : false
     });
     setSelectedStartTime({
       hours: st.getHours(),
@@ -59,10 +63,6 @@ const Log = ({ log }) => {
       hours: et.getHours(),
       minutes: et.getMinutes()
     });
-  };
-
-  const handleToggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
   };
 
   const dropdownRef = useRef(null);
@@ -82,23 +82,22 @@ const Log = ({ log }) => {
     };
   }, []);
 
-
   const deleteLogHandler = async () => {
     try {
       await deleteBookHistory(log.historyPk);
       const updatedHistoryLog = historyLog.filter(item => item.historyPk !== log.historyPk);
       setHistoryLog(updatedHistoryLog);
+      setOpenDeleteLogModal(false);
     } catch (err) {
       console.error(err);
     } finally {
-      handleToggleDropdown();
+      setIsDropdownOpen(false);
+      setOpenDeleteAlert(true);
     }
   };
 
-
   return (
     <DropdownContainer>
-
       <LogCard sx={{ borderRadius: '10px', boxShadow: 'none', height: 'auto' }}>
         <StyledCardContent>
           <LogInfo>
@@ -106,7 +105,7 @@ const Log = ({ log }) => {
               <LogDateTime>{formattedStartTime} ~ {formattedEndTime}</LogDateTime>
               <span>({formattedReadingTime})</span>
             </LogInfoDiv>
-            <MoreHorizIcon onClick={openDropdownHandler} />
+            <MoreHorizIcon onClick={openDropdownHandler} style={{ cursor: 'pointer' }} />
           </LogInfo>
           <LogComment>{comment}</LogComment>
           {isDropdownOpen && (
@@ -115,17 +114,25 @@ const Log = ({ log }) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              <DropdownItem onClick={() => { handleToggleDropdown(); setIsOpenLogEdit(true); }}>
+              <DropdownItem onClick={() => { setIsDropdownOpen(false); setIsOpenLogEdit(true); }}>
                 <EditIcon sx={{ fontSize: '13px' }} />
                 <span> 수정하기</span>
               </DropdownItem>
-              <DropdownItem onClick={deleteLogHandler}>
+              <DropdownItem onClick={() => setOpenDeleteLogModal(true)}>
                 <DeleteIcon sx={{ fontSize: '14px' }} />
                 <span> 삭제하기</span>
               </DropdownItem>
             </DropdownContent>
           )}
         </StyledCardContent>
+        <Modal openModal={openDeleteLogModal} setOpenModal={setOpenDeleteLogModal} modalType={'deleteLog'}
+          closeModal={() => { setOpenDeleteLogModal(false) }} height={'120px'} handleMethod={deleteLogHandler}
+        />
+        {openDeleteAlert &&
+          <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
+            setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }}
+          />
+        }
       </LogCard>
     </DropdownContainer>
   );
@@ -141,7 +148,6 @@ const LogCard = styled(Card)`
 const StyledCardContent = styled(CardContent)`
   padding: 12px !important;
 `;
-
 
 const LogInfo = styled.div`
   display: flex;
