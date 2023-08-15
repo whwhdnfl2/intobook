@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -115,7 +116,7 @@ public class UserBookController {
 
     @PutMapping("/{userBookPk}")
     @ApiOperation(value = "책의 페이지, 읽은 시간 변경하는 메소드")
-    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk, @RequestParam(required = false) int nowPage, @RequestParam(required = false) LocalDateTime completedAt) {
+    public ResponseEntity<String> updateUserBook(@PathVariable("userBookPk") long userBookPk, @RequestParam(required = false) int nowPage, @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") @RequestParam(required = false) LocalDateTime completedAt) {
         try {
             userBookService.updateUserBook(userBookPk, nowPage, completedAt);
             return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);

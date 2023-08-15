@@ -36,7 +36,6 @@ public class History {
     @JoinColumn(name = "user_pk")
     private User user;
 
-    @CreationTimestamp
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
@@ -54,6 +53,20 @@ public class History {
         if (startTime != null) this.startTime = startTime;
         if (endTime != null) this.endTime = endTime;
         if (this.endTime != null && (startTime != null || endTime != null)) this.readingTime = ChronoUnit.MINUTES.between(this.startTime, this.endTime);
+    }
+
+
+    @PrePersist
+    @PreUpdate
+    private void cutStartSecond() {
+        if (startTime != null) {
+            startTime = startTime.withSecond(0).withNano(0); // 분 단위로 절사
+        }else {
+            startTime = LocalDateTime.now().withSecond(0).withNano(0);
+        }
+        if (endTime != null) {
+            endTime = endTime.withSecond(0).withNano(0); // 분 단위로 절사
+        }
     }
 
     public void updateEndTimeAndReadingTime(){

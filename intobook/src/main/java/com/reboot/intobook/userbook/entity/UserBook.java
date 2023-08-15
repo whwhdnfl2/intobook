@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -39,7 +38,7 @@ public class UserBook {
     @ColumnDefault("0")
     private int nowPage;
 
-    @CreationTimestamp
+
     private LocalDateTime startedAt;
 
     private LocalDateTime completedAt;
@@ -57,10 +56,20 @@ public class UserBook {
 
     @PreUpdate
     private void updateProgress() {
+        if (completedAt != null) {
+            completedAt = completedAt.withSecond(0).withNano(0); // 분 단위로 절사
+        }
         if (this.book != null && this.book.getPage() != 0) {
             this.progress = (this.nowPage * 100) / this.book.getPage();
         }
         this.progress = Math.max(0, this.progress);
         this.progress = Math.min(100, this.progress);
+    }
+
+    @PrePersist
+    private void cutStartToMinutes() {
+        if (startedAt == null) {
+            startedAt = LocalDateTime.now().withSecond(0).withNano(0); // 분 단위로 절사
+        }
     }
 }
