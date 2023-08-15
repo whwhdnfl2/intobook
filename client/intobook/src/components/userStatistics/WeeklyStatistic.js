@@ -21,7 +21,7 @@ const WeeklyStatistic = (weeklyData) => {
 
 
     return (
-      <div style={{ height: '300px', width: '320px' }}>
+      <div style={{ height: '250px', width: '340px', backgroundColor: 'white', padding: '10px', borderRadius: '10%' }}>
         <p>나를 이겨라~~! 주간 그래프</p>
         <MyResponsiveBar data={data} />
       </div>

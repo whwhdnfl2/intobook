@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-  // const attention = 3;
-  // const multiRead = 0.5;
-  // const burning = false;
-  // const mostDay = '월요일';
-  // const mostTime = '오전';
-  // const mostGenre = '소설';
-  
+// const attention = 3;
+// const multiRead = 0.5;
+// const burning = false;
+// const mostDay = '월요일';
+// const mostTime = '오전';
+// const mostGenre = '소설';
+
 //   return (
 //     <React.Fragment>
 //       <CharacterContainer>
@@ -114,7 +114,7 @@ const CharacterImage = styled.img`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-`; 
+`;
 
 const Text = styled.p`
   font-size: 14px;
