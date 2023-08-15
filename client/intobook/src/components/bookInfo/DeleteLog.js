@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 
 const DeleteLog = ({ closeModal, onDelete }) => {
   const deleteClickHandler = () => {
+    closeModal();
     onDelete();
   };
 
