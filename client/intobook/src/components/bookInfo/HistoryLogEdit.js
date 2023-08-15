@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { editBookHistory } from '../../api/historyApi';
+import { AlertInfo } from './../common';
 import { styled } from 'styled-components';
 import DateTime from './DateTime';
 import { motion } from "framer-motion";
@@ -13,6 +14,7 @@ const HistoryLogEdit = () => {
   const [editedComment, setEditedComment] = useState(selectedLog.comment || '');
   const [isOpenTimeEdit, setIsOpenTimeEdit] = useState(false);
   const [editTarget, setEditTarget] = useState('start')
+  const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
   const selectedStartTime = useRecoilValue(SelectedStartTimeAtom);
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
 
@@ -74,7 +76,9 @@ const HistoryLogEdit = () => {
       } catch (err) {
         console.error(err);
       } finally {
+        setOpenUpdateAlert(true);
         setIsOpenLogEdit(false);
+        console.log('수정완')
       }
     } else {
       alert('시간을 확인하세요')
@@ -86,6 +90,8 @@ const HistoryLogEdit = () => {
   };
 
   return (
+    <>
+
     <LogEditContainer>
       <Title>히스토리 수정</Title>
       <Content>{startDate}</Content>
@@ -148,6 +154,12 @@ const HistoryLogEdit = () => {
         </div>
       )}
     </LogEditContainer>
+    {openUpdateAlert &&
+      <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
+        setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)}
+      />
+    }
+    </>
   );
 };
 
