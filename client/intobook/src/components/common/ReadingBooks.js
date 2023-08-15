@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Book } from '../bookShelves'
 import { useNavigate } from 'react-router-dom';
 import { userbooks, updateUserBookStatus } from './../../api/userbookApi';
 import { useSetRecoilState } from 'recoil';
 import { ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Stack, Box } from '@mui/material';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { ResultsContainer } from '../../styles/bookSearch/SearchStyle';
 import { styled } from 'styled-components';
 import useInfiniteScroll from './../../utils/useInfiniteScroll';
@@ -63,7 +63,7 @@ const ReadingBooks = ({ closeModal }) => {
   return (
     <ModalContent>
       <TitleContainter>
-        <ErrorOutlineOutlinedIcon />
+        <InfoOutlinedIcon />
         <div>책장에서 책을 선택해주세요</div>
       </TitleContainter>
       <ScrollableResultsContainer>
