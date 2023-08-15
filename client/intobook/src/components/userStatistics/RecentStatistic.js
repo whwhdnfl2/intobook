@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BookCharacter from './BookCharacter';
+import CharacterStatistic from '../character/CharacterStatistic';
 
 
 const RecentStatistic = ({ characterData }) => {
@@ -11,38 +12,55 @@ const RecentStatistic = ({ characterData }) => {
   const mostDay = characterData?.mostActiveWeekDay;
   const mostTime = characterData?.mostActiveTime;
   const mostGenre = characterData?.favoriteGenre;
-  
+  //React.Fragment
   return (
-    <React.Fragment>
+    <>
       <CharacterContainer>
-        <BookCharacter val={[attention, multiRead, burning]} />
+        {/* <BookCharacter val={[attention, multiRead, burning]} /> */}
+        <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/>
         <TextContainer>
           {attention >= 5 ? (
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}>
+            <>
+            <Text style={{}}>
               # 평균 독서시간 <strong>30분 이상</strong> <br />
+            </Text>
+            <SmallText>
               여유를 즐길 줄 아는 독서가
-            </Text>
+            </SmallText>
+            </>
           ) : (
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}>
-              # 평균 독서시간 <strong>30분 미만</strong> <br />
-              바쁘다 바빠 갓생 사는 독서가
+            <>
+            <Text style={{}}>
+            # 바쁘다 바빠 갓생 사는 독서가 <br/>
             </Text>
+            <SmallText>
+              평균 독서시간 <strong>30분 미만</strong>
+            </SmallText>
+            </>
           )}
           {multiRead ? (
-            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right' }}>
-              # 한 번에 <strong>한권</strong>의 책만 읽는  <br />
-              한 우물형 독서가
+            <>
+            <Text style={{}}>
+            # 한 번에 <strong>한권</strong>의 책만 읽는  <br />
             </Text>
+            <SmallText>
+            한 우물형 독서가
+            </SmallText>
+            </>
           ) : (
-            <Text style={{ position: 'relative', left: '-10px', textAlign: 'right' }}>
-              # 한 번에 <strong>여러 권</strong>의 책을 읽는  <br />
-              박학다식형 독서가
+            <>
+            <Text style={{}}>
+            # 박학다식형 독서가 <br/>
             </Text>
+            <SmallText>
+            한 번에 <strong>여러 권</strong>의 책을 읽는
+            </SmallText>
+            </>
           )}
           {burning ? (
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}># 지금 <strong>푹 빠</strong>져드는 중</Text>
+            <Text style={{}}># 지금 <strong>푹 빠</strong>져드는 중</Text>
           ) : (
-            <Text style={{ position: 'relative', left: '-30px', textAlign: 'right' }}># 지금 <strong>천천히 빠</strong>져드는 중</Text>
+            <Text style={{ }}># 지금 <strong>천천히 빠</strong>져드는 중</Text>
           )}
         </TextContainer>
       </CharacterContainer>
@@ -58,25 +76,32 @@ const RecentStatistic = ({ characterData }) => {
           {mostGenre}
         </ColoredBox>
       </BoxContainer>
-    </React.Fragment>
+    </>
   );
 }
 
 const CharacterContainer = styled.div`
+  width: 19rem;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   overflow: hidden;
-  margin: 12px 0px 36px;
+  margin: 0px auto;
 `;
 
 const TextContainer = styled.div`
-  /* display: flex; */
-  float: right;
+  display: flex;
   flex-direction: column;
+  color: white;
 `;
 
-const Text = styled.p`
-  font-size: 14px;
+const Text = styled.span`
+  font-size: var(--font-h5);
+`;
+
+const SmallText = styled.span`
+  font-size: var(--font-h6);
+  color: lightgray;
 `;
 
 const ColoredBox = styled.div`

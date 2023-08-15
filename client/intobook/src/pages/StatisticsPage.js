@@ -3,7 +3,7 @@ import { AverageStatistics } from "../components/common";
 import { RecentStatistic, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics, getWeeklyStatistics, getCharacterStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
-import { Layout, LayoutSecond, StyleContainer } from '../styles/CommonStyle';
+import { LayoutSecond, StyleContainer } from '../styles/CommonStyle';
 import { useRecoilValue } from "recoil";
 import { UserNameAtom } from '../recoil/user/UserAtom';
 

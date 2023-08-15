@@ -124,7 +124,7 @@ transform: translateX(-50%);
 animation: ${floatingAnimation} 2s infinite alternate;
 `;
 
-const BookmarkCharacter = ({ con1, con2, con3 }) => {
+const CharacterStatistic = ({ con1, con2, con3 }) => {
     return (
         <CharacterWrapper con1={con1}>
             <Eye con2={con2} position="left" />
@@ -135,4 +135,4 @@ const BookmarkCharacter = ({ con1, con2, con3 }) => {
     );
 };
 
-export default BookmarkCharacter;
+export default CharacterStatistic;
