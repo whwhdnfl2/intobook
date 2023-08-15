@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
 import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
+import Barcode from './Barcode';
 
 const SearchBar = ({ title, updateSearchKeyword }) => {
   const [keyword, setKeyword] = useState('');
+  const [showScanner, setShowScanner] = useState(false);
   const searchBarInputRef = useRef(null);
 
   const inputChangeHandler = (event) => {
@@ -28,32 +31,45 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
       searchBarInputRef.current.focus();
       window.scrollTo(0, 0); // 스크롤 위치 조정
     };
-  
+
     setFocus();
   }, []);
 
+  const barcodeScannerHandler = () => {
+    setShowScanner(true);
+  };
+
   return (
-    <SearchBarContainer>
-      <Title>{title}</Title>
-      <SerchBarDiv>
-        <BarcordeIcon src={barcodehIcon} alt="barcode-icon" />
-        <Line />
-        <SearchBarInput 
-          placeholder='책 제목, 저자명, 키워드 등을 입력하세요.'
-          value={keyword}
-          onChange={inputChangeHandler}
-          ref={searchBarInputRef}
-          onKeyDown={enterKeyPressHandler}
-        />
-        {keyword && (
-          <SearchIcon 
-            onClick={searchHandler}
-            src={searchIcon} 
-            alt="search-icon" 
-          />
-        )}
-      </SerchBarDiv>
-    </SearchBarContainer>
+    <>
+      {!showScanner &&
+        <SearchBarContainer>
+          <Title>{title}</Title>
+          <SerchBarDiv>
+            {/* <BarcordeIcon onClick={barcodeScannerHandler} src={barcodehIcon} alt="barcode-icon" /> */}
+            <Link to='/search/barcode' style={{ textDecoration: 'none' }}>
+              <BarcordeIcon  src={barcodehIcon} alt="barcode-icon" />
+            </Link>
+            <Line />
+            <SearchBarInput
+              placeholder='책 제목, 저자명, 키워드 등을 입력하세요.'
+              value={keyword}
+              onChange={inputChangeHandler}
+              ref={searchBarInputRef}
+              onKeyDown={enterKeyPressHandler}
+            />
+            {keyword && (
+              <SearchIcon
+                onClick={searchHandler}
+                src={searchIcon}
+                alt="search-icon"
+              />
+            )}
+          </SerchBarDiv>
+        </SearchBarContainer>
+      }
+
+      {showScanner && <Barcode />}
+    </>
   );
 };
 
