@@ -7,6 +7,7 @@ import BookmarkCharacter from "../character/CharacterWrapper";
 import { useState } from "react";
 import { styled } from "styled-components";
 import { UserNameAtom } from "../../recoil/user/UserAtom";
+import CharacterStatistic from './../character/CharacterStatistic';
 
 const BluetoothComponent = () => {
   const [bluetoothStatus, setBluetoothStatus] = useRecoilState(BluetoothAtom);
