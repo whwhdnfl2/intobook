@@ -8,10 +8,12 @@ import { useSetRecoilState, useRecoilState } from 'recoil';
 import { LogAtom, SelectedStartTimeAtom, SelectedEndTimeAtom, HistoryLogsAtom, LogEditAtom } from '../../recoil/book/BookAtom';
 import { deleteBookHistory } from './../../api/historyApi';
 import { formatDate, formatTimeInDate } from '../../utils/dateTimeUtils';
+import { Modal } from './../common';
 import { styled } from 'styled-components';
 
 const Log = ({ log }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [openDeleteLogModal, setOpenDeleteLogModal] = useState(false);
   const [historyLog, setHistoryLog] = useRecoilState(HistoryLogsAtom);
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
 
@@ -92,6 +94,8 @@ const Log = ({ log }) => {
       console.error(err);
     } finally {
       handleToggleDropdown();
+      setOpenDeleteLogModal(false);
+      alert('삭제되었습니다');
     }
   };
 
@@ -118,13 +122,16 @@ const Log = ({ log }) => {
                 <EditIcon sx={{ fontSize: '13px' }} />
                 <span> 수정하기</span>
               </DropdownItem>
-              <DropdownItem onClick={deleteLogHandler}>
+              <DropdownItem onClick={() => setOpenDeleteLogModal(true)}>
                 <DeleteIcon sx={{ fontSize: '14px' }} />
                 <span> 삭제하기</span>
               </DropdownItem>
             </DropdownContent>
           )}
         </StyledCardContent>
+      <Modal openModal={openDeleteLogModal} setOpenModal={setOpenDeleteLogModal} modalType={'deleteLog'} 
+        closeModal={() => {setOpenDeleteLogModal(false)}} height={'120px'} handleMethod={deleteLogHandler}
+      />
       </LogCard>
     </DropdownContainer>
   );
@@ -140,6 +147,7 @@ const LogCard = styled(Card)`
 const StyledCardContent = styled(CardContent)`
   padding: 12px !important;
 `;
+
 
 
 const LogInfo = styled.div`
