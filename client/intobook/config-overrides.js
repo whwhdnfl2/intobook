@@ -1,5 +1,5 @@
 module.exports = function override(config, env) {
-  //이전의 설정을 그대로 가져오기
+  //이전의 설정을 그대로 가져오기...
   const originalConfig = require(paths.scriptVersion + '/config/webpack.config.' + env);
 
   // 기존 설정을 수정하거나 추가
