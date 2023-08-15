@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import { Bookmark, Bluetooth, ReadingBook, CheckButton, Timer, CurrentBookStatus } from '../components/home';
 import { Layout, StyleContainer } from './../styles/CommonStyle';
-import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import BluetoothComponent from '../components/home/BluetoothComponent';

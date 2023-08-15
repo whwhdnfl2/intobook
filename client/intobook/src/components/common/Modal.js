@@ -15,7 +15,7 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
 
   return (
     <Box>
-      <Dialog open={openModal} onClose={closeModal} PaperProps={{ style: { borderRadius: '20px', marginLeft: '13px' } }}>
+      <Dialog open={openModal} onClose={closeModal} PaperProps={{ style: { borderRadius: '20px', margin: 'auto' } }}>
         <DialogContents sx={{ width: '280px', height: `${height}`, padding: '20px' }}>
           {modalType === 'Tutorial' && <Tutorial closeModal={closeModal} />}
           {modalType === 'readingBook' && <ReadingBooks closeModal={closeModal} />}
@@ -29,7 +29,6 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
 };
 
 const DialogContents = styled(DialogContent)`
-  // padding-right: 17px;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;

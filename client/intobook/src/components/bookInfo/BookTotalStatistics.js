@@ -10,9 +10,9 @@ import { styled } from 'styled-components';
 const BookTotalStatistics = ({ val, status }) => {
   const startDate = formatDate(val?.startedAt, 'dateDot');
   const completeDate = formatDate(val?.completedAt, 'dateDot');
-  const readingTime = formatTime(val?.totalReadingTime);
-  const bestTime = formatTime(val?.maxReadingTime);
-  const remainingTime = formatTime(val?.remainingTime);
+  const readingTime = formatTime(val?.totalReadingTime) ? formatTime(val?.totalReadingTime) : '0분';
+  const bestTime = formatTime(val?.maxReadingTime) ? formatTime(val?.maxReadingTime) : '0분';
+  const remainingTime = val?.remainingTime > 30 * 24 * 60 ? '기다리고 있을게요' : formatTime(val?.remainingTime);
 
   return (
     <StatisticsDiv>

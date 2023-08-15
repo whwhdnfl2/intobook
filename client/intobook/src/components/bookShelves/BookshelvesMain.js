@@ -33,7 +33,8 @@ const CustomTab = styled(Tab)(({ theme, selected }) => ({
 const OverrideCustomTab = styled(CustomTab)({
   // Override the selected tab color here
   '&.Mui-selected': {
-    color: '#FFFFFF',
+    color: 'var(--main-color)',
+    fontWeight: 'bold'
   },
 });
 

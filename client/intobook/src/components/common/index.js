@@ -8,3 +8,4 @@ export { default as AverageStatistics } from './AverageStatistics';
 export { default as TotalStatisticsItem } from './TotalStatisticsItem';
 export { default as ReadingBooks } from './ReadingBooks';
 export { default as UpdateUsername } from './UpdateUsername';
+export { default as AlertInfo } from './AlertInfo';
