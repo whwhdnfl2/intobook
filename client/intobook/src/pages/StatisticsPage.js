@@ -86,8 +86,8 @@ const StatisticsPage = () => {
         <StyleContainer>
           {<p style={{ color: 'var(--main-point-color' }}>{username} 님의 독서 유형은?</p>}
           <RecentStatistic characterData={characterValue} />
+          <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} style={{ backgroundColor: 'white' }}/>
           <TotalStatistic val={userStatisticsValue} />
-          <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
           <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
         </StyleContainer>
       </LayoutThird>
