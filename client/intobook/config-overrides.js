@@ -3,7 +3,7 @@ module.exports = function override(config, env) {
   // 기존 설정을 수정하거나 추가
   config.devServer = {
     ...config.devServer, // 기존의 설정을 그대로 유지하면서
-    port: 3000,
+    port: 443,
     liveReload: true,
     // host 지정
     host: "0.0.0.0",
