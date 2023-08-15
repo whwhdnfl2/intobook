@@ -14,7 +14,7 @@ module.exports = function override(config, env) {
     client: {
       overlay: true,
       // 웹소켓 설정
-      webSocketURL: { hostname: undefined, pathname: undefined, port: '0' },
+      webSocketURL: { hostname: 'intobook.kro.kr', pathname: undefined, port: '443' },
     },
     compress: true,
   };
