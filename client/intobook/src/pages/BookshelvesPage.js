@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import BookshelvesMain from '../components/bookShelves/BookshelvesMain';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { Layout, StyleSecondContainer } from './../styles/CommonStyle';
+import { Layout, LayoutForth, StyleSecondContainer } from './../styles/CommonStyle';
 import { useRecoilValue } from "recoil";
 import { UserNameAtom } from '../recoil/user/UserAtom';
 
@@ -13,16 +13,16 @@ const BookshelvesPage = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ x: '-100%' }} // 왼쪽에서 나타나는 효과
+      animate={{ x: 0 }} // 화면 안쪽으로 이동하여 나타나는 효과
+      exit={{ x: '100%' }} // 오른쪽으로 사라지는 효과
     >
-      <Layout>
+      <LayoutForth>
         <StyleSecondContainer>
           {<p>{username}님의 책장</p>}
           <BookshelvesMain />
         </StyleSecondContainer>
-      </Layout>
+      </LayoutForth>
     </motion.div>
   );
 }

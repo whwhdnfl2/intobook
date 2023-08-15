@@ -8,7 +8,7 @@ export const Layout = styled.div`
   min-height: 100vh;
   gap: 1rem;
   background-image: url(/backgroundImg.png);
-  background-size: full;
+  background-size: cover;
   /*border: 1px solid lightgray;*/
 `;
 
@@ -22,6 +22,30 @@ export const LayoutSecond = styled.div`
   background-image: url(/backgroundImg2.png);
   background-size: cover;
   background-position: center center;
+  /*border: 1px solid lightgray;*/
+`;
+
+//Third 배경(통계, 책장 시 사용)
+export const LayoutThird = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background-image: url(/backgroundImg3.png);
+  background-size: cover;
+  /*border: 1px solid lightgray;*/
+`;
+
+//Third 배경(통계, 책장 시 사용)
+export const LayoutForth = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  gap: 1rem;
+  background-image: url(/backgroundImg4.png);
+  background-size: cover;
   /*border: 1px solid lightgray;*/
 `;
 

@@ -17,8 +17,8 @@ const RecentStatistic = ({ characterData }) => {
     <>
       <CharacterContainer>
         {/* <BookCharacter val={[attention, multiRead, burning]} /> */}
-        {/* <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/> */}
-        <CharacterStatistic con1={true} con2={false} con3={false}/>
+        <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/>
+        {/* <CharacterStatistic con1={true} con2={true} con3={true}/> */}
         <TextContainer>
           {attention >= 5 ? (
             <>
@@ -66,13 +66,13 @@ const RecentStatistic = ({ characterData }) => {
         </TextContainer>
       </CharacterContainer>
       <BoxContainer>
-        <ColoredBox color="orange">
+        <ColoredBox color="var(--main-red-color)">
           선호 요일 <br />
           {mostDay}</ColoredBox>
-        <ColoredBox color="lightgreen">
+        <ColoredBox color="#1F787E">
           선호 시간대 <br />
           {mostTime}</ColoredBox>
-        <ColoredBox color="skyblue">
+        <ColoredBox color="#6A3D97">
           선호 장르 <br />
           {mostGenre}
         </ColoredBox>
@@ -89,6 +89,7 @@ const CharacterContainer = styled.div`
   align-items: center;
   overflow: hidden;
   margin: 0px auto;
+  padding-left: 10px;
 `;
 
 const TextContainer = styled.div`
@@ -108,20 +109,22 @@ const SmallText = styled.span`
 `;
 
 const ColoredBox = styled.div`
-  width: 96px;
+  width: 100px;
   height: 60px;
-  border-radius: 10%;
+  border-radius: 10px;
   background-color: ${props => props.color};
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  color:white;
 `;
 
 const BoxContainer = styled.div`
   display: flex;
-  width: 300px;
+  width: 90%;
+  min-width: 340px;
   justify-content: space-between;
-  margin: 10px 30px;
+  margin: 30px auto;
 `;
 
 

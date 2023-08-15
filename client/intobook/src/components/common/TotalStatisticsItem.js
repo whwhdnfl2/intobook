@@ -35,20 +35,21 @@ const TextDiv = styled.div`
   height: 36px;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
+  gap:0.1rem;
 `;
 
 const Title = styled.div`
   color: var(--black);
-  font-family: var(--main-font);
+  font-family: 'NanumSquareNeo-Variable';
   font-size: var(--font-h5);
   margin-bottom: 3px;
   `;
   
   const Content = styled.div`
   color: #3400C8;
-  font-family: var(--main-font);
-  font-size: var(--font-h5);
+  font-family: 'NanumSquareNeo-Variable';
+  font-size: var(--font-h6);
 `;
 
 export default TotalStatisticsItem;

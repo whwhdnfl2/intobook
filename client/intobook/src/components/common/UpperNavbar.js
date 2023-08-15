@@ -10,15 +10,15 @@ const UpperNavbar = () => {
       <StyledUpperNavbar
       style={{
         position: 'fixed',
-        left: '50%',
-        transform: 'translateX(-50%)',
+        // left: '50%',
+        // transform: 'translateX(-50%)',
         display: 'flex',
         width: '90%',
         maxWidth: '360px',
         paddingRight: '1.2rem',
         paddingLeft: '1.2rem',
         justifyContent: 'space-between',
-        marginTop: '0.5rem'
+        margin: '0.5rem auto 0 auto'
       }}
     >
       <AppTitle />

@@ -3,7 +3,7 @@ import { AverageStatistics } from "../components/common";
 import { RecentStatistic, TotalStatistic, WeeklyStatistic } from './../components/userStatistics';
 import { getUserStatistics, getWeeklyStatistics, getCharacterStatistics } from '../api/statisticsApi';
 import { motion } from 'framer-motion';
-import { LayoutSecond, StyleContainer } from '../styles/CommonStyle';
+import { LayoutSecond, LayoutThird, StyleContainer } from '../styles/CommonStyle';
 import { useRecoilValue } from "recoil";
 import { UserNameAtom } from '../recoil/user/UserAtom';
 
@@ -82,7 +82,7 @@ const StatisticsPage = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <LayoutSecond>
+      <LayoutThird>
         <StyleContainer>
           {<p style={{ color: 'var(--main-point-color' }}>{username} 님의 독서 유형은?</p>}
           <RecentStatistic characterData={characterValue} />
@@ -90,7 +90,7 @@ const StatisticsPage = () => {
           <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
           <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
         </StyleContainer>
-      </LayoutSecond>
+      </LayoutThird>
     </motion.div>
   );
 }

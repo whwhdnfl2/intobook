@@ -42,7 +42,7 @@ const CharacterWrapper = styled.div`
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: lightblue;
+    background-color: #FFEAB4;
     position: relative;
     animation: ${({ con1 }) => (con1 ? css`${floatingAnimation} 1s infinite` : css`${floatingAnimation} 3s infinite`)};
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -169,7 +169,7 @@ animation: ${floatingAnimation} 2s infinite alternate;
 const Fire = styled.div`
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, transparent 60%, var(--main-base-color) 90%);
+    background: radial-gradient(circle, transparent 64%, var(--main-red-color) 90%);
     border-radius: 50%;
     position: absolute;
     top: 0%;
@@ -193,7 +193,7 @@ const CharacterStatistic = ({ con1, con2, con3 }) => {
             :
             null}
             <Mouth />
-            {con3?<OnText>📖</OnText>:<OnText>📚📙📚</OnText>}
+            {con3?<OnText>📕❤</OnText>:<OnText>📚📙📚</OnText>}
             <Fire con2={con2} /> 
         </CharacterWrapper>
             </>
