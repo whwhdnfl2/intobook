@@ -42,7 +42,7 @@ const CharacterWrapper = styled.div`
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #FFEAB4;
+    background-color: #CBBDF4;
     position: relative;
     animation: ${({ con1 }) => (con1 ? css`${floatingAnimation} 1s infinite` : css`${floatingAnimation} 3s infinite`)};
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
@@ -64,7 +64,7 @@ const CharacterWrapper = styled.div`
 const Eye = styled.div`
     width: ${(props) => (props.con1 ? "6px" : "9px")};
     height: ${(props) => (props.con1 ? "6px" : "9px")};
-    border-radius: ${(props) => (props.con1 ? "15px" : "10px 10px 20px 20px")};
+    border-radius: ${(props) => (props.con1 ? "15px" : "20px")};
     background-color: black;
     position: absolute;
     top: 38%;
@@ -169,7 +169,7 @@ animation: ${floatingAnimation} 2s infinite alternate;
 const Fire = styled.div`
     width: 120px;
     height: 120px;
-    background: radial-gradient(circle, transparent 64%, var(--main-red-color) 90%);
+    background: radial-gradient(circle, transparent 64%, var(--main-purple-color) 90%);
     border-radius: 50%;
     position: absolute;
     top: 0%;

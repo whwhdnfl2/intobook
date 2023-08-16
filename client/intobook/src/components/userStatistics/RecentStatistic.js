@@ -23,42 +23,45 @@ const RecentStatistic = ({ characterData }) => {
         <TextContainer>
           {attention >= 5 ? (
             <>
-            <Text style={{}}>
-            <strong>여유</strong>를 즐길 줄 아는 독서가
-            </Text>
             <SmallText>
               # 평균 독서시간 30분 이상 <br />
             </SmallText>
+            <Text style={{}}>
+            <strong>여유</strong>를 즐길 줄 아는 독서가
+            </Text>
             </>
           ) : (
             <>
-            <Text style={{}}>
-            # 바쁘다 바빠 <strong>갓생</strong> 독서가 <br/>
-            </Text>
             <SmallText>
               평균 독서시간 30분 미만
             </SmallText>
+            <Text style={{}}>
+            # 바쁘다 바빠 <strong>갓생</strong> 독서가 <br/>
+            </Text>
             </>
           )}
           {multiRead ? (
             <>
-            <Text style={{}}>
-            # 한 우물형 독서가
-            </Text>
             <SmallText>
             한 번에 <strong>한권</strong>의 책만 읽는  <br />
             </SmallText>
+            <Text style={{}}>
+            # 한 우물형 독서가
+            </Text>
             </>
           ) : (
             <>
-            <Text style={{}}>
-            # <strong>박학다식형</strong> 독서가 <br/>
-            </Text>
             <SmallText>
             한 번에 여러 권의 책을 읽는
             </SmallText>
+            <Text style={{}}>
+            # <strong>박학다식형</strong> 독서가 <br/>
+            </Text>
             </>
           )}
+          <SmallText>
+            당신은
+          </SmallText>
           {burning ? (
             <Text style={{}}># 지금 <strong>푹 빠</strong>져드는 중</Text>
           ) : (
@@ -69,18 +72,19 @@ const RecentStatistic = ({ characterData }) => {
       <BoxContainer>
         {<p>{username}님은</p>}
         <ColoredBoxContainer>
-        <ColoredBox color="rgba(255, 0, 0, 0.5)">
-          선호 요일 <br />
-          {mostDay}</ColoredBox>
-        <ColoredBox color="rgba(0, 0, 255, 0.7)">
-          선호 시간대 <br />
-          {mostTime}</ColoredBox>
-        <ColoredBox color="rgba(255, 0, 0, 0.5)">
-          선호 장르 <br />
-          {mostGenre}
+        <ColoredBox color="rgba(255, 0, 0, 0.4)">
+          {mostDay}<br />
+          에
+          </ColoredBox>
+        <ColoredBox color="rgba(0, 0, 255, 0.3)">
+          {mostTime}<br />
+          시간대</ColoredBox>
+        <ColoredBox color="rgba(100, 205, 20, 0.4)">
+          {mostGenre}<br />
+          장르를
         </ColoredBox>
         </ColoredBoxContainer>
-        <p>를 선호하는 독서가입니다</p>
+        <p>주로 읽는 독서가입니다</p>
       </BoxContainer>
     </>
   );
@@ -109,7 +113,7 @@ const Text = styled.span`
 `;
 
 const SmallText = styled.span`
-  font-size: var(--font-h6);
+  font-size: var(--font-h7);
   color: gray;
 `;
 

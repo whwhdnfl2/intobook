@@ -10,7 +10,7 @@ const SocialKakao = () => {
   };
 
   return (
-      <img src={KakaoLoginLogo} alt="Kakao Login Logo" onClick={handleLogin}/>
+      <img src={KakaoLoginLogo} alt="Kakao Login Logo" onClick={handleLogin} style={{cursor:'pointer'}}/>
   );
 };
 
