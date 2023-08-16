@@ -17,7 +17,7 @@ const AppRoutes = () => {
                 <Route path="/alarm" element={<AlarmPage />} />
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/search/barcode" element={<BarcodePage />} />
+                {/* <Route path="/search/barcode" element={<BarcodePage />} /> */}
             </Routes>
             <Navbar />
         </>

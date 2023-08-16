@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
 import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
-import Barcode from './Barcode';
+import { Modal } from '../common';
 
 const SearchBar = ({ title, updateSearchKeyword }) => {
   const [keyword, setKeyword] = useState('');
   const [showScanner, setShowScanner] = useState(false);
+  const [openBarcodeModal, setOpenBarcodeModal] = useState('');
   const searchBarInputRef = useRef(null);
 
   const inputChangeHandler = (event) => {
@@ -35,10 +35,6 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
     setFocus();
   }, []);
 
-  const barcodeScannerHandler = () => {
-    setShowScanner(true);
-  };
-
   return (
     <>
       {!showScanner &&
@@ -46,9 +42,12 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
           <Title>{title}</Title>
           <SerchBarDiv>
             {/* <BarcordeIcon onClick={barcodeScannerHandler} src={barcodehIcon} alt="barcode-icon" /> */}
-            <Link to='/search/barcode' style={{ textDecoration: 'none' }}>
-              <BarcordeIcon  src={barcodehIcon} alt="barcode-icon" />
-            </Link>
+            {/* <Link to='/search/barcode' style={{ textDecoration: 'none' }}>
+              <BarcordeIcon src={barcodehIcon} alt="barcode-icon" />
+            </Link> */}
+            <div>
+              <BarcordeIcon src={barcodehIcon} alt="barcode-icon" onClick={() => {setOpenBarcodeModal(true)}} />
+            </div>
             <Line />
             <SearchBarInput
               placeholder='책 제목, 저자명, 키워드 등을 입력하세요.'
@@ -65,10 +64,11 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
               />
             )}
           </SerchBarDiv>
+
+          <Modal openModal={openBarcodeModal} setOpenModal={setOpenBarcodeModal} modalType={'barcode'} closeModal={() => setOpenBarcodeModal(false)} height={'510px'} />
+          
         </SearchBarContainer>
       }
-
-      {showScanner && <Barcode />}
     </>
   );
 };

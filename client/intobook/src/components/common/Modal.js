@@ -3,6 +3,7 @@ import { DeleteLog } from './../bookInfo';
 import { BookmarkInfo, CompleteReadingInfo } from './../home';
 import { Tutorial, ReadingBooks } from "./";
 import { styled } from 'styled-components';
+import Bar from './../bookSearch/Bar';
 
 const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMethod }) => {
   const closeModal = () => {
@@ -22,6 +23,7 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
           {modalType === 'bookmarkInfo' && <BookmarkInfo closeModal={closeModal} />}
           {modalType === 'completeBook' && <CompleteReadingInfo closeModal={closeModal} />}
           {modalType === 'deleteLog' && <DeleteLog closeModal={closeModal} onDelete={handleMethod} />}
+          {modalType === 'barcode' && <Bar closeModal={closeModal} />}
         </DialogContents>
       </Dialog>
     </Box>

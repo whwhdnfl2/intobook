@@ -15,7 +15,7 @@ const Barcode = () => {
   
     scanner.render(success);
   
-    function success(result) {
+    function success(result) { 
       console.log(result);
   
       scanner.clear();
