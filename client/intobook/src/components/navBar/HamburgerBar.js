@@ -3,12 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
-import styled from "styled-components";
 import { logout } from "../../api/logoutApi";
 import { AccessToken } from "../../recoil/user/UserAtom";
 import { useRecoilState } from "recoil";
-import UpdateUsername from '../common/UpdateUsername';
-
+import { Modal } from './../common';
+import styled from "styled-components";
 
 const DropdownContainer = styled.div`
     position: relative;
@@ -41,7 +40,7 @@ const DropdownItem = styled.div`
 
 const HamburgerBar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+    const [openEditNicknameModal, setOpenEditNicknameModal] = useState(false);
     const navigate = useNavigate();
     const [token, setToken] = useRecoilState(AccessToken);
 
@@ -50,7 +49,9 @@ const HamburgerBar = () => {
     };
 
     const handleToggleModal = () => {
-        setIsModalOpen(!isModalOpen);
+        setIsDropdownOpen(false);
+        // setIsModalOpen(true);
+        setOpenEditNicknameModal(true);
     };
 
     //쿠키 삭제
@@ -60,7 +61,7 @@ const HamburgerBar = () => {
 
     // 로그아웃 동작
     const handleLogout = async () => {
-        const res = await logout(); //로그아웃api 호출
+        await logout(); //로그아웃api 호출
         deleteCookie('accessToken'); // 쿠키에서 액세스토큰 삭제
         setToken(null); // 상태 업데이트
         navigate('/');
@@ -104,7 +105,10 @@ const HamburgerBar = () => {
                     </DropdownItem>
                 </DropdownContent>
             )}
-            {isModalOpen && <UpdateUsername closeModal={handleToggleModal} />}
+            {/* {isModalOpen && <UpdateUsername closeModal={handleToggleModal} />} */}
+            <Modal openModal={openEditNicknameModal} setOpenModal={setOpenEditNicknameModal} modalType={'updateUsername'}
+                closeModal={() => { setOpenEditNicknameModal(false) }} height={'185px'}
+            />
         </DropdownContainer>
     );
 };
