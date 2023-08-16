@@ -45,7 +45,11 @@ export const deleteBookHistory = async (historyPk) => {
 //로그 시작 기록하기(히스토리 생성)
 export const createBookHistory = async (userBookPk) => {
   try {
-    const res = await axiosInstance.post(`historys/${userBookPk}`)
+    const res = await axiosInstance.post(`historys`, null, {
+      params: {
+        userBookPk
+      }
+    })
     return res.data;
   } catch (err) {
     return err
