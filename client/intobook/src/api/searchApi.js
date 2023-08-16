@@ -15,11 +15,11 @@ export const searchBooks = async (keyword, start) => {
 };
 
 // 책 상세 정보 불러오기
-// export const getBookDetail = async (isbn) => {
-//   try {
-//     const res = await axiosInstance.get(`/books/${isbn}`);
-//     return res.data;
-//   } catch (err) {
-//     return err
-//   }
-// };
+export const getBookDetail = async (isbn) => {
+  try {
+    const res = await axiosInstance.get(`/books/${isbn}`);
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};

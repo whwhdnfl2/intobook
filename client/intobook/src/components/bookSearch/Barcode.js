@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { getBookDetail } from '../../api/searchApi'
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 
-const Barcode = () => {
+const Barcode = ({ setShowScanner, setScannedBook, setIsSheetOpen  }) => {
   const [scanResult, setScanResult] = useState(null);
   const [scanner, setScanner] = useState(null);
 
@@ -11,6 +12,9 @@ const Barcode = () => {
         console.log(result);
         scanner.clear();
         setScanResult(result);
+        setShowScanner(false);
+        getBookInfo(result);
+        setIsSheetOpen(true);
       });
     }
 
@@ -19,7 +23,7 @@ const Barcode = () => {
         scanner.clear();
       }
     };
-  }, [scanner]);
+  }, [scanner, setShowScanner]);
 
   useEffect(() => {
     // const formatsToSupport = [
@@ -38,8 +42,8 @@ const Barcode = () => {
       },
       fps: 200,
       // aspectRatio: 0.5,
-      // supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      // facingMode: "environment",
+      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+      facingMode: "environment",
       // formatsToSupport: formatsToSupport,
     });
 
@@ -49,6 +53,22 @@ const Barcode = () => {
       newScanner.clear();
     };
   }, []);
+
+  const getBookInfo = async (isbn) => {
+    try {
+      const res = await getBookDetail(isbn);
+      const scannedBook = {
+        bookId: res.isbn,
+        title: res.title,
+        author: res.author,
+        status: res.status,
+        cover: res.cover,
+        pate: res.page
+      }
+      setScannedBook(scannedBook);
+    } catch {
+    }
+  };
 
   return (
     <div style={{ width: 300  }}>

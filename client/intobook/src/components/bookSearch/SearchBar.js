@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { barcodehIcon, searchIcon } from '../../assets/img/search/searchBottomSheetImg';
 import { SearchBarContainer, Title, SerchBarDiv, BarcordeIcon, Line, SearchBarInput, SearchIcon } from './../../styles/bookSearch/SearchBarStyle';
-import { Modal } from '../common';
 import Barcode from './Barcode';
+import SelectedBook from './SelectedBook';
 
 const SearchBar = ({ title, updateSearchKeyword }) => {
   const [keyword, setKeyword] = useState('');
   const [showScanner, setShowScanner] = useState(false);
-  const [openBarcodeModal, setOpenBarcodeModal] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [scannedBook, setScannedBook] = useState(null);
   const searchBarInputRef = useRef(null);
+
+  console.log(454545, showScanner, scannedBook, isOpen)
 
   const inputChangeHandler = (event) => {
     setKeyword(event.target.value);
@@ -46,10 +49,6 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
       <SearchBarContainer>
           <Title>{title}</Title>
           <SerchBarDiv>
-            {/* <BarcordeIcon onClick={barcodeScannerHandler} src={barcodehIcon} alt="barcode-icon" /> */}
-            {/* <Link to='/search/barcode' style={{ textDecoration: 'none' }}>
-              <BarcordeIcon src={barcodehIcon} alt="barcode-icon" />
-            </Link> */}
             <div>
               <BarcordeIcon src={barcodehIcon} alt="barcode-icon" onClick={barcodeScannerHandler} />
             </div>
@@ -71,10 +70,8 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
           </SerchBarDiv>
       </SearchBarContainer>
         }
-
-
-      {/* <Modal openModal={openBarcodeModal} setOpenModal={setOpenBarcodeModal} modalType={'barcode'} closeModal={() => setOpenBarcodeModal(false)} height={'510px'} /> */}
-      {showScanner && <Barcode />}
+      {showScanner && <Barcode setShowScanner={setShowScanner} setScannedBook={setScannedBook} setIsSheetOpen={setIsOpen} />}
+      <SelectedBook isOpen={isOpen} setIsOpen={setIsOpen} selectedInfo={scannedBook} />
     </>
   );
 };
