@@ -10,20 +10,13 @@ const ConnectComponent = () => {
     const [bluetoothStatus, setBluetoothStatus] = useRecoilState(BluetoothAtom);
     const [openTutorialModal, setOpenTutorialModal] = useState(false);
 
-
     let contentText = "";
 
     if (bluetoothStatus) {
-        contentText = "블루투스 연결중"
+        contentText = "블루투스 연결중:)"
     } else {
-        contentText = "블루투스 미연결:)";
+        contentText = "블루투스 미연결";
     }
-
-    const testHandle = () => {
-        console.log('튜토리얼 떠라');
-        setOpenTutorialModal(true)
-
-    };
 
     return (
         <StyledBox>
@@ -32,7 +25,7 @@ const ConnectComponent = () => {
             </BluetoothWrapper>
             <ContentsContainer>
                 {<p>{contentText}</p>}
-                <div onClick={testHandle} >
+                <div onClick={()=>{setOpenTutorialModal(true)}} >
                     <BasicButton content={"책갈피 튜토리얼"} />
                 </div>
             </ContentsContainer>

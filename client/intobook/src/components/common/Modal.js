@@ -3,7 +3,6 @@ import { DeleteLog } from './../bookInfo';
 import { BookmarkInfo, CompleteReadingInfo } from './../home';
 import { Tutorial, ReadingBooks, UpdateUsername } from "./";
 import { styled } from 'styled-components';
-import Bar from './../bookSearch/Bar';
 
 const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMethod }) => {
   const closeModal = () => {
