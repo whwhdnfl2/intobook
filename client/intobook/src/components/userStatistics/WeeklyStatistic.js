@@ -1,5 +1,6 @@
 import React from 'react';
 import { MyResponsiveBar } from './';
+import { styled } from 'styled-components';
 
 
 const WeeklyStatistic = (weeklyData) => {
@@ -21,11 +22,22 @@ const WeeklyStatistic = (weeklyData) => {
 
 
     return (
-      <div style={{ height: '250px', width: '90%', minWidth: '320px', backgroundColor: 'lightblue', padding: '0.5rem', borderRadius: '20px' }}>
+      <StyledWeeklyStatistic>
         <p>지난주의 나를 이겨라!</p>
         <MyResponsiveBar data={data} />
-      </div>
+      </StyledWeeklyStatistic>
     );
   };
+
+  const StyledWeeklyStatistic = styled.div`
+  height: 280px;
+  width: 90%;
+  min-width: 320px;
+  background-color: rgba(235, 235, 235, 0.6);
+  padding: 0.5rem 0.5rem 0;
+  border-radius: 20px;
+  text-align: center;
+  font-size: var(--font-h6);
+`;
 
   export default WeeklyStatistic;

@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AccessAlarmsOutlinedIcon from '@mui/icons-material/AccessAlarmsOutlined';
 import SpeedOutlinedIcon from '@mui/icons-material/SpeedOutlined';
 import { formatTime } from './../../utils/dateTimeUtils';
-import { styled } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 
 const AverageStatistics = ({ readingTime, readSpeed }) => {
   const avgReadingTime = formatTime(readingTime) ? formatTime(readingTime) : '0분';
+  const [currentNumber, setCurrentNumber] = useState(0);
+  const [currentNumber2, setCurrentNumber2] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (currentNumber < avgReadingTime) {
+        setCurrentNumber(currentNumber + 1);
+      } else {
+        clearInterval(interval);
+      }
+
+      if (currentNumber2 < readSpeed) {
+        setCurrentNumber2(currentNumber2 + 1);
+      } else {
+        clearInterval(interval);
+      }
+
+    }, 5);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentNumber, currentNumber2]);
 
   return (
     <StatisticsDiv>
@@ -14,7 +37,8 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
           <AccessAlarmsOutlinedIcon sx={{ marginLeft: '2px', width: '26px', height: '26px', color: '#5061FF' }} />
         </IconDiv>
         <Title>책에 푹 빠져든 시간</Title>
-        <Content>{avgReadingTime}</Content>
+        {/* <Content>{avgReadingTime}</Content> */}
+        <Content>{currentNumber}</Content>
       </Div>
       <Div>
         <IconDiv>
@@ -70,6 +94,21 @@ const Content = styled.div`
   font-family: Open Sans;
   font-size: var(--font-h4);
   font-weight: 600;
+`;
+
+const CountUpAnimation = keyframes`
+  from {
+    content: "0";
+  }
+  to {
+    content: attr(data-count);
+  }
+`;
+
+const CounterWrapper = styled.div`
+  font-size: 15px;
+  font-weight: bold;
+  animation: ${CountUpAnimation} 5s linear forwards;
 `;
 
 export default AverageStatistics;

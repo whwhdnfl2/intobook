@@ -1,14 +1,8 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar'
-import { motion } from "framer-motion"
 
 
 const MyResponsiveBar = ({ data }) => (
-  // <motion.div
-  //   initial={{ y: 0 }} // 그래프가 위에서 시작하도록 초기 y 값을 설정
-  //   animate={{ y: 100 }} // 최종적으로 y 값을 0으로 이동
-  //   transition={{ duration: 1, delay: 0.5 }} // 지속 시간 및 지연 설정
-  // >
     <ResponsiveBar
       data={data}
       keys={[
