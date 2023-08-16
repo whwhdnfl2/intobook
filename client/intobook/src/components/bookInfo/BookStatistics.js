@@ -22,12 +22,8 @@ const BookStatistics = ({ userBookId, status }) => {
     return res.data;
   };
 
-  console.log('ye', statisticsValue)
-
   const avgReadingTime = statisticsValue?.averageReadingTime;
   const readingSpeed = statisticsValue?.averageSpeed;
-
-  console.log(avgReadingTime)
 
   return (
     <div>

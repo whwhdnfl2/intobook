@@ -5,3 +5,8 @@ export const HistoryPkAtom = atom({
     key: 'HistoryPkAtom',
     default: 'null'
 });
+
+export const UpdateSuccessAtom = atom({
+    key: 'UpdateSuccessAtom',
+    default: false,
+});
