@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
+import { Html5QrcodeScanner, Html5QrcodeSupportedFormats, Html5QrcodeScanType } from 'html5-qrcode';
 
-const Barcode = () => {
+import { styled } from 'styled-components';
+
+const Bar = ({ closeModal }) => {
   const [scanResult, setScanResult] = useState(null);
   const [scanner, setScanner] = useState(null);
 
@@ -36,10 +38,10 @@ const Barcode = () => {
         width: 200,
         height: 150,
       },
-      fps: 200,
+      fps: 150,
       // aspectRatio: 0.5,
-      // supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      // facingMode: "environment",
+      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+      facingMode: "environment",
       // formatsToSupport: formatsToSupport,
     });
 
@@ -49,16 +51,30 @@ const Barcode = () => {
       newScanner.clear();
     };
   }, []);
-
   return (
-    <div style={{ width: 300  }}>
+    <ModalContent>
+      {scanResult ? (
+        <div>Success: {scanResult}</div>
+      ) : (
+        <div id="reader" style={{ width: 280 }}></div>
+      )}
 
-      { scanResult ? 
-      <div>Success: {scanResult}</div> :
-        <div id="reader"></div>
-      }
-    </div>
-  );
+
+    {/* <StyledButton variant="contained" onClick={closeModal}>
+      나중에 보기
+    </StyledButton> */}
+  </ModalContent>
+);
 };
 
-export default Barcode;
+const ModalContent = styled.div`
+  width: 280px;
+  min-width: 240px;
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export default Bar;

@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { LogAtom, SelectedStartTimeAtom, SelectedEndTimeAtom, HistoryLogsAtom, LogEditAtom } from '../../recoil/book/BookAtom';
+import { UpdateSuccessAtom } from '../../recoil/history/historyAtom';
 import { deleteBookHistory } from './../../api/historyApi';
 import { formatDate, formatTimeInDate } from '../../utils/dateTimeUtils';
 import { Modal, AlertInfo } from './../common';
@@ -15,8 +16,12 @@ const Log = ({ log }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [openDeleteLogModal, setOpenDeleteLogModal] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
+  const [updateSuccess, setUpdateSuccess] = useRecoilState(UpdateSuccessAtom);
   const [historyLog, setHistoryLog] = useRecoilState(HistoryLogsAtom);
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
+
+
 
   const startTime = log?.startTime;
   const endTime = log?.endTime;
@@ -64,6 +69,13 @@ const Log = ({ log }) => {
       minutes: et.getMinutes()
     });
   };
+
+  useEffect(() => {
+    if (updateSuccess) {
+      setOpenUpdateAlert(true); // 업데이트 성공 시 알림 띄우기
+    }
+    setUpdateSuccess(false);
+  }, [updateSuccess, setUpdateSuccess]);
 
   const dropdownRef = useRef(null);
 
@@ -130,7 +142,12 @@ const Log = ({ log }) => {
         />
         {openDeleteAlert &&
           <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
-            setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }}
+            setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }} type={'success'}
+          />
+        }
+        {openUpdateAlert &&
+          <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert} 
+            setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)} type={'success'}
           />
         }
       </LogCard>
