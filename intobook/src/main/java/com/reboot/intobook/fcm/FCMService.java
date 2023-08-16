@@ -1,6 +1,8 @@
 package com.reboot.intobook.fcm;
 
 import com.google.firebase.messaging.*;
+import com.reboot.intobook.history.HistoryRepository;
+import com.reboot.intobook.history.entity.History;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.utils.JwtUtil;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +33,7 @@ public class FCMService {
 
 
     private final UserRepository userRepository;
+    private final HistoryRepository historyRepository;
     private final JwtUtil jwtUtil = new JwtUtil();
 
 
@@ -71,24 +76,27 @@ public class FCMService {
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 3600000)
+    @Scheduled(fixedDelay = 36000)
     public void sendAlarm() throws FirebaseMessagingException {
-        //user table에서 userPk를 전부 가져온다.
-        List<User> resultList =  userRepository.findAll();
-        //userPk를 순회하면서 알람을 보내야 하면 알람 보내기
+        //user table에서 user를 전부 가져온다.
+        List<User> userList =  userRepository.findAll();
+        //user를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
-        for(User user: resultList){
+        for(User user: userList){
             if(user.getFcmToken() == null) continue;
-            //나중에 로직 추가 userPk를 통해서 해당 사용자가 얼마나 오랫동안 책을 읽지 않았느지 체크한다. 그리고 알람을 보내야 하면 넣는다.
-//            if(){
-//                selectedFcmTokens.add(userPkFcmDto.getFcmToken());
-//            }
+            else {
+                List<History> historyList = historyRepository.findByUserPkOrderByEndTimeDesc(user.getUserPk());
+                if(historyList.size() == 0 || historyList.get(0).getEndTime() == null) break;
+                if(ChronoUnit.MINUTES.between(historyList.get(0).getEndTime(), LocalDateTime.now()) > 60){
+                    selectedFcmTokens.add(user.getFcmToken());
+                }
+            }
         }
 
         try{
             MulticastMessage message = MulticastMessage.builder().addAllTokens(selectedFcmTokens).setNotification(Notification.builder()
-                            .setTitle("보내라")
-                            .setBody("굿")
+                            .setTitle("오랫동안 안읽었어요.")
+                            .setBody("책이 울고있어요!! 책을 읽으러 갑시다.")
                             .build())
                     .build();
             BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
