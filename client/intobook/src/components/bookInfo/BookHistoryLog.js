@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { HistoryLogsAtom } from '../../recoil/book/BookAtom';
 import { Stack, Box } from '@mui/material';
@@ -12,6 +12,11 @@ const BookHistoryLog = ({ userBookId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
+
+  useEffect(() => {
+    getBookHistoryLogs();
+  }, [historyLogs])
+  
 
   async function getBookHistoryLogs() {
     setIsLoading(true);

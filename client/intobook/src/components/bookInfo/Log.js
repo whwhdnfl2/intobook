@@ -142,12 +142,12 @@ const Log = ({ log }) => {
         />
         {openDeleteAlert &&
           <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
-            setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }}
+            setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }} type={'success'}
           />
         }
         {openUpdateAlert &&
-          <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
-            setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)}
+          <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert} 
+            setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)} type={'success'}
           />
         }
       </LogCard>
