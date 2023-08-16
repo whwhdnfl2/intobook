@@ -85,7 +85,7 @@ public class FCMService {
         for(User user: userList){
             if(user.getFcmToken() == null) continue;
             else {
-                List<History> historyList = historyRepository.findByUserPkOrderByEndTimeDesc(user.getUserPk());
+                List<History> historyList = historyRepository.findByUserUserPkOrderByEndTimeDesc(user.getUserPk());
                 if(historyList.size() == 0 || historyList.get(0).getEndTime() == null) break;
                 if(ChronoUnit.MINUTES.between(historyList.get(0).getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
