@@ -1,7 +1,7 @@
 import { Box, Dialog, DialogContent } from "@mui/material";
 import { DeleteLog } from './../bookInfo';
 import { BookmarkInfo, CompleteReadingInfo } from './../home';
-import { Tutorial, ReadingBooks } from "./";
+import { Tutorial, ReadingBooks, UpdateUsername } from "./";
 import { styled } from 'styled-components';
 
 const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMethod }) => {
@@ -22,6 +22,7 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
           {modalType === 'bookmarkInfo' && <BookmarkInfo closeModal={closeModal} />}
           {modalType === 'completeBook' && <CompleteReadingInfo closeModal={closeModal} />}
           {modalType === 'deleteLog' && <DeleteLog closeModal={closeModal} onDelete={handleMethod} />}
+          {modalType === 'updateUsername' && <UpdateUsername closeModal={closeModal} />}
         </DialogContents>
       </Dialog>
     </Box>
