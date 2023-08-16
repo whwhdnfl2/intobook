@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyledUpperNavbar} from '../../styles/navBar/upperNavBar';
-import AppTitle from './AppTitle';
+import { StyledUpperNavbar } from '../../styles/navBar/upperNavBar';
+import { AppTitle } from './';
 import HamburgerBar from './../navBar/HamburgerBar';
-import { StyleContainer } from '../../styles/CommonStyle';
 
 const UpperNavbar = () => {
 
   return (
-      <StyledUpperNavbar
+    <StyledUpperNavbar
       style={{
         position: 'fixed',
         // left: '50%',
@@ -24,7 +23,7 @@ const UpperNavbar = () => {
       <AppTitle />
       <HamburgerBar />
     </StyledUpperNavbar>
-    
+
   );
 }
 

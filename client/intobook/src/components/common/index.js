@@ -9,3 +9,5 @@ export { default as TotalStatisticsItem } from './TotalStatisticsItem';
 export { default as ReadingBooks } from './ReadingBooks';
 export { default as UpdateUsername } from './UpdateUsername';
 export { default as AlertInfo } from './AlertInfo';
+export { default as BasicButton } from './BasicButton';
+export { default as AppTitle } from './AppTitle';
