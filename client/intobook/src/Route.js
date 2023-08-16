@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage, LoginPage, TutorialPage, BookshelvesPage, AlarmPage, StatisticsPage, BookSearchPage, BookInfoPage } from './pages';
+import { HomePage, LoginPage, TutorialPage, BookshelvesPage, AlarmPage, StatisticsPage, BookSearchPage, BookInfoPage, BarcodePage } from './pages';
 import { UpperNavbar } from './components/common';
 import { Navbar } from './components/common';
 
@@ -17,6 +17,7 @@ const AppRoutes = () => {
                 <Route path="/alarm" element={<AlarmPage />} />
                 <Route path="/statistics" element={<StatisticsPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                {/* <Route path="/search/barcode" element={<BarcodePage />} /> */}
             </Routes>
             <Navbar />
         </>

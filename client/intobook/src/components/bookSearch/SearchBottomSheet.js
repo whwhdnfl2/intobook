@@ -42,7 +42,9 @@ const SearchBottomSheet = ({ isOpen, setIsOpen }) => {
               <SearchGroups iconSrc={searchIcon} methodText={'검색하여 등록하기'}></SearchGroups>
             </Link>
             <Line />
-            <SearchGroups iconSrc={barcodehIcon} methodText={'바코드로 등록하기'}></SearchGroups>
+            <Link to='/search/barcode' style={{ textDecoration: 'none' }}>
+              <SearchGroups iconSrc={barcodehIcon} methodText={'바코드로 등록하기'}></SearchGroups>
+            </Link>
             <Line />
             <SearchGroups onClick={addInBookShelvesHandler} iconSrc={bookshIcon} methodText={'내 책장에서 등록하기'}></SearchGroups>
             <Line />
