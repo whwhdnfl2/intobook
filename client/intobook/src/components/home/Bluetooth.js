@@ -38,8 +38,6 @@ const Bluetooth = () => {
                 // Human-readable name of the device.
                 console.log('Connecting to GATT Server...');
                 setBluetoothDevice(device);
-                
-                console.log('비동기라 여기선 안찍히는듯',bluetoothDevice)
                 // Attempts to connect to remote GATT Server.
                 return device.gatt.connect();
             })
@@ -60,13 +58,14 @@ const Bluetooth = () => {
                     Bcharacteristic.addEventListener('characteristicvaluechanged', HandleNotifications);
                 });
             })
-            .catch(error => { console.error(error); });
+            .catch(error => { 
+                setIsBluetoothConnected(false); //bluetooth 연결 상태 변경
+                console.error(error); });
     } else {
         setIsBluetoothConnected(false);
         isBluetoothConnected = false;
-        bluetoothDevice.gatt.disconnect()
-        console.log('여기서 블루투스 연결을 끊어줘야',bluetoothDevice)
-        console.log('끊을때 alert로 한번 더 물어봐야하나?')
+        bluetoothDevice?.gatt?.disconnect()
+        console.log('끊을때 재확인하고 alert 띄워주기')
     }
 }
 
@@ -153,8 +152,8 @@ const StyledBLE = styled.div`
     align-items: center;
     box-shadow: ${({ isActive }) =>
     isActive
-      ? 'inset 0 0 10px rgba(255, 50, 50, 0.), inset 0 0 5px rgba(25, 250, 254, 0.2)'
-      : 'inset -5px 0 0px rgba(105, 105, 105, 0.6), inset 0 -5px 0px rgba(180, 240, 200, 0.6)'};
+      ? 'inset -5px 0 0 rgba(105, 105, 105, 0.2), inset 0 -5px 5px rgba(180, 240, 200, 0.6)'
+      : 'inset -5px 0 0 rgba(105, 105, 105, 0.6), inset 0 -5px 0px rgba(180, 240, 200, 0.6)'};
     cursor: pointer;
       `
 
