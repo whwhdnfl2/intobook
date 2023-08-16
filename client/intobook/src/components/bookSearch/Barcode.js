@@ -37,13 +37,14 @@ const Barcode = ({ setShowScanner, setScannedBook, setIsSheetOpen  }) => {
 
     const newScanner = new Html5QrcodeScanner('reader', {
       qrbox: {
-        width: 200,
-        height: 150,
+        width: 220,
+        height: 100,
       },
-      fps: 200,
+      fps: 500,
       // aspectRatio: 0.5,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      facingMode: "environment",
+      // facingMode: "environment",
+      facingMode: "user",
       // formatsToSupport: formatsToSupport,
     });
 
@@ -63,8 +64,10 @@ const Barcode = ({ setShowScanner, setScannedBook, setIsSheetOpen  }) => {
         author: res.author,
         status: res.status,
         cover: res.cover,
-        pate: res.page
+        page: res.page,
+        scanResult: isbn
       }
+      console.log(scannedBook,6767)
       setScannedBook(scannedBook);
     } catch {
     }
