@@ -21,10 +21,12 @@ const StyledButton = styled(motion.button)`
   }
 `;
 
-export const BasicButton = ({ content }) => {
+const BasicButton = ({ content }) => {
   return (
     <StyledButton whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       {content}
     </StyledButton>
   );
 };
+
+export default BasicButton;
