@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import BookCharacter from './BookCharacter';
 import CharacterStatistic from '../character/CharacterStatistic';
+import { useRecoilValue } from 'recoil';
+import { UserNameAtom } from '../../recoil/user/UserAtom';
 
 
 const RecentStatistic = ({ characterData }) => {
-
+  const username = useRecoilValue(UserNameAtom)
   const attention = characterData?.attention;
   const multiRead = characterData?.multiRead;
   const burning = characterData?.burning;
@@ -66,6 +67,8 @@ const RecentStatistic = ({ characterData }) => {
         </TextContainer>
       </CharacterContainer>
       <BoxContainer>
+        {<p>{username}님은</p>}
+        <ColoredBoxContainer>
         <ColoredBox color="rgba(255, 0, 0, 0.5)">
           선호 요일 <br />
           {mostDay}</ColoredBox>
@@ -76,6 +79,8 @@ const RecentStatistic = ({ characterData }) => {
           선호 장르 <br />
           {mostGenre}
         </ColoredBox>
+        </ColoredBoxContainer>
+        <p>를 선호하는 독서가입니다</p>
       </BoxContainer>
     </>
   );
@@ -119,12 +124,18 @@ const ColoredBox = styled.div`
   color:white;
 `;
 
+const ColoredBoxContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
 const BoxContainer = styled.div`
   display: flex;
+  flex-direction: column;
   width: 90%;
-  min-width: 340px;
-  justify-content: space-between;
-  margin: 10px auto;
+  min-width: 320px;
+  padding: 0.5rem;
+  margin: 0px auto;
 `;
 
 
