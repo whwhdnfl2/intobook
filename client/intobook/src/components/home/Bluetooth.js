@@ -20,21 +20,21 @@ const Bluetooth = () => {
   const BluetoothConnect = () => {
     //블루투스 연결상태가 false일 때, 연결
     if (!isBluetoothConnected) {
-        setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
-
+        
         navigator.bluetooth.requestDevice({
             filters: [{ services: ['0000ffe0-0000-1000-8000-00805f9b34fb'] }]
             // acceptAllDevices: true
         })
-            .then(device => {
-                // Human-readable name of the device.
-                console.log('Connecting to GATT Server...');
-                setBluetoothDevice(device);
-                console.log('비동기라 여기선 안찍히는듯',bluetoothDevice)
-                // Attempts to connect to remote GATT Server.
-                return bluetoothDevice.gatt.connect();
-            })
-            .then(server => {
+        .then(device => {
+            // Human-readable name of the device.
+            console.log('Connecting to GATT Server...');
+            setBluetoothDevice(device);
+            console.log('비동기라 여기선 안찍히는듯',bluetoothDevice)
+            // Attempts to connect to remote GATT Server.
+            return bluetoothDevice.gatt.connect();
+        })
+        .then(server => {
+                setIsBluetoothConnected(true); //bluetooth 연결 상태 변경
                 // Getting Service…
                 console.log('Getting Service...');
                 return server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');
@@ -107,13 +107,18 @@ const HandleNotifications = async (event) => {
 
 const StyledBLE = styled.div`
     width: 60px;
-    height: 60px;
-    background-color:${({ isActive }) => isActive ? '#5A7FFF' : '#827796'};
+    height: 80px;
+    background-color:${({ isActive }) => isActive ? '#F99475' : '#827796'};
     border-radius:30px;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-`
+    box-shadow: ${({ isActive }) =>
+    isActive
+      ? 'inset 0 0 10px rgba(255, 50, 50, 0.), inset 0 0 5px rgba(25, 250, 254, 0.2)'
+      : 'inset -5px 0 0px rgba(105, 105, 105, 0.6), inset 0 -5px 0px rgba(180, 240, 200, 0.6)'};
+    cursor: pointer;
+      `
 
 export default Bluetooth;
