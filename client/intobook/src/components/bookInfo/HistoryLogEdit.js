@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { LogAtom, LogEditAtom, SelectedStartTimeAtom, SelectedEndTimeAtom } from '../../recoil/book/BookAtom';
 import { editBookHistory } from '../../api/historyApi';
 import { AlertInfo } from './../common';
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { formatDate, formatTimeInDate } from './../../utils/dateTimeUtils';
 import { UpdateSuccessAtom } from '../../recoil/history/historyAtom';
 import { styled } from 'styled-components';
+import { HistoryLogsAtom } from './../../recoil/book/BookAtom';
 
 const HistoryLogEdit = () => {
   const selectedLog = useRecoilValue(LogAtom);
@@ -19,6 +20,9 @@ const HistoryLogEdit = () => {
   const selectedEndTime = useRecoilValue(SelectedEndTimeAtom);
   const setUpdateSuccess = useSetRecoilState(UpdateSuccessAtom);
   const [openAlert, setOpenAlert] = useState(false);
+
+  const [historyLogs, setHistoryLogs] = useRecoilState(HistoryLogsAtom);
+
 
 
   const startDate = formatDate(selectedLog.startTime, 'dateLetter');
@@ -78,6 +82,7 @@ const HistoryLogEdit = () => {
       } catch (err) {
         console.error(err);
       } finally {
+        
         setIsOpenLogEdit(false);
         setUpdateSuccess(true);
       }
@@ -86,6 +91,22 @@ const HistoryLogEdit = () => {
       setOpenAlert(true);
     }
   };
+  
+  const handelEditLog = () => {
+    const updatedHistoryLog = historyLogs.map(item => {
+      if (item.historyPk === selectedLog.historyPk) {
+        return {
+          ...item,
+          startTime: saveStart,
+          endTime: saveEnd,
+          comment: editedComment, 
+        };
+      }
+      return item;
+    });
+    setHistoryLogs(updatedHistoryLog);
+  };
+
 
   const isEditDone = (value) => {
     setIsOpenTimeEdit(!value);
@@ -155,7 +176,7 @@ const HistoryLogEdit = () => {
       )}
       {openAlert &&
         <AlertInfo text={'시간을 다시 설정해주세요'} openAlert={openAlert}
-          setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)}
+          setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)} type={'error'}
         />
       }
     </LogEditContainer>
