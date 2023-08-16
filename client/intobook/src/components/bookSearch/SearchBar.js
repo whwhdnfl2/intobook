@@ -45,8 +45,9 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
 
   return (
     <>
-        {!showScanner &&
-      <SearchBarContainer>
+      {!showScanner &&
+        <SearchBarContainer>
+          {scannedBook && <div>{scannedBook.bokkId}</div>}
           <Title>{title}</Title>
           <SerchBarDiv>
             <div>
@@ -68,8 +69,8 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
               />
             )}
           </SerchBarDiv>
-      </SearchBarContainer>
-        }
+        </SearchBarContainer>
+      }
       {showScanner && <Barcode setShowScanner={setShowScanner} setScannedBook={setScannedBook} setIsSheetOpen={setIsOpen} />}
       <SelectedBook isOpen={isOpen} setIsOpen={setIsOpen} selectedInfo={scannedBook} />
     </>

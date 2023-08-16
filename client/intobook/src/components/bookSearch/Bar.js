@@ -41,7 +41,8 @@ const Bar = ({ closeModal }) => {
       fps: 150,
       // aspectRatio: 0.5,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      facingMode: "environment",
+      // facingMode: "environment",
+      facingMode: "user",
       // formatsToSupport: formatsToSupport,
     });
 
