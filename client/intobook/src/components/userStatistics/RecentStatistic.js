@@ -66,13 +66,13 @@ const RecentStatistic = ({ characterData }) => {
         </TextContainer>
       </CharacterContainer>
       <BoxContainer>
-        <ColoredBox color="var(--main-red-color)">
+        <ColoredBox color="rgba(255, 0, 0, 0.5)">
           선호 요일 <br />
           {mostDay}</ColoredBox>
-        <ColoredBox color="#1F787E">
+        <ColoredBox color="rgba(0, 0, 255, 0.7)">
           선호 시간대 <br />
           {mostTime}</ColoredBox>
-        <ColoredBox color="#6A3D97">
+        <ColoredBox color="rgba(255, 0, 0, 0.5)">
           선호 장르 <br />
           {mostGenre}
         </ColoredBox>
@@ -124,7 +124,7 @@ const BoxContainer = styled.div`
   width: 90%;
   min-width: 340px;
   justify-content: space-between;
-  margin: 30px auto;
+  margin: 10px auto;
 `;
 
 

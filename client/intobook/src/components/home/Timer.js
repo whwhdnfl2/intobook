@@ -49,6 +49,7 @@ const Timer = () => {
             {timerValue.minutes < 10 ? '0' + timerValue.minutes : timerValue.minutes} :{' '}
             {timerValue.seconds < 10 ? '0' + timerValue.seconds : timerValue.seconds}
           </h2>
+          <p>오늘의 독서 시간이 채워지고 있어요</p>
         </TimerDiv>
       )}
     </div>
@@ -68,17 +69,17 @@ const TimerDiv = styled.div`
   width: 360px;
   height: 124px;
   border-radius: 100px;
-  margin-bottom: 20px;
   text-align: center;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(45deg, rgba(255, 167, 90, 0.4), rgba(135, 206, 235, 0.4));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(45deg, rgba(255, 167, 190, 0.5), rgba(135, 206, 235, 0.7));
 
   ${props =>
     props.isactive &&
     css`
       animation: ${floatAnimation} 2s infinite;
       animation-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-      box-shadow: 0 0 2px;
     `}
 `
 

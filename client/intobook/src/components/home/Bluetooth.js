@@ -144,13 +144,18 @@ const HandleNotifications = async (event) => {
 
 const StyledBLE = styled.div`
     width: 60px;
-    height: 60px;
-    background-color:${({ isActive }) => isActive ? '#5A7FFF' : '#827796'};
+    height: 80px;
+    background-color:${({ isActive }) => isActive ? '#F99475' : '#827796'};
     border-radius:30px;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-`
+    box-shadow: ${({ isActive }) =>
+    isActive
+      ? 'inset 0 0 10px rgba(255, 50, 50, 0.), inset 0 0 5px rgba(25, 250, 254, 0.2)'
+      : 'inset -5px 0 0px rgba(105, 105, 105, 0.6), inset 0 -5px 0px rgba(180, 240, 200, 0.6)'};
+    cursor: pointer;
+      `
 
 export default Bluetooth;
