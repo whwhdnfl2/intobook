@@ -33,9 +33,9 @@ public class HistoryController {
      */
     @PostMapping()
     @ApiOperation(value="책장 안에 책의 history 생성")
-    public ResponseEntity<Long> createHistory( @RequestParam("userBookPk") Long userBookPk) {
+    public ResponseEntity<Long> createHistory( @RequestParam("userBookPk") long userBookPk) {
 
-        Long newHistoryPk = historyService.create( userBookPk );
+        long newHistoryPk = historyService.create( userBookPk );
         return ResponseEntity.status(HttpStatus.CREATED).body(newHistoryPk);
     }
 
