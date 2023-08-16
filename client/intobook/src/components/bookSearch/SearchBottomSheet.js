@@ -24,15 +24,15 @@ const SearchBottomSheet = ({ isOpen, setIsOpen }) => {
         BackdropProps={{
           style:
           {
-            width: '400px', margin: 'auto'
+            width: '100%', margin: 'auto'
           }
         }}
         PaperProps={{
           sx: {
-            width: '400px', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
+            width: '100%', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
           }
         }}>
-        <Stack width={400} height={254} >
+        <Stack width={'90%'} height={254} >
           <SearchBottomeSheetDiv>
             <Title>
               <span>읽을 책 등록하기</span>

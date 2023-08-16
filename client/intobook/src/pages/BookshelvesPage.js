@@ -7,15 +7,14 @@ import { Layout, LayoutForth, StyleSecondContainer } from './../styles/CommonSty
 import { useRecoilValue } from "recoil";
 import { UserNameAtom } from '../recoil/user/UserAtom';
 
-
 const BookshelvesPage = () => {
   const username = useRecoilValue(UserNameAtom);
 
   return (
     <motion.div
-      initial={{ x: '-100%' }} // 왼쪽에서 나타나는 효과
-      animate={{ x: 0 }} // 화면 안쪽으로 이동하여 나타나는 효과
-      exit={{ x: '100%' }} // 오른쪽으로 사라지는 효과
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
       <LayoutForth>
         <StyleSecondContainer>

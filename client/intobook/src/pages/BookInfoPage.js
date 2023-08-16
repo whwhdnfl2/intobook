@@ -68,13 +68,12 @@ const BookInfoPage = () => {
 };
 
 const BookInfoContent = styled.div`
-  width: 320px;
-  height: 400px;
+  width: 90%;
+  height: fit-content;
   flex-shrink: 0;
   border-radius: 20px;
   background: var(--white);
-  border: 1px solid var(--main-color);
-  padding-top: 10px;
+  padding: 10px auto;
   margin-top: 10px;
 `;
 
