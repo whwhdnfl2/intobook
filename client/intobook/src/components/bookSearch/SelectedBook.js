@@ -63,7 +63,7 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
         }}>
         <Stack width={400} height={295} >
           <SearchBottomeSheetDiv>
-            <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '360px' }, textAlign: 'center' }} >
+            <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '90%' }, textAlign: 'center' }} >
               <BookCover image={selectedInfo?.cover} alt={selectedInfo?.title + 'image'}
                 customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
               />
@@ -114,7 +114,7 @@ const StatusButton = styled.button`
   color: var(--white);
   text-align: center;
   font-family: var(--main-font);
-  font-size: var(--font-h5);
+  font-size: var(--font-h6);
   letter-spacing: 0.4px;
   cursor: pointer;
 `;
