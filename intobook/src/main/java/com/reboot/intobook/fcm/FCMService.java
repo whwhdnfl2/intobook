@@ -75,11 +75,16 @@ public class FCMService {
     public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
+        log.info("싱행 중");
+
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
         for(User user: userList){
+            log.info("for문 실행 중");
+
             if(user.getFcmToken() != null) {
                 History history = historyRepository.findTop1ByUserUserPkOrderByEndTimeDesc(user.getUserPk());
+                log.info("endTime: " + history.getEndTime());
                 if(history == null) {
                     break;
                 }
