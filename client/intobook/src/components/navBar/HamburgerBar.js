@@ -87,7 +87,11 @@ const HamburgerBar = () => {
 
     return (
         <DropdownContainer>
-            <MenuIcon onClick={handleToggleDropdown}>
+            <MenuIcon onClick={handleToggleDropdown} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
                 <FontAwesomeIcon icon={faBars} size="2x" style={{ color: 'white' }} />
             </MenuIcon>
             {isDropdownOpen && (
