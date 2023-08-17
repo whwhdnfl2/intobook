@@ -11,8 +11,6 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
   const [scannedBook, setScannedBook] = useState(null);
   const searchBarInputRef = useRef(null);
 
-  console.log(454545, showScanner, scannedBook, isOpen)
-
   const inputChangeHandler = (event) => {
     setKeyword(event.target.value);
   };
