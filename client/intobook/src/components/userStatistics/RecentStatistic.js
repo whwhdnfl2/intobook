@@ -16,9 +16,10 @@ const RecentStatistic = ({ characterData }) => {
   //React.Fragment
   return (
     <>
-      <CharacterContainer>
+      <CharacterContainer style= {{ padding: '0rem 1rem 0rem rem' }}>
         {/* <BookCharacter val={[attention, multiRead, burning]} /> */}
-        <CharacterStatistic con1={attention} con2={burning} con3={multiRead}/>
+        <CharacterStatistic con1={attention} con2={burning} con3={multiRead}
+          />
         {/* <CharacterStatistic con1={true} con2={true} con3={true}/> */}
         <TextContainer>
           {attention >= 5 ? (
