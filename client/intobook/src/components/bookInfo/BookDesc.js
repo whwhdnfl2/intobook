@@ -25,7 +25,7 @@ const BookDesc = ({ bookInfo }) => {
         customStyle={{ width: '80px', height: '120px', border: '2px solid white', marginRight: '10px' }}
       />
       <BookInfoContentDiv>
-        <div style={{ fontSize: 'var(--font-h5)', width: '150px' }}>{title}</div>
+        <div style={{ fontSize: 'var(--font-h5)', width: '215px' }}>{title}</div>
         <TempDiv>
           <div>
             <div style={{ fontSize: 'var(--font-h7)', marginBottom: '3px' }}>{author}</div>
@@ -65,11 +65,12 @@ const LabelDiv = styled.div`
   flex-shrink: 0;
   background: var(--main-green-color);
   color: var(--white);
-  font-family: var(--main-font);
   font-size: var(--font-h5);
   display: flex;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 `;
 
 const TempDiv = styled.div`

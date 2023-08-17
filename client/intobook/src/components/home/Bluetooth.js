@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
@@ -6,24 +6,29 @@ import { createBookHistory, completeBookHistory } from '../../api/historyApi';
 import { HistoryPkAtom } from '../../recoil/history/historyAtom';
 import { styled } from 'styled-components';
 
-
-
-
 const Bluetooth = () => {
 
   //블루투스 연결상태 상태 및 책갈피 상태 가져오기(둘 다 초기상태 false)
   const [BluetoothConnected, setIsBluetoothConnected] = useRecoilState(BluetoothAtom);
   const [dumy, setBookmark] = useRecoilState(BookmarkStatusAtom);
-  const [nowBook, setNowBook] = useRecoilState(ReadingBookAtom);
   const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom);
+  const [nowBook, setNowBook] = useRecoilState(ReadingBookAtom);
   let bookmark = dumy;
   let historyPk = historyPkAtom;
   let isBluetoothConnected = BluetoothConnected;
+//   let currentBook = 
   // 블루투스 값 저장을 위한 큐
   const [queue, setQueue] = useState(new Array());
-
+  
   let [bluetoothDevice, setBluetoothDevice] = useState(null);
   let [Bcharacteristic, setBcharacteristic] = useState(null); 
+  
+  useEffect(() => {
+    setNowBook(nowBook);
+  }, [setNowBook, nowBook?.userBookPk]);
+  
+
+  console.log('blue', nowBook)
 
   const BluetoothConnect = () => {
     
@@ -55,6 +60,7 @@ const Bluetooth = () => {
                 Bcharacteristic = characteristic;
                 return Bcharacteristic.startNotifications().then(_ => {
                     console.log('> Notifications started');
+                    
                     Bcharacteristic.addEventListener('characteristicvaluechanged', HandleNotifications);
                 });
             })
@@ -116,6 +122,7 @@ const HandleNotifications = async (event) => {
             if (illuminance1 <= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 70 && pressure >= 30) {
                 console.log('책 덮였을때',pressure)
                 const res = await completeBookHistory(historyPk, pressure)
+                console.log('혹시 여기?', res.data)
                 setNowBook(res.data);
                 await setBookmark(false);
                 bookmark = false;
@@ -123,11 +130,13 @@ const HandleNotifications = async (event) => {
             }
         } else {
             if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 70 && pressure <= 50) {
-                console.log('책이 펼쳐졌을때 : ', nowBook)
+                console.log('책이 펼쳐졌을때 : ', nowBook);
+                setNowBook(nowBook);
                 const res = await createBookHistory(nowBook?.userBookPk)
                 await setHistoryPkAtom(res)
                 historyPk = res;
                 await setBookmark(true);
+                console.log('왜?//', nowBook)
                 bookmark = true;
                 console.log(bookmark)
             }

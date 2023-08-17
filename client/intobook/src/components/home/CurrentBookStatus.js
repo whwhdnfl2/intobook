@@ -81,6 +81,8 @@ const CurrentBookStatus = () => {
 
   }, [setNowReadingBook]);
 
+  console.log('currentbook', nowReadingBook);
+
   return (
     <>
       {nowReadingBook && (
