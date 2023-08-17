@@ -80,7 +80,7 @@ public class FCMService {
                 History history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
                 log.info("나이스");
                 if(history == null) {
-                    break;
+                    continue;
                 }
                 if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
