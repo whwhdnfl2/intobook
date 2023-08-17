@@ -13,6 +13,7 @@ const DropdownContainer = styled.div`
     /* position: relative;
     display: inline-block;*/
     display: flex;
+    alignitem
 `;
 
 const MenuIcon = styled.div`
