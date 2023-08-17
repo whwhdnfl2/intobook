@@ -20,6 +20,8 @@ export const BluetoothWrapper = styled.div`
 export const BookWrapper = styled.div`
     flex: 1;
     padding: 10px;
+    display: flex;
+    justify-content: center;
 `;
 
 export const StatusWrapper = styled.div`
@@ -30,7 +32,8 @@ export const StatusWrapper = styled.div`
 
 export const ContentsContainer = styled.div`
     flex: 2;
-    padding: 10px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
+    align-items: center;
 `

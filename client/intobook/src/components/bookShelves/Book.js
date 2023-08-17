@@ -38,8 +38,9 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
   );
 };
 
-const TitleTypography = styled(Typography)`
+const TitleTypography = styled.div`
   color: black;
+  font-size: var(--font-h6);
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

@@ -15,7 +15,7 @@ const MyResponsiveBar = ({ data }) => (
       // width={320}
       height={200}
       minValue={0}
-      // maxValue={0}
+      
       groupMode="grouped"
       valueScale={{ type: 'linear' }}
       indexScale={{ type: 'band', round: true }}

@@ -14,7 +14,7 @@ const DeleteLog = ({ closeModal, onDelete }) => {
         <ErrorOutlineOutlinedIcon />
         <div>삭제하시겠습니까?</div>
       </TitleContainter>
-      <ContentDiv>저장된 로그가 삭제 됩니다.</ContentDiv>
+      <ContentDiv>저장된 히스토리가 삭제 됩니다.</ContentDiv>
       <BtnContainter>
         <StatusButton onClick={closeModal} style={{ border: '1px solid var(--main-color)', color: 'var(--main-color)' }}>취소하기</StatusButton>
         <StatusButton onClick={deleteClickHandler} style={{ background: 'var(--main-color)' }}>삭제하기</StatusButton>

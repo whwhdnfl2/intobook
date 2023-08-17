@@ -33,9 +33,8 @@ const HomePage = () => {
         <StyleContainer>
           <BluetoothComponent />
           <Timer/>
-          <ConnectComponent  />
+          <ConnectComponent />
           <ReadingBookComponent />
-          <CheckButton>확인</CheckButton>
         </StyleContainer>
       </Layout>
     </motion.div>
