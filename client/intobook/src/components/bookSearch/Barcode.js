@@ -9,7 +9,6 @@ const Barcode = ({ setShowScanner, setScannedBook, setIsSheetOpen  }) => {
   useEffect(() => {
     if (scanner) {
       scanner.render((result) => {
-        console.log(result);
         scanner.clear();
         setScanResult(result);
         setShowScanner(false);
@@ -67,7 +66,6 @@ const Barcode = ({ setShowScanner, setScannedBook, setIsSheetOpen  }) => {
         page: res.page,
         scanResult: isbn
       }
-      console.log(scannedBook,6767)
       setScannedBook(scannedBook);
     } catch {
     }
