@@ -9,6 +9,7 @@ export const getBookHistory = async (userBookPk, page) => {
         page: page,
       },
     });
+    console.log('로그 조회', res.data)
     return res.data;
   } catch (err) {
     return err
