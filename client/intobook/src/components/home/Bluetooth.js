@@ -14,7 +14,7 @@ const Bluetooth = () => {
   //블루투스 연결상태 상태 및 책갈피 상태 가져오기(둘 다 초기상태 false)
   const [BluetoothConnected, setIsBluetoothConnected] = useRecoilState(BluetoothAtom);
   const [dumy, setBookmark] = useRecoilState(BookmarkStatusAtom);
-  const [nowBook,setNowBook] = useRecoilState(ReadingBookAtom);
+  const [nowBook, setNowBook] = useRecoilState(ReadingBookAtom);
   const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom);
   let bookmark = dumy;
   let historyPk = historyPkAtom;
@@ -115,7 +115,8 @@ const HandleNotifications = async (event) => {
         if (bookmark) {
             if (illuminance1 <= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 70 && pressure >= 30) {
                 console.log('책 덮였을때',pressure)
-                await completeBookHistory(historyPk, pressure)
+                const res = await completeBookHistory(historyPk, pressure)
+                setNowBook(res.data);
                 await setBookmark(false);
                 bookmark = false;
                 console.log(bookmark)

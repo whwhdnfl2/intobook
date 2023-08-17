@@ -28,7 +28,7 @@ const CurrentBookStatus = () => {
   const [timeDifference, setTimeDifference] = useState(lastLog);
   const [openBookInfoModal, setOpenBookInfoModal] = useState(false);
   const nowPage = nowReadingBook?.nowPage;
-  const progress = nowReadingBook?.page ? Math.floor((nowPage / nowReadingBook.page) * 100) : 0;
+  const progress = nowReadingBook?.progress;
   const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
 
   const searchHandler = () => {
@@ -60,10 +60,11 @@ const CurrentBookStatus = () => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
       setNowReadingBook(detailInfo);
+      console.log(2323, detailInfo)
       // 진행률 95% 이상일 때 모달 띄우기(nowPage가 0이면 확인 불가)
       if (detailInfo?.nowPage && detailInfo?.page) {
         const nowPage = detailInfo.nowPage;
-        const progress = detailInfo?.page ? Math.floor((nowPage / detailInfo.page) * 100) : 0;
+        const progress = detailInfo?.progress;
         
 
         if (progress >= 95) {

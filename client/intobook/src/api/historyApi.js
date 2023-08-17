@@ -58,14 +58,12 @@ export const createBookHistory = async (userBookPk) => {
 
 //로그 종료 생성하기
 export const completeBookHistory = async (historyPk,pressure) => {
-  console.log('여기까진 괜찮나요',historyPk,pressure)
   try {
     const res = await axiosInstance.put(`historys/updateHistoryPressure/${historyPk}`,null,{
       params: {
       pressure
     }}
     )
-    console.log('!!!',res)
     return res;
   } catch (err) {
     console.error('err',err)
