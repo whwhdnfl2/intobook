@@ -105,6 +105,8 @@ public class StatisticsService {
 
         List<History> findHistoryList = historyRepository.findAllByUserBookUserBookPk(userBookPk)
                 .orElseThrow(() -> new NoSuchElementException("History List Not Found"));
+        if (findHistoryList == null || findHistoryList.isEmpty()) return null;
+        LocalDateTime startReadingTime = findHistoryList.get(0).getStartTime();
         if (findHistoryList.isEmpty()) {
             return null;
         }
@@ -131,7 +133,7 @@ public class StatisticsService {
         return GetUserBookStatisticResponse.builder()
                 .userBookReadPages(userBookReadPages)
                 .userBookPages(userBookPages)
-                .startedAt(findUserBook.getStartedAt())
+                .startedAt(startReadingTime)
                 .maxReadingTime(maxReadingTime)
                 .totalReadingTime(totalReadingTime)
                 .averageReadingTime(averageReadingTime)
