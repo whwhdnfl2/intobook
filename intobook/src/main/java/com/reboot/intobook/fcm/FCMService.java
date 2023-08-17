@@ -83,7 +83,7 @@ public class FCMService {
             log.info("fcmtoken: " + user.getFcmToken());
 
             if(user.getFcmToken() != null) {
-                History history = historyRepository.findTop1ByUserUserPkOrderByEndTimeDesc(user.getUserPk());
+                History history = historyRepository.findTopByUserUserPk(user.getUserPk());
                 log.info("endTime: " + history.getEndTime());
                 if(history == null) {
                     break;
