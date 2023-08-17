@@ -82,9 +82,9 @@ public class FCMService {
                 if(history == null) {
                     continue;
                 }
-                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
+//                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
-                }
+//                }
             }
         }
         if(selectedFcmTokens.size() == 0){
