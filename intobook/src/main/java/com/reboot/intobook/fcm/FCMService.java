@@ -34,22 +34,15 @@ public class FCMService {
 
     //fcm알림 테스트를 위한 method
     public void test() throws Exception {
-        log.info("이게 실행 1");
-
         Long userPk = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Optional<User> temp = userRepository.findByUserPk(userPk);
-        log.info("이게 실행 2");
 
         if(temp.isPresent()){
-            log.info("이게 실행 3");
-
             User user = temp.get();
-            log.info("이게 실행 4");
-
 
             String fcmToken = user.getFcmToken();
             Message message = Message.builder()
-                    .putData("title", "판매 완료 알림")
+                    .putData("title", "BOOK!빠지다")
                     .putData("content", "독서를 안한지 3일이 넘었어요. 다시 한번 책갈피와 함께 BOOK! 빠져볼까요?")
                     .setToken(fcmToken)
                     .build();
@@ -84,12 +77,12 @@ public class FCMService {
 
             if(user.getFcmToken() != null) {
                 log.info("userPk: " + user.getUserPk());
-                History history = historyRepository.findTopByUser(user);
-                log.info("endTime: " + history.getEndTime());
-                if(history == null) {
+                List<History> history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
+                log.info("endTime: " + history.get(0).getEndTime());
+                if(history.size() == 0) {
                     break;
                 }
-                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
+                if(ChronoUnit.MINUTES.between(history.get(0).getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
                 }
             }
