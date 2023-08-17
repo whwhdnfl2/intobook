@@ -20,20 +20,20 @@ const BookTotalStatistics = ({ val, status }) => {
         <TotalStatisticsItem
           title={'처음 읽은 날'}
           content={startDate}
-          icon={<NotStartedOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<NotStartedOutlinedIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
         {status !== 'COMPLETE' &&
           <TotalStatisticsItem
             title={'완독까지 남은 시간'}
             content={remainingTime}
-            icon={<MenuBookIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+            icon={<MenuBookIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
             />
           }
         {status === 'COMPLETE' &&
           <TotalStatisticsItem
           title={'완독 일자'}
           content={completeDate}
-          icon={<MenuBookIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<MenuBookIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
           />
         }
       </ItemDivContainer>
@@ -41,12 +41,12 @@ const BookTotalStatistics = ({ val, status }) => {
         <TotalStatisticsItem
           title={'책 읽은 시간'}
           content={readingTime}
-          icon={<WatchLaterOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<WatchLaterOutlinedIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
         <TotalStatisticsItem
           title={'최고 집중 시간'}
           content={bestTime}
-          icon={<TimerOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<TimerOutlinedIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
     </StatisticsDiv>
@@ -58,11 +58,13 @@ const StatisticsDiv = styled.div`
   height: 120px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: #C2D7FF;
+  background: rgba(235, 235, 235, 0.6);
+  background: rgba(194, 215, 255, 0.6);
   margin: 15px auto 15px auto;
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
+  // gap: 0.25rem
 `;
 
 const ItemDivContainer = styled.div`

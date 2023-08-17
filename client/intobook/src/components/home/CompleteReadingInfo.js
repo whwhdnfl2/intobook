@@ -12,10 +12,10 @@ const CompleteReadingInfo = ({ closeModal }) => {
     closeModal();
   };
 
-
   const updateStatusHandler = async () => {
     await updateUserBookStatus(nowReadingBook?.userBookPk, 'COMPLETE');
     setNowReadingBook('');
+    localStorage.removeItem('hasCloseCompleteBookModal'); 
     closeModal();
   };
 

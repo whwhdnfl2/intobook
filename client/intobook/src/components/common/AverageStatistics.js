@@ -5,7 +5,8 @@ import { formatTime } from './../../utils/dateTimeUtils';
 import { styled, keyframes } from 'styled-components';
 
 const AverageStatistics = ({ readingTime, readSpeed }) => {
-  const avgReadingTime = formatTime(readingTime) ? formatTime(readingTime) : '0분';
+  // const avgReadingTime = formatTime(readingTime) ? formatTime(readingTime) : '0분';
+  const avgReadingTime = 100;
   const [currentNumber, setCurrentNumber] = useState(0);
   const [currentNumber2, setCurrentNumber2] = useState(0);
 
@@ -65,7 +66,8 @@ const Div = styled.div`
   height: 160px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #5061FF;
+  // background: #5061FF;
+  background-color: rgba(80, 97, 255, 0.6);
 `;
 
 const IconDiv = styled.div`
@@ -83,7 +85,6 @@ const IconDiv = styled.div`
 const Title = styled.div`
   color: var(--white);
   text-align: center;
-  font-family: var(--main-font);
   font-size: 14px;
   margin: 7px;
 `;

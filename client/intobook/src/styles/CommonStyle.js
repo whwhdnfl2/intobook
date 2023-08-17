@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 export const Layout = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   gap: 1rem;
   background-image: url(/backgroundImg.png);
@@ -100,3 +101,7 @@ export const StyleBackContainer = styled.div`
     min-width: 340px;
     min-height: 90vh;
 `
+
+export const EmptySpace = styled.div`
+  height: 1.5rem;
+`;

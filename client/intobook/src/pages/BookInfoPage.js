@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { BookInfoTabAtom, LogEditAtom } from './../recoil/book/BookAtom';
 import { getUserBookInfo } from '../api/userbookApi';
 import { getUserBookStatistics } from './../api/statisticsApi';
-import { LayoutSecond, StyleBackContainer } from './../styles/CommonStyle';
+import { Layout, StyleBackContainer, EmptySpace } from './../styles/CommonStyle';
 import { styled } from 'styled-components';
 
 const BookInfoPage = () => {
@@ -30,58 +30,57 @@ const BookInfoPage = () => {
     getHistoryStatus();
   }, [userBookId]);
 
-  const nowPage = 150;  // 추후 변경 필요 bookInfo?.nowPage
-  const progress = Math.floor((nowPage / bookInfo?.page) * 100);
+  const nowPage = bookInfo?.nowPage ;
+  const progress = bookInfo?.page ? Math.floor((nowPage / bookInfo.page) * 100) : 0;
   const status = bookInfo?.status;
 
   return (
-    <LayoutSecond>
-    
-    <StyleBackContainer>
-      <BookDesc bookInfo={bookInfo} />
-      <BookInfoContent>
-        {bookInfo && hasHistory === 200 ? (
-          <>
-            <Tab />
-            {selectedTab === 'statistics' ? (
-              <div>
-                <ProgressBar progress={progress} containerWidth={300} />
-                <BookStatistics userBookId={userBookId} status={status} />
-              </div>
-            ) : (
-              isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
-            )}
-          </>
-        ) : (
-          <EmptyContentDiv>
-            <EmptyContent>
-              아직 히스토리가 없네요<br />
-              책을 읽어볼까요?
-            </EmptyContent>
-          </EmptyContentDiv>
-        )}
-      </BookInfoContent>
-    </StyleBackContainer>
-
-    </LayoutSecond>
+    <Layout>
+      <StyleBackContainer>
+        <BookDesc bookInfo={bookInfo} />
+        <BookInfoContent>
+          {bookInfo && hasHistory === 200 ? (
+            <>
+            <EmptySpace />
+              <Tab />
+              <EmptySpace />
+              {selectedTab === 'statistics' ? (
+                <div>
+                  <ProgressBar progress={progress} containerWidth={300} />
+                  <EmptySpace />
+                  <BookStatistics userBookId={userBookId} status={status} />
+                </div>
+              ) : (
+                isOpenLogEdit ? <HistoryLogEdit /> : <BookHistoryLog userBookId={userBookId} />
+              )}
+            </>
+          ) : (
+            <EmptyContentDiv>
+              <EmptyContent>
+                아직 히스토리가 없네요<br />
+                책을 읽어볼까요?
+              </EmptyContent>
+            </EmptyContentDiv>
+          )}
+        </BookInfoContent>
+      </StyleBackContainer>
+    </Layout>
   );
 };
 
 const BookInfoContent = styled.div`
   width: 90%;
-  height: fit-content;
+  // height: fit-content;
+  height: 516px;
   flex-shrink: 0;
   border-radius: 20px;
-  background: var(--white);
-  padding: 10px auto;
-  margin-top: 10px;
+  padding: 1rem auto;
+  margin-bottom: 20px;  
 `;
 
 const EmptyContentDiv = styled.div`
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 

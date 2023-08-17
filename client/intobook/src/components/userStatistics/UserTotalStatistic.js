@@ -21,24 +21,24 @@ const UserTotalStatistic = ({ val }) => {
         <TotalStatisticsItem
           title={'총 읽은 권수'}
           content={`${totalReadBook} 권`}
-          icon={<MenuBook sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<MenuBook sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
         <TotalStatisticsItem
           title={'총 독서 시간'}
           content={`${totalReadTime} 분`}
-          icon={<WatchLaterOutlinedIcon sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<WatchLaterOutlinedIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
       <ItemDivContainer>
         <TotalStatisticsItem
           title={'총 읽은 쪽수'}
           content={`${totalReadPage} 쪽`}
-          icon={<Layers sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<Layers sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
         <TotalStatisticsItem
           title={'최장 연속 독서일'}
           content={`${bestStreak} 일`}
-          icon={<EmojiEvents sx={{ width: '26px', height: '26px', color: 'var(--main-color)' }} />}
+          icon={<EmojiEvents sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
         />
       </ItemDivContainer>
     </StatisticsDiv>
