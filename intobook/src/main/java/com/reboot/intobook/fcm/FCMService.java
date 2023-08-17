@@ -5,6 +5,8 @@ import com.reboot.intobook.history.HistoryRepository;
 import com.reboot.intobook.history.entity.History;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
+import com.reboot.intobook.userbook.UserBookRepository;
+import com.reboot.intobook.userbook.UserBookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,7 @@ public class FCMService {
 
 
     private final UserRepository userRepository;
+    private final UserBookService userBookService;
     private final HistoryRepository historyRepository;
 
 
@@ -43,15 +46,12 @@ public class FCMService {
             String fcmToken = user.getFcmToken();
             Message message = Message.builder()
                     .putData("title", "BOOK!빠지다")
-                    .putData("content", "독서를 안한지 3일이 넘었어요. 다시 한번 책갈피와 함께 BOOK! 빠져볼까요?")
+                    .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user) + "를 읽으러 가봐요!")
                     .setToken(fcmToken)
                     .build();
-
             send(message);
 
         }else{
-            log.info("send 실패 ㅠㅠ");
-
             throw new Exception("fcm test 실패");
         }
     }
@@ -63,11 +63,10 @@ public class FCMService {
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
-
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         for(User user: userList){
             log.info("fcmtoken: " + user.getFcmToken());
@@ -79,8 +78,8 @@ public class FCMService {
                 }
                 String fcmToken = user.getFcmToken();
                 Message message = Message.builder()
-                        .putData("title", "테스트임")
-                        .putData("content", "우하하")
+                        .putData("title", "BOOK!빠지다")
+                        .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user) + "를 읽으러 가봐요!")
                         .setToken(fcmToken)
                         .build();
 
