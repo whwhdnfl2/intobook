@@ -18,7 +18,7 @@ const BookshelvesPage = () => {
     >
       <LayoutForth>
         <StyleSecondContainer>
-          {<p>{username}님의 책장</p>}
+          {<p style={{ marginTop: '1.5rem' }}>{username}님의 책장</p>}
           <BookshelvesMain />
         </StyleSecondContainer>
       </LayoutForth>
