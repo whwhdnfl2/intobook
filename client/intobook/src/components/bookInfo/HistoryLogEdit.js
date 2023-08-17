@@ -23,8 +23,6 @@ const HistoryLogEdit = () => {
 
   const [historyLogs, setHistoryLogs] = useRecoilState(HistoryLogsAtom);
 
-
-
   const startDate = formatDate(selectedLog.startTime, 'dateLetter');
   const endDate = formatDate(selectedLog.endTime, 'dateLetter');
 

@@ -49,7 +49,7 @@ export function formatTimeDifference(lastDate) {
   const timeDifference = Math.floor((currentDate - previousDate) / 1000); // 차이를 초로 계산
 
   if (timeDifference < 60) {
-    return `${timeDifference}초`;
+    return `0분`;
   } else if (timeDifference < 3600) {
     const minutes = Math.floor(timeDifference / 60);
     return `${minutes}분`;

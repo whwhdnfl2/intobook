@@ -11,7 +11,7 @@ import { styled } from 'styled-components';
 const ListContainer = styled.div`
   width: 90%;
   min-width: 340px;
-  height: 30rem;
+  height: 34rem;
   margin: 10px auto;
   overflow-y: auto;
   scrollbar-width: none;
