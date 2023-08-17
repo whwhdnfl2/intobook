@@ -46,7 +46,7 @@ const UserTotalStatistic = ({ val }) => {
 };
 
 const StatisticsDiv = styled.div`
-  width: 22rem;
+  width: 90%;
   height: 10rem;
   flex-shrink: 0;
   border-radius: 20px;

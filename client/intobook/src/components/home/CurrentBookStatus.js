@@ -88,7 +88,7 @@ const CurrentBookStatus = () => {
     <>
       {nowReadingBook && (
         <>
-          <Content>{title}</Content>
+          <Content style={{color:'var(--main-purple-color'}}>{title}</Content>
           {(isConnected && isBookmarkOut) &&
             <>
               <Content>새로운 히스토리를 만들어가는 중!</Content>

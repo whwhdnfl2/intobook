@@ -10,9 +10,9 @@ import { Modal } from './../common';
 import styled from "styled-components";
 
 const DropdownContainer = styled.div`
-    position: relative;
-    display: inline-block;
-    
+    /* position: relative;
+    display: inline-block;*/
+    display: flex;
 `;
 
 const MenuIcon = styled.div`
