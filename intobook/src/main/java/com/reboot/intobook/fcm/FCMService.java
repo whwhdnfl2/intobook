@@ -46,7 +46,6 @@ public class FCMService {
                     .putData("content", "독서를 안한지 3일이 넘었어요. 다시 한번 책갈피와 함께 BOOK! 빠져볼까요?")
                     .setToken(fcmToken)
                     .build();
-            log.info("이게 실행 5");
 
             send(message);
 
@@ -64,56 +63,29 @@ public class FCMService {
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 36000)
+    @Scheduled(fixedDelay = 10000)
     public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
-        log.info("싱행 중");
 
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
-        List<String> selectedFcmTokens = new ArrayList<>();
         for(User user: userList){
             log.info("fcmtoken: " + user.getFcmToken());
 
             if(user.getFcmToken() != null) {
-                log.info("userPk: " + user.getUserPk());
                 History history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
-                log.info("나이스");
                 if(history == null) {
-                    log.info("history null이다");
-
                     continue;
                 }
-//                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
-                log.info("fcmToken 넣음: " + user.getFcmToken());
+                String fcmToken = user.getFcmToken();
+                Message message = Message.builder()
+                        .putData("title", "테스트임")
+                        .putData("content", "우하하")
+                        .setToken(fcmToken)
+                        .build();
 
-                selectedFcmTokens.add(user.getFcmToken());
-//                }
+                send(message);
             }
-        }
-        if(selectedFcmTokens.size() == 0){
-            log.info("fcm 토큰 없다");
-            return;
-        }
-
-        try{
-            MulticastMessage message = MulticastMessage.builder().addAllTokens(selectedFcmTokens).setNotification(Notification.builder()
-                            .setTitle("오랫동안 안읽었어요.")
-                            .setBody("책이 울고있어요!! 책을 읽으러 갑시다.")
-                            .build())
-                    .build();
-            BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
-            if (response.getFailureCount() > 0) {
-                List<SendResponse> responses = response.getResponses();
-                List<String> failedTokens = new ArrayList<>();
-                for (int i = 0; i < responses.size(); i++) {
-                    if (!responses.get(i).isSuccessful()) {
-                        failedTokens.add(selectedFcmTokens.get(i));
-                    }
-                }
-            }
-        }catch (Exception e){
-            log.error("sendAlarm error: " + e.getClass());
         }
     }
 }
