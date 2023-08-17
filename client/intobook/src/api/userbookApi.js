@@ -65,3 +65,13 @@ export const updateUserBookStatus = async (userBookId, status) => {
     return err;
   }
 };
+
+export const deleteUserBook = async (userBookPk) => {
+  try {
+    const res = await axiosInstance.delete(`/userbook/${userBookPk}`)
+    console.log("성공?!?!?");
+    return res.data;
+  } catch (err) {
+    return err
+  }
+};

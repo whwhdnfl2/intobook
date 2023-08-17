@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import BookCover from './../common/bookCover';
 import { styled } from 'styled-components';
+import {AlertInfo, BasicButton, Modal} from "../common";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {deleteBookHistory} from "../../api/historyApi";
+import {deleteUserBook} from "../../api/userbookApi";
 
 const BookDesc = ({ bookInfo }) => {
   const tempTitle = bookInfo?.title;
@@ -19,11 +23,48 @@ const BookDesc = ({ bookInfo }) => {
     status === 'NOWREADING' ? 'var(--main-color)' :
       status === 'READING' ? '#FFCD1D' : '#FF604B';
 
+    const [openDeleteUserBookModal, setOpenDeleteUserBookModal] = useState(false);
+    const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+    const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
+
+    const deleteUserBookHandler = async () => {
+        try {
+            await deleteUserBook(bookInfo.userBookPk);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setOpenDeleteAlert(true);
+        }
+    };
+
   return (
     <BookInfoDiv>
       <BookCover image={bookInfo?.coverImage} alt={title + 'image'}
         customStyle={{ width: '80px', height: '120px', border: '2px solid white', marginRight: '10px' }}
       />
+
+      {/* 삭제 버튼 추가 */}
+      <DeleteButtonWrapper>
+
+        <DeleteButton onClick={() => deleteUserBookHandler() }>
+            <DeleteIcon sx={{ fontSize: '16px' }} />
+        </DeleteButton>
+      </DeleteButtonWrapper>
+        <Modal openModal={openDeleteUserBookModal} setOpenModal={setOpenDeleteUserBookModal} modalType={'deleteLog'}
+               closeModal={() => { setOpenDeleteUserBookModal(false) }} height={'120px'} handleMethod={deleteUserBookHandler}
+        />
+        {openDeleteAlert &&
+            <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
+                       setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }} type={'success'}
+            />
+        }
+        {openUpdateAlert &&
+            <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
+                       setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)} type={'success'}
+            />
+        }
+
+
       <BookInfoContentDiv>
         <div style={{ fontSize: 'var(--font-h5)', width: '215px' }}>{title}</div>
         <TempDiv>
@@ -41,6 +82,7 @@ const BookDesc = ({ bookInfo }) => {
 };
 
 const BookInfoDiv = styled.div`
+  position: relative; /* 부모 컨테이너를 relative로 설정 */
   width: 310px;
   height: 140px;
   flex-shrink: 0;
@@ -78,4 +120,23 @@ const TempDiv = styled.div`
   width: 100%;
   justify-content: space-between;
 `;
+
+
+const DeleteButtonWrapper = styled.div`
+  position: absolute; /* 절대 위치 설정 */
+  top: 0; /* 위쪽으로 0으로 설정하여 부모 컨테이너 상단에 배치 */
+  right: 0; /* 오른쪽으로 0으로 설정하여 부모 컨테이너 오른쪽에 배치 */
+`;
+
+const DeleteButton = styled.button`
+  width: 27px; /* 너비 조절 가능 */
+  height: 27px;
+  background-color: rgba(0, 0, 1, 0.48);
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+`;
+
 export default BookDesc;
