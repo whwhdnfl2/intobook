@@ -96,8 +96,7 @@ const Bluetooth = () => {
         } else {
             setIsBluetoothConnected(false);
             isBluetoothConnected = false;
-            bluetoothDevice?.gatt?.disconnect()
-            console.log('끊을때 재확인하고 alert 띄워주기')
+            bluetoothDevice?.gatt?.disconnect();
         }
     }
 
@@ -150,6 +149,7 @@ const Bluetooth = () => {
                     await setBookmark(false);
                     bookmark = false;
                     console.log(bookmark)
+                    setOpenAlert(true)
                 }
             } else {
                 if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 70 && pressure <= 50) {
@@ -168,9 +168,16 @@ const Bluetooth = () => {
     }
 
     return (
+      <>
         <StyledBLE onClick={BluetoothConnect} isActive={isBluetoothConnected}>
             <BluetoothIcon />
         </StyledBLE>
+        {openAlert &&
+          <AlertInfo text={'독서완료'} openAlert={openAlert} 
+            setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)} type={'success'}
+          />
+        }
+      </>
     );
 };
 

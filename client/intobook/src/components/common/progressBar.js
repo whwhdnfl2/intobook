@@ -33,9 +33,8 @@ const Progress = styled.div`
 `;
 
 const ContainerDiv = styled.div`
-  height: 16px;
+  height: 10px;
   width: 100%;
-  background-color: #D9D9D9;
   background-color: #EFEFF0;
   border-radius: 50px;
 `;
