@@ -101,9 +101,9 @@ const HandleNotifications = async (event) => {
     let isSame = true;
     if (queue.length === 5) { // 5개의 연속한 a배열의 값 차이들이 큰 변화가 없을때 정적인 상태가 된것으로 판정
         for (let i = 0; i < 5; i++) {
-            if ((Math.abs(queue[i][0]-queue[(i + 1)%5][0]) > 30)||
-                (Math.abs(queue[i][1]-queue[(i + 1)%5][1]) > 30)||
-                (Math.abs(queue[i][2]-queue[(i + 1)%5][2]) > 15)) {
+            if ((Math.abs(queue[i][0]-queue[(i + 1)%5][0]) > 40)||
+                (Math.abs(queue[i][1]-queue[(i + 1)%5][1]) > 40)||
+                (Math.abs(queue[i][2]-queue[(i + 1)%5][2]) > 25)) {
                     isSame = false;
                 }
         }
