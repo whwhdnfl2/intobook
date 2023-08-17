@@ -88,7 +88,7 @@ const StatisticsPage = () => {
           <RecentStatistic characterData={characterValue} />
           <TotalStatistic val={userStatisticsValue} />
           <WeeklyStatistic thisWeek={thisWeek} lastWeek={lastWeek} />
-          <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} />
+          <AverageStatistics readingTime={timePerRead} readSpeed={pagePerHour} width={320} />
         </StyleContainer>
       </LayoutThird>
     </motion.div>
