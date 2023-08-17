@@ -7,8 +7,16 @@ import { BasicButton, ProgressBar } from '../common';
 import { getReadingBookInfo } from '../../api/userbookApi';
 import SearchBottomSheet from '../bookSearch/SearchBottomSheet';
 import { styled, keyframes, css } from 'styled-components';
-
+import ConfettiExplosion from 'react-confetti-explosion';
 const CurrentBookStatus = () => {
+  const [isExploding, setIsExploding] = useState(false);
+
+  const startExplode  = () => {
+    setIsExploding(true); // 폭죽 값을 업데이트
+    setTimeout(() => setIsExploding(false), 4000);
+  };
+
+
   const [openModal, setOpenModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +38,8 @@ const CurrentBookStatus = () => {
   const nowPage = nowReadingBook?.nowPage;
   const progress = nowReadingBook?.progress;
   const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
+
+  
 
   const searchHandler = () => {
     if (isConnected && isBookmarkOut) {
@@ -82,7 +92,7 @@ const CurrentBookStatus = () => {
   }, [setNowReadingBook]);
 
   return (
-    <>
+    <> <div style={{position: 'relative'}}>{isExploding && <ConfettiExplosion style={ {position:'absolute', bottom:'15rem'}}/>}</div>
       {nowReadingBook && (
         <>
           <Content style={{color:'var(--main-purple-color'}}>{title}</Content>
@@ -139,10 +149,12 @@ const CurrentBookStatus = () => {
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
       <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
-      <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} height={'160px'} />
+      <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} startExplode={ startExplode } height={'160px'} />
+      
     </>
   );
 };
+
 
 const Container = styled.div`
   display: flex;
