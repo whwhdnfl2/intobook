@@ -50,7 +50,7 @@ public class FCMService {
             String fcmToken = user.getFcmToken();
             Message message = Message.builder()
                     .putData("title", "판매 완료 알림")
-                    .putData("content", "등록하신 판매 입찰이 낙찰되었습니다.")
+                    .putData("content", "독서를 안한지 3일이 넘었어요. 다시 한번 책갈피와 함께 BOOK! 빠져볼까요?")
                     .setToken(fcmToken)
                     .build();
             log.info("이게 실행 5");
@@ -84,7 +84,7 @@ public class FCMService {
 
             if(user.getFcmToken() != null) {
                 log.info("userPk: " + user.getUserPk());
-                History history = historyRepository.findTopByUserUserPk(user.getUserPk());
+                History history = historyRepository.findTopByUser(user);
                 log.info("endTime: " + history.getEndTime());
                 if(history == null) {
                     break;
