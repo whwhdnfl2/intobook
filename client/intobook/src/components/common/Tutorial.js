@@ -42,10 +42,12 @@ const Tutorial = ({ closeModal }) => {
 
 const ModalContent = styled.div`
   min-width: 240px;
+  height: 430px;
   background-color: white;
   padding: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
 `;
 

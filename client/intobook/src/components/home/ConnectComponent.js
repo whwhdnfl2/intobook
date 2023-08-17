@@ -30,7 +30,7 @@ const ConnectComponent = () => {
                 </div>
             </ContentsContainer>
             <Modal openModal={openTutorialModal} setOpenModal={setOpenTutorialModal} modalType={'tutorial'}
-                closeModal={() => { setOpenTutorialModal(false) }} height={'550px'}
+                closeModal={() => { setOpenTutorialModal(false) }} height={'450px'}
             />
         </StyledBox>
     );
