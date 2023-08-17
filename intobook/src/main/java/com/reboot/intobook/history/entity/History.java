@@ -75,8 +75,11 @@ public class History {
         this.readingTime = ChronoUnit.MINUTES.between(this.startTime, now);
     }
 
-    public void updatePressure(int pressure){
+    public void updatePressureAndPageAmount(int pressure, int pageAmount){
         this.pressure = pressure;
+        this.pageAmount = pageAmount;
     }
+
+
 
 }

@@ -117,43 +117,55 @@ public class HistoryService {
     @Transactional
     public void updateEndtime(long historyPk) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
+        updateEndTimeMethod(history);
+    }
+
+    public void updateEndTimeMethod(History history) {
         history.updateEndTimeAndReadingTime();
-        UserBook userBook = userBookRepository.findById(history.getUserBook().getUserBookPk()).get();
-        userBook.setCompletedAt(LocalDateTime.now());
+        UserBook userBook = history.getUserBook();
+        userBook.setCompletedAt(history.getEndTime());
     }
 
 
-    public int pressureToPage(int pressure) {
-        float[] pressures = {30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330};
-        float[] pages = {410, 445, 475, 515, 545, 565, 590, 620, 650, 690, 710};
+    public static int pressureToPage(int pressure) {
+        float[] pages = {30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330};
+        float[] pressures = {410, 445, 475, 515, 545, 565, 590, 620, 650, 690, 710};
 
-        float prevPres = 0;
         float prevPage = 0;
-        float nextPres = 0;
+        float prevPress = 0;
         float nextPage = 0;
+        float nextPress = 0;
 
-        for (int i = 0; i < pressures.length; i++) {
-            if (pressures[i] > pressure) {
-                nextPres = pressures[i];
-                nextPage = pages[i];
-                prevPres = pressures[i - 1];
-                prevPage = pages[i - 1];
-                break;
+        if (pressure <= pressures[0]) {
+            nextPress = pressures[0];
+            nextPage = pages[0];
+        } else if (pressure >= pressures[pressures.length - 1]) {
+            prevPress = pressures[pressures.length - 1];
+            prevPage = pages[pressures.length - 1];
+        } else {
+            for (int i = 1; i < pressures.length; i++) {
+                if (pressures[i] > pressure) {
+                    nextPress = pressures[i];
+                    nextPage = pages[i];
+                    prevPress = pressures[i - 1];
+                    prevPage = pages[i - 1];
+                    break;
+                }
             }
         }
-        float weight = (pressure - prevPres) / (nextPres - prevPres);
-        int page = Math.round((1 - weight) * prevPage + weight * nextPage);
-        return page;
+
+        float weight = (pressure - prevPress) / (nextPress - prevPress);
+        return Math.round((1 - weight) * prevPage + weight * nextPage);
     }
-
-
 
 
     @Transactional
     public void updatePressure(long historyPk, int pressure) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
-        history.updatePressure(pressure);
-        updateEndtime(historyPk);
+        int maxPage = history.getUserBook().getBook().getPage();
+        int newNowPage = Math.min(pressureToPage(pressure), maxPage);
+        history.updatePressureAndPageAmount(pressure, newNowPage);
+        updateEndTimeMethod(history);
     }
 
     @Transactional
