@@ -61,9 +61,9 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
             width: '100%', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
           }
         }}>
-        <Stack width={400} height={295} >
+        <Stack width={400} height={295} margin={'0 auto'}>
           <SearchBottomeSheetDiv>
-            <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', width: { xs: '90%' }, textAlign: 'center' }} >
+            <Card sx={{ backgroundColor: 'transparent', boxShadow: 'none', margin: '0 auto', width: { xs: '90%' }, textAlign: 'center' }} >
               <BookCover image={selectedInfo?.cover} alt={selectedInfo?.title + 'image'}
                 customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
               />
