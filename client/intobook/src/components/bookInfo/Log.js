@@ -71,10 +71,7 @@ const Log = ({ log }) => {
   };
 
   useEffect(() => {
-    if (updateSuccess) {
-      setOpenUpdateAlert(true); // 업데이트 성공 시 알림 띄우기
-    }
-    setUpdateSuccess(false);
+    
   }, [updateSuccess, setUpdateSuccess]);
 
   const dropdownRef = useRef(null);

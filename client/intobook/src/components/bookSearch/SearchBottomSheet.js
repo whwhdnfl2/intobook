@@ -32,7 +32,7 @@ const SearchBottomSheet = ({ isOpen, setIsOpen }) => {
             width: '100%', margin: 'auto', borderTopRightRadius: '20px', borderTopLeftRadius: '20px'
           }
         }}>
-        <Stack width={'90%'} height={254} >
+        <Stack width={'90%'} height={254} margin={'0 auto'}>
           <SearchBottomeSheetDiv>
             <Title>
               <span>읽을 책 등록하기</span>

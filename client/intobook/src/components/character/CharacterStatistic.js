@@ -175,7 +175,7 @@ const Fire = styled.div`
     top: 0%;
     right: -10%;
     transform: translateX(-50%);
-    animation: ${({ con2 }) => (con2 ? css`${floatingAnimation} 0.1s infinite` : css`${floatingAnimation} 3s infinite`)};
+    animation: ${({ con2 }) => (con2 ? css`${floatingAnimation} 1s infinite` : css`${floatingAnimation} 3s infinite`)};
     `;
 
 const CharacterStatistic = ({ con1, con2, con3 }) => {

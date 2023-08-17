@@ -5,8 +5,8 @@ export const SearchBottomeSheetDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  background-color: var(--white);
 `;
 
 export const Title = styled.div`
