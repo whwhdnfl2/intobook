@@ -115,7 +115,7 @@ const Bluetooth = () => {
                 }
         }
       }
-    }
+    
     console.log('> ' + a.join(' ') + " " + bookmark + " : " + isSame);
     //책을 펼쳤을 때 history api 요청(response로 pk를 받아와서 저장)
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
@@ -142,8 +142,6 @@ const Bluetooth = () => {
         }
       }
     }
-  }
-
   return (
     <StyledBLE onClick={BluetoothConnect} isActive={isBluetoothConnected}>
       <BluetoothIcon />
