@@ -41,6 +41,10 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
     try {
       await addUserBook(bookId);
       setNowReadingBook(selectedInfo);
+      const modalVal = localStorage.getItem('hasCloseCompleteBookModal');
+      if (modalVal === 'true') {
+        localStorage.setItem('hasCloseCompleteBookModal', 'false');
+      }
       navigate('/');
     } catch (err) {
       console.error(err);

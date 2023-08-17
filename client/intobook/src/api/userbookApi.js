@@ -36,7 +36,6 @@ export const addUserBook = async (isbn) => {
 export const getReadingBookInfo = async () => {
   try {
     const res = await axiosInstance.get(`/userbook/nowreading`);
-    console.log('현재 책 정보', res.data)
     return res.data;
   } catch (err) {
     return err.response.status;
