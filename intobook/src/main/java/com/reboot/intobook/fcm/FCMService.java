@@ -77,12 +77,12 @@ public class FCMService {
 
             if(user.getFcmToken() != null) {
                 log.info("userPk: " + user.getUserPk());
-                List<History> history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
-                log.info("endTime: " + history.get(0).getEndTime());
-                if(history.size() == 0) {
+                History history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
+                log.info("나이스");
+                if(history == null) {
                     break;
                 }
-                if(ChronoUnit.MINUTES.between(history.get(0).getEndTime(), LocalDateTime.now()) > 60){
+                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
                 }
             }
