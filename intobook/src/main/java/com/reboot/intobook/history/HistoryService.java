@@ -6,6 +6,7 @@ import com.reboot.intobook.history.entity.History;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
 import com.reboot.intobook.userbook.UserBookRepository;
+import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import com.reboot.intobook.userbook.entity.UserBook;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -160,12 +161,15 @@ public class HistoryService {
 
 
     @Transactional
-    public void updatePressure(long historyPk, int pressure) throws NoSuchElementException{
+    public UserBookResponseDto updatePressure(long historyPk, int pressure) throws NoSuchElementException{
         History history = historyRepository.findById(historyPk).orElseThrow(() -> new NoSuchElementException("History Not Found Error!!!"));
         int maxPage = history.getUserBook().getBook().getPage();
         int newNowPage = Math.min(pressureToPage(pressure), maxPage);
         history.updatePressureAndPageAmount(pressure, newNowPage);
+        UserBook userBook = history.getUserBook();
+        userBook.setNowPage(newNowPage);
         updateEndTimeMethod(history);
+        return UserBookResponseDto.toEntity(userBook);
     }
 
     @Transactional

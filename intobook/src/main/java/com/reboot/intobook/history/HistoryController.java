@@ -3,6 +3,7 @@ package com.reboot.intobook.history;
 import com.reboot.intobook.history.dto.GetHistoryListResponse;
 import com.reboot.intobook.history.dto.GetHistoryResponse;
 
+import com.reboot.intobook.userbook.dto.UserBookResponseDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -80,10 +81,10 @@ public class HistoryController {
 
     @PutMapping("/updateHistoryPressure/{historyPk}")
     @ApiOperation(value="책을 읽고 나서 pressure을 수정하는 api")
-    public ResponseEntity<GetHistoryListResponse> updateHistoryPressure(@PathVariable("historyPk") long historyPk ,@RequestParam("pressure") int pressure ){
+    public ResponseEntity<UserBookResponseDto> updateHistoryPressure(@PathVariable("historyPk") long historyPk ,@RequestParam("pressure") int pressure ){
         try{
-            historyService.updatePressure(historyPk, pressure);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            UserBookResponseDto userBookResponseDto = historyService.updatePressure(historyPk, pressure);
+            return ResponseEntity.status(HttpStatus.OK).body(userBookResponseDto);
         }catch (NoSuchElementException e){
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
