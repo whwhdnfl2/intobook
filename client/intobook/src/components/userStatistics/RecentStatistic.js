@@ -16,7 +16,7 @@ const RecentStatistic = ({ characterData }) => {
   //React.Fragment
   return (
     <>
-      <CharacterContainer style= {{ padding: '0rem 1rem 0rem rem' }}>
+      <CharacterContainer style= {{ padding: '0rem 1rem 0rem 1rem' }}>
         {/* <BookCharacter val={[attention, multiRead, burning]} /> */}
         <CharacterStatistic con1={attention} con2={burning} con3={multiRead}
           />
