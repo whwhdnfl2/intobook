@@ -21,8 +21,6 @@ const Log = ({ log }) => {
   const [historyLog, setHistoryLog] = useRecoilState(HistoryLogsAtom);
   const setIsOpenLogEdit = useSetRecoilState(LogEditAtom);
 
-
-
   const startTime = log?.startTime;
   const endTime = log?.endTime;
 
@@ -71,6 +69,10 @@ const Log = ({ log }) => {
   };
 
   useEffect(() => {
+    if (updateSuccess) {
+      setOpenUpdateAlert(true);
+    }
+    setUpdateSuccess(false);
     
   }, [updateSuccess, setUpdateSuccess]);
 
@@ -107,7 +109,7 @@ const Log = ({ log }) => {
 
   return (
     <DropdownContainer>
-      <LogCard sx={{ borderRadius: '10px', boxShadow: 'none', height: 'auto' }}>
+      <LogCard sx={{ borderRadius: '10px', height: 'auto', backgroundColor: 'rgba(215, 225, 255, 0.6)' }}>
         <StyledCardContent>
           <LogInfo>
             <LogInfoDiv>
@@ -155,7 +157,7 @@ const Log = ({ log }) => {
 const LogCard = styled(Card)`
   width: 296px;
   height: 90px;
-  border: 1px solid var(--main-color);
+  // border: 3px solid var(--main-color);
   font-size: 14px;
 `;
 

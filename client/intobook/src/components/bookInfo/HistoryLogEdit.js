@@ -82,12 +82,10 @@ const HistoryLogEdit = () => {
       } catch (err) {
         console.error(err);
       } finally {
-        
         setIsOpenLogEdit(false);
         setUpdateSuccess(true);
       }
     } else {
-      // alert('시간을 확인하세요')
       setOpenAlert(true);
     }
   };
@@ -106,7 +104,6 @@ const HistoryLogEdit = () => {
     });
     setHistoryLogs(updatedHistoryLog);
   };
-
 
   const isEditDone = (value) => {
     setIsOpenTimeEdit(!value);
@@ -129,7 +126,7 @@ const HistoryLogEdit = () => {
           animate={{ scale: 1, background: 'var(--white)' }}
           exit={{ scale: 1, background: 'var(--white)' }}
         >
-          <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
+          <svg width="20" height="34" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg" >
             <path d="M0 0H12V6L8 10L12 14V20H0V14L4 10L0 6V0ZM10 14.5L6 10.5L2 14.5V18H10V14.5ZM6 9.5L10 5.5V2H2V5.5L6 9.5ZM4 4H8V4.75L6 6.75L4 4.75V4Z" fill="#C2D7FF" />
           </svg>
           <ContentDiv>
@@ -149,7 +146,7 @@ const HistoryLogEdit = () => {
           animate={{ scale: 1, background: 'var(--white)' }}
           exit={{ scale: 1, background: 'var(--white)' }}
         >
-          <svg width="20" height="28" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="20" height="34" viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 20H0V14L4 10L0 6V0H12V6L8 10L12 14M2 5.5L6 9.5L10 5.5V2H2M6 10.5L2 14.5V18H10V14.5M8 16H4V15.2L6 13.2L8 15.2V16Z" fill="#C2D7FF" />
           </svg>
           <ContentDiv onClick={isFirst ? () => { setIsOpenTimeEdit(true); setEditTarget('end') } : null}>
@@ -187,6 +184,7 @@ const LogEditContainer = styled.div`
   width: 260px;
   height: 290px;
   background: #C2D7FF;
+  background: rgba(194, 215, 255, 0.6);
   border-radius: 20px;
   margin: 10px auto;
   padding: 20px;
@@ -194,7 +192,7 @@ const LogEditContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: var(--font-h3);
+  font-size: var(--font-h4);
   line-height: 20px
   letter-spacing: 0.4px;
   margin-bottom: 10px;
@@ -202,12 +200,13 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   color: #808080;
-  font-size: var(--font-h5);
-  margin-bottome: 5px;
-`;
-
-const Content = styled.div`
+  font-size: var(--font-h6);
+  margin-bottom: 5px;
+  `;
+  
+  const Content = styled.div`
   font-size: var(--font-h4);
+  font-weight: bold;
 `;
 
 const TimeContainer = styled.div`
@@ -249,7 +248,7 @@ const CommentDiv = styled.textarea`
 
 const Button = styled.button`
   width: 83px;
-  height: 22px;
+  height: 28px;
   border: none;
   border-radius: 100px;
   background: var(--main-color);
