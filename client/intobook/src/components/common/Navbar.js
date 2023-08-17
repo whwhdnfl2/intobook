@@ -8,7 +8,7 @@ import StyledBottomNavigation from '../../styles/navBar/navBar';
 import { useNavigate } from 'react-router-dom';
 
 const SimpleBottomNavigation = () => {
-  const [value, setValue] = React.useState('recents');
+  const [value, setValue] = React.useState('Home');
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleStatisticsClick = () => {

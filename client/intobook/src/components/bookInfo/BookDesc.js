@@ -5,7 +5,7 @@ import { AlertInfo, BasicButton, Modal } from "../common";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteBookHistory } from "../../api/historyApi";
 import { deleteUserBook } from "../../api/userbookApi";
-
+import { useNavigate } from 'react-router-dom';
 const BookDesc = ({ bookInfo }) => {
   const tempTitle = bookInfo?.title;
   const tempAauthor = bookInfo?.author;
@@ -27,9 +27,11 @@ const BookDesc = ({ bookInfo }) => {
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
 
+  const navigate = useNavigate(); // useNavigate 훅 사용
   const deleteUserBookHandler = async () => {
     try {
       await deleteUserBook(bookInfo.userBookPk);
+      navigate('/bookshelves');
     } catch (err) {
       console.error(err);
     } finally {
