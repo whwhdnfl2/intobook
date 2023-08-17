@@ -8,11 +8,9 @@ export const SearchBarContainer = styled.div`
 `;
 
 export const Title = styled.div`
-  color: var(--main-green-color);
-  font-family: var(--content-font);
-  font-size: var(--font-size-h4);
-  font-weight: 700;
-  font-style: normal;
+  color: white;
+  font-size: var(--font-h5);
+  font-weight: 500;
   letter-spacing: -0.5px;
   position: relative;
   line-height: 20px;

@@ -98,7 +98,6 @@ const CharacterContainer = styled.div`
   align-items: center;
   overflow: hidden;
   margin: 0px auto;
-  padding-left: 10px;
 `;
 
 const TextContainer = styled.div`

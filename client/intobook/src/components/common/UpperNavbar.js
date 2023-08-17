@@ -17,7 +17,7 @@ const UpperNavbar = () => {
         paddingRight: '1.2rem',
         paddingLeft: '1.2rem',
         justifyContent: 'space-between',
-        margin: '0.5rem auto 0 auto'
+        margin: 'auto 0 auto',
       }}
     >
       <AppTitle />

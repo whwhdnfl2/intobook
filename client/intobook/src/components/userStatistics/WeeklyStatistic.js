@@ -34,7 +34,7 @@ const WeeklyStatistic = (weeklyData) => {
   width: 90%;
   min-width: 320px;
   background-color: rgba(235, 235, 235, 0.6);
-  padding: 0.5rem 0.5rem 0;
+  padding: 0.5rem 0;
   border-radius: 20px;
   text-align: center;
   font-size: var(--font-h6);
