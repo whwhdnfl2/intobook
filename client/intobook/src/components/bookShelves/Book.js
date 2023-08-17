@@ -11,7 +11,7 @@ const ResultBook = ({ bookInfo, customStyle, width }) => {
   const title = tempTitle && tempTitle.includes('-') ? tempTitle.split('-')[0].trim() : tempTitle;
   const author = tempAauthor && tempAauthor.includes('(') ? tempAauthor.split('(')[0].trim() : tempAauthor;
   const nowPage = bookInfo?.nowPage;
-  const progress = bookInfo?.page ? Math.floor((nowPage / bookInfo.page) * 100) : 0;
+  const progress = bookInfo?.progress;
   
 
   return (
