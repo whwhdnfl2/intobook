@@ -55,7 +55,7 @@ public class UserBook {
     private int progress;
 
     @PreUpdate
-    private void updateProgress() {
+    public void updateProgress() {
         if (completedAt != null) {
             completedAt = completedAt.withSecond(0).withNano(0); // 분 단위로 절사
         }

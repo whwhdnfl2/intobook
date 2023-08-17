@@ -169,6 +169,7 @@ public class HistoryService {
         UserBook userBook = history.getUserBook();
         userBook.setNowPage(newNowPage);
         updateEndTimeMethod(history);
+        userBook.updateProgress();
         return UserBookResponseDto.toEntity(userBook);
     }
 
