@@ -22,7 +22,6 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
         <DialogContents sx={{ width: '280px', height: `${height}`, padding: '20px' }}>
           {modalType === 'tutorial' && <Tutorial closeModal={closeModal} />}
           {modalType === 'readingBook' && <ReadingBooks closeModal={closeModal} />}
-          {modalType === 'bookmarkInfo' && <BookmarkInfo closeModal={closeModal} />}
           {modalType === 'completeBook' && <CompleteReadingInfo closeModal={closeModal} startExplode={startExplode} />}
           {modalType === 'deleteLog' && <DeleteLog closeModal={closeModal} onDelete={handleMethod} />}
           {modalType === 'updateUsername' && <UpdateUsername closeModal={closeModal} />}

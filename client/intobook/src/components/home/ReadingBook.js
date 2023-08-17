@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { BookCover, Modal } from './../common';
+import { BookCover } from './../common';
 import SearchBottomSheet from './../bookSearch/SearchBottomSheet';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
+import { useRecoilState } from 'recoil';
+import { ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { getReadingBookInfo } from '../../api/userbookApi';
 import { Box } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -11,9 +11,6 @@ import { styled } from 'styled-components';
 
 const ReadingBook = () => {
   const [isOpen, setIsOpen] = useState(false);  //이건 무슨 상태이지
-  const isConnected = useRecoilValue(BluetoothAtom);  //블투연결되어있는지
-  const isBookmarkOut = useRecoilValue(BookmarkStatusAtom);  //책갈피 인인지, 아웃인지
-  const [openBookInfoModal, setOpenBookInfoModal] = useState(false);  //책정보 모달
   const [nowReadingBook, setNowReadingBook] = useRecoilState(ReadingBookAtom);  //지금 읽는 책이 있는지 없는지
 
   useEffect(() => {
@@ -25,17 +22,8 @@ const ReadingBook = () => {
 
   }, [setNowReadingBook]);
 
-  const closeBookInfoModal = () => {
-    setOpenBookInfoModal(false);
-  };
-
   const searchHandler = () => {
-    if (isConnected && isBookmarkOut) {
-      // 안내 모달 띄우기
-      setOpenBookInfoModal(true);
-    } else {
-      setIsOpen(true);
-    }
+    setIsOpen(true);
   };
 
   const coverImg = nowReadingBook?.coverImage;
@@ -57,7 +45,6 @@ const ReadingBook = () => {
         </>
       )}
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
-      <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
     </>
   );
 };
