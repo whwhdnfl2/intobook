@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BookCover from './../common/bookCover';
 import { addUserBook } from './../../api/userbookApi';
-import { useSetRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilState } from 'recoil';
 import { ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import { Box, Stack, SwipeableDrawer, Typography, Card, CardContent } from '@mui/material';
 import { SearchBottomeSheetDiv } from '../../styles/bookSearch/SearchBottomSheetStyle';
@@ -10,7 +10,8 @@ import { styled } from 'styled-components';
 
 const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   const navigate = useNavigate();
-  const setNowReadingBook = useSetRecoilState(ReadingBookAtom);
+  // const setNowReadingBook = useSetRecoilState(ReadingBookAtom);
+  const [nowReadingBook , setNowReadingBook] = useRecoilState(ReadingBookAtom);
 
   const status = selectedInfo?.status
   const bookId = selectedInfo?.bookId
@@ -40,7 +41,13 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   const registerBookHandler = async () => {
     try {
       await addUserBook(bookId);
+      console.log('selectdBook1', selectedInfo);
       setNowReadingBook(selectedInfo);
+      const modalVal = localStorage.getItem('hasCloseCompleteBookModal');
+      if (modalVal === 'true') {
+        localStorage.setItem('hasCloseCompleteBookModal', 'false');
+      }
+      console.log('selectdBook2', nowReadingBook);
       navigate('/');
     } catch (err) {
       console.error(err);

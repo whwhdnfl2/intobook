@@ -60,13 +60,10 @@ const CurrentBookStatus = () => {
     const getReadingBook = async () => {
       const detailInfo = await getReadingBookInfo();
       setNowReadingBook(detailInfo);
-      console.log(2323, detailInfo)
       // 진행률 95% 이상일 때 모달 띄우기(nowPage가 0이면 확인 불가)
       if (detailInfo?.nowPage && detailInfo?.page) {
-        const nowPage = detailInfo.nowPage;
         const progress = detailInfo?.progress;
         
-
         if (progress >= 95) {
           // localStorage 값 설정
           const modalVal = localStorage.getItem('hasCloseCompleteBookModal')
@@ -83,6 +80,8 @@ const CurrentBookStatus = () => {
     getReadingBook();
 
   }, [setNowReadingBook]);
+
+  console.log('currentbook', nowReadingBook);
 
   return (
     <>

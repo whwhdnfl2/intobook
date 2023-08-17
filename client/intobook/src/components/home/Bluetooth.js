@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { BluetoothAtom, BookmarkStatusAtom, ReadingBookAtom } from './../../recoil/bookmark/bookmarkAtom';
 import BluetoothIcon from '@mui/icons-material/Bluetooth';
@@ -7,27 +7,30 @@ import { HistoryPkAtom } from '../../recoil/history/historyAtom';
 import { styled } from 'styled-components';
 import { AlertInfo } from '../common';
 
-
 const Bluetooth = () => {
 
   //알럿 위한 상태 선언
   const [openAlert, setOpenAlert] = useState(false);
 
-
   //블루투스 연결상태 상태 및 책갈피 상태 가져오기(둘 다 초기상태 false)
   const [BluetoothConnected, setIsBluetoothConnected] = useRecoilState(BluetoothAtom);
   const [dumy, setBookmark] = useRecoilState(BookmarkStatusAtom);
-  const [nowBook, setNowBook] = useRecoilState(ReadingBookAtom);
   const [historyPkAtom, setHistoryPkAtom] = useRecoilState(HistoryPkAtom);
+  const [nowBook, setNowBook] = useRecoilState(ReadingBookAtom);
   let bookmark = dumy;
   let historyPk = historyPkAtom;
   let isBluetoothConnected = BluetoothConnected;
+//   let currentBook = 
   // 블루투스 값 저장을 위한 큐
   const [queue, setQueue] = useState(new Array());
-
+  
   let [bluetoothDevice, setBluetoothDevice] = useState(null);
-  let [Bcharacteristic, setBcharacteristic] = useState(null);
-
+  let [Bcharacteristic, setBcharacteristic] = useState(null); 
+  
+  useEffect(() => {
+    setNowBook(nowBook);
+  }, [setNowBook, nowBook?.userBookPk]);
+  
   const BluetoothConnect = () => {
 
     //블루투스 연결상태가 false일 때, 연결
