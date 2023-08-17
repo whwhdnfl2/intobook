@@ -83,11 +83,12 @@ public class FCMService {
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
         for(User user: userList){
-            if(user.getFcmToken() == null) continue;
-            else {
-                List<History> historyList = historyRepository.findByUserUserPkOrderByEndTimeDesc(user.getUserPk());
-                if(historyList.size() == 0 || historyList.get(0).getEndTime() == null) break;
-                if(ChronoUnit.MINUTES.between(historyList.get(0).getEndTime(), LocalDateTime.now()) > 60){
+            if(user.getFcmToken() != null) {
+                History history = historyRepository.findTop1ByUserUserPkOrderByEndTimeDesc(user.getUserPk());
+                if(history == null) {
+                    break;
+                }
+                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
                 }
             }
@@ -108,7 +109,6 @@ public class FCMService {
                         failedTokens.add(selectedFcmTokens.get(i));
                     }
                 }
-                // 실패한 registrationTokens에 대한 추가 처리 이건 나중에 할 예정
             }
         }catch (Exception e){
             log.error("sendAlarm error: " + e.getClass());
