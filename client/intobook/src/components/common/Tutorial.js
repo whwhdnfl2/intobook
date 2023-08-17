@@ -7,7 +7,7 @@ import BasicButton from './BasicButton';
 
 const Tutorial = ({ closeModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 4;
+  const totalPages = 2;
 
   // const closeModal = () => {
   //   setOpenModal
@@ -20,10 +20,8 @@ const Tutorial = ({ closeModal }) => {
   return (
     <ModalContent>
       {/* 페이지 내용 */}
-      {currentPage === 1 && <PageContent>첫 번째 페이지 내용 </PageContent>}
-      {currentPage === 2 && <PageContent>두 번째 페이지 내용 </PageContent>}
-      {currentPage === 3 && <PageContent>세 번째 페이지 내용 </PageContent>}
-      {currentPage === 4 && <PageContent>네 번째 페이지 내용 </PageContent>}
+      {currentPage === 1 && <PageContent><img src="/tutorial/tutorial_bluetooth.png" alt="tutorial_bluetooth" style={{ width: '200px' }}/>먼저, 블루투스 책갈피를 어플에 등록해주세요 </PageContent> }
+      {currentPage === 2 && <PageContent><img src="/tutorial/tutorial_reading.png" alt="tutorial_reading"  style={{ width: '280px' }}/>책갈피를 뺏다 꽂으면 책 기록이 자동으로 생성돼요 </PageContent>}
 
       {/* 페이지네이션 */}
       <PaginationWrapper>
@@ -59,10 +57,13 @@ const ModalContent = styled.div`
 const PageContent = styled.div`
   width: 100%;
   height: 300px;
-  background-color: lightblue;
+  background-color: white;
   display: flex;
+  flex-direction: column; /* 상하로 정렬되도록 변경 */
   justify-content: center;
   align-items: center;
+  justify-content: center; /* 상하 중앙 정렬 */
+  padding: 20px 0; /* 상하 패딩 추가 */
 `;
 
 const PaginationWrapper = styled.div`
