@@ -81,6 +81,7 @@ const BookInfoContent = styled.div`
 const EmptyContentDiv = styled.div`
   height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -88,6 +89,7 @@ const EmptyContent = styled.div`
   text-align: center;
   line-height: 40px;
   font-size: var(--font-h4);
+  padding-bottom: 100px;
 `;
 
 export default BookInfoPage;
