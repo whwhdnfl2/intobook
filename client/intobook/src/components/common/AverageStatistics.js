@@ -5,7 +5,7 @@ import { formatTime } from './../../utils/dateTimeUtils';
 import { styled, keyframes } from 'styled-components';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 
-const AverageStatistics = ({ readingTime, readSpeed }) => {
+const AverageStatistics = ({ readingTime, readSpeed, width }) => {
   // const avgReadingTime = formatTime(readingTime) ? formatTime(readingTime) : '0분';
   const hour = parseInt(readingTime / 60)
   readingTime %= 60
@@ -16,6 +16,7 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
   let hourFlag = (hour === 0 ? true:false);
   let minFlag = (minute === 0 ? true:false);
   let speedFlag = (readSpeed === 0 ? true:false)
+  
   useEffect(() => {
     const interval = setInterval(() => {
       if (currentHour < hour) {
@@ -50,7 +51,7 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
 
 
   return (
-    <StatisticsDiv>
+    <StatisticsDiv style={{ width: `${width}px` }}>
       <Div>
         <IconDiv>
           <AccessAlarmsOutlinedIcon sx={{ marginLeft: '2px', width: '26px', height: '26px', color: '#5061FF' }} />
@@ -71,7 +72,7 @@ const AverageStatistics = ({ readingTime, readSpeed }) => {
 };
 
 const StatisticsDiv = styled.div`
-  width: 300px;
+  // width: 300px;
   flex-shrink: 0;
   display: flex;
   justify-content: space-between;

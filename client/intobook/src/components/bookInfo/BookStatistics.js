@@ -30,7 +30,7 @@ const BookStatistics = ({ userBookId, status }) => {
     <div>
       <BookTotalStatistics val={statisticsValue} status={status} />
       <EmptySpace />
-      <AverageStatistics readingTime={avgReadingTime} readSpeed={readingSpeed} />
+      <AverageStatistics readingTime={avgReadingTime} readSpeed={readingSpeed} width={300} />
     </div>
   );
 };
