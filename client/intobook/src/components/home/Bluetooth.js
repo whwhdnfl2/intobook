@@ -8,6 +8,8 @@ import { styled } from 'styled-components';
 import { AlertInfo } from '../common';
 import { getReadingBookInfo } from './../../api/userbookApi';
 
+let isAfterConnect = false;
+
 const Bluetooth = () => {
 
     //알럿 위한 상태 선언
@@ -37,7 +39,7 @@ const Bluetooth = () => {
     }, [bluetoothDevice])
 
     function checkBluetoothConnectionPeriodically() {
-        if (bluetoothDevice == null) return;
+        if (bluetoothDevice == null || !isAfterConnect) return;
         const isCon = bluetoothDevice.gatt.connected;
         if (!isCon) {
             setIsBluetoothConnected(false);
@@ -45,6 +47,7 @@ const Bluetooth = () => {
             isBluetoothConnected = false;
             bluetoothDevice?.gatt?.disconnect()
             bookmark = false;
+            isAfterConnect = false;
         }
         // console.log(isCon, bookmark, isBluetoothConnected)
     }
@@ -70,6 +73,7 @@ const Bluetooth = () => {
                 .then(server => {
                     // Getting Service…
                     console.log('Getting Service...');
+                    isAfterConnect = true;
                     return server.getPrimaryService('0000ffe0-0000-1000-8000-00805f9b34fb');
                 })
                 .then(service => {
@@ -168,16 +172,16 @@ const Bluetooth = () => {
     }
 
     return (
-      <>
-        <StyledBLE onClick={BluetoothConnect} isActive={isBluetoothConnected}>
-            <BluetoothIcon />
-        </StyledBLE>
-        {openAlert &&
-          <AlertInfo text={'독서완료'} openAlert={openAlert} 
-            setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)} type={'success'}
-          />
-        }
-      </>
+        <>
+            <StyledBLE onClick={BluetoothConnect} isActive={isBluetoothConnected}>
+                <BluetoothIcon />
+            </StyledBLE>
+            {openAlert &&
+                <AlertInfo text={'독서완료'} openAlert={openAlert}
+                    setOpenAlert={setOpenAlert} closeAlert={() => setOpenAlert(false)} type={'success'}
+                />
+            }
+        </>
     );
 };
 
