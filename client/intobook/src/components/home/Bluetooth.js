@@ -46,7 +46,7 @@ const Bluetooth = () => {
             bluetoothDevice?.gatt?.disconnect()
             bookmark = false;
         }
-        console.log(isCon, bookmark, isBluetoothConnected)
+        // console.log(isCon, bookmark, isBluetoothConnected)
     }
     // 일정 간격마다 블루투스 연결 상태 확인
     setInterval(checkBluetoothConnectionPeriodically, 2000);

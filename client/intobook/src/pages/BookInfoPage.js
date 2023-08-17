@@ -71,7 +71,7 @@ const BookInfoPage = () => {
 const BookInfoContent = styled.div`
   width: 90%;
   // height: fit-content;
-  height: 516px;
+  height: 475px;
   flex-shrink: 0;
   border-radius: 20px;
   padding: 1rem auto;

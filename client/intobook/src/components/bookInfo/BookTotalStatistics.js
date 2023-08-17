@@ -12,7 +12,11 @@ const BookTotalStatistics = ({ val, status }) => {
   const completeDate = formatDate(val?.completedAt, 'dateDot');
   const readingTime = formatTime(val?.totalReadingTime) ? formatTime(val?.totalReadingTime) : '0분';
   const bestTime = formatTime(val?.maxReadingTime) ? formatTime(val?.maxReadingTime) : '0분';
-  const remainingTime = val?.remainingTime > 30 * 24 * 60 ? '기다리고 있을게요' : formatTime(val?.remainingTime);
+  const remainingTime = val?.remainingTime > 30 * 24 * 60
+    ? '기다리고 있을게요'
+    : val?.remainingTime === 0
+      ? '0분'
+      : formatTime(val?.remainingTime);
 
   return (
     <StatisticsDiv>
@@ -27,13 +31,13 @@ const BookTotalStatistics = ({ val, status }) => {
             title={'완독까지 남은 시간'}
             content={remainingTime}
             icon={<MenuBookIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
-            />
-          }
+          />
+        }
         {status === 'COMPLETE' &&
           <TotalStatisticsItem
-          title={'완독 일자'}
-          content={completeDate}
-          icon={<MenuBookIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
+            title={'완독 일자'}
+            content={completeDate}
+            icon={<MenuBookIcon sx={{ width: '24px', height: '24px', color: 'var(--main-color)' }} />}
           />
         }
       </ItemDivContainer>

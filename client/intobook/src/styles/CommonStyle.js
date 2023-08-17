@@ -99,7 +99,7 @@ export const StyleBackContainer = styled.div`
     border-radius: 20px;
     width: 90%;
     min-width: 340px;
-    min-height: 90vh;
+    min-height: 50vh;
 `
 
 export const EmptySpace = styled.div`

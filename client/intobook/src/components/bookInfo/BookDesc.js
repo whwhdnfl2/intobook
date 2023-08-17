@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import BookCover from './../common/bookCover';
 import { styled } from 'styled-components';
-import {AlertInfo, BasicButton, Modal} from "../common";
+import { AlertInfo, BasicButton, Modal } from "../common";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {deleteBookHistory} from "../../api/historyApi";
-import {deleteUserBook} from "../../api/userbookApi";
+import { deleteBookHistory } from "../../api/historyApi";
+import { deleteUserBook } from "../../api/userbookApi";
 
 const BookDesc = ({ bookInfo }) => {
   const tempTitle = bookInfo?.title;
@@ -23,19 +23,19 @@ const BookDesc = ({ bookInfo }) => {
     status === 'NOWREADING' ? 'var(--main-color)' :
       status === 'READING' ? '#FFCD1D' : '#FF604B';
 
-    const [openDeleteUserBookModal, setOpenDeleteUserBookModal] = useState(false);
-    const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
-    const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
+  const [openDeleteUserBookModal, setOpenDeleteUserBookModal] = useState(false);
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const [openUpdateAlert, setOpenUpdateAlert] = useState(false);
 
-    const deleteUserBookHandler = async () => {
-        try {
-            await deleteUserBook(bookInfo.userBookPk);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setOpenDeleteAlert(true);
-        }
-    };
+  const deleteUserBookHandler = async () => {
+    try {
+      await deleteUserBook(bookInfo.userBookPk);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setOpenDeleteAlert(true);
+    }
+  };
 
   return (
     <BookInfoDiv>
@@ -45,35 +45,33 @@ const BookDesc = ({ bookInfo }) => {
 
       {/* 삭제 버튼 추가 */}
       <DeleteButtonWrapper>
-
-        <DeleteButton onClick={() => deleteUserBookHandler() }>
-            <DeleteIcon sx={{ fontSize: '16px' }} />
+        <DeleteButton onClick={() => deleteUserBookHandler()}>
+          <DeleteIcon sx={{ fontSize: '16px' }} />
         </DeleteButton>
       </DeleteButtonWrapper>
-        <Modal openModal={openDeleteUserBookModal} setOpenModal={setOpenDeleteUserBookModal} modalType={'deleteLog'}
-               closeModal={() => { setOpenDeleteUserBookModal(false) }} height={'120px'} handleMethod={deleteUserBookHandler}
-        />
-        {openDeleteAlert &&
-            <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
-                       setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }} type={'success'}
-            />
-        }
-        {openUpdateAlert &&
-            <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
-                       setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)} type={'success'}
-            />
-        }
 
+      <Modal openModal={openDeleteUserBookModal} setOpenModal={setOpenDeleteUserBookModal} modalType={'deleteLog'}
+        closeModal={() => { setOpenDeleteUserBookModal(false) }} height={'120px'} handleMethod={deleteUserBookHandler}
+      />
+      {openDeleteAlert &&
+        <AlertInfo text={'삭제되었습니다.'} openAlert={openDeleteAlert}
+          setOpenAlert={setOpenDeleteAlert} closeAlert={() => { setOpenDeleteAlert(false) }} type={'success'}
+        />
+      }
+      {openUpdateAlert &&
+        <AlertInfo text={'수정되었습니다.'} openAlert={openUpdateAlert}
+          setOpenAlert={setOpenUpdateAlert} closeAlert={() => setOpenUpdateAlert(false)} type={'success'}
+        />
+      }
 
       <BookInfoContentDiv>
-        <div style={{ fontSize: 'var(--font-h5)', width: '215px' }}>{title}</div>
+        <div style={{ fontSize: 'var(--font-h5)', width: '175px' }}>{title}</div>
         <TempDiv>
           <div>
             <div style={{ fontSize: 'var(--font-h7)', marginBottom: '3px' }}>{author}</div>
             <div style={{ fontSize: 'var(--font-h7)', marginBottom: '4px', color: 'var(--main-color)' }}>{bookInfo?.publisher}</div>
             <span style={{ fontSize: 'var(--font-h7)', color: 'var(--main-color)' }}>{bookInfo?.page}p</span>
           </div>
-          {/* <LabelDiv>{statusInfo}</LabelDiv> */}
           <LabelDiv style={{ backgroundColor: statusColor }}>{statusInfo}</LabelDiv>
         </TempDiv>
       </BookInfoContentDiv>
