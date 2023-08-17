@@ -113,7 +113,7 @@ const HandleNotifications = async (event) => {
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
     if (isSame) {
         if (bookmark) {
-            if (illuminance1 <= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 70 && pressure >= 30) {
+            if (illuminance1 <= 50 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 100 && pressure >= 30) {
                 console.log('책 덮였을때',pressure)
                 const res = await completeBookHistory(historyPk, pressure)
                 setNowBook(res.data);
@@ -122,7 +122,7 @@ const HandleNotifications = async (event) => {
                 console.log(bookmark)
             }
         } else {
-            if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 70 && pressure <= 50) {
+            if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 100 && pressure <= 80) {
                 console.log('책이 펼쳐졌을때 : ', nowBook)
                 const res = await createBookHistory(nowBook?.userBookPk)
                 await setHistoryPkAtom(res)
