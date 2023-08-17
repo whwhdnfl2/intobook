@@ -80,7 +80,7 @@ public class FCMService {
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
         for(User user: userList){
-            log.info("for문 실행 중");
+            log.info("fcmtoken: " + user.getFcmToken());
 
             if(user.getFcmToken() != null) {
                 History history = historyRepository.findTop1ByUserUserPkOrderByEndTimeDesc(user.getUserPk());
@@ -92,6 +92,10 @@ public class FCMService {
                     selectedFcmTokens.add(user.getFcmToken());
                 }
             }
+        }
+        if(selectedFcmTokens.size() == 0){
+            log.info("fcm 토큰 없다");
+            return;
         }
 
         try{
