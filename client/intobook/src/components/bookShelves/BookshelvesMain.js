@@ -15,9 +15,9 @@ const BookshelvesMain = () => {
   return (
     <div>
       <Tabs value={selectedTab} onChange={handleTabChange}>
-        <OverrideCustomTab ab label="전체" value="" selected={selectedTab === ''}/>
-        <OverrideCustomTab  label="다 읽은 책" value="COMPLETE" selected={selectedTab === 'COMPLETE'}/>
         <OverrideCustomTab  label="읽고 있는 책" value="READING" selected={selectedTab === 'READING'}/>
+        <OverrideCustomTab  label="다 읽은 책" value="COMPLETE" selected={selectedTab === 'COMPLETE'}/>
+        <OverrideCustomTab ab label="전체" value="" selected={selectedTab === ''}/>
       </Tabs>
       <BookshelvesContent selectedTab={selectedTab} />
     </div>
