@@ -35,15 +35,10 @@ const ResultBook = ({ bookCover }) => {
           customStyle={{ width: '88px', height: '120px', borderRadius: '10px' }}
         />
         <CardContent sx={{ height: '42px', padding: '2px' }} >
-          <TitleTypography
-            fontWeight={'bold'}
-            fontSize={'12px'}
-            align='center'
-            letterSpacing={'-0.5px'}
-          >
+          <TitleTypography>
             {title}
           </TitleTypography>
-          <Typography fontSize={'10px'} align='center' color={'black'} letterSpacing={'-1px'}>
+          <Typography fontSize={'10px'} align='center' color={'var(--white)'} letterSpacing={'-1px'}>
             {author}
           </Typography>
         </CardContent>
@@ -53,8 +48,12 @@ const ResultBook = ({ bookCover }) => {
   );
 };
 
-const TitleTypography = styled(Typography)`
-  color: black;
+const TitleTypography = styled.div`
+  font-family: 'NanumSquareNeo-Variable';
+  font-size: var(--font-h6);
+  font-weight: bold;
+  text-align: center;
+  color: var(--white);
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;

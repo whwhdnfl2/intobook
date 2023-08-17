@@ -14,7 +14,7 @@ const ProgressBar = ({ progress, containerWidth, containerHeight, bg, bbg, desc=
 
   return (
     <div style={{ width: `${containerWidth}px`, margin: '0 auto' }}>
-      {desc && <Progress>{`${limitedProgress}% 다 왔어요`}</Progress>}
+      {/* {desc && <Progress>{`${limitedProgress}% 다 왔어요`}</Progress>} */}
       <ContainerDiv style={{ height: `${containerHeight}px`, backgroundColor: `${bbg}` }} >
         <div style={fillerStyles}></div>
       </ContainerDiv>

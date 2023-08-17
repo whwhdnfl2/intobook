@@ -27,7 +27,7 @@ const CurrentBookStatus = () => {
   const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
   const [timeDifference, setTimeDifference] = useState(lastLog);
   const [openBookInfoModal, setOpenBookInfoModal] = useState(false);
-  const nowPage = nowReadingBook?.nowPage + 90;
+  const nowPage = nowReadingBook?.nowPage;
   const progress = nowReadingBook?.page ? Math.floor((nowPage / nowReadingBook.page) * 100) : 0;
   const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
 
@@ -62,8 +62,9 @@ const CurrentBookStatus = () => {
       setNowReadingBook(detailInfo);
       // 진행률 95% 이상일 때 모달 띄우기(nowPage가 0이면 확인 불가)
       if (detailInfo?.nowPage && detailInfo?.page) {
-        const nowPage = detailInfo.nowPage + 100;
-        const progress = Math.floor((nowPage / detailInfo.page) * 100);
+        const nowPage = detailInfo.nowPage;
+        const progress = detailInfo?.page ? Math.floor((nowPage / detailInfo.page) * 100) : 0;
+        
 
         if (progress >= 95) {
           // localStorage 값 설정

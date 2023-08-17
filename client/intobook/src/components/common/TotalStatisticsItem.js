@@ -28,7 +28,7 @@ const IconDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 4px;
+  margin-right: 0.5rem;
 `;
 
 const TextDiv = styled.div`
@@ -42,7 +42,7 @@ const TextDiv = styled.div`
 const Title = styled.div`
   color: var(--black);
   font-family: 'NanumSquareNeo-Variable';
-  font-size: var(--font-h5);
+  font-size: var(--font-h7);
   margin-bottom: 3px;
   `;
   
@@ -50,6 +50,7 @@ const Title = styled.div`
   color: #3400C8;
   font-family: 'NanumSquareNeo-Variable';
   font-size: var(--font-h6);
+  width: 95px;
 `;
 
 export default TotalStatisticsItem;

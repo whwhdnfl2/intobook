@@ -36,10 +36,8 @@ const BookHistoryLog = ({ userBookId }) => {
           return item;
         });
         if (page === 0) {
-          // setHistoryLogs(res.items); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
           setHistoryLogs(newLogs); // 첫 페이지일 경우, 기존 기록을 덮어쓰기
         } else {
-          // setHistoryLogs((prev) => [...prev, ...res.items]);
           setHistoryLogs((prev) => [...prev, ...newLogs]);
         }
         setPage(prev => prev + 1);
@@ -70,7 +68,7 @@ const BookHistoryLog = ({ userBookId }) => {
 const HistoryLogContainer = styled.div`
   width: 300px;
   height: 350px;
-  margin: 10px auto;
+  margin: auto;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;

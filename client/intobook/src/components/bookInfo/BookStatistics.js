@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BookTotalStatistics from './BookTotalStatistics';
 import AverageStatistics from '../common/AverageStatistics';
 import { getUserBookStatistics } from './../../api/statisticsApi';
+import { EmptySpace } from './../../styles/CommonStyle';
 
 const BookStatistics = ({ userBookId, status }) => {
   const [statisticsValue, setStatisticsValue] = useState({});
@@ -28,6 +29,7 @@ const BookStatistics = ({ userBookId, status }) => {
   return (
     <div>
       <BookTotalStatistics val={statisticsValue} status={status} />
+      <EmptySpace />
       <AverageStatistics readingTime={avgReadingTime} readSpeed={readingSpeed} />
     </div>
   );
