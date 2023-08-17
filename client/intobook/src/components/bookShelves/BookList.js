@@ -60,10 +60,13 @@ const BookList = ({ bookStatus, orderBy, pageKind }) => {
   return (
     <div>
       <ListContainer>
-        <Stack direction='row' flexWrap='wrap' justifyContent='space-between' columnGap={3.5} rowGap={3.5}>
+        {/* <Stack direction='row' flexWrap='wrap' justifyContent='space-between' columnGap={3.5} rowGap={3.5}> */}
+        <Stack display='grid'
+            gridTemplateColumns='repeat(3, 1fr)'
+            gap='3.5px'>
           {userBooks.length > 0 ? (
             userBooks.map((book, idx) => (
-              <Box key={idx}>
+              <Box key={idx} display='flex' justifyContent='center'>
                 <Link to={`/userbook/${book.userBookPk}`} style={{ textDecoration: 'none' }}>
                   <Book bookInfo={book} customStyle={{ width: '88px', height: '120px', marginBottom: '5px' }} width={'88px'} />
                 </Link>

@@ -29,13 +29,19 @@ const BluetoothComponent = () => {
   }
 
   return (
-    <>
+    <BluetoothContainer>
       {<StatueText>안녕하세요, {username}님</StatueText>}
       <BookmarkCharacter bluetoothStatus={bluetoothStatus} bookmarkStatus={bookmarkStatus}/>
-      <StatueText>{StatusText}</StatueText>
-    </>
+      <StatueText style={{marginTop:'20px'}}>{StatusText}</StatueText>
+    </BluetoothContainer>
   );
 };
+
+const BluetoothContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 const StatueText = styled.div`
   color: white;
