@@ -38,7 +38,7 @@ const ResultBook = ({ bookCover }) => {
           <TitleTypography>
             {title}
           </TitleTypography>
-          <Typography fontSize={'10px'} align='center' color={'var(--white)'} letterSpacing={'-1px'}>
+          <Typography fontSize={'var(--font-h7)'} align='center' color={'var(--white)'} letterSpacing={'-1px'}>
             {author}
           </Typography>
         </CardContent>
@@ -51,7 +51,6 @@ const ResultBook = ({ bookCover }) => {
 const TitleTypography = styled.div`
   font-family: 'NanumSquareNeo-Variable';
   font-size: var(--font-h6);
-  font-weight: bold;
   text-align: center;
   color: var(--white);
   overflow: hidden;

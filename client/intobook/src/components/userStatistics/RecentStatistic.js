@@ -75,7 +75,7 @@ const RecentStatistic = ({ characterData }) => {
         <ColoredBoxContainer>
         <ColoredBox color="rgba(255, 0, 0, 0.4)">
           {mostDay}<br />
-          에
+          
           </ColoredBox>
         <ColoredBox color="rgba(0, 0, 255, 0.3)">
           {mostTime}<br />

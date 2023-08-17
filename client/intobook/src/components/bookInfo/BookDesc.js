@@ -3,6 +3,8 @@ import BookCover from './../common/bookCover';
 import { styled } from 'styled-components';
 import { AlertInfo, BasicButton, Modal } from "../common";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deleteBookHistory } from "../../api/historyApi";
 import { deleteUserBook } from "../../api/userbookApi";
 import { useNavigate } from 'react-router-dom';
@@ -47,9 +49,10 @@ const BookDesc = ({ bookInfo }) => {
 
       {/* 삭제 버튼 추가 */}
       <DeleteButtonWrapper>
-        <DeleteButton onClick={() => deleteUserBookHandler()}>
-          <DeleteIcon sx={{ fontSize: '16px' }} />
-        </DeleteButton>
+        
+          <FontAwesomeIcon icon={faTrash} size="1x" style={{ color: 'var(--main-point-color)', cursor: 'pointer', margin: '14px' }} onClick={() => deleteUserBookHandler()} />
+          {/* <DeleteIcon sx={{ fontSize: '16px' }} /> */}
+        
       </DeleteButtonWrapper>
 
       <Modal openModal={openDeleteUserBookModal} setOpenModal={setOpenDeleteUserBookModal} modalType={'deleteLog'}

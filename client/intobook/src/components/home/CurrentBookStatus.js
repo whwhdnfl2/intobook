@@ -112,12 +112,20 @@ const CurrentBookStatus = () => {
               ) : (
                 <>
                   <Content>첫 히스토리를 쌓으러 가보세요!</Content>
-                  <div
+                  {/* <div
                     style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
                     onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
                   >
                     {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
-                  </div>
+                  </div> */}
+                  <StyledProgressBar
+                      onClick={() => {
+                        if (progress >= 95) setOpenCompleteBookModal(true);
+                      }}
+                      progress={progress}
+                    >
+                    {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
+                  </StyledProgressBar>
                 </>
               )}
               <ImgContainer onClick={() => { setOpenModal(true) }} >

@@ -192,7 +192,7 @@ const LogEditContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: var(--font-h4);
+  font-size: var(--font-h5);
   line-height: 20px
   letter-spacing: 0.4px;
   margin-bottom: 10px;
@@ -205,7 +205,7 @@ const SubTitle = styled.div`
   `;
   
   const Content = styled.div`
-  font-size: var(--font-h4);
+  font-size: var(--font-h6);
   font-weight: bold;
 `;
 
@@ -244,6 +244,7 @@ const CommentDiv = styled.textarea`
   border-radius: 15px;
   margin: 0 auto;
   padding: 10px;
+  font-size: var(--font-h6)
 `;
 
 const Button = styled.button`
@@ -255,11 +256,9 @@ const Button = styled.button`
   margin-left: 10px;
   margin-top: 10px;
   cursor: pointer;
-  
   color: var(--white);
   text-align: center;
-  font-family: var(--main-font);
-  font-size: var(--font-h5);
+  font-size: var(--font-h6);
   letter-spacing: 0.4px;
   float: right;
 `;

@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
+import BasicButton from './BasicButton';
 
 
 const Tutorial = ({ closeModal }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 4;
+
+  // const closeModal = () => {
+  //   setOpenModal
+  // }
 
   const handlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -31,11 +36,10 @@ const Tutorial = ({ closeModal }) => {
           color="primary"
         />
       </PaginationWrapper>
-
-      {/* '나중에 보기' 버튼 */}
-      <StyledButton variant="contained" onClick={closeModal}>
-        나중에 보기
-      </StyledButton>
+      
+      <div onClick={closeModal}>
+        <BasicButton content={'나중에 보기'}  />
+      </div>    
     </ModalContent>
   );
 };
@@ -47,6 +51,7 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
 `;
 
 const PageContent = styled.div`
@@ -60,11 +65,6 @@ const PageContent = styled.div`
 
 const PaginationWrapper = styled.div`
   margin-top: 20px;
-`;
-
-// 여기 왜 important안하면 적용이 안될까
-const StyledButton = styled(Button)`
-  margin-top: 20px !important;
 `;
 
 export default Tutorial;
