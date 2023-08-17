@@ -9,7 +9,10 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
     setOpenModal(false);
 
     if (modalType === 'completeBook') {
-      localStorage.setItem('hasCloseCompleteBookModal', 'true');
+      const modalVal = localStorage.getItem('hasCloseCompleteBookModal')
+      if (modalVal === 'false') {
+        localStorage.setItem('hasCloseCompleteBookModal', 'true');
+      }
     }
   };
 
@@ -20,7 +23,7 @@ const Modal = ({ openModal, setOpenModal, modalType, height = '430px', handleMet
           {modalType === 'tutorial' && <Tutorial closeModal={closeModal} />}
           {modalType === 'readingBook' && <ReadingBooks closeModal={closeModal} />}
           {modalType === 'bookmarkInfo' && <BookmarkInfo closeModal={closeModal} />}
-          {modalType === 'completeBook' && <CompleteReadingInfo closeModal={closeModal} startExplode={ startExplode }/>}
+          {modalType === 'completeBook' && <CompleteReadingInfo closeModal={closeModal} startExplode={startExplode} />}
           {modalType === 'deleteLog' && <DeleteLog closeModal={closeModal} onDelete={handleMethod} />}
           {modalType === 'updateUsername' && <UpdateUsername closeModal={closeModal} />}
         </DialogContents>

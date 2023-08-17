@@ -11,12 +11,17 @@ const CompleteReadingInfo = ({ closeModal, startExplode }) => {
     localStorage.setItem('hasCloseCompleteBookModal', 'true');
     closeModal();
   };
-  
 
-  
+
+
   const updateStatusHandler = async () => {
     await updateUserBookStatus(nowReadingBook?.userBookPk, 'COMPLETE');
-    localStorage.setItem('hasCloseCompleteBookModal', 'false');
+    const modalVal = localStorage.getItem('hasCloseCompleteBookModal');
+    if (modalVal === null) {
+      localStorage.setItem('hasCloseCompleteBookModal', 'false');
+    } else if (modalVal === 'true') {
+      localStorage.removeItem('hasCloseCompleteBookModal');
+    }
     setNowReadingBook('');
     startExplode()
     closeModal();
@@ -40,26 +45,19 @@ const CompleteReadingInfo = ({ closeModal, startExplode }) => {
   );
 };
 
-const ConfettiContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-`;
-
 const ModalWrapper = styled.div`
   position: relative;
 `;
 
 const ModalContent = styled.div`
   min-width: 240px;
-  height: 100%;
-  background-color: white;
-  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  height: 100%;
+  background-color: white;
+  padding: 10px;
   text-align: center;
   font-family: var(--main-font);
   font-size: var(--font-h5);
@@ -79,6 +77,7 @@ const Buttons = styled.div`
   width: 200px;
   display: flex;
   justify-content: center;
+  margin-top: 1.5rem;
 `;
 
 const StatusButton = styled.button`
