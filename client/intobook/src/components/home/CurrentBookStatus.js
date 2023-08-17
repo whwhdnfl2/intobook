@@ -6,7 +6,7 @@ import { formatTimeDifference } from '../../utils/dateTimeUtils';
 import { BasicButton, ProgressBar } from '../common';
 import { getReadingBookInfo } from '../../api/userbookApi';
 import SearchBottomSheet from '../bookSearch/SearchBottomSheet';
-import { styled } from 'styled-components';
+import { styled, keyframes, css } from 'styled-components';
 
 const CurrentBookStatus = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -100,12 +100,14 @@ const CurrentBookStatus = () => {
                     <Span>{lastLog} </Span>
                     지났습니다.
                   </Content>
-                  <div
-                    style={{ cursor: progress >= 95 ? 'pointer' : 'default' }}
-                    onClick={() => { if (progress >= 95) setOpenCompleteBookModal(true); }}
-                  >
+                  <StyledProgressBar
+                      onClick={() => {
+                        if (progress >= 95) setOpenCompleteBookModal(true);
+                      }}
+                      progress={progress}
+                    >
                     {nowReadingBook && <ProgressBar progress={progress} containerWidth={200} bbg={'#D9D9D9'} />}
-                  </div>
+                  </StyledProgressBar>
                 </div>
               ) : (
                 <>
@@ -167,5 +169,56 @@ const ImgContainer = styled.div`
   gap: 6px;
   cursor: pointer;
 `;
+
+const styledButtonStyles = (progress) => {
+  if (progress >= 95) {
+    return {
+      cursor: 'pointer',
+    };
+  }
+
+  // 95 미만일 때의 스타일
+  return {
+    cursor: 'default',
+  };
+};
+
+
+// const styledFullProgressbar = {
+//   cursor: 'pointer',
+//   border: '1px solid var(--main-red-color)',
+//   padding: '1px 1px',
+//   borderRadius: '10px',
+// }
+
+const styledProgressbar = {
+    cursor: 'default'
+}
+
+const StyledProgressBar = styled.div`
+  cursor: ${({ progress }) => (progress >= 95 ? 'pointer' : 'default')};
+  ${({ progress }) =>
+    progress >= 95 &&
+    css`
+      padding: 0px 0px;
+      border: 2px solid white;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      animation: ${lightEffectKeyframes} 0.4s infinite;
+    `}
+`;
+
+const lightEffectKeyframes = keyframes`
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 187, 50);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(255, 187, 50);
+  }
+`;
+
+
+
 
 export default CurrentBookStatus;
