@@ -28,8 +28,6 @@ public class FCMService {
     @Value("${jwt.secretKey}")
     String secretKey;
 
-
-
     private final UserRepository userRepository;
     private final UserBookService userBookService;
     private final HistoryRepository historyRepository;
@@ -57,23 +55,20 @@ public class FCMService {
     }
 
     public void send(Message message) {
-        
         FirebaseMessaging.getInstance().sendAsync(message);
-        log.info("send 실행된거임");
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 1000 * 30)
+    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         for(User user: userList){
-            log.info("fcmtoken: " + user.getFcmToken());
-
             if(user.getFcmToken() != null) {
                 History history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
-                if(history == null) {
+                LocalDateTime now = LocalDateTime.now();
+                if(history == null || history.getEndTime() == null || ChronoUnit.MINUTES.between(history.getEndTime(), now) < 60) {
                     continue;
                 }
                 String fcmToken = user.getFcmToken();
