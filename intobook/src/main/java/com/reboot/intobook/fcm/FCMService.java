@@ -63,7 +63,7 @@ public class FCMService {
     }
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+    @Scheduled(fixedDelay = 1000 * 30)
     public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
@@ -79,7 +79,7 @@ public class FCMService {
                 String fcmToken = user.getFcmToken();
                 Message message = Message.builder()
                         .putData("title", "BOOK!빠지다")
-                        .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user) + "를 읽으러 가봐요!")
+                        .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user).getTitle() + "를 읽으러 가봐요!")
                         .setToken(fcmToken)
                         .build();
 
