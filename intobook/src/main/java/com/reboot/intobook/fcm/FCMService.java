@@ -80,10 +80,14 @@ public class FCMService {
                 History history = historyRepository.findTop1ByUserOrderByEndTimeDesc(user);
                 log.info("나이스");
                 if(history == null) {
+                    log.info("history null이다");
+
                     continue;
                 }
 //                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
-                    selectedFcmTokens.add(user.getFcmToken());
+                log.info("fcmToken 넣음: " + user.getFcmToken());
+
+                selectedFcmTokens.add(user.getFcmToken());
 //                }
             }
         }
