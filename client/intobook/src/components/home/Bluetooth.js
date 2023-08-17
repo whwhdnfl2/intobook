@@ -107,11 +107,12 @@ const Bluetooth = () => {
 
     let isSame = true;
     if (queue.length === 5) { // 5개의 연속한 a배열의 값 차이들이 큰 변화가 없을때 정적인 상태가 된것으로 판정
-      for (let i = 0; i < 5; i++) {
-        if ((Math.abs(queue[i][0] - queue[(i + 1) % 5][0]) > 30) ||
-          (Math.abs(queue[i][1] - queue[(i + 1) % 5][1]) > 30) ||
-          (Math.abs(queue[i][2] - queue[(i + 1) % 5][2]) > 15)) {
-          isSame = false;
+        for (let i = 0; i < 5; i++) {
+            if ((Math.abs(queue[i][0]-queue[(i + 1)%5][0]) > 40)||
+                (Math.abs(queue[i][1]-queue[(i + 1)%5][1]) > 40)||
+                (Math.abs(queue[i][2]-queue[(i + 1)%5][2]) > 25)) {
+                    isSame = false;
+                }
         }
       }
     }
@@ -119,24 +120,25 @@ const Bluetooth = () => {
     //책을 펼쳤을 때 history api 요청(response로 pk를 받아와서 저장)
     //책을 덮었을 때 history api 요청(params에 pk와 pressure를 넘겨줄 것)
     if (isSame) {
-      if (bookmark) {
-        if (illuminance1 <= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 70 && pressure >= 30) {
-          console.log('책 덮였을때', pressure)
-          const res = await completeBookHistory(historyPk, pressure)
-          setNowBook(res.data);
-          await setBookmark(false);
-          bookmark = false;
-          console.log(bookmark)
-        }
-      } else {
-        if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 70 && pressure <= 50) {
-          console.log('책이 펼쳐졌을때 : ', nowBook)
-          const res = await createBookHistory(nowBook?.userBookPk)
-          await setHistoryPkAtom(res)
-          historyPk = res;
-          await setBookmark(true);
-          bookmark = true;
-          console.log(bookmark)
+        if (bookmark) {
+            if (illuminance1 <= 50 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) >= 100 && pressure >= 30) {
+                console.log('책 덮였을때',pressure)
+                const res = await completeBookHistory(historyPk, pressure)
+                setNowBook(res.data);
+                await setBookmark(false);
+                bookmark = false;
+                console.log(bookmark)
+            }
+        } else {
+            if (illuminance1 >= 100 && illuminance2 >= 100 && Math.abs(illuminance1 - illuminance2) < 100 && pressure <= 80) {
+                console.log('책이 펼쳐졌을때 : ', nowBook)
+                const res = await createBookHistory(nowBook?.userBookPk)
+                await setHistoryPkAtom(res)
+                historyPk = res;
+                await setBookmark(true);
+                bookmark = true;
+                console.log(bookmark)
+            }
         }
       }
     }
