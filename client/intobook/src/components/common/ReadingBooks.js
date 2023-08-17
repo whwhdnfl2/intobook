@@ -53,6 +53,12 @@ const ReadingBooks = ({ closeModal }) => {
     try {
       await updateUserBookStatus(bookInfo.userBookPk, 'NOWREADING');
       setNowReadingBook(bookInfo);
+      const modalVal = localStorage.getItem('hasCloseCompleteBookModal');
+      if (modalVal === null) {
+        localStorage.setItem('hasCloseCompleteBookModal', 'false');
+      } else if (modalVal === 'true') {
+        localStorage.removeItem('hasCloseCompleteBookModal');
+      }
       closeModal();
     } catch (err) {
       console.err(err);

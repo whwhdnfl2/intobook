@@ -41,13 +41,13 @@ const SelectedBook = ({ isOpen, setIsOpen, selectedInfo }) => {
   const registerBookHandler = async () => {
     try {
       await addUserBook(bookId);
-      console.log('selectdBook1', selectedInfo);
       await setNowReadingBook(selectedInfo);
       const modalVal = localStorage.getItem('hasCloseCompleteBookModal');
-      if (modalVal === 'true') {
+      if (modalVal === null) {
         localStorage.setItem('hasCloseCompleteBookModal', 'false');
+      } else if (modalVal === 'true') {
+        localStorage.removeItem('hasCloseCompleteBookModal');
       }
-      console.log('selectdBook2', nowReadingBook);
       navigate('/');
     } catch (err) {
       console.error(err);
