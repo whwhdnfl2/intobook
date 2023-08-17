@@ -5,7 +5,6 @@ import com.reboot.intobook.history.HistoryRepository;
 import com.reboot.intobook.history.entity.History;
 import com.reboot.intobook.user.entity.User;
 import com.reboot.intobook.user.repository.UserRepository;
-import com.reboot.intobook.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,8 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -28,13 +25,11 @@ public class FCMService {
 
     @Value("${jwt.secretKey}")
     String secretKey;
-    @PersistenceContext
-    EntityManager em;
+
 
 
     private final UserRepository userRepository;
     private final HistoryRepository historyRepository;
-    private final JwtUtil jwtUtil = new JwtUtil();
 
 
     //fcm알림 테스트를 위한 method
@@ -77,17 +72,18 @@ public class FCMService {
 
     //1시간마다 전체 유저의 가장 최근에 읽은 시간을 통해서 알람 보냄
     @Scheduled(fixedDelay = 36000)
-    public void sendAlarm() throws FirebaseMessagingException {
+    public void sendAlarm() {
         //user table에서 user를 전부 가져온다.
         List<User> userList =  userRepository.findAll();
         //user를 순회하면서 알람을 보내야 하면 알람 보내기
         List<String> selectedFcmTokens = new ArrayList<>();
         for(User user: userList){
-            if(user.getFcmToken() == null) continue;
-            else {
-                List<History> historyList = historyRepository.findByUserUserPkOrderByEndTimeDesc(user.getUserPk());
-                if(historyList.size() == 0 || historyList.get(0).getEndTime() == null) break;
-                if(ChronoUnit.MINUTES.between(historyList.get(0).getEndTime(), LocalDateTime.now()) > 60){
+            if(user.getFcmToken() != null) {
+                History history = historyRepository.findTop1ByUserUserPkOrderByEndTimeDesc(user.getUserPk());
+                if(history == null) {
+                    break;
+                }
+                if(ChronoUnit.MINUTES.between(history.getEndTime(), LocalDateTime.now()) > 60){
                     selectedFcmTokens.add(user.getFcmToken());
                 }
             }
@@ -108,7 +104,6 @@ public class FCMService {
                         failedTokens.add(selectedFcmTokens.get(i));
                     }
                 }
-                // 실패한 registrationTokens에 대한 추가 처리 이건 나중에 할 예정
             }
         }catch (Exception e){
             log.error("sendAlarm error: " + e.getClass());
