@@ -45,7 +45,7 @@ const SearchBar = ({ title, updateSearchKeyword }) => {
     <>
       {!showScanner &&
         <SearchBarContainer>
-          {scannedBook && <div>{scannedBook.bokkId}</div>}
+          {/* {scannedBook && <div>{scannedBook.bokkId}</div>} */}
           <Title>{title}</Title>
           <SerchBarDiv>
             <div>

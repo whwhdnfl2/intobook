@@ -37,10 +37,12 @@ const ReadingBook = () => {
       {!nowReadingBook && (
         <>
           <CurrentBook sx={{ background: 'var(--white)' }}>
+          <Link to='/search' style={{ textDecoration: 'none' }} onClick={() => setIsOpen(false)}>
+              {/* <SearchGroups iconSrc={searchIcon} methodText={'검색하여 등록하기'}></SearchGroups> */}
             <AddCircleOutlineIcon
-              onClick={searchHandler}
               style={{ color: 'var(--main-point-color)', fontSize: '26px', cursor: 'pointer' }}
             />
+            </Link>
           </CurrentBook>
         </>
       )}
