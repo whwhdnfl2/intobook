@@ -44,7 +44,7 @@ public class FCMService {
             String fcmToken = user.getFcmToken();
             Message message = Message.builder()
                     .putData("title", "BOOK!빠지다")
-                    .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user) + "를 읽으러 가봐요!")
+                    .putData("content",  user.getNickname() + "님. 독서를 안한지 3일이 넘었어요. " + userBookService.findNowReadingUserBook(user).getTitle() + "를 읽으러 가봐요!")
                     .setToken(fcmToken)
                     .build();
             send(message);

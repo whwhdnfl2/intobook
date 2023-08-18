@@ -55,7 +55,7 @@ public class StatisticsService {
         // pagePerHour 계산
         int pagePerHour = 0;
         if( totalReadTime != 0 ){ // divide by 0 방지
-            pagePerHour = totalReadPage / totalReadTime;
+            pagePerHour = (totalReadPage / totalReadTime)*60;
         }
 
         // timePerRead  계산
@@ -125,7 +125,7 @@ public class StatisticsService {
         averageReadingTime = totalReadingTime / findHistoryList.size();
 
         double averageSpeed = 0;
-        if (totalReadingTime > 0) averageSpeed = userBookReadPages / totalReadingTime;
+        if (totalReadingTime > 0) averageSpeed = (userBookReadPages / totalReadingTime) * 60;
 
         long remainingTime = (long) (( userBookPages - userBookReadPages ) / averageSpeed);
 
