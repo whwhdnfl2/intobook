@@ -34,7 +34,6 @@ const CurrentBookStatus = () => {
   // 지난 로그 기록 기준 1초마다 갱신
   const lastLog = formatTimeDifference(nowReadingBook?.completedAt);
   const [timeDifference, setTimeDifference] = useState(lastLog);
-  const [openBookInfoModal, setOpenBookInfoModal] = useState(false);
   const nowPage = nowReadingBook?.nowPage;
   const progress = nowReadingBook?.progress;
   const [openCompleteBookModal, setOpenCompleteBookModal] = useState(false);
@@ -42,15 +41,7 @@ const CurrentBookStatus = () => {
   
 
   const searchHandler = () => {
-    if (isConnected && isBookmarkOut) {
-      // 안내 모달 띄우기
-      setOpenBookInfoModal(true);
-    } else {
-      setIsOpen(true);
-    }
-  };
-  const closeBookInfoModal = () => {
-    setOpenBookInfoModal(false);
+    setIsOpen(true);
   };
 
   const closeCompleteBookModal = () => {
@@ -156,19 +147,10 @@ const CurrentBookStatus = () => {
       )}
       <Modal openModal={openModal} setOpenModal={setOpenModal} modalType={'readingBook'} closeModal={closeModal} height={'510px'} />
       <SearchBottomSheet isOpen={isOpen} setIsOpen={setIsOpen} clickHandler={searchHandler} />
-      <Modal openModal={openBookInfoModal} setOpenModal={setOpenBookInfoModal} modalType={'bookmarkInfo'} closeModal={closeBookInfoModal} height={'240px'} />
       <Modal openModal={openCompleteBookModal} setOpenModal={setOpenCompleteBookModal} modalType={'completeBook'} closeModal={closeCompleteBookModal} startExplode={ startExplode } height={'160px'} />
-      
     </>
   );
 };
-
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
 
 const Content = styled.div`
   text-align: center;
@@ -237,8 +219,5 @@ const lightEffectKeyframes = keyframes`
     box-shadow: 0 0 12px rgba(255, 187, 50);
   }
 `;
-
-
-
 
 export default CurrentBookStatus;
