@@ -1,0 +1,36 @@
+/* @font-face {
+    font-family: "BM HANNA_TTF-Regular";
+    font-style: normal;
+    font-weight: 400;
+    src: url("assets/font/BM-HANNA.ttf") format("truetype");
+} */
+
+@font-face {
+    font-family: 'SUITE-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+}
+
+:root {
+    --main-color: #5A7FFF;
+    --main-point-color: #2B49B4;
+    --main-base-color: #EDF7FF;
+    --main-purple-color: #734CFF;
+    --main-red-color: #F08A50;
+    --black: #18191a;
+    --white: #ffffff;
+    --bg-gray: #dcdcdc;
+    --gray: #575757;
+
+    --font-h1: 2rem;
+    --font-h2: 1.75rem;
+    --font-h3: 1.5rem; 
+    --font-h4: 1.125rem;
+    --font-h5: 0.95rem;
+    --font-h6: 0.75rem;
+    --font-h7: 0.6rem;
+
+    --main-font: "BM HANNA_TTF-Regular", Helvetica;
+    --content-font: "Inter", Helvetica;
+}

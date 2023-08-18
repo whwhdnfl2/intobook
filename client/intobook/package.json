@@ -1,0 +1,80 @@
+{
+  "name": "intobook",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.2",
+    "@mui/styled-engine-sc": "^5.12.0",
+    "@nivo/bar": "^0.83.0",
+    "@nivo/core": "^0.83.0",
+    "@tanstack/react-query": "^4.32.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "axios": "^1.4.0",
+    "chart.js": "^4.3.3",
+    "date-fns": "^2.30.0",
+    "firebase": "^10.1.0",
+    "framer-motion": "^10.15.2",
+    "html5-qrcode": "^2.3.8",
+    "keen-slider": "^6.8.6",
+    "msw": "^1.2.3",
+    "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-confetti-explosion": "^2.1.2",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2",
+    "react-scripts": "5.0.1",
+    "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
+    "styled-components": "^6.0.5",
+    "web-vitals": "^2.1.0",
+    "workbox-background-sync": "^5.1.4",
+    "workbox-broadcast-update": "^5.1.4",
+    "workbox-cacheable-response": "^5.1.4",
+    "workbox-core": "^5.1.4",
+    "workbox-expiration": "^5.1.4",
+    "workbox-google-analytics": "^5.1.4",
+    "workbox-navigation-preload": "^5.1.4",
+    "workbox-precaching": "^5.1.4",
+    "workbox-range-requests": "^5.1.4",
+    "workbox-routing": "^5.1.4",
+    "workbox-strategies": "^5.1.4",
+    "workbox-streams": "^5.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
