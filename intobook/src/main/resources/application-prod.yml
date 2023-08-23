@@ -11,6 +11,7 @@ spring:
     username: root
     password: root
 
+
   security:
     oauth2:
       client:
