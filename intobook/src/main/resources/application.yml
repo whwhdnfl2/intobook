@@ -1,9 +1,7 @@
 # MySQL 설정
 
 
-into-book:
-  api:
-    key: ttbjmj25885471405001
+
 
 spring:
   profiles:
@@ -41,7 +39,6 @@ swagger:
     base-package: com.reboot.intobook.controller.api
 
 jwt:
-  secretKey: sc136as1c5qw4c13ax1cz3x5c4as3c1a35scczx3casc54;
 
   access:
     expiration: 360000000 # 100시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
